@@ -50,7 +50,6 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(),
       decoration: BoxDecoration(
           border:
               Border(top: BorderSide(color: Theme.of(context).primaryColor))),
@@ -67,10 +66,12 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                 //
                 //user profile pic
                 Container(
-                  height: 40.0,
-                  width: 40.0,
+                  padding: EdgeInsets.all(1.0),
+                  height: 35.0,
+                  width: 35.0,
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.grey[300]),
+                       
+                      shape: BoxShape.circle, color: Colors.deepOrange[900]),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(30.0),
                       child: CachedNetworkImage(
@@ -204,7 +205,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(Icons.comment_bank_outlined),
+                          icon: Icon(Icons.mode_comment),
                           onPressed: () {
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],

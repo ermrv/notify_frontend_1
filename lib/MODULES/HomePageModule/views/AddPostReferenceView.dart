@@ -16,12 +16,12 @@ class AddPostReferenceView extends StatelessWidget {
         Get.to(() => AddPostPageScreen());
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 2.0),
+        margin: EdgeInsets.symmetric(horizontal: 4.0),
         width: screenWidth,
         decoration: BoxDecoration(
             border: Border.all(
                 color: Theme.of(context).accentColor.withOpacity(0.4)),
-            borderRadius: BorderRadius.circular(20.0)),
+            borderRadius: BorderRadius.circular(5.0)),
         child: Column(
           children: [
             Container(
