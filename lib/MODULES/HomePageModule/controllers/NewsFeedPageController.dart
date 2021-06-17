@@ -1,0 +1,46 @@
+import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/MODULES/UserAuthModule/userAuthVariables.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+
+class NewsFeedPageController extends GetxController {
+  double maxScrollExtent = 2.0;
+  bool callScrollListener = true;
+  List data = [];
+
+  @override
+  void onInit() {
+    getData();
+    super.onInit();
+  }
+
+  getData() async {
+    var response =
+        await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl, {}, userToken);
+
+    data.addAll(response);
+    print(data);
+    update();
+  }
+
+  scrollListener(ScrollNotification notification) {
+    if (notification.metrics.axisDirection == AxisDirection.down) {
+      double _maxScrollExtent = notification.metrics.maxScrollExtent;
+      if (notification.metrics.pixels.floor() >=
+              (notification.metrics.maxScrollExtent * 0.9).floor() &&
+          callScrollListener) {
+        print("bottom");
+
+        maxScrollExtent = _maxScrollExtent;
+        callScrollListener = false;
+        update();
+      } else if (notification.metrics.pixels.floor() >=
+              maxScrollExtent.floor() &&
+          !callScrollListener) {
+        callScrollListener = true;
+        update();
+      }
+    }
+  }
+}
