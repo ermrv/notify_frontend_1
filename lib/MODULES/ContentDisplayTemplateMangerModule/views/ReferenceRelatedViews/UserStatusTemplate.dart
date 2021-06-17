@@ -20,10 +20,10 @@ class UserStatusTemplate extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: [
           _AddStatusButtonContainer(),
-          for (var i in boxContents["contents"])
-            _Template(
-              content: i,
-            ),
+          // for (var i in boxContents["contents"])
+          //   _Template(
+          //     content: i,
+          //   ),
         ],
       ),
     );
