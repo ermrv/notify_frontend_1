@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 class CreateEventPageScreenController extends GetxController {
+  bool isUploading = false;
   File eventImage;
   String eventStartDate;
   String eventEndDate;
@@ -90,10 +91,14 @@ class CreateEventPageScreenController extends GetxController {
     var response = await request.send();
     final strResponse = await response.stream.bytesToString();
     print(response.statusCode);
-    if (response.statusCode == 200) {
-      // Get.off(() => ContestHostingHistoryScreen());
-    } else {
-      print(strResponse);
+   if (response.statusCode == 200) {
+      isUploading = false;
+      Get.snackbar("Uploaded", "Task Completed");
+      update();
+    }else{
+      isUploading = false;
+      Get.snackbar("Error", "Error Occured");
+      update();
     }
   }
 }

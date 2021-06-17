@@ -23,7 +23,7 @@ class _PollPagePreviewScreenState extends State<PollPagePreviewScreen> {
             child: Container(
               height: 50.0,
               alignment: Alignment.center,
-              child: Text("Post"),
+              child: controller.isUploading ? Text("posting...") : Text("Post"),
             ),
             onPressed: () {
               controller.uploadPollPost();

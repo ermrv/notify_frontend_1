@@ -73,7 +73,7 @@ class AddPostPageScreen extends StatelessWidget {
                 child: Container(
                     padding:
                         EdgeInsets.symmetric(vertical: 2.0, horizontal: 7.0),
-                    child: Text(" Post ")),
+                    child:controller.isUploading?Text("Uploading"):Text(" Post ")),
               ),
             ),
           ],

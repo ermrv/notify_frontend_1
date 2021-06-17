@@ -22,7 +22,7 @@ class CreateEventPageScreen extends StatelessWidget {
                         onPressed: () {
                           controller.postEventHandler();
                         },
-                        child: Text("Post Event")),
+                        child:controller.isUploading? Text("Posting.."): Text("Post Event")),
                   )
                 ],
               ),

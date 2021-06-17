@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 class CreateContestScreenController extends GetxController {
+  bool isUploading = false;
   File contestImage;
   int prizeCoins = 200;
   String contestEndDate;
@@ -104,10 +105,13 @@ class CreateContestScreenController extends GetxController {
     final strResponse = await response.stream.bytesToString();
     print(response.statusCode);
     if (response.statusCode == 200) {
-      print("posted");
-      // Get.off(() => ContestHostingHistoryScreen());
-    } else {
-      print(strResponse);
+      isUploading = false;
+      Get.snackbar("Uploaded", "Task Completed");
+      update();
+    }else{
+      isUploading = false;
+      Get.snackbar("Error", "Error Occured");
+      update();
     }
   }
 }

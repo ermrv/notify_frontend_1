@@ -22,7 +22,7 @@ class CreateContestScreen extends StatelessWidget {
                         onPressed: () {
                           controller.postContestHandler();
                         },
-                        child: Text("Post Contest")),
+                        child:controller.isUploading?Text("Posting.."): Text("Post Contest")),
                   )
                 ],
               ),

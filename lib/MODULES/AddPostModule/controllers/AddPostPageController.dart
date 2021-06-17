@@ -14,6 +14,7 @@ import 'package:MediaPlus/MODULES/AddPostModule/views/SelectedImagesDisplayTempl
 import 'package:MediaPlus/MODULES/AddPostModule/views/SelectedImagesDisplayTemplates/SingleImageDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/AddPostModule/views/VideoGridDisplay.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/userAuthVariables.dart';
+import 'package:MediaPlus/MODULES/UserProfileModule/views/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,11 @@ import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart' as dio;
 
 class AddPostPageController extends GetxController {
+  //to show the upload task
+  bool isUploading = false;
+  bool isUploaded = false;
+  bool isError = false;
+  //
   bool showBottomNavbar = true;
   double aspectRatio;
 
@@ -142,6 +148,7 @@ class AddPostPageController extends GetxController {
 
   ///uploading data
   uploadData() async {
+    isUploading = true;
     if (videoFile == null && imageFiles != null) {
       List<Uint8List> _temp = await ImageCompressor.compressImages(imageFiles);
       for (Uint8List i in _temp) {
@@ -173,6 +180,10 @@ class AddPostPageController extends GetxController {
         imageFiles == null &&
         textEditingController.text != null) {
       uploadTextPost();
+    } else if(videoFile == null &&
+        imageFiles == null &&
+        textEditingController.text == null){
+      isUploading = false;
     }
 
     update();
@@ -183,6 +194,16 @@ class AddPostPageController extends GetxController {
     var response = await ApiServices.postWithAuth(ApiUrlsData.addTextPost,
         {"description": textEditingController.text}, userToken);
     print(response);
+    if (response != "error") {
+      isUploading = false;
+      Get.snackbar("Uploaded", "Task Completed");
+      update();
+      // Get.to(() => UserProfileScreen());
+    }else{
+       isUploading = false;
+      Get.snackbar("Error", "Error occured");
+      update();
+    }
   }
 
   ///to upload the compressed images
@@ -232,10 +253,18 @@ class AddPostPageController extends GetxController {
           contentType: MediaType(
               "image", imageFiles[index].path.split(".").last.toString())));
     }
-
     var response = await request.send();
     response.stream.listen((data) => print(data));
     print(response.statusCode);
+    if (response.statusCode == 200) {
+      isUploading = false;
+      Get.snackbar("Uploaded", "Task Completed");
+      update();
+    }else{
+      isUploading = false;
+      Get.snackbar("Error", "Error Occured");
+      update();
+    }
   }
 
   ///video uploader
@@ -266,6 +295,15 @@ class AddPostPageController extends GetxController {
             MediaType("video", videoFile.path.split(".").last.toString())));
 
     http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      isUploading = false;
+      Get.snackbar("Uploaded", "Task Completed");
+      update();
+    }else{
+      isUploading = false;
+      Get.snackbar("Error", "Error Occured");
+      update();
+    }
     response.stream.listen((value) {
       print(value.length);
     });
