@@ -21,7 +21,10 @@ abstract class ApiUrlsData {
   static String userHighlights =
       "http://18.188.219.114:3000/api/user/highlights";
 
+
+///user profile data and related posts
   static String userPosts = "http://18.188.219.114:3000/api/user/posts";
+  static String userProfileBasicData = "http://18.188.219.114:3000/api/user/profile";
 
 //newsfeed
   static String newsFeedUrl = "http://18.188.219.114:3000/api/home/newsfeed";

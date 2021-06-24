@@ -1,9 +1,12 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ContentDisplayTemplateProvider.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/UserProfileModule/views/PrimaryUserActionsOnProfile.dart';
-import 'package:MediaPlus/MODULES/UserProfileModule/views/UserBasicInfoContainer.dart';
+import 'package:MediaPlus/MODULES/UserProfileModule/views/SecondaryUserActionsOnProfile.dart';
+import 'package:MediaPlus/MODULES/UserProfileModule/views/PrimaryUserBasicInfoContainer.dart';
+import 'package:MediaPlus/MODULES/UserProfileModule/views/SecondaryUserBasicInfoContainer.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -30,6 +33,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   String _ownerId;
 
   List data;
+  var profileData;
 
   @override
   void initState() {
@@ -53,8 +57,22 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           context: context,
           child: ListView(
             children: [
-              PrimaryUserBasicInfoContainer(),
-              PrimaryUserActionsOnProfile(),
+              _userIsProfileOwner
+                  ? PrimaryUserBasicInfoContainer()
+                  : profileData == null
+                      ? Container(
+                        height: 100.0,
+                        width: screenWidth,
+                          child: Center(
+                            child: SpinKitPulse(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        )
+                      : SecondaryUserBasicInfoContainer(basicUserData: profileData,),
+              _userIsProfileOwner
+                  ? PrimaryUserActionsOnProfile()
+                  : SecondaryUserActionsOnProfile(),
               data == null
                   ? Center(
                       child: SpinKitPulse(
@@ -71,10 +89,26 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   _getData() async {
+    if (!_userIsProfileOwner) _getBasicProfileData();
+
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.userPosts, {"_id": widget.profileOwnerId}, userToken);
     if (response != "error") {
       data = response["posts"];
+      if (this.mounted) {
+        setState(() {});
+      }
+    }
+  }
+
+  ///getting basic user data
+  _getBasicProfileData() async {
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.userProfileBasicData,
+        {"profileId": widget.profileOwnerId},
+        userToken);
+    if (response != "error") {
+      profileData = response;
       if (this.mounted) {
         setState(() {});
       }
