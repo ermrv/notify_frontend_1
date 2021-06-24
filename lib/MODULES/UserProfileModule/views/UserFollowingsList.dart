@@ -1,4 +1,3 @@
-
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
@@ -6,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 /// stlful widget--Listview which contains all the list of Followings
-class PrimaryUserFollowingsList extends StatefulWidget {
+class UserFollowingsList extends StatefulWidget {
+  final String userId;
+
+  const UserFollowingsList({Key key,@required this.userId}) : super(key: key);
   @override
-  _PrimaryUserFollowingsListState createState() => _PrimaryUserFollowingsListState();
+  _UserFollowingsListState createState() => _UserFollowingsListState();
 }
 
-class _PrimaryUserFollowingsListState extends State<PrimaryUserFollowingsList> {
+class _UserFollowingsListState extends State<UserFollowingsList> {
   List _data = [];
   bool requestProcessed = false;
 

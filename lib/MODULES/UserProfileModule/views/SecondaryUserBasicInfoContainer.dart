@@ -82,7 +82,7 @@ class SecondaryUserBasicInfoContainer extends StatelessWidget {
                                 margin: EdgeInsets.only(top: 19.0),
                                 child: TextButton(
                                   onPressed: () {
-                                    // Get.to(() => PrimaryUserFollowersList());
+                                    Get.to(() => UserFollowersList(userId: basicUserData["_id"].toString(),));
                                   },
                                   child: Text(
                                     "Followers",
@@ -115,7 +115,7 @@ class SecondaryUserBasicInfoContainer extends StatelessWidget {
                               margin: EdgeInsets.only(top: 19.0),
                               child: TextButton(
                                 onPressed: () {
-                                  // Get.to(() => PrimaryUserFollowingsList());
+                                  Get.to(() => UserFollowingsList(userId: basicUserData["_id"].toString(),));
                                 },
                                 child: Text(
                                   "Followings",

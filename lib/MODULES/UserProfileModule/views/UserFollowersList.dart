@@ -1,4 +1,3 @@
-
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
@@ -6,12 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 /// stlful widget--Listview which contains all the list of followers
-class PrimaryUserFollowersList extends StatefulWidget {
+class UserFollowersList extends StatefulWidget {
+  final String userId;
+
+  const UserFollowersList({Key key,@required this.userId}) : super(key: key);
   @override
-  _PrimaryUserFollowersListState createState() => _PrimaryUserFollowersListState();
+  _UserFollowersListState createState() =>
+      _UserFollowersListState();
 }
 
-class _PrimaryUserFollowersListState extends State<PrimaryUserFollowersList> {
+class _UserFollowersListState extends State<UserFollowersList> {
   List _data = [];
   bool requestProcessed = false;
 
@@ -54,7 +57,7 @@ class _PrimaryUserFollowersListState extends State<PrimaryUserFollowersList> {
 
   _getData() async {
     var response = await ApiServices.postWithAuth(
-        ApiUrlsData.userFollowers, {}, userToken.toString());
+        ApiUrlsData.userFollowers, {"userId":widget.userId}, userToken.toString());
     if (response == "error") {
       print("some error occured");
     } else {
