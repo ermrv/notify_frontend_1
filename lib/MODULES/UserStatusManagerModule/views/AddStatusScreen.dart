@@ -11,8 +11,6 @@ class AddStatusScreen extends StatelessWidget {
         appBar: PreferredSize(
           child: AppBar(
             elevation: 0.1,
-            brightness: Brightness.light,
-            backgroundColor: Colors.white,
             bottom: TabBar(
               indicatorSize: TabBarIndicatorSize.label,
               indicatorPadding: EdgeInsets.zero,

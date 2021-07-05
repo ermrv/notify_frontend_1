@@ -60,8 +60,8 @@ class _StatusImagesGridViewState extends State<StatusImagesGridView>
                   } else {
                     List<File> selectedFiles = selectedImagesFile;
                     selectedImagesFile = [];
-                    Get.to(() => StatusUploaderScreen(
-                        files: selectedFiles, contentType: "image"));
+                    // Get.to(() => StatusUploaderScreen(
+                    //     files: selectedFiles, contentType: "image"));
                   }
                 },
               ),
