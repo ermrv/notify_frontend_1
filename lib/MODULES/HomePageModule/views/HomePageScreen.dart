@@ -3,6 +3,7 @@ import 'package:MediaPlus/MODULES/HomePageModule/views/NewsFeedPageScreen.dart';
 import 'package:MediaPlus/MODULES/MainNavigationModule/controllers/MainNavigationController.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/KeepWidgetAliveModule/KeepWidgetAliveWrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:foldable_sidebar/foldable_sidebar.dart';
 import 'package:get/get.dart';
 
@@ -118,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           //         ))
           //   ],
           child: fsbStatus == FSBStatus.FSB_CLOSE
-              ? Icon(Icons.menu)
+              ? Icon(Entypo.grid)
               : Icon(Icons.close),
         ),
         title: Text("mediaPlus",style: TextStyle(fontStyle: FontStyle.italic,fontWeight: FontWeight.bold),),
