@@ -1,11 +1,14 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
+import 'package:MediaPlus/MODULES/CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/InPostVideoPlayer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 ///play a video only for 15 seconds
@@ -163,11 +166,11 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                       IconButton(
                           icon: _likes.contains(_thisUserId)
                               ? Icon(
-                                  Icons.favorite,
+                                  EvilIcons.heart,
                                   color: Colors.red,
                                 )
                               : Icon(
-                                  Icons.favorite_border,
+                                  EvilIcons.heart,
                                   color: Colors.white,
                                 ),
                           onPressed: () {
@@ -181,26 +184,32 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(Icons.comment_bank_outlined),
-                          onPressed: () {}),
-                      Text(_numberOfComments.toString())
+                          icon: Icon(EvilIcons.comment),
+                          onPressed: () {
+                            Get.to(() => CommentsDisplayScreen(
+                                  postId: widget.postContent["_id"],
+                                ));
+                          }),
+                      Text(_numberOfComments.toString() + " "),
                     ],
                   ),
                 ),
                 Container(
                   child: Row(
                     children: [
-                      IconButton(icon: Icon(Icons.share), onPressed: () {}),
-                      Text(_numberOfShares.toString())
+                      IconButton(
+                          icon: Icon(MaterialCommunityIcons.shape_outline),
+                          onPressed: () {}),
+                      Text("  1.1k")
                     ],
                   ),
                 ),
                 Expanded(
-            child: Container(),
-          ),
+                  child: Container(),
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

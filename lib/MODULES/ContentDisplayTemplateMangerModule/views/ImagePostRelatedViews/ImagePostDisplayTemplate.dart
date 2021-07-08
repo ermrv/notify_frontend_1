@@ -12,6 +12,7 @@ import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 
 ///widget to dispaly the image posts, given [postContent]
@@ -70,7 +71,6 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                   height: 35.0,
                   width: 35.0,
                   decoration: BoxDecoration(
-                       
                       shape: BoxShape.circle, color: Colors.deepOrange[900]),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(30.0),
@@ -187,11 +187,11 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                       IconButton(
                           icon: _likes.contains(_thisUserId)
                               ? Icon(
-                                  Icons.favorite,
+                                  EvilIcons.heart,
                                   color: Colors.red,
                                 )
                               : Icon(
-                                  Icons.favorite_border,
+                                  EvilIcons.heart,
                                   color: Colors.white,
                                 ),
                           onPressed: () {
@@ -205,7 +205,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(Icons.mode_comment),
+                          icon: Icon(EvilIcons.comment),
                           onPressed: () {
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],
@@ -218,14 +218,14 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                 Container(
                   child: Row(
                     children: [
-                      IconButton(icon: Icon(Icons.share), onPressed: () {}),
+                      IconButton(icon: Icon(MaterialCommunityIcons.shape_outline), onPressed: () {}),
                       Text("  1.1k")
                     ],
                   ),
                 ),
                 Expanded(
-            child: Container(),
-          ),
+                  child: Container(),
+                ),
               ],
             ),
           ),

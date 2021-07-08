@@ -1,11 +1,13 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
+import 'package:MediaPlus/MODULES/CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/FullImagePostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/ContestingModule/ContestHostingModule/views/ContestParticipantsPostScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +29,7 @@ class _ContestPostDisplayTemplateState
   String _ownerId;
   String _thisUserId;
 
-  int _numberOfCommnets = 0;
+  int _numberOfComments = 0;
   int _numberOfReactions = 0;
 
  
@@ -225,44 +227,48 @@ class _ContestPostDisplayTemplateState
               height: 60.0,
               child: Row(
                 children: [
-                  Container(
-                    child: Row(
-                      children: [
-                        IconButton(
-                            icon: _likes.contains(_thisUserId)
-                                ? Icon(
-                                    Icons.favorite,
-                                    color: Colors.red,
-                                  )
-                                : Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.white,
-                                  ),
-                            onPressed: () {
-                              reactionCountUpdater(_thisUserId);
-                            }),
-                        Text(_numberOfReactions.toString())
-                      ],
-                    ),
+                   Container(
+                  child: Row(
+                    children: [
+                      IconButton(
+                          icon: _likes.contains(_thisUserId)
+                              ? Icon(
+                                  EvilIcons.heart,
+                                  color: Colors.red,
+                                )
+                              : Icon(
+                                  EvilIcons.heart,
+                                  color: Colors.white,
+                                ),
+                          onPressed: () {
+                            reactionCountUpdater(_thisUserId);
+                          }),
+                      Text(_numberOfReactions.toString())
+                    ],
                   ),
-                  Container(
-                    child: Row(
-                      children: [
-                        IconButton(
-                            icon: Icon(Icons.comment_bank_outlined),
-                            onPressed: () {}),
-                        Text(_numberOfCommnets.toString() + " "),
-                      ],
-                    ),
+                ),
+                Container(
+                  child: Row(
+                    children: [
+                      IconButton(
+                          icon: Icon(EvilIcons.comment),
+                          onPressed: () {
+                            Get.to(() => CommentsDisplayScreen(
+                                  postId: widget.postContent["_id"],
+                                ));
+                          }),
+                      Text(_numberOfComments.toString() + " "),
+                    ],
                   ),
-                  Container(
-                    child: Row(
-                      children: [
-                        IconButton(icon: Icon(Icons.share), onPressed: () {}),
-                        Text("  1.1k")
-                      ],
-                    ),
+                ),
+                Container(
+                  child: Row(
+                    children: [
+                      IconButton(icon: Icon(MaterialCommunityIcons.shape_outline), onPressed: () {}),
+                      Text("  1.1k")
+                    ],
                   ),
+                ),
                   Expanded(
                     child: Container(),
                   ),
@@ -292,7 +298,7 @@ class _ContestPostDisplayTemplateState
 
   commentCountUpdater(int count) {
     setState(() {
-      _numberOfCommnets = count;
+      _numberOfComments = count;
     });
   }
 
