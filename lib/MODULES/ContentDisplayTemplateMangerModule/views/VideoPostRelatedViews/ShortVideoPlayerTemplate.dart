@@ -6,6 +6,7 @@ import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dar
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
@@ -114,15 +115,15 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
                                 borderRadius: BorderRadius.circular(25.0)),
                             child: _likes.contains(_thisUserId)
                                 ? Icon(
-                                    Icons.favorite,
-                                    color: Colors.red,
-                                    size: 32.0,
-                                  )
-                                : Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.white,
-                                    size: 32.0,
-                                  ),
+                                  Octicons.heart,
+                                  size: 28.0,
+                                  color: Colors.red,
+                                )
+                              : Icon(
+                                  EvilIcons.heart,
+                                  size: 32.0,
+                                  color: Colors.white,
+                                ),
                           ),
                         ),
                         Text(
@@ -158,7 +159,7 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
                                 color: Colors.black26,
                                 borderRadius: BorderRadius.circular(25.0)),
                             child: Icon(
-                              Icons.comment_bank_outlined,
+                              EvilIcons.comment,
                               size: 32.0,
                             ),
                           ),
@@ -180,7 +181,7 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
                               color: Colors.black26,
                               borderRadius: BorderRadius.circular(25.0)),
                           child: Icon(
-                            Icons.share,
+                            MaterialCommunityIcons.share,
                             size: 32.0,
                           ),
                         ),

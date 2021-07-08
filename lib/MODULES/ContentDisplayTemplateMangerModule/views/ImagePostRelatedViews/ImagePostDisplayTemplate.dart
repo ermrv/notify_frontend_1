@@ -183,15 +183,19 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
               children: [
                 Container(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+
                     children: [
                       IconButton(
-                          icon: _likes.contains(_thisUserId)
+                          icon: _likes.contains(_thisUserId,)
                               ? Icon(
-                                  EvilIcons.heart,
+                                  Octicons.heart,
+                                  size: 24.0,
                                   color: Colors.red,
                                 )
                               : Icon(
                                   EvilIcons.heart,
+                                  size: 28.0,
                                   color: Colors.white,
                                 ),
                           onPressed: () {
@@ -205,7 +209,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(EvilIcons.comment),
+                          icon: Icon(EvilIcons.comment,size: 28.0,),
                           onPressed: () {
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],
@@ -218,8 +222,8 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                 Container(
                   child: Row(
                     children: [
-                      IconButton(icon: Icon(MaterialCommunityIcons.shape_outline), onPressed: () {}),
-                      Text("  1.1k")
+                      IconButton(icon: Icon(MaterialCommunityIcons.share), onPressed: () {}),
+                      Text(" 1.1k")
                     ],
                   ),
                 ),

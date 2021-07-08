@@ -32,7 +32,6 @@ class _ContestPostDisplayTemplateState
   int _numberOfComments = 0;
   int _numberOfReactions = 0;
 
- 
   @override
   void initState() {
     _ownerId = widget.postContent["contestPost"]["contestBy"]["_id"].toString();
@@ -227,48 +226,58 @@ class _ContestPostDisplayTemplateState
               height: 60.0,
               child: Row(
                 children: [
-                   Container(
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: _likes.contains(_thisUserId)
-                              ? Icon(
-                                  EvilIcons.heart,
-                                  color: Colors.red,
-                                )
-                              : Icon(
-                                  EvilIcons.heart,
-                                  color: Colors.white,
-                                ),
-                          onPressed: () {
-                            reactionCountUpdater(_thisUserId);
-                          }),
-                      Text(_numberOfReactions.toString())
-                    ],
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                            icon: _likes.contains(
+                              _thisUserId,
+                            )
+                                ? Icon(
+                                    Octicons.heart,
+                                    size: 24.0,
+                                    color: Colors.red,
+                                  )
+                                : Icon(
+                                    EvilIcons.heart,
+                                    size: 28.0,
+                                    color: Colors.white,
+                                  ),
+                            onPressed: () {
+                              reactionCountUpdater(_thisUserId);
+                            }),
+                        Text(_numberOfReactions.toString())
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(EvilIcons.comment),
-                          onPressed: () {
-                            Get.to(() => CommentsDisplayScreen(
-                                  postId: widget.postContent["_id"],
-                                ));
-                          }),
-                      Text(_numberOfComments.toString() + " "),
-                    ],
+                  Container(
+                    child: Row(
+                      children: [
+                        IconButton(
+                            icon: Icon(
+                              EvilIcons.comment,
+                              size: 28.0,
+                            ),
+                            onPressed: () {
+                              Get.to(() => CommentsDisplayScreen(
+                                    postId: widget.postContent["_id"],
+                                  ));
+                            }),
+                        Text(_numberOfComments.toString() + " "),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(icon: Icon(MaterialCommunityIcons.shape_outline), onPressed: () {}),
-                      Text("  1.1k")
-                    ],
+                  Container(
+                    child: Row(
+                      children: [
+                        IconButton(
+                            icon: Icon(MaterialCommunityIcons.share),
+                            onPressed: () {}),
+                        Text(" 1.1k")
+                      ],
+                    ),
                   ),
-                ),
                   Expanded(
                     child: Container(),
                   ),
@@ -293,8 +302,6 @@ class _ContestPostDisplayTemplateState
           ]),
     );
   }
-
-  
 
   commentCountUpdater(int count) {
     setState(() {
