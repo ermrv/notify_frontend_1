@@ -116,7 +116,7 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
                             child: _likes.contains(_thisUserId)
                                 ? Icon(
                                   Octicons.heart,
-                                  size: 28.0,
+                                  size: 32.0,
                                   color: Colors.red,
                                 )
                               : Icon(
