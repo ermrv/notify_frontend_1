@@ -21,10 +21,10 @@ abstract class ApiUrlsData {
   static String userHighlights =
       "http://18.188.219.114:3000/api/user/highlights";
 
-
-///user profile data and related posts
+  ///user profile data and related posts
   static String userPosts = "http://18.188.219.114:3000/api/user/posts";
-  static String userProfileBasicData = "http://18.188.219.114:3000/api/user/profile";
+  static String userProfileBasicData =
+      "http://18.188.219.114:3000/api/user/profile";
 
 //newsfeed
   static String newsFeedUrl = "http://18.188.219.114:3000/api/home/newsfeed";
@@ -42,8 +42,8 @@ abstract class ApiUrlsData {
   static String addVideoPost = "http://18.188.219.114:3000/api/videopost/add";
   static String createContest =
       "http://18.188.219.114:3000/api/contestpost/add";
-      static String addPollPost = "http://18.188.219.114:3000/api/pollpost/add";
-       static String addEventPost = "http://18.188.219.114:3000/api/eventpost/add";
+  static String addPollPost = "http://18.188.219.114:3000/api/pollpost/add";
+  static String addEventPost = "http://18.188.219.114:3000/api/eventpost/add";
 
   //comments
   static String comments = "http://18.188.219.114:3000/api/post/comments";
@@ -72,6 +72,9 @@ abstract class ApiUrlsData {
   //user story or status
   static String addStatus = "http://18.188.219.114:3000/api/status/add";
   static String removeStatus = "http://18.188.219.114:3000/api/status/remove";
+  static String getStatus = "http://18.188.219.114:3000/api/status";
+  static String statusHistory = "http://18.188.219.114:3000/api/status/history";
+  static String addStatusFromPost = "http://18.188.219.114:3000/api/status/addfrompost";
 
   //chat
   static String followlist = "http://18.188.219.114:3000/api/followlists";

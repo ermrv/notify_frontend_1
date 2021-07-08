@@ -137,9 +137,11 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
                     onTap: () {
                       _videoPlayerController.pause();
                       setState(() {});
-                      Get.bottomSheet(CommentsDisplayScreen(
+                      Get.to(()=>
+                        CommentsDisplayScreen(
                         postId: widget.postContent["_id"],
-                      )).then((value) {
+                      ),
+                      ).then((value) {
                         setState(() {
                           _videoPlayerController.play();
                         });

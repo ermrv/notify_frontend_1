@@ -41,16 +41,17 @@ class CommentDisplayController extends GetxController {
 
   //add comment
   addComment(String comment) async {
+    comments.insert(0, comment);
+    commentEditingController.text = "";
     var response = await ApiServices.postWithAuth(ApiUrlsData.addComment,
         {"postId": postId, "comment": comment}, userToken);
     if (response == "error") {
       print("error");
     } else {
-      comments.insert(0, response);
+      // comments.insert(0, response);
       print(response);
-      commentEditingController.text = "";
-      update();
     }
+    update();
   }
 
   //add subcomments
@@ -77,18 +78,16 @@ class CommentDisplayController extends GetxController {
 
   //remove comment
   removeComment(String commentId) async {
+    //find the index of the editted comment
+    int _index = comments.indexWhere((element) => element["_id"] == commentId);
+    //remove the comment and then
+    comments.removeAt(_index);
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.removeComment, {"commentId": commentId}, userToken);
     if (response == "error") {
       print("error");
-    } else {
-      //find the index of the editted comment
-      int _index =
-          comments.indexWhere((element) => element["_id"] == commentId);
-      //remove the comment and then
-      comments.removeAt(_index);
-      update();
-    }
+    } else {}
+    update();
   }
 
   //remove subcomment
@@ -113,6 +112,11 @@ class CommentDisplayController extends GetxController {
 
   //edit comment
   editComment(String commentId) async {
+    //find the index of the editted comment
+    int _index = comments.indexWhere((element) => element["_id"] == commentId);
+    //remove the comment and then
+    comments.removeAt(_index);
+    comments.insert(_index, editCommentController.text);
     print(commentId);
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.editComment,
@@ -120,15 +124,8 @@ class CommentDisplayController extends GetxController {
         userToken);
     if (response == "error") {
       print("error");
-    } else {
-      //find the index of the editted comment
-      int _index =
-          comments.indexWhere((element) => element["_id"] == commentId);
-      //remove the comment and then
-      comments.removeAt(_index);
-      comments.insert(_index, response);
-      update();
-    }
+    } else {}
+    update();
   }
 
   //edit subComent
@@ -156,7 +153,7 @@ class CommentDisplayController extends GetxController {
 
   @override
   void dispose() {
-    Get.delete();
+    Get.delete<CommentDisplayController>();
     super.dispose();
   }
 }

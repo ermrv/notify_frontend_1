@@ -30,8 +30,7 @@ class _ContestPostDisplayTemplateState
   int _numberOfCommnets = 0;
   int _numberOfReactions = 0;
 
-  Color likeButtonColor = Colors.white;
-
+ 
   @override
   void initState() {
     _ownerId = widget.postContent["contestPost"]["contestBy"]["_id"].toString();
@@ -289,12 +288,7 @@ class _ContestPostDisplayTemplateState
     );
   }
 
-  likeButtonColorUpdater() {
-    setState(() {
-      likeButtonColor =
-          likeButtonColor == Colors.white ? Colors.red : Colors.white;
-    });
-  }
+  
 
   commentCountUpdater(int count) {
     setState(() {
