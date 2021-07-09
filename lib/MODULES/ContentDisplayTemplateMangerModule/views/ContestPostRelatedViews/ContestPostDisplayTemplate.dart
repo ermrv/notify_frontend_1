@@ -101,36 +101,48 @@ class _ContestPostDisplayTemplateState
                             ],
                           ),
                         ),
-                        Container(
-                            child: DateTime.parse(widget
-                                        .postContent["contestPost"]["endsOn"])
-                                    .isAfter(DateTime.now())
-                                ? Container(
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Contest is Live ',
+                        Row(
+                          children: [
+                             Container(
+                          padding: EdgeInsets.symmetric(vertical: 1.0,horizontal: 5.0),
+                          decoration: BoxDecoration(
+                            color: Colors.red[900],
+                            borderRadius: BorderRadius.circular(5.0)
+                          ),
+                          child: Text("CONTEST",style: TextStyle(color: Colors.white,fontSize: 10.0,fontWeight: FontWeight.bold),),
+                        ),
+                            Container(
+                                child: DateTime.parse(widget
+                                            .postContent["contestPost"]["endsOn"])
+                                        .isAfter(DateTime.now())
+                                    ? Container(
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Contest is Live ',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13.0),
+                                            ),
+                                            // SpinKitThreeBounce(
+                                            //   color: Colors.green,
+                                            //   size: 10.0,
+                                            // )
+                                          ],
+                                        ),
+                                      )
+                                    : Container(
+                                        child: Text(
+                                          "Contest Ended",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 13.0),
                                         ),
-                                        // SpinKitThreeBounce(
-                                        //   color: Colors.green,
-                                        //   size: 10.0,
-                                        // )
-                                      ],
-                                    ),
-                                  )
-                                : Container(
-                                    child: Text(
-                                      "Contest Ended",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13.0),
-                                    ),
-                                  ))
+                                      )),
+                          ],
+                        )
                       ],
                     ),
                   ),
@@ -190,7 +202,8 @@ class _ContestPostDisplayTemplateState
                 padding: EdgeInsets.only(right: 2.0, left: 2.0),
                 alignment: Alignment.centerLeft,
                 child: ReadMoreText(
-                  widget.postContent["contestPost"]["description"].toString() +
+                  widget.postContent["contestPost"]["description"]
+                          .toString() +
                       "\n" +
                       widget.postContent["contestPost"]["contestRules"][0]
                           .toString(),
@@ -216,7 +229,8 @@ class _ContestPostDisplayTemplateState
                   aspectRatio: 4 / 3,
                   child: CachedNetworkImage(
                     imageUrl: ApiUrlsData.domain +
-                        widget.postContent["contestPost"]["poster"].toString(),
+                        widget.postContent["contestPost"]["poster"]
+                            .toString(),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -289,8 +303,9 @@ class _ContestPostDisplayTemplateState
                               Get.to(() => ContestParticipantsPostScreen(
                                   contestId: widget.postContent["contestPost"]
                                       ["_id"],
-                                  contestName: widget.postContent["contestPost"]
-                                      ["contestName"]));
+                                  contestName:
+                                      widget.postContent["contestPost"]
+                                          ["contestName"]));
                             },
                             child: Text("Participants"))
                         : TextButton(

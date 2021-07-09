@@ -85,22 +85,38 @@ class MultiImageHorizontalDisplayTemplate extends StatelessWidget {
                               child: AspectRatio(
                                   aspectRatio: 0.8,
                                   child: Container(
-                                      height: 20.0,
-                                      width: 20.0,
                                       alignment: Alignment.center,
-                                      padding: EdgeInsets.all(5.0),
-                                      decoration: BoxDecoration(
-                                          color: Colors.black54,
-                                          shape: BoxShape.circle),
                                       child: images.length > 3
-                                          ? Text(
-                                              "+" +
-                                                  (images.length - 3)
-                                                      .toString() +
-                                                  " ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white),
+                                          ? SizedBox(
+                                              width: 50.0,
+                                              height: 50.0,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  Get.to(() =>
+                                                      FullScreenImagePostDisplay(
+                                                        imagesData: images,
+                                                        initialPage: 4,
+                                                      ));
+                                                },
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  padding: EdgeInsets.all(5.0),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.black54,
+                                                      shape: BoxShape.circle),
+                                                  child: Text(
+                                                    "+" +
+                                                        (images.length - 3)
+                                                            .toString() +
+                                                        " ",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 22.0,
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
                                             )
                                           : Container())))
                           : Container(),

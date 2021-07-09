@@ -46,61 +46,71 @@ class _EventPostDisplayTemplateState extends State<EventPostDisplayTemplate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 5.0, right: 5.0, left: 5.0),
-      decoration: BoxDecoration(
-          border:
-              Border(top: BorderSide(color: Theme.of(context).primaryColor))),
-      child: Column(
-          //post details like user profile pic and name
-          children: [
-            Container(
-              height: 60.0,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.grey[300]),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30.0),
-                        child: CachedNetworkImage(
-                          imageUrl: ApiUrlsData.domain +
-                              widget.postContent["eventPost"]["postBy"]
-                                  ["profilePic"],
-                          fit: BoxFit.fill,
-                        )),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+        // margin: EdgeInsets.only(top: 5.0, right: 5.0, left: 5.0),
+        decoration: BoxDecoration(
+      border:
+          Border(top: BorderSide(color: Theme.of(context).primaryColor))),
+        child: Column(
+      //post details like user profile pic and name
+      children: [
+        Container(
+          height: 60.0,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: 40.0,
+                width: 40.0,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.grey[300]),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: CachedNetworkImage(
+                      imageUrl: ApiUrlsData.domain +
+                          widget.postContent["eventPost"]["postBy"]
+                              ["profilePic"],
+                      fit: BoxFit.fill,
+                    )),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: 2.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            widget.postContent["eventPost"]["postBy"]
+                                        ["name"]
+                                    .toString() +
+                                "  ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15.0),
+                          ),
+                          Text(
+                            widget.postContent["eventPost"]["postBy"]
+                                    ["userName"]
+                                .toString(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(bottom: 2.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                widget.postContent["eventPost"]["postBy"]
-                                            ["name"]
-                                        .toString() +
-                                    "  ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15.0),
-                              ),
-                              Text(
-                                widget.postContent["eventPost"]["postBy"]
-                                        ["userName"]
-                                    .toString(),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14.0),
-                              ),
-                            ],
+                          padding: EdgeInsets.symmetric(vertical: 1.0,horizontal: 5.0),
+                          decoration: BoxDecoration(
+                            color: Colors.red[900],
+                            borderRadius: BorderRadius.circular(5.0)
                           ),
+                          child: Text("EVENT",style: TextStyle(color: Colors.white,fontSize: 10.0,fontWeight: FontWeight.bold),),
                         ),
                         Container(
                             child: DateTime.parse(widget
@@ -116,7 +126,7 @@ class _EventPostDisplayTemplateState extends State<EventPostDisplayTemplate> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Event is Live ',
+                                          '  Live ',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 13.0),
@@ -127,164 +137,166 @@ class _EventPostDisplayTemplateState extends State<EventPostDisplayTemplate> {
                                   )
                                 : Container(
                                     child: Text(
-                                      "Event Ended",
+                                      "  Ended",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.0),
                                     ),
-                                  ))
+                                  )),
                       ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(),
-                  ),
-                  _isOwner
-                      ? TextButton(
-                          style: ButtonStyle(
-                              padding: MaterialStateProperty.resolveWith(
-                                  (states) => EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 15.0))),
-                          child: Text(
-                            "Promote",
-                          ),
-                          onPressed: () {
-                            print("object");
-                          })
-                      : Container(),
-                  Container(
-                    child: PopupMenuButton<TextButton>(
-                      elevation: 0.0,
-                      padding: EdgeInsets.all(2.0),
-                      itemBuilder: (context) {
-                        return [
-                          PopupMenuItem<TextButton>(
-                              child: _isOwner
-                                  ? TextButton(
-                                      onPressed: () {
-                                        print("okay");
-                                      },
-                                      child: Text('Remove Contest'),
-                                    )
-                                  : TextButton(
-                                      onPressed: () {
-                                        print("okay");
-                                      },
-                                      child: Text('Report'),
-                                    ))
-                        ];
-                      },
-                    ),
-                  )
+                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Container(),
+              ),
+              _isOwner
+                  ? TextButton(
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.resolveWith(
+                              (states) => EdgeInsets.symmetric(
+                                  vertical: 8.0, horizontal: 15.0))),
+                      child: Text(
+                        "Promote",
+                      ),
+                      onPressed: () {
+                        print("object");
+                      })
+                  : Container(),
+              Container(
+                child: PopupMenuButton<TextButton>(
+                  elevation: 0.0,
+                  padding: EdgeInsets.all(2.0),
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem<TextButton>(
+                          child: _isOwner
+                              ? TextButton(
+                                  onPressed: () {
+                                    print("okay");
+                                  },
+                                  child: Text('Remove Contest'),
+                                )
+                              : TextButton(
+                                  onPressed: () {
+                                    print("okay");
+                                  },
+                                  child: Text('Report'),
+                                ))
+                    ];
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+        // Container(
+        //     width: screenWidth,
+        //     padding: EdgeInsets.only(top: 3.0, right: 2.0, left: 2.0),
+        //     alignment: Alignment.centerLeft,
+        //     child: Text(
+        //       widget.postContent["eventPost"]["eventName"].toString(),
+        //       style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+        //     )),
+        Container(
+            width: screenWidth,
+            padding: EdgeInsets.only(right: 2.0, left: 2.0),
+            alignment: Alignment.centerLeft,
+            child: ReadMoreText(
+              widget.postContent["eventPost"]["description"].toString(),
+              trimLines: 4,
+              trimMode: TrimMode.Line,
+              colorClickableText: Colors.blue,
+            )),
+        GestureDetector(
+          onDoubleTap: () {
+            reactionCountUpdater(_thisUserId);
+          },
+          onTap: () {
+            Get.to(() => FullScreenImagePostDisplay(
+                  imagesData: [
+                    {
+                      "path": widget.postContent["eventPost"]["poster"]
+                          .toString()
+                    }
+                  ],
+                  initialPage: 0,
+                ));
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 0.0),
+            child: AspectRatio(
+              aspectRatio: 4 / 3,
+              child: CachedNetworkImage(
+                imageUrl: ApiUrlsData.domain +
+                    widget.postContent["eventPost"]["poster"].toString(),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+        ),
+        Container(
+        height: 50.0,
+        width: screenWidth,
+        padding: EdgeInsets.symmetric(horizontal: 2.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+           Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                
+                children: [
+                  IconButton(
+                      icon: _likes.contains(_thisUserId,)
+                          ? Icon(
+                              Octicons.heart,
+                              size: 24.0,
+                              color: Colors.red,
+                            )
+                          : Icon(
+                              EvilIcons.heart,
+                              size: 28.0,
+                              color: Colors.white,
+                            ),
+                      onPressed: () {
+                        reactionCountUpdater(_thisUserId);
+                      }),
+                  Text(_numberOfReactions.toString())
                 ],
               ),
             ),
-            // Container(
-            //     width: screenWidth,
-            //     padding: EdgeInsets.only(top: 3.0, right: 2.0, left: 2.0),
-            //     alignment: Alignment.centerLeft,
-            //     child: Text(
-            //       widget.postContent["eventPost"]["eventName"].toString(),
-            //       style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-            //     )),
             Container(
-                width: screenWidth,
-                padding: EdgeInsets.only(right: 2.0, left: 2.0),
-                alignment: Alignment.centerLeft,
-                child: ReadMoreText(
-                  widget.postContent["eventPost"]["description"].toString(),
-                  trimLines: 4,
-                  trimMode: TrimMode.Line,
-                  colorClickableText: Colors.blue,
-                )),
-            GestureDetector(
-              onDoubleTap: () {
-                reactionCountUpdater(_thisUserId);
-              },
-              onTap: () {
-                Get.to(() => FullScreenImagePostDisplay(
-                      imagesData: [
-                        {
-                          "path": widget.postContent["eventPost"]["poster"]
-                              .toString()
-                        }
-                      ],
-                      initialPage: 0,
-                    ));
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 0.0),
-                child: AspectRatio(
-                  aspectRatio: 4 / 3,
-                  child: CachedNetworkImage(
-                    imageUrl: ApiUrlsData.domain +
-                        widget.postContent["eventPost"]["poster"].toString(),
-                    fit: BoxFit.fill,
-                  ),
-                ),
+              child: Row(
+                children: [
+                  IconButton(
+                      icon: Icon(EvilIcons.comment,size: 28.0,),
+                      onPressed: () {
+                        Get.to(() => CommentsDisplayScreen(
+                              postId: widget.postContent["_id"],
+                            ));
+                      }),
+                  Text(_numberOfComments.toString() + " "),
+                ],
               ),
             ),
             Container(
-            height: 50.0,
-            width: screenWidth,
-            padding: EdgeInsets.symmetric(horizontal: 2.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-               Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    
-                    children: [
-                      IconButton(
-                          icon: _likes.contains(_thisUserId,)
-                              ? Icon(
-                                  Octicons.heart,
-                                  size: 24.0,
-                                  color: Colors.red,
-                                )
-                              : Icon(
-                                  EvilIcons.heart,
-                                  size: 28.0,
-                                  color: Colors.white,
-                                ),
-                          onPressed: () {
-                            reactionCountUpdater(_thisUserId);
-                          }),
-                      Text(_numberOfReactions.toString())
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(EvilIcons.comment,size: 28.0,),
-                          onPressed: () {
-                            Get.to(() => CommentsDisplayScreen(
-                                  postId: widget.postContent["_id"],
-                                ));
-                          }),
-                      Text(_numberOfComments.toString() + " "),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(icon: Icon(MaterialCommunityIcons.share), onPressed: () {}),
-                      Text(" 1.1k")
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(),
-                ),
-              ],
+              child: Row(
+                children: [
+                  IconButton(icon: Icon(MaterialCommunityIcons.share), onPressed: () {}),
+                  Text(" 1.1k")
+                ],
+              ),
             ),
-          ),
-          ]),
-    );
+            Expanded(
+              child: Container(),
+            ),
+          ],
+        ),
+      ),
+      ]),
+      );
   }
 
   likeButtonColorUpdater() {
