@@ -20,70 +20,66 @@ class MainNavigationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MainNavigationController>(
-        builder: (controller) => NotificationListener<UserScrollNotification>(
-              onNotification: (notification) => mainNavigationController
-                  .bottomNavigationbarViewHandler(notification),
-              child: Scaffold(
-                extendBody: true,
-                bottomNavigationBar: AnimatedContainer(
-                  height: controller.height,
-                  duration: Duration(milliseconds: 300),
-                  child: CustomBottomNavigationBar(
-                    itemColor: Theme.of(context).accentColor,
-                    currentIndex: controller.currentIndex,
-                    onChange: (index) {
-                      controller.pageTransitionHandler(index);
-                    },
-                    children: [
-                      CustomBottomNavigationItem(
-                        icon: Icons.home,
-                        label: 'Home',
-                      ),
-                      CustomBottomNavigationItem(
-                        icon: Icons.explore,
-                        label: 'Explore',
-                      ),
-                      CustomBottomNavigationItem(
-                        icon: Icons.add_box,
-                        label: 'Post',
-                      ),
-                      CustomBottomNavigationItem(
-                        suffix: Text(
-                          "7",
-                          style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        icon: Icons.emoji_events,
-                        label: 'Rewards',
-                      ),
-                      CustomBottomNavigationItem(
-                        imageUrl: PrimaryUserData.primaryUserData.profilePic,
-                        label: 'Profile',
-                      )
-                    ],
+        builder: (controller) => Scaffold(
+          extendBody: true,
+          bottomNavigationBar: AnimatedContainer(
+            height: controller.height,
+            duration: Duration(milliseconds: 300),
+            child: CustomBottomNavigationBar(
+              itemColor: Theme.of(context).accentColor,
+              currentIndex: controller.currentIndex,
+              onChange: (index) {
+                controller.pageTransitionHandler(index);
+              },
+              children: [
+                CustomBottomNavigationItem(
+                  icon: Icons.home,
+                  label: 'Home',
+                ),
+                CustomBottomNavigationItem(
+                  icon: Icons.explore,
+                  label: 'Explore',
+                ),
+                CustomBottomNavigationItem(
+                  icon: Icons.add_box,
+                  label: 'Post',
+                ),
+                CustomBottomNavigationItem(
+                  suffix: Text(
+                    "7",
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 13.0,
+                        fontWeight: FontWeight.w700),
                   ),
+                  icon: Icons.emoji_events,
+                  label: 'Rewards',
                 ),
+                CustomBottomNavigationItem(
+                  imageUrl: PrimaryUserData.primaryUserData.profilePic,
+                  label: 'Profile',
+                )
+              ],
+            ),
+          ),
 
-                //bottom tab bar screens
-                body: PageView(
-                  physics: NeverScrollableScrollPhysics(),
-                  controller: controller.pageController,
-                  children: [
-                    HomeScreen(),
-                    ExplorePageScreen(),
-                    AddPostPageScreen(),
-                    RewardaPageScreen(),
-                    KeepWidgetAliveWrapper(child: UserProfileScreen()),
-                    // HomeScreen(),
-                    // ExploreScreen(),
-                    // AddPostScreen(),
-                    // RewardsScreen(),
-                    // ChatScreen()
-                  ],
-                ),
-              ),
-            ));
+          //bottom tab bar screens
+          body: PageView(
+            physics: NeverScrollableScrollPhysics(),
+            controller: controller.pageController,
+            children: [
+              HomeScreen(),
+              ExplorePageScreen(),
+              AddPostPageScreen(),
+              RewardaPageScreen(),
+              KeepWidgetAliveWrapper(child: UserProfileScreen(profileOwnerId: PrimaryUserData.primaryUserData.userId,)),
+              // HomeScreen(),
+              // ExploreScreen(),
+              // AddPostScreen(),
+              // RewardsScreen(),
+              // ChatScreen()
+            ],
+          ),
+        ));
   }
 }

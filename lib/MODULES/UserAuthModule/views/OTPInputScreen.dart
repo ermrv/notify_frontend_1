@@ -108,6 +108,7 @@ class OTPInputScreen extends StatelessWidget {
                                       width: screenWidth,
                                       alignment: Alignment.center,
                                       child: OTPTextField(
+                                        
                                         length: 6,
                                         width: screenWidth * 0.9,
                                         fieldWidth: screenWidth * 0.1,

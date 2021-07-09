@@ -90,6 +90,8 @@ class CreateContestScreenController extends GetxController {
   }
 
   uploadContestData() async {
+    isUploading = true;
+    update();
     var request =
         http.MultipartRequest("POST", Uri.parse(ApiUrlsData.createContest));
     request.headers["authorization"] = "Bearer " + userToken;
@@ -113,7 +115,7 @@ class CreateContestScreenController extends GetxController {
       isUploading = false;
       Get.snackbar("Uploaded", "Task Completed");
       update();
-      Get.to(() => UserProfileScreen(
+      Get.off(() => UserProfileScreen(
             profileOwnerId: PrimaryUserData.primaryUserData.userId,
           ));
     } else {

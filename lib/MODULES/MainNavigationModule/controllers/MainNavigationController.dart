@@ -32,23 +32,23 @@ class MainNavigationController extends GetxController {
 
   //hide the bottom nav bar when scrolling upward
   //
-  bottomNavigationbarViewHandler(UserScrollNotification notification) {
-    if (!hidden) {
-      print(hidden.toString());
-      if (notification.metrics.axis == Axis.vertical &&
-          notification.direction == ScrollDirection.reverse) {
-        height = 0.0;
-        update();
-      } else if (notification.metrics.axis == Axis.vertical &&
-          notification.direction == ScrollDirection.forward) {
-        if (height == 0) {
-          height = 60.0;
-          update();
-        }
-      }
-      print("scrolled");
-    }
-  }
+  // bottomNavigationbarViewHandler(UserScrollNotification notification) {
+  //   if (!hidden) {
+  //     print(hidden.toString());
+  //     if (notification.metrics.axis == Axis.vertical &&
+  //         notification.direction == ScrollDirection.reverse) {
+  //       height = 0.0;
+  //       update();
+  //     } else if (notification.metrics.axis == Axis.vertical &&
+  //         notification.direction == ScrollDirection.forward) {
+  //       if (height == 0) {
+  //         height = 60.0;
+  //         update();
+  //       }
+  //     }
+  //     print("scrolled");
+  //   }
+  // }
 
   //hide
   //

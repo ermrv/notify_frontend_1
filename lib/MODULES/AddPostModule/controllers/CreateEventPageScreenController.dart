@@ -51,6 +51,8 @@ class CreateEventPageScreenController extends GetxController {
   }
 
   postEventHandler() async {
+    isUploading = true;
+    update();
     //check if required field is not null
     if (eventNameController.text != null &&
         eventStartDate != null &&
@@ -63,6 +65,8 @@ class CreateEventPageScreenController extends GetxController {
       //call the function upload the data
       uploadEventData();
     } else {
+      isUploading = false;
+      update();
       Get.dialog(AlertDialog(
         title: Text("All Fields are mandatory!"),
         actions: [

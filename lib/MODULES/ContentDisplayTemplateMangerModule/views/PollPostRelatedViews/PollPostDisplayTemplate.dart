@@ -1,10 +1,13 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/MODULES/CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 
 class PollPostDisplayTemplate extends StatefulWidget {
   final postContent;
@@ -24,7 +27,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
 
   String _vote = "";
 
-  int _numberOfCommnets = 0;
+  int _numberOfComments = 0;
   int _numberOfReactions = 0;
 
   Color likeButtonColor = Colors.white;
@@ -187,7 +190,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                     : Container(
                         height: 45.0,
                         margin: EdgeInsets.symmetric(
-                            horizontal: 19.0, vertical: 3.0),
+                            horizontal: 10.0, vertical: 3.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -198,8 +201,13 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                           onPressed: () {
                             setState(() {
-                              _vote = widget.postContent["pollPost"]["opOne"]
-                                  .toString();
+                              if (_vote ==
+                                  widget.postContent["pollPost"]["opOne"]) {
+                                _vote = "";
+                              } else {
+                                _vote = widget.postContent["pollPost"]["opOne"]
+                                    .toString();
+                              }
                             });
                           },
                           child: Row(
@@ -231,7 +239,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                     : Container(
                         height: 45.0,
                         margin: EdgeInsets.symmetric(
-                            horizontal: 19.0, vertical: 3.0),
+                            horizontal: 10.0, vertical: 3.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -242,8 +250,13 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                           onPressed: () {
                             setState(() {
-                              _vote = widget.postContent["pollPost"]["opTwo"]
-                                  .toString();
+                              if (_vote ==
+                                  widget.postContent["pollPost"]["opTwo"]) {
+                                _vote = "";
+                              } else {
+                                _vote = widget.postContent["pollPost"]["opTwo"]
+                                    .toString();
+                              }
                             });
                           },
                           child: Row(
@@ -275,7 +288,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                     : Container(
                         height: 45.0,
                         margin: EdgeInsets.symmetric(
-                            horizontal: 19.0, vertical: 3.0),
+                            horizontal: 10.0, vertical: 3.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -286,8 +299,14 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                           onPressed: () {
                             setState(() {
-                              _vote = widget.postContent["pollPost"]["opThree"]
-                                  .toString();
+                              if (_vote ==
+                                  widget.postContent["pollPost"]["opThree"]) {
+                                _vote = "";
+                              } else {
+                                _vote = widget.postContent["pollPost"]
+                                        ["opThree"]
+                                    .toString();
+                              }
                             });
                           },
                           child: Row(
@@ -320,7 +339,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                     : Container(
                         height: 45.0,
                         margin: EdgeInsets.symmetric(
-                            horizontal: 19.0, vertical: 3.0),
+                            horizontal: 10.0, vertical: 3.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -331,8 +350,13 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                           onPressed: () {
                             setState(() {
-                              _vote = widget.postContent["pollPost"]["opFour"]
-                                  .toString();
+                              if (_vote ==
+                                  widget.postContent["pollPost"]["opFour"]) {
+                                _vote = "";
+                              } else {
+                                _vote = widget.postContent["pollPost"]["opFour"]
+                                    .toString();
+                              }
                             });
                           },
                           child: Row(
@@ -369,18 +393,25 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
               children: [
                 Container(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                          icon: _likes.contains(_thisUserId)
+                          icon: _likes.contains(
+                            _thisUserId,
+                          )
                               ? Icon(
-                                  Icons.favorite,
+                                  Octicons.heart,
+                                  size: 24.0,
                                   color: Colors.red,
                                 )
                               : Icon(
-                                  Icons.favorite_border,
+                                  EvilIcons.heart,
+                                  size: 28.0,
                                   color: Colors.white,
                                 ),
-                          onPressed: () {}),
+                          onPressed: () {
+                            reactionCountUpdater(_thisUserId);
+                          }),
                       Text(_numberOfReactions.toString())
                     ],
                   ),
@@ -389,17 +420,26 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(Icons.comment_bank_outlined),
-                          onPressed: () {}),
-                      Text(_numberOfCommnets.toString() + " "),
+                          icon: Icon(
+                            EvilIcons.comment,
+                            size: 28.0,
+                          ),
+                          onPressed: () {
+                            Get.to(() => CommentsDisplayScreen(
+                                  postId: widget.postContent["_id"],
+                                ));
+                          }),
+                      Text(_numberOfComments.toString() + " "),
                     ],
                   ),
                 ),
                 Container(
                   child: Row(
                     children: [
-                      IconButton(icon: Icon(Icons.share), onPressed: () {}),
-                      Text("  1.1k")
+                      IconButton(
+                          icon: Icon(MaterialCommunityIcons.share),
+                          onPressed: () {}),
+                      Text(" 1.1k")
                     ],
                   ),
                 ),
@@ -416,7 +456,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
 
   commentCountUpdater(int count) {
     setState(() {
-      _numberOfCommnets = count;
+      _numberOfComments = count;
     });
   }
 

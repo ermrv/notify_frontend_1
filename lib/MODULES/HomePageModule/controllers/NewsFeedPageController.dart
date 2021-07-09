@@ -18,9 +18,18 @@ class NewsFeedPageController extends GetxController {
   getData() async {
     var response =
         await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl, {}, userToken);
+    //store the previous data
+    List _previousData = data;
+
+    //make the data list null
+    data = [];
+    //add the recent data in the data list
 
     data.addAll(response);
-    print(data);
+
+    //now add the previous data to the list
+    data.addAll(_previousData);
+    
     update();
   }
 
