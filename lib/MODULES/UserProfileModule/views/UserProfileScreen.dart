@@ -1,6 +1,7 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ContentDisplayTemplateProvider.dart';
+import 'package:MediaPlus/MODULES/HomePageModule/views/AddPostReferenceView.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/UserProfileModule/views/PrimaryUserActionsOnProfile.dart';
@@ -55,18 +56,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ? PrimaryUserBasicInfoContainer()
                   : profileData == null
                       ? Container(
-                        height: 100.0,
-                        width: screenWidth,
+                          height: 100.0,
+                          width: screenWidth,
                           child: Center(
                             child: SpinKitPulse(
                               color: Colors.blue,
                             ),
                           ),
                         )
-                      : SecondaryUserBasicInfoContainer(basicUserData: profileData,),
+                      : SecondaryUserBasicInfoContainer(
+                          basicUserData: profileData,
+                        ),
               _userIsProfileOwner
                   ? PrimaryUserActionsOnProfile()
                   : SecondaryUserActionsOnProfile(),
+
               data == null
                   ? Center(
                       child: SpinKitPulse(

@@ -1,5 +1,5 @@
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ContentDisplayTemplateProvider.dart';
-import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/UserStatusTemplate.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/UserStatusReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/HomePageModule/controllers/NewsFeedPageController.dart';
 import 'package:MediaPlus/MODULES/HomePageModule/views/AddPostReferenceView.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,7 @@ class NewsFeedPageScreen extends StatelessWidget {
                         },
                         child: ListView(
                           children: [
-                            UserStatusTemplate(),
+                            UserStatusReferenceLayout(),
                             AddPostReferenceView(),
                             ContentDisplayTemplateProvider(data: controller.data)
                           ],

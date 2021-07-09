@@ -1,7 +1,5 @@
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
-import 'package:MediaPlus/MODULES/UserProfileModule/views/EditProfileScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SecondaryUserActionsOnProfile extends StatelessWidget {
   @override

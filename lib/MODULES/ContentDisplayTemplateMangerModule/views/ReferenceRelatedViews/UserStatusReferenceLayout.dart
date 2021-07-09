@@ -7,10 +7,10 @@ import 'package:get/get.dart';
 
 const double _containerWidth = 65.0;
 
-class UserStatusTemplate extends StatelessWidget {
+class UserStatusReferenceLayout extends StatelessWidget {
   final boxContents;
 
-  const UserStatusTemplate({Key key, this.boxContents}) : super(key: key);
+  const UserStatusReferenceLayout({Key key, this.boxContents}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(

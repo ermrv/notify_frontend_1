@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 const double _containerWidth = 120.0;
 
-class NearByProfileReferenceLayout extends StatelessWidget {
+class ProfileReferenceLayout extends StatelessWidget {
   final boxContents;
 
-  const NearByProfileReferenceLayout({Key key, @required this.boxContents})
+  const ProfileReferenceLayout({Key key, @required this.boxContents})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
