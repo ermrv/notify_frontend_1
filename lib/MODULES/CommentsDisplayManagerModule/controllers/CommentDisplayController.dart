@@ -41,14 +41,15 @@ class CommentDisplayController extends GetxController {
 
   //add comment
   addComment(String comment) async {
-    comments.insert(0, comment);
     commentEditingController.text = "";
     var response = await ApiServices.postWithAuth(ApiUrlsData.addComment,
         {"postId": postId, "comment": comment}, userToken);
     if (response == "error") {
       print("error");
     } else {
-      // comments.insert(0, response);
+      comments.insert(0, response);
+      commentEditingController.text = "";
+
       print(response);
     }
     update();
