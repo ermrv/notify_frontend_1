@@ -20,7 +20,9 @@ class CreateContestScreen extends StatelessWidget {
                         EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
                     child: TextButton(
                         onPressed: () {
-                          controller.postContestHandler();
+                         if(!controller.isUploading){
+                            controller.postContestHandler();
+                         }
                         },
                         child:controller.isUploading?Text("Posting.."): Text("Post Contest")),
                   )

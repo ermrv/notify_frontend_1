@@ -68,7 +68,9 @@ class AddPostPageScreen extends StatelessWidget {
               alignment: Alignment.center,
               child: TextButton(
                 onPressed: () {
-                  controller.uploadData();
+                  if(!controller.isUploading){
+                    controller.uploadData();
+                  }
                 },
                 child: Container(
                     padding:

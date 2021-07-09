@@ -124,7 +124,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
         title: Text("mediaPlus",style: TextStyle(fontStyle: FontStyle.italic,fontWeight: FontWeight.bold),),
         actions: [
-          IconButton(icon: Icon(Icons.notifications_on), onPressed:(){})
+          IconButton(icon: Icon(Feather.search,size: 22.0,), onPressed:(){}),
+          Container(width: 3.0,)
         ],
       ),
       body:KeepWidgetAliveWrapper(child: NewsFeedPageScreen()),),

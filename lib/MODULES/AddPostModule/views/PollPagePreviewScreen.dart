@@ -26,7 +26,9 @@ class _PollPagePreviewScreenState extends State<PollPagePreviewScreen> {
               child: controller.isUploading ? Text("posting...") : Text("Post"),
             ),
             onPressed: () {
-              controller.uploadPollPost();
+              if (!controller.isUploading) {
+                controller.uploadPollPost();
+              }
             },
           ),
         ),

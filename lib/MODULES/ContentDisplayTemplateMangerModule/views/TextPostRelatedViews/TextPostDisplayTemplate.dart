@@ -6,6 +6,7 @@ import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 
 ///widget to dispaly the image posts, given [postContent]
@@ -152,7 +153,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                     widget.postContent["textPost"]["description"]
                         .toString()
                         .capitalizeFirst,
-                    style: TextStyle(fontSize: 15.0),
+                    style: TextStyle(fontSize: 16.0),
                     trimLines: 15,
                     trimMode: TrimMode.Line,
                     colorClickableText: Colors.blue,
@@ -167,15 +168,20 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
               children: [
                 Container(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                          icon: _likes.contains(_thisUserId)
+                          icon: _likes.contains(
+                            _thisUserId,
+                          )
                               ? Icon(
-                                  Icons.favorite,
+                                  Octicons.heart,
+                                  size: 24.0,
                                   color: Colors.red,
                                 )
                               : Icon(
-                                  Icons.favorite_border,
+                                  EvilIcons.heart,
+                                  size: 28.0,
                                   color: Colors.white,
                                 ),
                           onPressed: () {
@@ -189,7 +195,10 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(Icons.comment_bank_outlined),
+                          icon: Icon(
+                            EvilIcons.comment,
+                            size: 28.0,
+                          ),
                           onPressed: () {
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],
@@ -202,8 +211,10 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                 Container(
                   child: Row(
                     children: [
-                      IconButton(icon: Icon(Icons.share), onPressed: () {}),
-                      Text("  1.1k")
+                      IconButton(
+                          icon: Icon(MaterialCommunityIcons.share),
+                          onPressed: () {}),
+                      Text(" 1.1k")
                     ],
                   ),
                 ),

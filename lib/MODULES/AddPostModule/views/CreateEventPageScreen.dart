@@ -20,9 +20,13 @@ class CreateEventPageScreen extends StatelessWidget {
                         EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
                     child: TextButton(
                         onPressed: () {
-                          controller.postEventHandler();
+                          if (!controller.isUploading) {
+                            controller.postEventHandler();
+                          }
                         },
-                        child:controller.isUploading? Text("Posting.."): Text("Post Event")),
+                        child: controller.isUploading
+                            ? Text("Posting..")
+                            : Text("Post Event")),
                   )
                 ],
               ),

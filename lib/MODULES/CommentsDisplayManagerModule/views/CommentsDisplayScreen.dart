@@ -58,8 +58,10 @@ class CommentsDisplayScreen extends StatelessWidget {
                             controller: controller.commentEditingController,
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
-                            decoration: InputDecoration(
+                            
+                            decoration: InputDecoration.collapsed(
                                 border: InputBorder.none,
+                                
                                 hintText: "Add Comment"),
                           ),
                         ),
