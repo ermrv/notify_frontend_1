@@ -5,7 +5,9 @@ import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/AddPostModule/MediaCompressorModule/ImageCompressor.dart';
 import 'package:MediaPlus/MODULES/AddPostModule/SingleImagePickerModule/views/SingleImagePicker.dart';
 import 'package:MediaPlus/MODULES/ContestingModule/ContestHostingModule/views/ContestHostingHistoryScreen.dart';
+import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/userAuthVariables.dart';
+import 'package:MediaPlus/MODULES/UserProfileModule/views/UserProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -16,6 +18,7 @@ import 'package:http_parser/http_parser.dart';
 class CreateEventPageScreenController extends GetxController {
   bool isUploading = false;
   File eventImage;
+  double eventImageAspectRatio = 4 / 3;
   String eventStartDate;
   String eventEndDate;
 
@@ -40,6 +43,8 @@ class CreateEventPageScreenController extends GetxController {
     File temp = await Get.to(() => SingleImagePicker());
     if (temp != null) {
       eventImage = temp;
+      var decodeImage = await decodeImageFromList(temp.readAsBytesSync());
+      eventImageAspectRatio = decodeImage.width / decodeImage.height;
     }
 
     update();
@@ -91,11 +96,14 @@ class CreateEventPageScreenController extends GetxController {
     var response = await request.send();
     final strResponse = await response.stream.bytesToString();
     print(response.statusCode);
-   if (response.statusCode == 200) {
+    if (response.statusCode == 200) {
       isUploading = false;
       Get.snackbar("Uploaded", "Task Completed");
       update();
-    }else{
+      Get.to(() => UserProfileScreen(
+            profileOwnerId: PrimaryUserData.primaryUserData.userId,
+          ));
+    } else {
       isUploading = false;
       Get.snackbar("Error", "Error Occured");
       update();

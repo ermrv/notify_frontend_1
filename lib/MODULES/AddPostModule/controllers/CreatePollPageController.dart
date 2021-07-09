@@ -1,6 +1,8 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/AddPostModule/views/PollPagePreviewScreen.dart';
+import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/userAuthVariables.dart';
+import 'package:MediaPlus/MODULES/UserProfileModule/views/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -64,6 +66,7 @@ class CreatePollPageController extends GetxController {
       isUploading = false;
       Get.snackbar("Uploaded", "Task Completed");
       update();
+      Get.to(() => UserProfileScreen(profileOwnerId: PrimaryUserData.primaryUserData.userId,));
       // Get.to(() => UserProfileScreen());
     } else {
       isUploading = false;

@@ -5,7 +5,9 @@ import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/AddPostModule/MediaCompressorModule/ImageCompressor.dart';
 import 'package:MediaPlus/MODULES/AddPostModule/SingleImagePickerModule/views/SingleImagePicker.dart';
 import 'package:MediaPlus/MODULES/ContestingModule/ContestHostingModule/views/ContestHostingHistoryScreen.dart';
+import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/userAuthVariables.dart';
+import 'package:MediaPlus/MODULES/UserProfileModule/views/UserProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -15,6 +17,7 @@ import 'package:http_parser/http_parser.dart';
 class CreateContestScreenController extends GetxController {
   bool isUploading = false;
   File contestImage;
+  double contestImageAspectRatio = 4 / 3;
   int prizeCoins = 200;
   String contestEndDate;
 
@@ -41,6 +44,8 @@ class CreateContestScreenController extends GetxController {
     File temp = await Get.to(() => SingleImagePicker());
     if (temp != null) {
       contestImage = temp;
+      var decodeImage = await decodeImageFromList(temp.readAsBytesSync());
+      contestImageAspectRatio = decodeImage.width / decodeImage.height;
     }
 
     update();
@@ -108,7 +113,10 @@ class CreateContestScreenController extends GetxController {
       isUploading = false;
       Get.snackbar("Uploaded", "Task Completed");
       update();
-    }else{
+      Get.to(() => UserProfileScreen(
+            profileOwnerId: PrimaryUserData.primaryUserData.userId,
+          ));
+    } else {
       isUploading = false;
       Get.snackbar("Error", "Error Occured");
       update();

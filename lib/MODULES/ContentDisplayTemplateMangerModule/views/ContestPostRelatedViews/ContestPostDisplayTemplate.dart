@@ -177,14 +177,14 @@ class _ContestPostDisplayTemplateState
                 ],
               ),
             ),
-            Container(
-                width: screenWidth,
-                padding: EdgeInsets.only(top: 3.0, right: 2.0, left: 2.0),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  widget.postContent["contestPost"]["contestName"].toString(),
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                )),
+            // Container(
+            //     width: screenWidth,
+            //     padding: EdgeInsets.only(top: 3.0, right: 2.0, left: 2.0),
+            //     alignment: Alignment.centerLeft,
+            //     child: Text(
+            //       widget.postContent["contestPost"]["contestName"].toString(),
+            //       style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            //     )),
             Container(
                 width: screenWidth,
                 padding: EdgeInsets.only(right: 2.0, left: 2.0),

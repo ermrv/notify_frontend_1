@@ -20,11 +20,13 @@ class CreateContestScreen extends StatelessWidget {
                         EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
                     child: TextButton(
                         onPressed: () {
-                         if(!controller.isUploading){
+                          if (!controller.isUploading) {
                             controller.postContestHandler();
-                         }
+                          }
                         },
-                        child:controller.isUploading?Text("Posting.."): Text("Post Contest")),
+                        child: controller.isUploading
+                            ? Text("Posting..")
+                            : Text("Post Contest")),
                   )
                 ],
               ),
@@ -39,7 +41,9 @@ class CreateContestScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5.0),
                           border: Border.all()),
                       child: AspectRatio(
-                        aspectRatio: 4 / 3,
+                        aspectRatio: controller.contestImageAspectRatio < 0.8
+                            ? 0.8
+                            : controller.contestImageAspectRatio,
                         child: controller.contestImage == null
                             ? GestureDetector(
                                 onTap: () {
@@ -65,10 +69,14 @@ class CreateContestScreen extends StatelessWidget {
                             : Stack(
                                 children: [
                                   AspectRatio(
-                                      aspectRatio: 4 / 3,
+                                      aspectRatio: controller
+                                                  .contestImageAspectRatio <
+                                              0.8
+                                          ? 0.8
+                                          : controller.contestImageAspectRatio,
                                       child: Image.file(
                                         controller.contestImage,
-                                        fit: BoxFit.fill,
+                                        fit: BoxFit.fitWidth,
                                       )),
                                   Positioned(
                                       bottom: 0.0,

@@ -41,7 +41,9 @@ class CreateEventPageScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5.0),
                           border: Border.all()),
                       child: AspectRatio(
-                        aspectRatio: 4 / 3,
+                        aspectRatio: controller.eventImageAspectRatio < 0.8
+                            ? 0.8
+                            : controller.eventImageAspectRatio,
                         child: controller.eventImage == null
                             ? GestureDetector(
                                 onTap: () {
@@ -67,10 +69,14 @@ class CreateEventPageScreen extends StatelessWidget {
                             : Stack(
                                 children: [
                                   AspectRatio(
-                                      aspectRatio: 4 / 3,
+                                      aspectRatio:
+                                          controller.eventImageAspectRatio < 0.8
+                                              ? 0.8
+                                              : controller
+                                                  .eventImageAspectRatio,
                                       child: Image.file(
                                         controller.eventImage,
-                                        fit: BoxFit.fill,
+                                        fit: BoxFit.fitWidth,
                                       )),
                                   Positioned(
                                       bottom: 0.0,

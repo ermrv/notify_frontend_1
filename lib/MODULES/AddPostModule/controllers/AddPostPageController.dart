@@ -13,6 +13,7 @@ import 'package:MediaPlus/MODULES/AddPostModule/views/SelectedImagesDisplayTempl
 import 'package:MediaPlus/MODULES/AddPostModule/views/SelectedImagesDisplayTemplates/MultiImageVerticalDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/AddPostModule/views/SelectedImagesDisplayTemplates/SingleImageDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/AddPostModule/views/VideoGridDisplay.dart';
+import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/UserProfileModule/views/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
@@ -180,9 +181,9 @@ class AddPostPageController extends GetxController {
         imageFiles == null &&
         textEditingController.text != null) {
       uploadTextPost();
-    } else if(videoFile == null &&
+    } else if (videoFile == null &&
         imageFiles == null &&
-        textEditingController.text == null){
+        textEditingController.text == null) {
       isUploading = false;
     }
 
@@ -199,8 +200,8 @@ class AddPostPageController extends GetxController {
       Get.snackbar("Uploaded", "Task Completed");
       update();
       // Get.to(() => UserProfileScreen());
-    }else{
-       isUploading = false;
+    } else {
+      isUploading = false;
       Get.snackbar("Error", "Error occured");
       update();
     }
@@ -260,7 +261,7 @@ class AddPostPageController extends GetxController {
       isUploading = false;
       Get.snackbar("Uploaded", "Task Completed");
       update();
-    }else{
+    } else {
       isUploading = false;
       Get.snackbar("Error", "Error Occured");
       update();
@@ -297,9 +298,9 @@ class AddPostPageController extends GetxController {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       isUploading = false;
-      Get.snackbar("Uploaded", "Task Completed");
       update();
-    }else{
+      Get.to(() => UserProfileScreen(profileOwnerId: PrimaryUserData.primaryUserData.userId,));
+    } else {
       isUploading = false;
       Get.snackbar("Error", "Error Occured");
       update();
