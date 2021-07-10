@@ -1,4 +1,9 @@
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ContentDisplayTemplateProvider.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ContestPostReferenceLayout.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/EventPostReferenceLayout.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ImagePostReferenceLayout.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceLayout.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/TagsReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/ExplorePageModule/controllers/ExplorePageController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -46,6 +51,11 @@ class ExplorePageScreen extends StatelessWidget {
           )
         : ListView(
           children: [
+            TagsReferenceLayout(),
+            ImagePostReferenceLayout(),
+            ContestPostReferenceLayout(),
+            EventPostReferenceLayout(),
+            ProfileReferenceLayout(),
             ContentDisplayTemplateProvider(data: controller.data)
           ],
         )),
