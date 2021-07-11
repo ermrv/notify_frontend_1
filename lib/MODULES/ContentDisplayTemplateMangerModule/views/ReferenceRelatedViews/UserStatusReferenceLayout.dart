@@ -1,6 +1,7 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/UserStatusManagerModule/views/AddStatusScreen.dart';
+import 'package:MediaPlus/MODULES/UserStatusManagerModule/views/StatusDisplayPageScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,8 @@ const double _containerWidth = 65.0;
 class UserStatusReferenceLayout extends StatelessWidget {
   final boxContents;
 
-  const UserStatusReferenceLayout({Key key, this.boxContents}) : super(key: key);
+  const UserStatusReferenceLayout({Key key, this.boxContents})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,10 +22,11 @@ class UserStatusReferenceLayout extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: [
           _AddStatusButtonContainer(),
-          // for (var i in boxContents["contents"])
-          //   _Template(
-          //     content: i,
-          //   ),
+          for (var i in boxContents)
+            _Template(
+              boxContents: boxContents,
+              content: i,
+            ),
         ],
       ),
     );
@@ -31,28 +34,37 @@ class UserStatusReferenceLayout extends StatelessWidget {
 }
 
 class _Template extends StatelessWidget {
+  final List boxContents;
   final content;
 
-  const _Template({Key key, this.content}) : super(key: key);
+  const _Template({Key key, this.content, this.boxContents}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: _containerWidth,
-      width: _containerWidth,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.blue, width: 3.0),
-        shape: BoxShape.circle,
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(
-          50.0,
+    return GestureDetector(
+      onTap: () {
+        Get.to(() => StatusDisplayPageScreen(
+              statusData: boxContents,
+            ));
+      },
+      child: Container(
+        height: _containerWidth,
+        width: _containerWidth,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.blue[200], width: 2.0),
+          shape: BoxShape.circle,
         ),
-        child: content["postBy"]["profilePic"] == null
-            ? Image.asset("assets/person.jpg")
-            : Image.network(
-                ApiUrlsData.domain + content["postBy"]["profilePic"],
-                fit: BoxFit.fill,
-              ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(
+            50.0,
+          ),
+          child: content["userId"]["profilePic"] == null
+              ? Image.asset("assets/person.jpg")
+              : CachedNetworkImage(
+                  imageUrl:
+                      ApiUrlsData.domain + content["userId"]["profilePic"],
+                  fit: BoxFit.fill,
+                ),
+        ),
       ),
     );
   }

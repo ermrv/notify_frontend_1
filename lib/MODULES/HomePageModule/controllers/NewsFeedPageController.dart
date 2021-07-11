@@ -8,9 +8,11 @@ class NewsFeedPageController extends GetxController {
   double maxScrollExtent = 2.0;
   bool callScrollListener = true;
   List data = [];
+  List userStatusData = [];
 
   @override
   void onInit() {
+    getUserStatusData();
     getData();
     super.onInit();
   }
@@ -29,8 +31,20 @@ class NewsFeedPageController extends GetxController {
 
     //now add the previous data to the list
     data.addAll(_previousData);
-    
+
     update();
+  }
+
+  ///getting user status data
+  getUserStatusData() async {
+    var response =
+        await ApiServices.postWithAuth(ApiUrlsData.getStatus, {}, userToken);
+    if (response == "error") {
+      print("error");
+    } else {
+      userStatusData.addAll(response);
+      update();
+    }
   }
 
   scrollListener(ScrollNotification notification) {

@@ -34,7 +34,7 @@ class NewsFeedPageScreen extends StatelessWidget {
                         },
                         child: ListView(
                           children: [
-                            UserStatusReferenceLayout(),
+                            UserStatusReferenceLayout(boxContents: controller.userStatusData,),
                             AddPostReferenceView(),
                             ContentDisplayTemplateProvider(data: controller.data)
                           ],

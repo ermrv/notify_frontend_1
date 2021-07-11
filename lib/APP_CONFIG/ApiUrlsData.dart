@@ -1,9 +1,12 @@
 abstract class ApiUrlsData {
   static String domain = "http://18.188.219.114:3000";
-  //appStart
+
+
+
+  //..................................appStart........................................
   static String appStart = "http://18.188.219.114:3000/api/appstart";
 
-  //user
+  //.......................................user............................................
   static String userProfilePicUpdate =
       "http://18.188.219.114:3000/api/user/profilepicupdate";
   static String userProfileDetailsUpdate =
@@ -26,17 +29,17 @@ abstract class ApiUrlsData {
   static String userProfileBasicData =
       "http://18.188.219.114:3000/api/user/profile";
 
-//newsfeed
+//..........................................newsfeed.......................................................
   static String newsFeedUrl = "http://18.188.219.114:3000/api/home/newsfeed";
 
   static String contestUrl = "http://18.188.219.114:3000/api/home/contests";
-//explore
+//............................................explore..................................................
   static String explorePage = "http://18.188.219.114:3000/api/explore";
 
   //rewards
   static String rewardsPage = "http://18.188.219.114:3000/api/home/rewards";
 
-  //add post
+  //..................................................add post...................................
   static String addTextPost = "http://18.188.219.114:3000/api/textpost/add";
   static String addImagePost = "http://18.188.219.114:3000/api/imagepost/add";
   static String addVideoPost = "http://18.188.219.114:3000/api/videopost/add";
@@ -53,7 +56,7 @@ abstract class ApiUrlsData {
   ///[postId]
   static String deletePost = "http://18.188.219.114:3000/api/post/delete";
 
-  //comments
+  //........................................comments..................................................
   static String comments = "http://18.188.219.114:3000/api/post/comments";
 
   static String addComment = "http://18.188.219.114:3000/api/post/comment/add";
@@ -77,7 +80,7 @@ abstract class ApiUrlsData {
   static String removePostReaction =
       "http://18.188.219.114:3000/api/post/reaction/remove";
 
-  //user story or status
+  //..............................................user story or status.................................
   static String addStatus = "http://18.188.219.114:3000/api/status/add";
   static String removeStatus = "http://18.188.219.114:3000/api/status/remove";
   static String getStatus = "http://18.188.219.114:3000/api/status";
