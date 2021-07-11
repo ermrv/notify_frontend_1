@@ -79,137 +79,289 @@ class __TemplateState extends State<_Template> {
   Widget build(BuildContext context) {
     _likes = statusContents[currentIndex]["likes"];
     _isLiked = _likes.contains(_thisUserId);
-    return Container(
-      height: screenHeight,
-      width: screenWidth,
-      child: Stack(
-        children: [
-          //status content contianer
-          Container(
-            height: screenHeight,
-            width: screenWidth,
-            child: CachedNetworkImage(
-              imageUrl:
-                  ApiUrlsData.domain + statusContents[currentIndex]["path"],
-            ),
-          ),
-          //user basic details
-          Container(
-            margin: EdgeInsets.only(top: 10.0, left: 10.0),
-            child: Row(
-              children: [
-                Container(
-                  height: 50.0,
-                  width: 50.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100.0),
-                    child: CachedNetworkImage(
-                      imageUrl: ApiUrlsData.domain +
-                          widget.content["userId"]["profilePic"],
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        widget.content["userId"]["name"].toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 15.0),
-                      ),
-                      Text("4hrs ago")
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          //total number of status hightlighter
-          Positioned(
-            top: 0.0,
-            child: Container(
+    return GestureDetector(
+      onTapDown: (details) {
+        double xCordinate = details.globalPosition.dx;
+        if (xCordinate > screenWidth / 2 &&
+            details.globalPosition.dy < screenHeight - 100 &&
+            currentIndex < statusContents.length - 1) {
+          if (this.mounted) {
+            setState(() {
+              currentIndex = currentIndex + 1;
+            });
+          }
+        } else if (xCordinate < screenWidth / 2 &&
+            details.globalPosition.dy < screenHeight - 100 &&
+            currentIndex > 0) {
+          if (this.mounted) {
+            setState(() {
+              currentIndex = currentIndex - 1;
+            });
+          }
+        }
+      },
+      child: Container(
+        height: screenHeight,
+        width: screenWidth,
+        child: Stack(
+          children: [
+            //status content contianer
+            Container(
+              height: screenHeight,
               width: screenWidth,
-              height: 3.0,
+              child: CachedNetworkImage(
+                imageUrl:
+                    ApiUrlsData.domain + statusContents[currentIndex]["path"],
+              ),
+            ),
+            //user basic details
+            Container(
+              height: 60.0,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.black38,
+                      Colors.black38,
+                      Colors.black26,
+                      Colors.transparent
+                    ]),
+              ),
+              padding: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
               child: Row(
                 children: [
-                  for (var j = 0; j < statusContents.length; j++)
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 2.0),
-                      height: 2.0,
-                      width: screenWidth / statusContents.length -
-                          4.0 * statusContents.length,
-                      decoration: BoxDecoration(
-                        color: j == currentIndex ? Colors.red : Colors.white,
+                  Container(
+                    height: 50.0,
+                    width: 50.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100.0),
+                      child: CachedNetworkImage(
+                        imageUrl: ApiUrlsData.domain +
+                            widget.content["userId"]["profilePic"],
+                        fit: BoxFit.cover,
                       ),
-                    )
+                    ),
+                  ),
+                  Container(
+                    height: 40.0,
+                    margin: EdgeInsets.only(left: 5.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.content["userId"]["name"].toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 15.0),
+                        ),
+                        Text(
+                          "4hrs ago",
+                          style: TextStyle(fontSize: 12.0),
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(),
+                  ),
+                  _isOwner
+                      ? Container(
+                          child: IconButton(
+                            icon: Icon(Icons.more_vert),
+                            onPressed: () {
+                              Get.bottomSheet(Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Remove story",
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Container(
+                                      height: 20.0,
+                                    )
+                                  ],
+                                ),
+                              ));
+                            },
+                          ),
+                        )
+                      : Container()
                 ],
               ),
             ),
-          ),
-
-          //write a comment section
-          Positioned(
-              bottom: 5.0,
+            //total number of status hightlighter
+            Positioned(
+              top: 0.0,
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 1.0),
                 width: screenWidth,
-                child: Column(
+                height: 3.0,
+                child: Row(
                   children: [
-                    Container(
-                        width: screenWidth - 20.0,
-                        child: ReadMoreText(
-                          statusContents[currentIndex]["statusText"].toString(),
-                          style: TextStyle(fontSize: 15.0),
-                          trimLines: 2,
-                          trimMode: TrimMode.Line,
-                          colorClickableText: Colors.blue,
-                        )),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: IconButton(
-                              onPressed: () {
-                                reactionUpdater(_thisUserId);
-                              },
-                              icon: _isLiked
-                                  ? Icon(
-                                      Octicons.heart,
-                                      size: 30.0,
-                                      color: Colors.red,
-                                    )
-                                  : Icon(
-                                      EvilIcons.heart,
-                                      size: 34.0,
-                                      color: Colors.white,
-                                    ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.only(left: 5.0),
-                              height: 50.0,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    hintText: "write a comment...."),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    for (var j = 0; j < statusContents.length; j++)
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 2.0),
+                        height: 2.0,
+                        width: screenWidth / statusContents.length -
+                            4.0 * statusContents.length,
+                        decoration: BoxDecoration(
+                          color: j == currentIndex ? Colors.red : Colors.white,
+                        ),
+                      )
                   ],
                 ),
-              )),
-        ],
+              ),
+            ),
+
+            //write a comment section
+            Positioned(
+                bottom: 0.0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        end: Alignment.topCenter,
+                        begin: Alignment.bottomCenter,
+                        colors: [
+                          Colors.black54,
+                          Colors.black54,
+                          Colors.black38,
+                          Colors.black26,
+                          Colors.black12,
+                          Colors.transparent
+                        ]),
+                  ),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+                  width: screenWidth,
+                  child: Column(
+                    children: [
+                      Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(bottom: 5.0),
+                          width: screenWidth - 20.0,
+                          child: ReadMoreText(
+                            statusContents[currentIndex]["statusText"]
+                                .toString(),
+                            style: TextStyle(fontSize: 15.0),
+                            trimLines: 2,
+                            trimMode: TrimMode.Line,
+                            colorClickableText: Colors.blue,
+                          )),
+                      _isOwner
+                          ?
+                          //actions for the status owner
+                          Container(
+                              height: 55.0,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: Icon(Entypo.chevron_thin_up),
+                                  ),
+                                  Container(
+                                    height: 30.0,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Ionicons.md_eye),
+                                        Text(
+                                          " " +
+                                              statusContents[currentIndex]
+                                                      ["seenBy"]
+                                                  .length
+                                                  .toString(),
+                                        ),
+                                        Container(
+                                          width: 20.0,
+                                        ),
+                                        Icon(
+                                          EvilIcons.comment,
+                                          size: 28.0,
+                                        ),
+                                        Text(
+                                          " " +
+                                              statusContents[currentIndex]
+                                                      ["comments"]
+                                                  .length
+                                                  .toString(),
+                                        ),
+                                        Container(
+                                          width: 20.0,
+                                        ),
+                                        Icon(
+                                          Octicons.heart,
+                                          size: 24.0,
+                                          color: Colors.red,
+                                        ),
+                                        Text(" " + _likes.length.toString()),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          :
+                          //actions for other users
+                          Container(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    child: IconButton(
+                                      onPressed: () {
+                                        reactionUpdater(_thisUserId);
+                                      },
+                                      icon: _isLiked
+                                          ? Icon(
+                                              Octicons.heart,
+                                              size: 30.0,
+                                              color: Colors.red,
+                                            )
+                                          : Icon(
+                                              EvilIcons.heart,
+                                              size: 34.0,
+                                              color: Colors.white,
+                                            ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      padding: EdgeInsets.only(
+                                          left: 5.0, right: 5.0),
+                                      margin: EdgeInsets.only(right: 5.0),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Theme.of(context)
+                                                  .accentColor
+                                                  .withOpacity(0.5)),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                      height: 40.0,
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            focusedBorder: InputBorder.none,
+                                            hintText: "write a comment...."),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                    ],
+                  ),
+                )),
+          ],
+        ),
       ),
     );
   }
