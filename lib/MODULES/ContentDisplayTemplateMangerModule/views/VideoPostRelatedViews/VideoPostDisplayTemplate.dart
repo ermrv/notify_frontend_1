@@ -1,6 +1,8 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/InPostVideoPlayer.dart';
@@ -112,23 +114,25 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                 Expanded(
                   child: Container(),
                 ),
-                Container(
-                  child: PopupMenuButton<TextButton>(
-                    elevation: 0.0,
-                    padding: EdgeInsets.all(2.0),
-                    itemBuilder: (context) {
-                      return [
-                        PopupMenuItem<TextButton>(
-                            child: TextButton(
-                          onPressed: () {
-                            print("okay");
-                          },
-                          child: Text('Block User'),
-                        ))
-                      ];
-                    },
-                  ),
-                )
+                //actions on post
+                _isOwner
+                    ? PostOwnerActionsOnPost(
+                        postId:
+                            widget.postContent["_id"].toString(),
+                        postDescription: widget.postContent["videoPost"]
+                                ["description"]
+                            .toString(),
+                        editedDescriptionUpdater: (String description) {
+                          updateEditedDescription(description);
+                        },
+                      )
+                    : OtherUserActionsOnPost(
+                        postUserId: widget.postContent["videoPost"]["postBy"]
+                                ["_id"]
+                            .toString(),
+                        postId:
+                            widget.postContent["_id"].toString(),
+                      )
               ],
             ),
           ),
@@ -163,10 +167,11 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    
                     children: [
                       IconButton(
-                          icon: _likes.contains(_thisUserId,)
+                          icon: _likes.contains(
+                            _thisUserId,
+                          )
                               ? Icon(
                                   Octicons.heart,
                                   size: 24.0,
@@ -188,7 +193,10 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(EvilIcons.comment,size: 28.0,),
+                          icon: Icon(
+                            EvilIcons.comment,
+                            size: 28.0,
+                          ),
                           onPressed: () {
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],
@@ -201,7 +209,9 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                 Container(
                   child: Row(
                     children: [
-                      IconButton(icon: Icon(MaterialCommunityIcons.share), onPressed: () {}),
+                      IconButton(
+                          icon: Icon(MaterialCommunityIcons.share),
+                          onPressed: () {}),
                       Text(" 1.1k")
                     ],
                   ),
@@ -215,6 +225,14 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
         ],
       ),
     );
+  }
+
+  //edited description updater
+  updateEditedDescription(String editedDescription) {
+    widget.postContent["imagePost"]["description"] = editedDescription;
+    if (this.mounted) {
+      setState(() {});
+    }
   }
 
   commentCountUpdater(int count) {

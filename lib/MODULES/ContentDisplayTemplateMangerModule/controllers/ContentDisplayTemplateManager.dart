@@ -1,14 +1,35 @@
+import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ContestPostRelatedViews/ContestPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/EventPostRelatedViews/EventPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImagePostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/PollPostRelatedViews/PollPostDisplayTemplate.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ImagePostReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/TextPostRelatedViews/TextPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/VideoPostDisplayTemplate.dart';
+import 'package:MediaPlus/MODULES/UserAuthModule/userAuthVariables.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 ///selects the template of the display
 class ContentDisplayManager extends GetxController {
+  List data;
+
+  //delete a post
+  deletePost(String postId) async {
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.deletePost, {"postId": postId}, userToken);
+    if (response == "error") {
+      print("error");
+    } else {
+      int index = data.indexWhere((post) => post["_id"] == postId);
+      if (index != -1) {
+        data.removeAt(index);
+      }
+      update();
+    }
+  }
+
   getContentDisplayTemplate(var content) {
     print(content["postContentType"].toString().toLowerCase());
     switch (content["postContentType"].toString().toLowerCase()) {
@@ -50,10 +71,10 @@ class ContentDisplayManager extends GetxController {
 //------------------------------------post reference views-----------------------------------------------------------//
 
       //for user status or story reference post
-      case "userStoryReference":
-        return EventPostDisplayTemplate(
-          postContent: content,
-        );
+      case "imagePostReference":
+        return ImagePostReferenceLayout(
+            // postContent: content,
+            );
         break;
 
       //for short video post reference

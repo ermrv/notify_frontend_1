@@ -45,6 +45,14 @@ abstract class ApiUrlsData {
   static String addPollPost = "http://18.188.219.114:3000/api/pollpost/add";
   static String addEventPost = "http://18.188.219.114:3000/api/eventpost/add";
 
+  ///edit post
+  ///[postId,description]
+  static String editPost = "http://18.188.219.114:3000/api/post/edit";
+
+  ///delete post
+  ///[postId]
+  static String deletePost = "http://18.188.219.114:3000/api/post/delete";
+
   //comments
   static String comments = "http://18.188.219.114:3000/api/post/comments";
 
@@ -74,7 +82,8 @@ abstract class ApiUrlsData {
   static String removeStatus = "http://18.188.219.114:3000/api/status/remove";
   static String getStatus = "http://18.188.219.114:3000/api/status";
   static String statusHistory = "http://18.188.219.114:3000/api/status/history";
-  static String addStatusFromPost = "http://18.188.219.114:3000/api/status/addfrompost";
+  static String addStatusFromPost =
+      "http://18.188.219.114:3000/api/status/addfrompost";
 
   //chat
   static String followlist = "http://18.188.219.114:3000/api/followlists";

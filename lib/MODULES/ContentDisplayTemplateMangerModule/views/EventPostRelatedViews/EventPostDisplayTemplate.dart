@@ -2,6 +2,8 @@ import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/FullImagePostDisplayTemplate.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/ContestingModule/ContestHostingModule/views/ContestParticipantsPostScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
@@ -164,30 +166,26 @@ class _EventPostDisplayTemplateState extends State<EventPostDisplayTemplate> {
                         print("object");
                       })
                   : Container(),
-              Container(
-                child: PopupMenuButton<TextButton>(
-                  elevation: 0.0,
-                  padding: EdgeInsets.all(2.0),
-                  itemBuilder: (context) {
-                    return [
-                      PopupMenuItem<TextButton>(
-                          child: _isOwner
-                              ? TextButton(
-                                  onPressed: () {
-                                    print("okay");
-                                  },
-                                  child: Text('Remove Contest'),
-                                )
-                              : TextButton(
-                                  onPressed: () {
-                                    print("okay");
-                                  },
-                                  child: Text('Report'),
-                                ))
-                    ];
-                  },
-                ),
-              )
+              //actions on post
+                _isOwner
+                    ? PostOwnerActionsOnPost(
+                        postId:
+                            widget.postContent["_id"].toString(),
+                        postDescription: widget.postContent["eventPost"]
+                                ["description"]
+                            .toString(),
+                        editedDescriptionUpdater: (String description) {
+                          updateEditedDescription(description);
+                        },
+                      )
+                    : OtherUserActionsOnPost(
+                        postUserId: widget.postContent["eventPost"]["postBy"]
+                                ["_id"]
+                            .toString(),
+                        postId:
+                            widget.postContent["_id"].toString(),
+                      ),
+              
             ],
           ),
         ),
@@ -297,6 +295,16 @@ class _EventPostDisplayTemplateState extends State<EventPostDisplayTemplate> {
       ),
       ]),
       );
+  }
+
+  //edited description updater
+  updateEditedDescription(String editedDescription) {
+    widget.postContent["eventPost"]["description"] = editedDescription;
+    if(this.mounted){
+      setState(() {
+        
+      });
+    }
   }
 
   likeButtonColorUpdater() {

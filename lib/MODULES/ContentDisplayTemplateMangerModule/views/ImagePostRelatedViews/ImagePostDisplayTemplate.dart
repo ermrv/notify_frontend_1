@@ -7,6 +7,8 @@ import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/Image
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/MultiImageHorizontalDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/MultiImageVerticalDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/SingleImageDisplayTemplate.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
@@ -126,23 +128,24 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                 ),
 
                 //actions on post
-                Container(
-                  child: PopupMenuButton<TextButton>(
-                    elevation: 0.0,
-                    padding: EdgeInsets.all(2.0),
-                    itemBuilder: (context) {
-                      return [
-                        PopupMenuItem<TextButton>(
-                            child: TextButton(
-                          onPressed: () {
-                            print("okay");
-                          },
-                          child: Text('Block User'),
-                        ))
-                      ];
-                    },
-                  ),
-                )
+                _isOwner
+                    ? PostOwnerActionsOnPost(
+                        postId:
+                            widget.postContent["_id"].toString(),
+                        postDescription: widget.postContent["imagePost"]
+                                ["description"]
+                            .toString(),
+                        editedDescriptionUpdater: (String description) {
+                          updateEditedDescription(description);
+                        },
+                      )
+                    : OtherUserActionsOnPost(
+                        postUserId: widget.postContent["imagePost"]["postBy"]
+                                ["_id"]
+                            .toString(),
+                        postId:
+                            widget.postContent["_id"].toString(),
+                      )
               ],
             ),
           ),
@@ -184,10 +187,11 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-
                     children: [
                       IconButton(
-                          icon: _likes.contains(_thisUserId,)
+                          icon: _likes.contains(
+                            _thisUserId,
+                          )
                               ? Icon(
                                   Octicons.heart,
                                   size: 24.0,
@@ -209,7 +213,10 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(EvilIcons.comment,size: 28.0,),
+                          icon: Icon(
+                            EvilIcons.comment,
+                            size: 28.0,
+                          ),
                           onPressed: () {
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],
@@ -222,7 +229,9 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                 Container(
                   child: Row(
                     children: [
-                      IconButton(icon: Icon(MaterialCommunityIcons.share), onPressed: () {}),
+                      IconButton(
+                          icon: Icon(MaterialCommunityIcons.share),
+                          onPressed: () {}),
                       Text(" 1.1k")
                     ],
                   ),
@@ -278,6 +287,16 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
           break;
         default:
       }
+    }
+  }
+
+  //edited description updater
+  updateEditedDescription(String editedDescription) {
+    widget.postContent["imagePost"]["description"] = editedDescription;
+    if(this.mounted){
+      setState(() {
+        
+      });
     }
   }
 

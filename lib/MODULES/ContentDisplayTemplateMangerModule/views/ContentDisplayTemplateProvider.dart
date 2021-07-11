@@ -20,10 +20,13 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ContentDisplayManager>(
+        initState: (state) {
+          contentDisplayManager.data = data;
+        },
         builder: (controller) => Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                for (var i in data) controller.getContentDisplayTemplate(i),
+                for (var i in controller.data) controller.getContentDisplayTemplate(i),
               ],
             ));
   }

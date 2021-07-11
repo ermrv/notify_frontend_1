@@ -1,6 +1,8 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
+import 'package:MediaPlus/MODULES/ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
@@ -119,24 +121,25 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                   child: Container(),
                 ),
 
-                //actions on post
-                Container(
-                  child: PopupMenuButton<TextButton>(
-                    elevation: 0.0,
-                    padding: EdgeInsets.all(2.0),
-                    itemBuilder: (context) {
-                      return [
-                        PopupMenuItem<TextButton>(
-                            child: TextButton(
-                          onPressed: () {
-                            print("okay");
-                          },
-                          child: Text('Block User'),
-                        ))
-                      ];
-                    },
-                  ),
-                )
+               //actions on post
+                _isOwner
+                    ? PostOwnerActionsOnPost(
+                        postId:
+                            widget.postContent["_id"].toString(),
+                        postDescription: widget.postContent["textPost"]
+                                ["description"]
+                            .toString(),
+                        editedDescriptionUpdater: (String description) {
+                          updateEditedDescription(description);
+                        },
+                      )
+                    : OtherUserActionsOnPost(
+                        postUserId: widget.postContent["textPost"]["postBy"]
+                                ["_id"]
+                            .toString(),
+                        postId:
+                            widget.postContent["_id"].toString(),
+                      )
               ],
             ),
           ),
@@ -228,7 +231,15 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
       ),
     );
   }
-
+//edited description updater
+  updateEditedDescription(String editedDescription) {
+    widget.postContent["textPost"]["description"] = editedDescription;
+    if(this.mounted){
+      setState(() {
+        
+      });
+    }
+  }
   commentCountUpdater(int count) {
     setState(() {
       _numberOfReactions = count;
