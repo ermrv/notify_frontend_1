@@ -31,9 +31,13 @@ class AddStatusTextPageScreen extends StatelessWidget {
                 child: Container(
                   height: 21.0,
                   alignment: Alignment.center,
-                  child: Text(" Post "),
+                  child:controller.isUploading?Text(" Posting "):Text(" Post "),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (!controller.isUploading) {
+                    controller.postHandler();
+                  }
+                },
               ),
             ),
           ],
@@ -59,7 +63,7 @@ class AddStatusTextPageScreen extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.only(left: 5.0, right: 5.0),
                         decoration: BoxDecoration(
-                          color: Colors.black26,
+                            color: Colors.black26,
                             border: Border.all(
                                 color: Theme.of(context)
                                     .accentColor
@@ -99,21 +103,21 @@ class AddStatusTextPageScreen extends StatelessWidget {
                     Positioned(
                       child: Center(
                         child: Container(
-                          padding: EdgeInsets.all(5.0),
-                      decoration: BoxDecoration(
-                        color:Colors.black26,
-                        shape: BoxShape.circle
-                      ),
-                          child: Icon(Icons.play_arrow,size: 32.0,)),
+                            padding: EdgeInsets.all(5.0),
+                            decoration: BoxDecoration(
+                                color: Colors.black26, shape: BoxShape.circle),
+                            child: Icon(
+                              Icons.play_arrow,
+                              size: 32.0,
+                            )),
                       ),
                     ),
                     Positioned(
                       bottom: 0.0,
                       child: Container(
-
                         padding: EdgeInsets.only(left: 5.0, right: 5.0),
                         decoration: BoxDecoration(
-                          color: Colors.black26,
+                            color: Colors.black26,
                             border: Border.all(
                                 color: Theme.of(context)
                                     .accentColor
