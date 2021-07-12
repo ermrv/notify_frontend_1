@@ -347,6 +347,7 @@ class __TemplateState extends State<_Template> {
                                               BorderRadius.circular(10.0)),
                                       height: 40.0,
                                       child: TextFormField(
+                                        maxLines: null,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
                                             focusedBorder: InputBorder.none,
