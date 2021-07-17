@@ -1,8 +1,6 @@
 abstract class ApiUrlsData {
   static String domain = "http://18.188.219.114:3000";
 
-
-
   //..................................appStart........................................
   static String appStart = "http://18.188.219.114:3000/api/appstart";
 
@@ -81,12 +79,22 @@ abstract class ApiUrlsData {
       "http://18.188.219.114:3000/api/post/reaction/remove";
 
   //..............................................user story or status.................................
+
   static String addStatus = "http://18.188.219.114:3000/api/status/add";
   static String removeStatus = "http://18.188.219.114:3000/api/status/remove";
   static String getStatus = "http://18.188.219.114:3000/api/status";
   static String statusHistory = "http://18.188.219.114:3000/api/status/history";
   static String addStatusFromPost =
       "http://18.188.219.114:3000/api/status/addfrompost";
+
+  //........................................status comments section..................................
+  static String statusComments = "http://18.188.219.114:3000/api/status/comments";
+  static String addStatusComments = "http://18.188.219.114:3000/api/status/comment/add";
+  static String editStatusComments = "http://18.188.219.114:3000/api/status/comment/edit";
+  static String deleteStatusComments = "http://18.188.219.114:3000/api/status/comment/remove";
+
+
+
 
   //chat
   static String followlist = "http://18.188.219.114:3000/api/followlists";

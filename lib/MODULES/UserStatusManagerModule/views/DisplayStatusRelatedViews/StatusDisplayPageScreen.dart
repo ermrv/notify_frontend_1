@@ -1,7 +1,7 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
-import 'package:MediaPlus/MODULES/UserStatusManagerModule/controllers/StatusDisplayPageController.dart';
+import 'package:MediaPlus/MODULES/UserStatusManagerModule/controllers/DisplayStatusRelatedControllers/StatusDisplayPageController.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,8 @@ import 'package:get/get.dart';
 
 class StatusDisplayPageScreen extends StatelessWidget {
   final List statusData;
-  final controller = Get.put(StatusDisplayPageController());
+  final StatusDisplayPageController controller =
+      Get.put(StatusDisplayPageController());
 
   StatusDisplayPageScreen({Key key, @required this.statusData})
       : super(key: key);
@@ -45,7 +46,7 @@ class StatusDisplayPageScreen extends StatelessWidget {
 
 class _Template extends StatefulWidget {
   final content;
-  final controller;
+  final StatusDisplayPageController controller;
 
   const _Template({Key key, @required this.content, @required this.controller})
       : super(key: key);
@@ -66,8 +67,11 @@ class __TemplateState extends State<_Template> {
 
   List _likes;
 
+  TextEditingController _controller;
+
   @override
   void initState() {
+    _controller = TextEditingController();
     statusContents = widget.content["statusContents"];
     _ownerId = widget.content["userId"]["_id"].toString();
     _thisUserId = PrimaryUserData.primaryUserData.userId.toString();
@@ -209,8 +213,7 @@ class __TemplateState extends State<_Template> {
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 2.0),
                         height: 2.0,
-                        width: screenWidth / statusContents.length -
-                            4.0 * statusContents.length,
+                        width: screenWidth / statusContents.length,
                         decoration: BoxDecoration(
                           color: j == currentIndex ? Colors.red : Colors.white,
                         ),
@@ -346,12 +349,32 @@ class __TemplateState extends State<_Template> {
                                           borderRadius:
                                               BorderRadius.circular(10.0)),
                                       height: 40.0,
-                                      child: TextFormField(
-                                        maxLines: null,
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            focusedBorder: InputBorder.none,
-                                            hintText: "write a comment...."),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            child: TextFormField(
+                                              controller: _controller,
+                                              maxLines: null,
+                                              decoration: InputDecoration(
+                                                  border: InputBorder.none,
+                                                  focusedBorder:
+                                                      InputBorder.none,
+                                                  hintText:
+                                                      "write a comment...."),
+                                            ),
+                                          ),
+                                          Container(
+                                            child: IconButton(
+                                              icon: Icon(Icons.send),
+                                              onPressed: () {
+                                                widget.controller
+                                                    .addStatusComment(
+                                                        widget.content["_id"],
+                                                        _controller.text);
+                                              },
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
                                   ),

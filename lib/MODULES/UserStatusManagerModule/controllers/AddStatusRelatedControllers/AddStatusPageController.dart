@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:MediaPlus/MODULES/UserStatusManagerModule/views/AddStatusTextPageScreen.dart';
+import 'package:MediaPlus/MODULES/UserStatusManagerModule/views/AddStatusRelatedViews/AddStatusTextPageScreen.dart';
 import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
 

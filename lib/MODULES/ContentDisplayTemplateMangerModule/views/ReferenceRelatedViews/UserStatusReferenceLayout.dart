@@ -1,7 +1,7 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
-import 'package:MediaPlus/MODULES/UserStatusManagerModule/views/AddStatusScreen.dart';
-import 'package:MediaPlus/MODULES/UserStatusManagerModule/views/StatusDisplayPageScreen.dart';
+import 'package:MediaPlus/MODULES/UserStatusManagerModule/views/AddStatusRelatedViews/AddStatusScreen.dart';
+import 'package:MediaPlus/MODULES/UserStatusManagerModule/views/DisplayStatusRelatedViews/StatusDisplayPageScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

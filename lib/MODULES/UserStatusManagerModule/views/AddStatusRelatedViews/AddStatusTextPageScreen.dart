@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
-import 'package:MediaPlus/MODULES/UserStatusManagerModule/controllers/AddStatusTextPageController.dart';
+import 'package:MediaPlus/MODULES/UserStatusManagerModule/controllers/AddStatusRelatedControllers/AddStatusTextPageController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';

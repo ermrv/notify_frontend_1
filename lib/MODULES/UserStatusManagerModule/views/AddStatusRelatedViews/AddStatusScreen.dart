@@ -1,5 +1,5 @@
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
-import 'package:MediaPlus/MODULES/UserStatusManagerModule/controllers/AddStatusPageController.dart';
+import 'package:MediaPlus/MODULES/UserStatusManagerModule/controllers/AddStatusRelatedControllers/AddStatusPageController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
