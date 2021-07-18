@@ -1,5 +1,6 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
+import 'package:MediaPlus/MODULES/CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/UserStatusManagerModule/controllers/DisplayStatusRelatedControllers/StatusDisplayPageController.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
@@ -285,9 +286,16 @@ class __TemplateState extends State<_Template> {
                                         Container(
                                           width: 20.0,
                                         ),
-                                        Icon(
-                                          EvilIcons.comment,
-                                          size: 28.0,
+                                        GestureDetector(
+                                          onTap: () => Get.to(() =>
+                                              CommentsDisplayScreen(
+                                                  postId: statusContents[
+                                                          currentIndex]["_id"]
+                                                      .toString())),
+                                          child: Icon(
+                                            EvilIcons.comment,
+                                            size: 28.0,
+                                          ),
                                         ),
                                         Text(
                                           " " +
