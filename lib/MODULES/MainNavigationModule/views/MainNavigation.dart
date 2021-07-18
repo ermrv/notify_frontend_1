@@ -52,8 +52,8 @@ class MainNavigationScreen extends StatelessWidget {
                         fontSize: 13.0,
                         fontWeight: FontWeight.w700),
                   ),
-                  icon: Icons.emoji_events,
-                  label: 'Rewards',
+                  icon: Icons.notifications,
+                  label: 'Notifications',
                 ),
                 CustomBottomNavigationItem(
                   imageUrl: PrimaryUserData.primaryUserData.profilePic,
