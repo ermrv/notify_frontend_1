@@ -153,6 +153,7 @@ class __TemplateState extends State<_Template> {
                   ),
                   Container(
                     height: 40.0,
+                    
                     margin: EdgeInsets.only(left: 5.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -214,7 +215,7 @@ class __TemplateState extends State<_Template> {
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 2.0),
                         height: 2.0,
-                        width: screenWidth / statusContents.length,
+                        width: screenWidth-4.0 / statusContents.length,
                         decoration: BoxDecoration(
                           color: j == currentIndex ? Colors.red : Colors.white,
                         ),
@@ -258,7 +259,7 @@ class __TemplateState extends State<_Template> {
                             trimMode: TrimMode.Line,
                             colorClickableText: Colors.blue,
                           )),
-                      _isOwner
+                      !_isOwner
                           ?
                           //actions for the status owner
                           Container(
@@ -325,6 +326,7 @@ class __TemplateState extends State<_Template> {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Container(
                                     child: IconButton(
@@ -356,19 +358,24 @@ class __TemplateState extends State<_Template> {
                                                   .withOpacity(0.5)),
                                           borderRadius:
                                               BorderRadius.circular(10.0)),
-                                      height: 40.0,
                                       child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
                                         children: [
-                                          Container(
-                                            child: TextFormField(
-                                              controller: _controller,
-                                              maxLines: null,
-                                              decoration: InputDecoration(
-                                                  border: InputBorder.none,
-                                                  focusedBorder:
-                                                      InputBorder.none,
-                                                  hintText:
-                                                      "write a comment...."),
+                                          Expanded(
+                                            child: Container(
+                                              child: TextFormField(
+                                                controller: _controller,
+                                                maxLines: null,
+                                                decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    contentPadding:
+                                                        EdgeInsets.zero,
+                                                    focusedBorder:
+                                                        InputBorder.none,
+                                                    hintText:
+                                                        "write a comment...."),
+                                              ),
                                             ),
                                           ),
                                           Container(
@@ -386,6 +393,16 @@ class __TemplateState extends State<_Template> {
                                       ),
                                     ),
                                   ),
+                                  statusContents[currentIndex]["comments"]
+                                          .contains(_thisUserId)
+                                      ? Container(
+                                          margin: EdgeInsets.only(bottom: 10.0),
+                                          child: Icon(
+                                            EvilIcons.comment,
+                                            size: 32.0,
+                                          ),
+                                        )
+                                      : Container(),
                                 ],
                               ),
                             ),
