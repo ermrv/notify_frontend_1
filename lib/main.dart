@@ -1,5 +1,5 @@
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
-import 'package:MediaPlus/MODULES/UserAuthModule/views/UserAuthScreen.dart';
+import 'package:MediaPlus/MODULES/7_UserAuthModule/views/UserAuthScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/AppThemeModule/controllers/ThemeController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
