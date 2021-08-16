@@ -1,6 +1,7 @@
 
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/UserAuthScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/AppThemeModule/controllers/ThemeController.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/NotificationServices/NotificationServices.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -25,41 +26,14 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_backgroundNotificationHandler);
 
   await GetStorage.init();
+  NotificationServices.initialise();
 
-  if (true) {
-    channel = const AndroidNotificationChannel(
-      'high_importance_channel', // id
-      'High Importance Notifications', // title
-      'This channel is used for important notifications.', // description
-      importance: Importance.high,
-    );
-
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-    /// Create an Android Notification Channel.
-    ///
-    /// We use this channel in the `AndroidManifest.xml` file to override the
-    /// default FCM channel to enable heads up notifications.
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
-
-    /// Update the iOS foreground notification presentation options to allow
-    /// heads up notifications.
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-  }
+  
 
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget { 
-  // final statusBarDisplayController = Get.put(StatusBarDisplayController());
 
   final themeController = Get.put(ThemeController());
   @override
