@@ -1,5 +1,10 @@
 # This is a generated file; do not edit or check into version control.
+firebase_core=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.7.0/
+firebase_core_web=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-0.2.1+3/
+firebase_messaging=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-8.0.0-dev.15/
+firebase_messaging_web=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging_web-0.1.0-dev.6/
 flutter_image_compress=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_image_compress-1.0.0/
+flutter_local_notifications=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-4.0.1+2/
 image_editor=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image_editor-1.0.0/
 path_provider=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.28/
 path_provider_linux=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+2/
