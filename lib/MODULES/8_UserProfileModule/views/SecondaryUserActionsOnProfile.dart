@@ -1,5 +1,7 @@
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/CommonPostDisplayPageScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SecondaryUserActionsOnProfile extends StatelessWidget {
   @override
@@ -33,7 +35,9 @@ class SecondaryUserActionsOnProfile extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text("Photos")),
                       onPressed: () {
-                        print("Promotions");
+                        Get.to(() => CommonPostDisplayPageScreen(
+                              title: "Photos",
+                            ));
                       }),
                 ),
                 Container(
@@ -42,7 +46,9 @@ class SecondaryUserActionsOnProfile extends StatelessWidget {
                       child: Container(
                           alignment: Alignment.center, child: Text("Photos")),
                       onPressed: () {
-                        print("Promotions");
+                        Get.to(() => CommonPostDisplayPageScreen(
+                              title: "Photos",
+                            ));
                       }),
                 ),
                 Container(
@@ -51,7 +57,9 @@ class SecondaryUserActionsOnProfile extends StatelessWidget {
                       child: Container(
                           alignment: Alignment.center, child: Text("Videos")),
                       onPressed: () {
-                        print("Promotions");
+                        Get.to(() => CommonPostDisplayPageScreen(
+                              title: "Videos",
+                            ));
                       }),
                 ),
                 Container(
@@ -60,7 +68,9 @@ class SecondaryUserActionsOnProfile extends StatelessWidget {
                       child: Container(
                           alignment: Alignment.center, child: Text("Events")),
                       onPressed: () {
-                        print("Promotions");
+                        Get.to(() => CommonPostDisplayPageScreen(
+                              title: "Events",
+                            ));
                       }),
                 ),
                 Container(
@@ -69,7 +79,9 @@ class SecondaryUserActionsOnProfile extends StatelessWidget {
                       child: Container(
                           alignment: Alignment.center, child: Text("Contests")),
                       onPressed: () {
-                        print("Promotions");
+                        Get.to(() => CommonPostDisplayPageScreen(
+                              title: "Contests",
+                            ));
                       }),
                 ),
               ],

@@ -25,6 +25,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:workmanager/workmanager.dart';
 
 class AddPostPageController extends GetxController {
   //to show the upload task
@@ -271,45 +272,54 @@ class AddPostPageController extends GetxController {
 
   ///video uploader
   uploadVideo() async {
-    //create the request object
-    var request = http.MultipartRequest(
-      "POST",
-      Uri.parse(ApiUrlsData.addVideoPost),
-    );
-
-    //adding the headers
-    request.headers["authorization"] = "Bearer " + userToken;
-    request.headers["Content-type"] = "multipart/form-data";
-
-    //adding body contents
-    request.fields["aspectRatio"] = aspectRatio.toString();
-    if (textEditingController.text != null) {
-      request.fields["description"] = textEditingController.text;
-    }
-
-    request.fields["postType"] = "video";
-    // request.fields["location"] = location;
-
-    //adding thumbnail file
-    request.files.add(http.MultipartFile.fromBytes("postFile", compressedVideo,
-        filename: videoFile.path,
-        contentType:
-            MediaType("video", videoFile.path.split(".").last.toString())));
-
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      isUploading = false;
-      update();
-      Get.to(() => UserProfileScreen(
-            profileOwnerId: PrimaryUserData.primaryUserData.userId,
-          ));
-    } else {
-      isUploading = false;
-      Get.snackbar("Error", "Error Occured");
-      update();
-    }
-    response.stream.listen((value) {
-      print(value.length);
+    Workmanager().registerOneOffTask("uploadVideo", "uploadVideo", inputData: {
+      "userToken":"Bearer " + userToken,
+      "postType": "video",
+      "videoType": videoFile.path.split(".").last.toString(),
+      "description":textEditingController.text,
+      "postFile":videoFile.path,
+      "filename":videoFile.path,
+      "aspectRatio":aspectRatio.toString()
     });
+    // //create the request object
+    // var request = http.MultipartRequest(
+    //   "POST",
+    //   Uri.parse(ApiUrlsData.addVideoPost),
+    // );
+
+    // //adding the headers
+    // request.headers["authorization"] = "Bearer " + userToken;
+    // request.headers["Content-type"] = "multipart/form-data";
+
+    // //adding body contents
+    // request.fields["aspectRatio"] = aspectRatio.toString();
+    // if (textEditingController.text != null) {
+    //   request.fields["description"] = textEditingController.text;
+    // }
+
+    // request.fields["postType"] = "video";
+    // // request.fields["location"] = location;
+
+    // //adding thumbnail file
+    // request.files.add(http.MultipartFile.fromBytes("postFile", compressedVideo,
+    //     filename: videoFile.path,
+    //     contentType:
+    //         MediaType("video", videoFile.path.split(".").last.toString())));
+
+    // http.StreamedResponse response = await request.send();
+    // if (response.statusCode == 200) {
+    //   isUploading = false;
+    //   update();
+    //   Get.to(() => UserProfileScreen(
+    //         profileOwnerId: PrimaryUserData.primaryUserData.userId,
+    //       ));
+    // } else {
+    //   isUploading = false;
+    //   Get.snackbar("Error", "Error Occured");
+    //   update();
+    // }
+    // response.stream.listen((value) {
+    //   print(value.length);
+    // });
   }
 }

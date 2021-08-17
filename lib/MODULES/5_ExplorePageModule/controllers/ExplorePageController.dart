@@ -23,7 +23,7 @@ class ExplorePageController extends GetxController
     var response =
         await ApiServices.postWithAuth(ApiUrlsData.explorePage, {}, userToken);
 
-    data.addAll(response);
+    data.addAll(response["boxes"]);
     update();
   }
 

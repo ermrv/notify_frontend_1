@@ -103,13 +103,13 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 15.0),
                             ),
-                            Text(
-                              widget.postContent["imagePost"]["postBy"]
-                                      ["userName"]
-                                  .toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 14.0),
-                            ),
+                            // Text(
+                            //   widget.postContent["imagePost"]["postBy"]
+                            //           ["userName"]
+                            //       .toString(),
+                            //   style: TextStyle(
+                            //       fontWeight: FontWeight.w500, fontSize: 14.0),
+                            // ),
                           ],
                         ),
                       ),

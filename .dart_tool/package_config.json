@@ -602,6 +602,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "workmanager",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/workmanager-0.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "xdg_directories",
       "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/xdg_directories-0.1.2",
       "packageUri": "lib/",
@@ -620,7 +626,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-08-15T06:06:49.881017Z",
+  "generated": "2021-08-16T10:52:48.601051Z",
   "generator": "pub",
   "generatorVersion": "2.13.1"
 }
