@@ -147,6 +147,15 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
               ],
             ),
           ),
+
+          GestureDetector(
+            onDoubleTap: () {
+              reactionCountUpdater(_thisUserId);
+            },
+            child: _imageLayoutSelector(
+                widget.postContent["imagePost"]["postContent"],
+                widget.postContent["imagePost"]["templateType"]),
+          ),
           //description and tags container
           widget.postContent["imagePost"]["description"] == null ||
                   widget.postContent["imagePost"]["description"] == ""
@@ -162,19 +171,11 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                         .capitalizeFirst,
                     style: TextStyle(fontSize: 15.0),
                     trimLines: 2,
+                    trimCollapsedText: "...more",
+                    trimExpandedText: "  less",
                     trimMode: TrimMode.Line,
                     colorClickableText: Colors.blue,
                   )),
-
-          GestureDetector(
-            onDoubleTap: () {
-              reactionCountUpdater(_thisUserId);
-            },
-            child: _imageLayoutSelector(
-                widget.postContent["imagePost"]["postContent"],
-                widget.postContent["imagePost"]["templateType"]),
-          ),
-
           Container(
             height: 50.0,
             width: screenWidth,
