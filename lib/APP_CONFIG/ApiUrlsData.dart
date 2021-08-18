@@ -128,4 +128,20 @@ abstract class ApiUrlsData {
 
   static String contestReaction =
       "http://18.188.219.114:3000/api/contest/reaction";
+
+
+      //.................................post promotions urls................................................
+      static String checkPromotionPricing =
+      "http://18.188.219.114:3000/api/checkpricing";
+
+      static String addPromotionPost =
+      "http://18.188.219.114:3000/api/addpromotion";
+
+      static String promotionPaymentOrder =
+      "http://18.188.219.114:3000/api/paymentorder";
+
+      static String promotionPaymentVerify=
+      "http://18.188.219.114:3000/api/paymentverify";
+
+
 }

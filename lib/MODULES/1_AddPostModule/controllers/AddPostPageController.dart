@@ -194,19 +194,21 @@ class AddPostPageController extends GetxController {
 
   //to upload the text post
   uploadTextPost() async {
-    var response = await ApiServices.postWithAuth(ApiUrlsData.addTextPost,
-        {"description": textEditingController.text}, userToken);
-    print(response);
-    if (response != "error") {
-      isUploading = false;
-      Get.snackbar("Uploaded", "Task Completed");
-      update();
-      // Get.to(() => UserProfileScreen());
-    } else {
-      isUploading = false;
-      Get.snackbar("Error", "Error occured");
-      update();
-    }
+    Workmanager().registerOneOffTask("uploadText", "uploadText", inputData: {
+      "userToken": "Bearer " + userToken,
+      "postType": "text",
+      "description": textEditingController.text,
+    });
+
+    // if (response != "error") {
+    //   isUploading = false;
+    //   Get.snackbar("Uploaded", "Task Completed");
+    //   update();
+    //   // Get.to(() => UserProfileScreen());
+    // } else {
+    //   isUploading = false;
+    //   Get.snackbar("Error", "Error occured");
+    //   update();
   }
 
   ///to upload the compressed images
@@ -272,15 +274,19 @@ class AddPostPageController extends GetxController {
 
   ///video uploader
   uploadVideo() async {
-    Workmanager().registerOneOffTask("uploadVideo", "uploadVideo", inputData: {
-      "userToken":"Bearer " + userToken,
-      "postType": "video",
-      "videoType": videoFile.path.split(".").last.toString(),
-      "description":textEditingController.text,
-      "postFile":videoFile.path,
-      "filename":videoFile.path,
-      "aspectRatio":aspectRatio.toString()
-    });
+    Workmanager().registerOneOffTask(
+      "uploadVideo",
+      "uploadVideo",
+      inputData: {
+        "userToken": "Bearer " + userToken,
+        "postType": "video",
+        "videoType": videoFile.path.split(".").last.toString(),
+        "description": textEditingController.text,
+        "postFile": videoFile.path,
+        "filename": videoFile.path,
+        "aspectRatio": aspectRatio.toString()
+      },
+    );
     // //create the request object
     // var request = http.MultipartRequest(
     //   "POST",

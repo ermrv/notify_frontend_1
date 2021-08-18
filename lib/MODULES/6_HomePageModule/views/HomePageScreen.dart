@@ -1,3 +1,4 @@
+import 'package:MediaPlus/MODULES/13_SearchEngineModule/views/SearchInputPageScreen.dart';
 import 'package:MediaPlus/MODULES/6_HomePageModule/UserDrawerModule/views/UserDrawerScreen.dart';
 import 'package:MediaPlus/MODULES/6_HomePageModule/views/NewsFeedPageScreen.dart';
 import 'package:MediaPlus/MODULES/14_MainNavigationModule/controllers/MainNavigationController.dart';
@@ -132,7 +133,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   Feather.search,
                   size: 22.0,
                 ),
-                onPressed: () {}),
+                onPressed: () {
+                  Get.to(() => SearchInputPageScreen());
+                }),
             Container(
               width: 3.0,
             )

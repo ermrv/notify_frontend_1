@@ -1,5 +1,6 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
+import 'package:MediaPlus/MODULES/10_PostPromotionModule/views/EstimatedBudgetPageScreen.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/DuobleImageHorizontalDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/DuobleImageVerticalDisplayTemplate.dart';
@@ -126,7 +127,18 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                 Expanded(
                   child: Container(),
                 ),
-
+                _isOwner
+                    ? Container(
+                        child: TextButton(
+                          onPressed: () {
+                            Get.to(() => EstimatedBudgetPageScreen(
+                                  postId: widget.postContent["_id"].toString(),
+                                ));
+                          },
+                          child: Text("Promote"),
+                        ),
+                      )
+                    : Container(),
                 //actions on post
                 _isOwner
                     ? PostOwnerActionsOnPost(
@@ -147,15 +159,6 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
               ],
             ),
           ),
-
-          GestureDetector(
-            onDoubleTap: () {
-              reactionCountUpdater(_thisUserId);
-            },
-            child: _imageLayoutSelector(
-                widget.postContent["imagePost"]["postContent"],
-                widget.postContent["imagePost"]["templateType"]),
-          ),
           //description and tags container
           widget.postContent["imagePost"]["description"] == null ||
                   widget.postContent["imagePost"]["description"] == ""
@@ -169,13 +172,24 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                     widget.postContent["imagePost"]["description"]
                         .toString()
                         .capitalizeFirst,
-                    style: TextStyle(fontSize: 15.0),
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        color: Theme.of(context).accentColor.withOpacity(0.9)),
                     trimLines: 2,
                     trimCollapsedText: "...more",
                     trimExpandedText: "  less",
                     trimMode: TrimMode.Line,
                     colorClickableText: Colors.blue,
                   )),
+          GestureDetector(
+            onDoubleTap: () {
+              reactionCountUpdater(_thisUserId);
+            },
+            child: _imageLayoutSelector(
+                widget.postContent["imagePost"]["postContent"],
+                widget.postContent["imagePost"]["templateType"]),
+          ),
+
           Container(
             height: 50.0,
             width: screenWidth,

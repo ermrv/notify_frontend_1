@@ -154,7 +154,8 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                     widget.postContent["textPost"]["description"]
                         .toString()
                         .capitalizeFirst,
-                    style: TextStyle(fontSize: 16.0),
+                    style: TextStyle(fontSize: 16.0,color: Theme.of(context).accentColor.withOpacity(0.9)),
+                    
                     trimLines: 15,
                     trimMode: TrimMode.Line,
                     colorClickableText: Colors.blue,

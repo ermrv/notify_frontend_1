@@ -78,6 +78,7 @@ dependencies:
   firebase_messaging: ^8.0.0-dev.15
   flutter_local_notifications: ^4.0.1+2
   workmanager: ^0.4.1
+  flutter_uploader: ^1.2.1
 
 dev_dependencies:
   flutter_test:

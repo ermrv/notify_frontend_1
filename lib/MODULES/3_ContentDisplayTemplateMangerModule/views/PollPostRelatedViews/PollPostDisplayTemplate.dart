@@ -181,7 +181,9 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
                   child: Text(
                     widget.postContent["pollPost"]["description"],
-                    style: TextStyle(fontSize: 16.0),
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: Theme.of(context).accentColor.withOpacity(0.9)),
                   ),
                 ),
                 //option one
@@ -228,7 +230,10 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                     .toString(),
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    color: Theme.of(context).accentColor),
+                                    fontWeight: FontWeight.normal,
+                                    color: Theme.of(context)
+                                        .accentColor
+                                        .withOpacity(0.9)),
                               ),
                             ],
                           ),
@@ -277,7 +282,10 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                     .toString(),
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    color: Theme.of(context).accentColor),
+                                    fontWeight: FontWeight.normal,
+                                    color: Theme.of(context)
+                                        .accentColor
+                                        .withOpacity(0.9)),
                               ),
                             ],
                           ),
@@ -328,7 +336,10 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                     .toString(),
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    color: Theme.of(context).accentColor),
+                                    fontWeight: FontWeight.normal,
+                                    color: Theme.of(context)
+                                        .accentColor
+                                        .withOpacity(0.9)),
                               ),
                             ],
                           ),
@@ -378,7 +389,10 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                     .toString(),
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    color: Theme.of(context).accentColor),
+                                    fontWeight: FontWeight.normal,
+                                    color: Theme.of(context)
+                                        .accentColor
+                                        .withOpacity(0.9)),
                               ),
                             ],
                           ),

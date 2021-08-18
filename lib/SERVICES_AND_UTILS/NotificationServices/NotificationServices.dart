@@ -16,6 +16,11 @@ abstract class NotificationServices {
     }
 
     if (Platform.isIOS || Platform.isAndroid) {
+      print("getting token");
+      String token = await FirebaseMessaging.instance.getToken(
+          vapidKey:
+              "BNG0nM_OcVknT4yTpbp8RuI2WHWfi7fNTxbzbC3yUw--VhbT6HszqZvL1DUOzSpA6-8Fp9DAsPXqoHB78O9EguQ");
+      print(token);
       AndroidNotificationChannel channel = const AndroidNotificationChannel(
         'high_importance_channel', // id
         'High Importance Notifications', // title
@@ -61,7 +66,6 @@ abstract class NotificationServices {
                 importance: Importance.high,
                 // TODO add a proper drawable resource to android, for now using
                 //      one that already exists in example app.
-                
               ),
             ));
       }

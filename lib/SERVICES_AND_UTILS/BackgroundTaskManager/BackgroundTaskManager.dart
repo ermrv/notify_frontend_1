@@ -1,5 +1,6 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -13,7 +14,9 @@ abstract class BackgroundTaskManager {
         print("video is uploading");
         BackgroundTaskManager._uploadVideo(inputData);
         break;
-      case "uploadImages":
+      case "uploadText":
+        print("text is uploading");
+        BackgroundTaskManager._uploadText(inputData);
         break;
       default:
     }
@@ -29,7 +32,7 @@ abstract class BackgroundTaskManager {
     );
 
     //adding the headers
-    request.headers["authorization"] =data["userToken"];
+    request.headers["authorization"] = data["userToken"];
     request.headers["Content-type"] = "multipart/form-data";
 
     // adding body contents
@@ -42,11 +45,19 @@ abstract class BackgroundTaskManager {
     // request.fields["location"] = location;
 
     //adding thumbnail file
-    request.files.add(await http.MultipartFile.fromPath("postFile", data["postFile"],
+    request.files.add(await http.MultipartFile.fromPath(
+        "postFile", data["postFile"],
         filename: data["filename"],
         contentType: MediaType("video", data["videoType"])));
 
     http.StreamedResponse response = await request.send();
     print(response.statusCode);
+  }
+
+  static _uploadText(var data) async {
+    print("uploading text");
+    var response = await ApiServices.postWithAuth(ApiUrlsData.addTextPost,
+        {"description": data["description"]}, userToken);
+    print(response);
   }
 }
