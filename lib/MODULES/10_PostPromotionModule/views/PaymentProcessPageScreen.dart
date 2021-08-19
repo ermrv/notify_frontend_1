@@ -33,7 +33,7 @@ class PaymentProcessPageScreen extends StatelessWidget {
                     Text("Some error occured,please try again"),
                     TextButton(
                       onPressed: () {
-                        controller.openCheckout();
+                        controller.paymentOrder();
                       },
                       child: Text("Retry Payment"),
                     ),

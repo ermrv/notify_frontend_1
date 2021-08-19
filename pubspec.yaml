@@ -44,7 +44,6 @@ dependencies:
 
   extended_image: any
 
-  image_editor: any
   flex_color_scheme: ^2.1.1
   path_provider: any
 

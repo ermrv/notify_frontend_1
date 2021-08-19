@@ -37,7 +37,7 @@ class PaymentProcessPageController extends GetxController {
     print(response);
     if (response != "error") {
       if (response['status'].toString() == "success") {
-        openCheckout();
+        openCheckout(response["paymentData"]["id"]);
       } else {
         retryOption = true;
         update();
@@ -59,12 +59,15 @@ class PaymentProcessPageController extends GetxController {
     print(response);
   }
 
-  void openCheckout() async {
+  ///open the razorpay payment gateway ui to process the payment
+  void openCheckout(String orderId) async {
     var options = {
+      
       'key': promotionDetailsBeforePayment["key"],
       'amount': price * 100,
       'name': 'Mediaplus',
       'description': 'Post Promotion',
+      "order_id":orderId.toString(),
       'prefill': {
         'contact': PrimaryUserData.primaryUserData.mobile,
         'email': 'test@razorpay.com'
@@ -85,7 +88,8 @@ class PaymentProcessPageController extends GetxController {
     Get.snackbar("success", "message");
     retryOption = false;
     update();
-
+    print("signature " + response.signature.toString());
+    print("paymentId" + response.paymentId.toString());
     verifyPayment(response.paymentId.toString(), response.signature.toString());
   }
 
