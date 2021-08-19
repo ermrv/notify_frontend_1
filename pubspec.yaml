@@ -79,6 +79,7 @@ dependencies:
   flutter_local_notifications: ^4.0.1+2
   workmanager: ^0.4.1
   flutter_uploader: ^1.2.1
+  razorpay_flutter: ^1.2.7
 
 dev_dependencies:
   flutter_test:

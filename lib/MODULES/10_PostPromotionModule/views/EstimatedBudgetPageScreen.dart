@@ -12,6 +12,9 @@ class EstimatedBudgetPageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<EstimatedBudgetPageController>(
+      initState: (state) {
+        _controller.postId = postId;
+      },
       builder: (controller) => Scaffold(
         bottomNavigationBar: Container(
           height: 40.0,
@@ -109,7 +112,7 @@ class EstimatedBudgetPageScreen extends StatelessWidget {
                 },
                 min: 12.0,
                 max: 240.0,
-                divisions:19,
+                divisions: 19,
               ),
             )
           ],

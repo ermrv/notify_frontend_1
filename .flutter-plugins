@@ -12,6 +12,7 @@ path_provider_linux=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.
 path_provider_macos=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+8/
 path_provider_windows=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-0.0.5/
 photo_manager=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/photo_manager-0.6.0/
+razorpay_flutter=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/razorpay_flutter-1.2.7/
 share=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/share-0.6.5+4/
 sqflite=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-2.0.0+3/
 video_compress=/home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/video_compress-2.1.1/
