@@ -54,6 +54,7 @@ abstract class NotificationServices {
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification?.android;
       if (notification != null && android != null) {
+        print(notification.hashCode);
         flutterLocalNotificationsPlugin.show(
             notification.hashCode,
             notification.title,
@@ -65,7 +66,7 @@ abstract class NotificationServices {
                 'This channel is used for important notifications.', // description
                 importance: Importance.high,
                 // TODO add a proper drawable resource to android, for now using
-                //      one that already exists in example app.
+                icon: "launch_background"
               ),
             ));
       }
