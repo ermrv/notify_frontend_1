@@ -1,5 +1,6 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
+import 'package:MediaPlus/MODULES/10_PostPromotionModule/views/EstimatedBudgetPageScreen.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
@@ -109,6 +110,18 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                 Expanded(
                   child: Container(),
                 ),
+                 _isOwner
+                    ? Container(
+                        child: TextButton(
+                          onPressed: () {
+                            Get.to(() => EstimatedBudgetPageScreen(
+                                  postId: widget.postContent["_id"].toString(),
+                                ));
+                          },
+                          child: Text("Promote"),
+                        ),
+                      )
+                    : Container(),
                 //actions on post
                 _isOwner
                     ? PostOwnerActionsOnPost(

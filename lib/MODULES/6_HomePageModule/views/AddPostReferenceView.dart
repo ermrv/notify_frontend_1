@@ -69,13 +69,13 @@ class AddPostReferenceView extends StatelessWidget {
                       Get.to(() => CreatePollPageScreen());
                     },
                   ),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: Icon(Icons.local_activity),
-                    onPressed: () {
-                      Get.to(() => CreateContestScreen());
-                    },
-                  )
+                  // IconButton(
+                  //   padding: EdgeInsets.zero,
+                  //   icon: Icon(Icons.local_activity),
+                  //   onPressed: () {
+                  //     Get.to(() => CreateContestScreen());
+                  //   },
+                  // )
                 ],
               ),
             ),
