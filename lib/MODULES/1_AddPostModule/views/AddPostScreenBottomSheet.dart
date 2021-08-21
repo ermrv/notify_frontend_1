@@ -74,21 +74,21 @@ class AddPostScreenBottomSheet extends StatelessWidget {
                   child: Row(
                     children: [Icon(Icons.poll), Text("   Create Poll")],
                   )),
-              TextButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith(
-                          (states) => Colors.transparent),
-                      side: MaterialStateProperty.resolveWith(
-                          (states) => BorderSide.none)),
-                  onPressed: () {
-                    Get.off(() => CreateContestScreen());
-                  },
-                  child: Row(
-                    children: [
-                      Icon(Icons.emoji_events),
-                      Text("   Create Contest")
-                    ],
-                  )),
+              // TextButton(
+              //     style: ButtonStyle(
+              //         backgroundColor: MaterialStateProperty.resolveWith(
+              //             (states) => Colors.transparent),
+              //         side: MaterialStateProperty.resolveWith(
+              //             (states) => BorderSide.none)),
+              //     onPressed: () {
+              //       Get.off(() => CreateContestScreen());
+              //     },
+              //     child: Row(
+              //       children: [
+              //         Icon(Icons.emoji_events),
+              //         Text("   Create Contest")
+              //       ],
+              //     )),
             ],
           ),
         ),

@@ -44,11 +44,11 @@ class AddPostPageScreen extends StatelessWidget {
                         onPressed: () {
                           Get.to(() => CreatePollPageScreen());
                         }),
-                    IconButton(
-                        icon: Icon(Icons.emoji_events),
-                        onPressed: () {
-                          Get.to(() => CreateContestScreen());
-                        }),
+                    // IconButton(
+                    //     icon: Icon(Icons.emoji_events),
+                    //     onPressed: () {
+                    //       Get.to(() => CreateContestScreen());
+                    //     }),
                     IconButton(
                         icon: Icon(Icons.more_horiz),
                         onPressed: () {
