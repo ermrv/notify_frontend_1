@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "200630672320",
-    "project_id": "mediaplus-16ebc",
-    "storage_bucket": "mediaplus-16ebc.appspot.com"
+    "project_number": "785208266186",
+    "firebase_url": "https://mediaplus-cedc1-default-rtdb.firebaseio.com",
+    "project_id": "mediaplus-cedc1",
+    "storage_bucket": "mediaplus-cedc1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:200630672320:android:33aee637d3d8b936478625",
+        "mobilesdk_app_id": "1:785208266186:android:95f9521f49450caf975333",
         "android_client_info": {
           "package_name": "com.example.MediaPlus"
         }
       },
       "oauth_client": [
         {
-          "client_id": "200630672320-ileeme4rf6n7h2mjqu42vkh3vpdqs5h6.apps.googleusercontent.com",
+          "client_id": "785208266186-3g829ji5gpcig4mc3tqd94vg0fon46j3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAQX2l1oxbEys1h3rl221LxswI3NG-MPvM"
+          "current_key": "AIzaSyAhelN9lNipBDiOLsbMnc8IsfbbNaoln9w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "200630672320-ileeme4rf6n7h2mjqu42vkh3vpdqs5h6.apps.googleusercontent.com",
+              "client_id": "785208266186-3g829ji5gpcig4mc3tqd94vg0fon46j3.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
