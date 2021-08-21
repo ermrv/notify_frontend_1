@@ -34,7 +34,7 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_backgroundNotificationHandler);
 
   await GetStorage.init();
-  NotificationServices.initialise();
+  await NotificationServices.initialise();
 
   runApp(MyApp());
 }

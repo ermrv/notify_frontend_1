@@ -1,147 +1,147 @@
 abstract class ApiUrlsData {
-  static String domain = "http://18.188.219.114:3000";
 
+  static String domain = "http://192.168.43.160:3000";
   //..................................appStart........................................
-  static String appStart = "http://18.188.219.114:3000/api/appstart";
+  static String appStart = "$domain/api/appstart";
 
   //.......................................user............................................
   static String userProfilePicUpdate =
-      "http://18.188.219.114:3000/api/user/profilepicupdate";
+      "$domain/api/user/profilepicupdate";
   static String userProfileDetailsUpdate =
-      "http://18.188.219.114:3000/api/user/updateprofile";
+      "$domain/api/user/updateprofile";
 
-  static String userData = "http://18.188.219.114:3000/api/user";
+  static String userData = "$domain/api/user";
 
-  static String mobileOtp = "http://18.188.219.114:3000/api/user/mobileotp";
-  static String verifyOtp = "http://18.188.219.114:3000/api/user/verifyotp";
+  static String mobileOtp = "$domain/api/user/mobileotp";
+  static String verifyOtp = "$domain/api/user/verifyotp";
   static String userRegistration =
-      "http://18.188.219.114:3000/api/user/register";
-  static String userFollowers = "http://18.188.219.114:3000/api/user/followers";
+      "$domain/api/user/register";
+  static String userFollowers = "$domain/api/user/followers";
   static String userFollowings =
-      "http://18.188.219.114:3000/api/user/followings";
+      "$domain/api/user/followings";
   static String userHighlights =
-      "http://18.188.219.114:3000/api/user/highlights";
+      "$domain/api/user/highlights";
 
   ///user profile data and related posts
-  static String userPosts = "http://18.188.219.114:3000/api/user/posts";
+  static String userPosts = "$domain/api/user/posts";
   static String userProfileBasicData =
-      "http://18.188.219.114:3000/api/user/profile";
+      "$domain/api/user/profile";
 
 //..........................................newsfeed.......................................................
-  static String newsFeedUrl = "http://18.188.219.114:3000/api/home/newsfeed";
+  static String newsFeedUrl = "$domain/api/home/newsfeed";
 
-  static String contestUrl = "http://18.188.219.114:3000/api/home/contests";
+  static String contestUrl = "$domain/api/home/contests";
 //............................................explore..................................................
-  static String explorePage = "http://18.188.219.114:3000/api/explore";
+  static String explorePage = "$domain/api/explore";
 
   //rewards
-  static String rewardsPage = "http://18.188.219.114:3000/api/home/rewards";
+  static String rewardsPage = "$domain/api/home/rewards";
 
   //..................................................add post...................................
-  static String addTextPost = "http://18.188.219.114:3000/api/textpost/add";
-  static String addImagePost = "http://18.188.219.114:3000/api/imagepost/add";
-  static String addVideoPost = "http://18.188.219.114:3000/api/videopost/add";
+  static String addTextPost = "$domain/api/textpost/add";
+  static String addImagePost = "$domain/api/imagepost/add";
+  static String addVideoPost = "$domain/api/videopost/add";
   static String createContest =
-      "http://18.188.219.114:3000/api/contestpost/add";
-  static String addPollPost = "http://18.188.219.114:3000/api/pollpost/add";
-  static String addEventPost = "http://18.188.219.114:3000/api/eventpost/add";
+      "$domain/api/contestpost/add";
+  static String addPollPost = "$domain/api/pollpost/add";
+  static String addEventPost = "$domain/api/eventpost/add";
 
   ///edit post
   ///[postId,description]
-  static String editPost = "http://18.188.219.114:3000/api/post/edit";
+  static String editPost = "$domain/api/post/edit";
 
   ///delete post
   ///[postId]
-  static String deletePost = "http://18.188.219.114:3000/api/post/delete";
+  static String deletePost = "$domain/api/post/delete";
 
   //........................................comments..................................................
-  static String comments = "http://18.188.219.114:3000/api/post/comments";
+  static String comments = "$domain/api/post/comments";
 
-  static String addComment = "http://18.188.219.114:3000/api/post/comment/add";
+  static String addComment = "$domain/api/post/comment/add";
   static String removeComment =
-      "http://18.188.219.114:3000/api/post/comment/remove";
+      "$domain/api/post/comment/remove";
 
   static String addSubComment =
-      "http://18.188.219.114:3000/api/post/subcomment/add";
+      "$domain/api/post/subcomment/add";
   static String removeSubComment =
-      "http://18.188.219.114:3000/api/post/subcomment/remove";
+      "$domain/api/post/subcomment/remove";
   static String editComment =
-      "http://18.188.219.114:3000/api/post/comment/edit";
+      "$domain/api/post/comment/edit";
   static String editSubComment =
-      "http://18.188.219.114:3000/api/post/subcomment/edit";
+      "$domain/api/post/subcomment/edit";
 
   //reactions
   static String allPostReaction =
-      "http://18.188.219.114:3000/api/post/reactions";
+      "$domain/api/post/reactions";
   static String addPostReaction =
-      "http://18.188.219.114:3000/api/post/reaction/add";
+      "$domain/api/post/reaction/add";
   static String removePostReaction =
-      "http://18.188.219.114:3000/api/post/reaction/remove";
+      "$domain/api/post/reaction/remove";
 
   //..............................................user story or status.................................
 
-  static String addStatus = "http://18.188.219.114:3000/api/status/add";
-  static String removeStatus = "http://18.188.219.114:3000/api/status/remove";
-  static String getStatus = "http://18.188.219.114:3000/api/status";
-  static String statusHistory = "http://18.188.219.114:3000/api/status/history";
+  static String addStatus = "$domain/api/status/add";
+  static String removeStatus = "$domain/api/status/remove";
+  static String getStatus = "$domain/api/status";
+  static String statusHistory = "$domain/api/status/history";
   static String addStatusFromPost =
-      "http://18.188.219.114:3000/api/status/addfrompost";
+      "$domain/api/status/addfrompost";
 
   //........................................status comments section..................................
-  static String statusComments = "http://18.188.219.114:3000/api/status/comments";
-  static String addStatusComments = "http://18.188.219.114:3000/api/status/comment/add";
-  static String editStatusComments = "http://18.188.219.114:3000/api/status/comment/edit";
-  static String deleteStatusComments = "http://18.188.219.114:3000/api/status/comment/remove";
+  static String statusComments = "$domain/api/status/comments";
+  static String addStatusComments = "$domain/api/status/comment/add";
+  static String editStatusComments = "$domain/api/status/comment/edit";
+  static String deleteStatusComments = "$domain/api/status/comment/remove";
 
 
 
 
   //chat
-  static String followlist = "http://18.188.219.114:3000/api/followlists";
-  static String sendMessage = "http://18.188.219.114:3000/api/chatroom/message";
-  static String newChatroom = "http://18.188.219.114:3000/chatrooms";
+  static String followlist = "$domain/api/followlists";
+  static String sendMessage = "$domain/api/chatroom/message";
+  static String newChatroom = "$domain/chatrooms";
   static String chatroomAllMessages =
-      "http://18.188.219.114:3000/chatroom/messages";
+      "$domain/chatroom/messages";
 
   //chat socket
   static String socketUrl = "http://18.188.219.114:3002";
 
   //contest urls
   static String addContestPoster =
-      "http://18.188.219.114:3000/api/contest/addposter";
+      "$domain/api/contest/addposter";
   static String contestsOrganised =
-      "http://18.188.219.114:3000/api/contests/organised";
+      "$domain/api/contests/organised";
 
   static String contestsParticipated =
-      "http://18.188.219.114:3000/api/contests/participated";
+      "$domain/api/contests/participated";
 
-  static String contestPosts = "http://18.188.219.114:3000/api/contest/posts";
+  static String contestPosts = "$domain/api/contest/posts";
 
   static String contestParticipatePostUpload =
-      "http://18.188.219.114:3000/api/contest/participate/post";
+      "$domain/api/contest/participate/post";
 
   static String removeContestRequest =
-      "http://18.188.219.114:3000/api/contest/removerequest";
+      "$domain/api/contest/removerequest";
 
   static String removeContestParticipantPost =
-      "http://18.188.219.114:3000/api/contest/participate/remove";
+      "$domain/api/contest/participate/remove";
 
   static String contestReaction =
-      "http://18.188.219.114:3000/api/contest/reaction";
+      "$domain/api/contest/reaction";
 
 
       //.................................post promotions urls................................................
       static String checkPromotionPricing =
-      "http://18.188.219.114:3000/api/checkpricing";
+      "$domain/api/checkpricing";
 
       static String addPromotionPost =
-      "http://18.188.219.114:3000/api/addpromotion";
+      "$domain/api/addpromotion";
 
       static String promotionPaymentOrder =
-      "http://18.188.219.114:3000/api/paymentorder";
+      "$domain/api/paymentorder";
 
       static String promotionPaymentVerify=
-      "http://18.188.219.114:3000/api/paymentverify";
+      "$domain/api/paymentverify";
 
 
 }
