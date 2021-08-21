@@ -1,4 +1,5 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/MODULES/14_MainNavigationModule/views/MainNavigation.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
@@ -57,17 +58,23 @@ class PaymentProcessPageController extends GetxController {
         userToken);
 
     print(response);
+    if (response["status"] == "success") {
+      Get.offAll(() => MainNavigationScreen(
+            tabNumber: 4,
+          ));
+    } else {
+      Get.snackbar("Some error occured", "Some error occured");
+    }
   }
 
   ///open the razorpay payment gateway ui to process the payment
   void openCheckout(String orderId) async {
     var options = {
-      
       'key': promotionDetailsBeforePayment["key"],
       'amount': price * 100,
       'name': 'Mediaplus',
       'description': 'Post Promotion',
-      "order_id":orderId.toString(),
+      "order_id": orderId.toString(),
       'prefill': {
         'contact': PrimaryUserData.primaryUserData.mobile,
         'email': 'test@razorpay.com'

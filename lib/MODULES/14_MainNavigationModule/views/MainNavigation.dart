@@ -15,10 +15,17 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 ///
 
 class MainNavigationScreen extends StatelessWidget {
+  final int tabNumber;
   final mainNavigationController = Get.put(MainNavigationController());
+
+  MainNavigationScreen({Key key,this.tabNumber}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MainNavigationController>(
+        initState: (state) {
+          mainNavigationController.currentIndex =
+              tabNumber == null ? 0 : tabNumber;
+        },
         builder: (controller) => Scaffold(
               extendBody: true,
               bottomNavigationBar: AnimatedContainer(
