@@ -21,6 +21,9 @@ abstract class NotificationServices {
           vapidKey:
               "BNG0nM_OcVknT4yTpbp8RuI2WHWfi7fNTxbzbC3yUw--VhbT6HszqZvL1DUOzSpA6-8Fp9DAsPXqoHB78O9EguQ");
       print(token);
+
+      //subscribe to the general topic
+      NotificationServices.subscribeToNotificationChannel("general");
       AndroidNotificationChannel channel = const AndroidNotificationChannel(
         'high_importance_channel', // id
         'High Importance Notifications', // title
@@ -54,20 +57,18 @@ abstract class NotificationServices {
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification?.android;
       if (notification != null && android != null) {
-        print(notification.hashCode);
         flutterLocalNotificationsPlugin.show(
             notification.hashCode,
             notification.title,
             notification.body,
             NotificationDetails(
               android: AndroidNotificationDetails(
-                'high_importance_channel', // id
-                'High Importance Notifications', // title
-                'This channel is used for important notifications.', // description
-                importance: Importance.high,
-                // TODO add a proper drawable resource to android, for now using
-                icon: "launch_background"
-              ),
+                  'high_importance_channel', // id
+                  'High Importance Notifications', // title
+                  'This channel is used for important notifications.', // description
+                  importance: Importance.high,
+                  // TODO add a proper drawable resource to android, for now using
+                  icon: "launch_background"),
             ));
       }
     });
@@ -87,5 +88,14 @@ abstract class NotificationServices {
         }
       }
     });
+  }
+
+  static subscribeToNotificationChannel(String channelName) {
+    FirebaseMessaging.instance.subscribeToTopic(channelName);
+    Get.snackbar("Subscribes to $channelName", "Subscribed");
+  }
+
+  static usubscribeToNotificationChannel(String channelName) {
+    FirebaseMessaging.instance.unsubscribeFromTopic(channelName);
   }
 }
