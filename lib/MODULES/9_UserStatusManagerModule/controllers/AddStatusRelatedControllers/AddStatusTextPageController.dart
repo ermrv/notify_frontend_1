@@ -7,6 +7,7 @@ import 'package:MediaPlus/MODULES/1_AddPostModule/MediaCompressorModule/VideoCom
 import 'package:MediaPlus/MODULES/14_MainNavigationModule/views/MainNavigation.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -35,57 +36,47 @@ class AddStatusTextPageController extends GetxController {
   postHandler() async {
     isUploading = true;
     update();
-    if (imageFiles.length != 0) {
-      compressedImageFiles
-          .addAll(await ImageCompressor.compressImages(imageFiles));
-    }
-    if (videoFiles.length != 0) {
-      for (File i in videoFiles) {
-        compressedVideoFiles.add(await VideoCompressor.compressVideo(i));
-      }
-    }
 
     _uploadFiles();
   }
 
   _uploadFiles() async {
-    var request =
-        http.MultipartRequest("POST", Uri.parse(ApiUrlsData.addStatus));
-    request.headers["authorization"] = "Bearer " + userToken;
-    request.headers["Content-type"] = "multipart/form-data";
-
-    //adding images
-    for (Uint8List i in compressedImageFiles) {
-      int index = compressedImageFiles.indexOf(i);
-      print(index);
-      request.fields['statusText'] = "Status text for image file";
-      request.files.add(http.MultipartFile.fromBytes("statusFile", i.toList(),
-          filename: imageFiles[index].path,
-          contentType: MediaType(
-              "image", imageFiles[index].path.split(".").last.toString())));
+    FlutterUploader _flutterUploader = FlutterUploader();
+    List<FileItem> _files = [];
+    for (File i in imageFiles) {
+      _files.add(
+        FileItem(
+            fieldname: "statusFile",
+            filename: i.path,
+            savedDir: (i.path).split("/")[0].toString()),
+      );
     }
-    for (Uint8List i in compressedVideoFiles) {
-      int index = compressedVideoFiles.indexOf(i);
-      print(index);
-      request.fields['statusText'] = "Status text for video file";
-      request.files.add(http.MultipartFile.fromBytes("statusFile", i.toList(),
-          filename: imageFiles[index].path,
-          contentType: MediaType(
-              "video", imageFiles[index].path.split(".").last.toString())));
+    for (File i in videoFiles) {
+      _files.add(
+        FileItem(
+            fieldname: "statusFile",
+            filename: i.path,
+            savedDir: (i.path).split("/")[0].toString()),
+      );
     }
+    final taskId = await _flutterUploader.enqueue(
+      url: ApiUrlsData.addStatus,
+      method: UploadMethod.POST,
+      headers: {
+        "authorization": "Bearer " + userToken,
+        "Content-type": "multipart/form-data"
+      },
+      data: {
+        "statusText": "okay",
+      },
+      files: _files,
+      showNotification: true,
+      tag: "status upload",
+    );
 
-    var response = await request.send();
-    if (response.statusCode == 200) {
-      print(response);
-      isUploading = false;
-      update();
-
-      /// Get.offUntil(GetPageRoute(page: () => UserProfileScreen()),(route)=>Get.until((route) =>Get.isDialogOpen);
-      Get.off(() => MainNavigationScreen());
-    } else {
-      isUploading = false;
-      update();
-      print(response.statusCode);
-    }
+    ///navigate to the news feed screen
+    Get.offAll(() => MainNavigationScreen(
+          tabNumber: 0,
+        ));
   }
 }
