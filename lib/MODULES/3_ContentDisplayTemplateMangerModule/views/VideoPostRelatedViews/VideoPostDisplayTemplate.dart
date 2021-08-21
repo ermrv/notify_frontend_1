@@ -6,6 +6,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Use
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/InPostVideoPlayer.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
@@ -91,19 +92,13 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 15.0),
                             ),
-                            Text(
-                              widget.postContent["videoPost"]["postBy"]
-                                      ["userName"]
-                                  .toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 14.0),
-                            ),
                           ],
                         ),
                       ),
                       Container(
                         child: Text(
-                          '2 hrs ago',
+                          TimeStampProvider.timeStampProvider(
+                              widget.postContent["createdAt"].toString()),
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 12.0),
                         ),

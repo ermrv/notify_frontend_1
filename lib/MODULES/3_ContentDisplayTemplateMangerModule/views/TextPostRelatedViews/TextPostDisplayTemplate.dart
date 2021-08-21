@@ -6,6 +6,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Use
 
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -97,19 +98,12 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 15.0),
                             ),
-                            Text(
-                              widget.postContent["textPost"]["postBy"]
-                                      ["userName"]
-                                  .toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 14.0),
-                            ),
                           ],
                         ),
                       ),
                       Container(
                         child: Text(
-                          'location',
+                          TimeStampProvider.timeStampProvider(widget.postContent["createdAt"].toString()),
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 12.0),
                         ),
@@ -146,9 +140,10 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                   widget.postContent["textPost"]["description"] == ""
               ? Container()
               : Container(
+                
                   width: screenWidth,
                   padding: EdgeInsets.only(
-                      top: 3.0, bottom: 3.0, right: 2.0, left: 2.0),
+                      top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
                   alignment: Alignment.centerLeft,
                   child: ReadMoreText(
                     widget.postContent["textPost"]["description"]
@@ -156,7 +151,9 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                         .capitalizeFirst,
                     style: TextStyle(fontSize: 16.0,color: Theme.of(context).accentColor.withOpacity(0.9)),
                     
-                    trimLines: 15,
+                    trimLines:5,
+                    trimExpandedText: " less",
+                    trimCollapsedText: "...more",
                     trimMode: TrimMode.Line,
                     colorClickableText: Colors.blue,
                   )),
