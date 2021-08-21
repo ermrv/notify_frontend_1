@@ -167,20 +167,6 @@ class AddPostPageController extends GetxController {
     }
 
     if (videoFile != null && imageFiles == null) {
-      // Uint8List a = await videoFile.readAsBytes();
-      // String originalSize = a.lengthInBytes.toString();
-      compressedVideo = await VideoCompressor.compressVideo(videoFile);
-
-      // Get.dialog(Card(
-      //   child: Column(
-      //     children: [
-      //       Text("compressed  " + originalSize),
-      //       Text("original  " + compressedVideo.lengthInBytes.toString()),
-      //       Text((compressedVideo.lengthInBytes / int.parse(originalSize))
-      //           .toString())
-      //     ],
-      //   ),
-      // ));
       uploadVideo();
     }
 
@@ -249,7 +235,7 @@ class AddPostPageController extends GetxController {
   ///....................to upload video................................
   uploadVideo() async {
     final taskId = await _flutterUploader.enqueue(
-      url: ApiUrlsData.addImagePost,
+      url: ApiUrlsData.addVideoPost,
       method: UploadMethod.POST,
       headers: {
         "authorization": "Bearer " + userToken,
