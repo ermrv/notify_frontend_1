@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/MODULES/14_MainNavigationModule/views/MainNavigation.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/MediaCompressorModule/ImageCompressor.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/MediaCompressorModule/VideoCompressor.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/AddPostScreenBottomSheet.dart';
@@ -20,6 +21,7 @@ import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserProfileScreen.da
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:http/http.dart' as http;
@@ -43,6 +45,7 @@ class AddPostPageController extends GetxController {
   List<File> imageFiles;
   String templateType;
 
+  FlutterUploader _flutterUploader;
   //compressed images and videos in Uint8Lst
   //ready to be uploaded
   List<Uint8List> compressedImages;
@@ -52,6 +55,7 @@ class AddPostPageController extends GetxController {
   @override
   void onInit() {
     textEditingController = TextEditingController();
+    _flutterUploader = FlutterUploader();
     super.onInit();
   }
 
@@ -65,7 +69,7 @@ class AddPostPageController extends GetxController {
     Get.bottomSheet(AddPostScreenBottomSheet(), elevation: 0.0);
   }
 
-  ///get images
+  ///to select image files
   getImageFiles() async {
     Map<String, dynamic> _imagesData = await Get.to(() => ImagesGridDisplay());
     if (_imagesData != null) {
@@ -78,6 +82,7 @@ class AddPostPageController extends GetxController {
     }
   }
 
+  ///to selecet video files
   getVideoFile() async {
     Map<String, dynamic> _temp = await Get.to(() => VideosGridDisplay());
     if (_temp != null) {
@@ -192,140 +197,82 @@ class AddPostPageController extends GetxController {
     update();
   }
 
-  //to upload the text post
+  //.......................to upload the text post...........................
   uploadTextPost() async {
-    Workmanager().registerOneOffTask("uploadText", "uploadText", inputData: {
-      "userToken": "Bearer " + userToken,
-      "postType": "text",
-      "description": textEditingController.text,
-    });
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.addTextPost,
+        {"description": textEditingController.text, "postType": "text"},
+        userToken);
 
-    // if (response != "error") {
-    //   isUploading = false;
-    //   Get.snackbar("Uploaded", "Task Completed");
-    //   update();
-    //   // Get.to(() => UserProfileScreen());
-    // } else {
-    //   isUploading = false;
-    //   Get.snackbar("Error", "Error occured");
-    //   update();
+    if (response != "error") {
+      ///navigate to the news feed screen
+      Get.offAll(() => MainNavigationScreen(
+            tabNumber: 0,
+          ));
+    }
   }
 
-  ///to upload the compressed images
+  ///....................to upload the  images.........................
   uploadImages() async {
-    // var headers = <String, String>{
-    //   "authorization": "Bearer " + userToken,
-    //   "Content-type": "multipart/form-data"
-    // };
-    // var formData = dio.FormData.fromMap({
-    //   "description": textEditingController.text,
-    //   "templateType": templateType,
-    //   "postFile": [
-    //     await dio.MultipartFile.fromFile(imageFiles[0].path,
-    //         contentType: MediaType("image", "jpg")),
-    //   ]
-    // });
-
-    // var response = await Dio().post(ApiUrlsData.addImagePost,
-    //     data: formData, options: Options(headers: headers));
-
-    // print(response.statusCode);
-
-    // //create the request object
-    var request = http.MultipartRequest(
-      "POST",
-      Uri.parse(ApiUrlsData.addImagePost),
+    List<FileItem> _imageFiles = [];
+    for (File i in imageFiles) {
+      _imageFiles.add(
+        FileItem(
+            fieldname: "postFile",
+            filename: i.path,
+            savedDir: (i.path).split("/")[0].toString()),
+      );
+    }
+    final taskId = await _flutterUploader.enqueue(
+      url: ApiUrlsData.addImagePost,
+      method: UploadMethod.POST,
+      headers: {
+        "authorization": "Bearer " + userToken,
+        "Content-type": "multipart/form-data"
+      },
+      data: {
+        "description": textEditingController.text,
+        "templateType": templateType,
+        "postType": "images"
+      },
+      files: _imageFiles,
+      showNotification: true,
+      tag: "image upload",
     );
 
-    //adding the headers
-    request.headers["authorization"] = "Bearer " + userToken;
-    request.headers["Content-type"] = "multipart/form-data";
-
-    //adding body contents
-    // request.fields["aspectRatio"] = aspectRatio.toString();
-    request.fields["description"] = textEditingController.text;
-    request.fields["templateType"] = templateType;
-    request.fields["postType"] = "images";
-    // request.fields["location"] = location;
-
-    //adding files
-    //
-    for (Uint8List i in compressedImages) {
-      int index = compressedImages.indexOf(i);
-      print(index);
-      request.files.add(http.MultipartFile.fromBytes("postFile", i.toList(),
-          filename: imageFiles[index].path,
-          contentType: MediaType(
-              "image", imageFiles[index].path.split(".").last.toString())));
-    }
-    var response = await request.send();
-    response.stream.listen((data) => print(data));
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-      isUploading = false;
-      Get.snackbar("Uploaded", "Task Completed");
-      update();
-    } else {
-      isUploading = false;
-      Get.snackbar("Error", "Error Occured");
-      update();
-    }
+    ///navigate to the news feed screen
+    Get.offAll(() => MainNavigationScreen(
+          tabNumber: 0,
+        ));
   }
 
-  ///video uploader
+  ///....................to upload video................................
   uploadVideo() async {
-    Workmanager().registerOneOffTask(
-      "uploadVideo",
-      "uploadVideo",
-      inputData: {
-        "userToken": "Bearer " + userToken,
-        "postType": "video",
-        "videoType": videoFile.path.split(".").last.toString(),
-        "description": textEditingController.text,
-        "postFile": videoFile.path,
-        "filename": videoFile.path,
-        "aspectRatio": aspectRatio.toString()
+    final taskId = await _flutterUploader.enqueue(
+      url: ApiUrlsData.addImagePost,
+      method: UploadMethod.POST,
+      headers: {
+        "authorization": "Bearer " + userToken,
+        "Content-type": "multipart/form-data"
       },
+      data: {
+        "description": textEditingController.text,
+        "aspectRatio": aspectRatio.toString(),
+        "postType": "video"
+      },
+      files: [
+        FileItem(
+            filename: videoFile.path,
+            savedDir: videoFile.path.split("/")[0],
+            fieldname: "postFile")
+      ],
+      showNotification: true,
+      tag: "video upload",
     );
-    // //create the request object
-    // var request = http.MultipartRequest(
-    //   "POST",
-    //   Uri.parse(ApiUrlsData.addVideoPost),
-    // );
 
-    // //adding the headers
-    // request.headers["authorization"] = "Bearer " + userToken;
-    // request.headers["Content-type"] = "multipart/form-data";
-
-    // //adding body contents
-    // request.fields["aspectRatio"] = aspectRatio.toString();
-    // if (textEditingController.text != null) {
-    //   request.fields["description"] = textEditingController.text;
-    // }
-
-    // request.fields["postType"] = "video";
-    // // request.fields["location"] = location;
-
-    // //adding thumbnail file
-    // request.files.add(http.MultipartFile.fromBytes("postFile", compressedVideo,
-    //     filename: videoFile.path,
-    //     contentType:
-    //         MediaType("video", videoFile.path.split(".").last.toString())));
-
-    // http.StreamedResponse response = await request.send();
-    // if (response.statusCode == 200) {
-    //   isUploading = false;
-    //   update();
-    //   Get.to(() => UserProfileScreen(
-    //         profileOwnerId: PrimaryUserData.primaryUserData.userId,
-    //       ));
-    // } else {
-    //   isUploading = false;
-    //   Get.snackbar("Error", "Error Occured");
-    //   update();
-    // }
-    // response.stream.listen((value) {
-    //   print(value.length);
-    // });
+    ///navigate to the news feed screen
+    Get.offAll(() => MainNavigationScreen(
+          tabNumber: 0,
+        ));
   }
 }
