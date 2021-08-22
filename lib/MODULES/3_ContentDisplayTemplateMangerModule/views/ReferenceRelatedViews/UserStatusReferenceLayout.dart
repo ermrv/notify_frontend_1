@@ -47,6 +47,7 @@ class _Template extends StatelessWidget {
             ));
       },
       child: Container(
+        margin: EdgeInsets.symmetric(horizontal:3.0),
         height: _containerWidth,
         width: _containerWidth,
         decoration: BoxDecoration(
@@ -77,48 +78,51 @@ class _AddStatusButtonContainer extends StatelessWidget {
       onTap: () {
         Get.to(() => AddStatusScreen());
       },
-      child: Stack(
-        children: [
-          //post
-          Container(
-            width: _containerWidth,
-            height: _containerWidth,
-            margin: EdgeInsets.only(right: 4.0),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(100.0),
-              child: PrimaryUserData.primaryUserData.profilePic == null
-                  ? Image.asset(
-                      "assets/person.jpg",
-                      fit: BoxFit.fill,
-                    )
-                  : CachedNetworkImage(
-                      imageUrl:
-                          PrimaryUserData.primaryUserData.profilePic.toString(),
-                      fit: BoxFit.fill,
-                    ),
-            ),
-          ),
-          Positioned(
-            bottom: 5.0,
-            right: 5.0,
-            child: Container(
-              width: 20.0,
-              height: 20.0,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 3.0),
+        child: Stack(
+          children: [
+            //post
+            Container(
+              width: _containerWidth,
+              height: _containerWidth,
+              margin: EdgeInsets.only(right: 4.0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.blue,
               ),
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.add,
-                size: 16.0,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100.0),
+                child: PrimaryUserData.primaryUserData.profilePic == null
+                    ? Image.asset(
+                        "assets/person.jpg",
+                        fit: BoxFit.fill,
+                      )
+                    : CachedNetworkImage(
+                        imageUrl: PrimaryUserData.primaryUserData.profilePic
+                            .toString(),
+                        fit: BoxFit.fill,
+                      ),
               ),
             ),
-          )
-        ],
+            Positioned(
+              bottom: 5.0,
+              right: 5.0,
+              child: Container(
+                width: 20.0,
+                height: 20.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.blue,
+                ),
+                alignment: Alignment.center,
+                child: Icon(
+                  Icons.add,
+                  size: 16.0,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
