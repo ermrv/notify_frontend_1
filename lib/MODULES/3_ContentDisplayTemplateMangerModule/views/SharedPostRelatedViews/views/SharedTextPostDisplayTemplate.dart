@@ -15,13 +15,16 @@ import 'package:get/get.dart';
 class SharedTextPostDisplayTemplate extends StatefulWidget {
   final postContent;
 
-  const SharedTextPostDisplayTemplate({Key key,@required this.postContent}) : super(key: key);
+  const SharedTextPostDisplayTemplate({Key key, @required this.postContent})
+      : super(key: key);
 
   @override
-  _SharedTextPostDisplayTemplateState createState() => _SharedTextPostDisplayTemplateState();
+  _SharedTextPostDisplayTemplateState createState() =>
+      _SharedTextPostDisplayTemplateState();
 }
 
-class _SharedTextPostDisplayTemplateState extends State<SharedTextPostDisplayTemplate> {
+class _SharedTextPostDisplayTemplateState
+    extends State<SharedTextPostDisplayTemplate> {
   String _ownerId;
   String _thisUserId;
   bool _isOwner = false;
@@ -31,18 +34,18 @@ class _SharedTextPostDisplayTemplateState extends State<SharedTextPostDisplayTem
 
   List _likes = [];
 
-
-   @override
+  @override
   void initState() {
     _ownerId = widget.postContent["postBy"]["_id"].toString();
     _thisUserId = PrimaryUserData.primaryUserData.userId.toString();
     _isOwner = _ownerId == _thisUserId;
-    
+
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,8 +71,7 @@ class _SharedTextPostDisplayTemplateState extends State<SharedTextPostDisplayTem
                       borderRadius: BorderRadius.circular(30.0),
                       child: CachedNetworkImage(
                         imageUrl: ApiUrlsData.domain +
-                            widget.postContent["postBy"]
-                                ["profilePic"],
+                            widget.postContent["postBy"]["profilePic"],
                         fit: BoxFit.fill,
                       )),
                 ),
@@ -87,8 +89,7 @@ class _SharedTextPostDisplayTemplateState extends State<SharedTextPostDisplayTem
                         child: Row(
                           children: [
                             Text(
-                              widget.postContent["postBy"]["name"]
-                                      .toString() +
+                              widget.postContent["postBy"]["name"].toString() +
                                   "  ",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 15.0),
@@ -154,15 +155,10 @@ class _SharedTextPostDisplayTemplateState extends State<SharedTextPostDisplayTem
           Container(
               margin: EdgeInsets.only(left: 8.0),
               decoration: BoxDecoration(
-                  border: Border(
-                      top: BorderSide(
-                          width: 0.5,
-                          color:
-                              Theme.of(context).accentColor.withOpacity(0.5)),
-                      left: BorderSide(
-                          width: 0.5,
-                          color:
-                              Theme.of(context).accentColor.withOpacity(0.5)))),
+                borderRadius: BorderRadius.circular(5.0),
+                  border: Border.all(
+                      width: 0.5,
+                      color: Theme.of(context).accentColor.withOpacity(0.5))),
               child: TextPostDisplayTemplate(
                 postContent: widget.postContent,
               )),
@@ -236,7 +232,6 @@ class _SharedTextPostDisplayTemplateState extends State<SharedTextPostDisplayTem
       ),
     );
   }
-
 
   //edited description updater
   updateEditedDescription(String editedDescription) {

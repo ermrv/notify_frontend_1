@@ -58,7 +58,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
         children: [
           //basic info of the post
           Container(
-            height: 60.0,
+            height: 50.0,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

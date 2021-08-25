@@ -1,6 +1,7 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/10_PostPromotionModule/views/EstimatedBudgetPageScreen.dart';
+import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/DuobleImageHorizontalDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/DuobleImageVerticalDisplayTemplate.dart';
@@ -248,7 +249,14 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                           children: [
                             IconButton(
                                 icon: Icon(MaterialCommunityIcons.share),
-                                onPressed: () {}),
+                                onPressed: () {
+                                  Get.to(() => SharePostPageScreen(
+                                        postId: widget.postContent["imagePost"]
+                                            ["_id"],
+                                            postOwnerName: widget.postContent["imagePost"]["postBy"]["name"],
+                                            postOwnerProfilePic:widget.postContent["imagePost"]["postBy"]["profilePic"],
+                                      ));
+                                }),
                             Text(" 1.1k")
                           ],
                         ),

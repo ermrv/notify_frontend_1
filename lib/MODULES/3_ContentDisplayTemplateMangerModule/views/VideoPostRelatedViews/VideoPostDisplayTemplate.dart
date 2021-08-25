@@ -1,6 +1,7 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/10_PostPromotionModule/views/EstimatedBudgetPageScreen.dart';
+import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
@@ -220,7 +221,14 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                           children: [
                             IconButton(
                                 icon: Icon(MaterialCommunityIcons.share),
-                                onPressed: () {}),
+                                onPressed: () {
+                                   Get.to(() => SharePostPageScreen(
+                                        postId: widget.postContent["videoPost"]
+                                            ["_id"],
+                                            postOwnerName: widget.postContent["videoPost"]["postBy"]["name"],
+                                            postOwnerProfilePic:widget.postContent["videoPost"]["postBy"]["profilePic"],
+                                      ));
+                                }),
                             Text(" 1.1k")
                           ],
                         ),
