@@ -78,7 +78,7 @@ class _SharedImagePostDisplayTemplateState
                       borderRadius: BorderRadius.circular(30.0),
                       child: CachedNetworkImage(
                         imageUrl: ApiUrlsData.domain +
-                            widget.postContent["imagePost"]["postBy"]
+                            widget.postContent["postBy"]
                                 ["profilePic"],
                         fit: BoxFit.fill,
                       )),
@@ -97,7 +97,7 @@ class _SharedImagePostDisplayTemplateState
                         child: Row(
                           children: [
                             Text(
-                              widget.postContent["imagePost"]["postBy"]["name"]
+                              widget.postContent["postBy"]["name"]
                                       .toString() +
                                   "  ",
                               style: TextStyle(
@@ -297,7 +297,7 @@ class _SharedImagePostDisplayTemplateState
 
   //edited description updater
   updateEditedDescription(String editedDescription) {
-    widget.postContent["imagePost"]["description"] = editedDescription;
+    widget.postContent["sharedDiscription"] = editedDescription;
     if (this.mounted) {
       setState(() {});
     }

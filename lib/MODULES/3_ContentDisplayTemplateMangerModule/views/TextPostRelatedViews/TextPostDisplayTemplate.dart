@@ -27,7 +27,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
   String _ownerId;
   String _thisUserId;
   bool _isOwner = false;
-
+  bool _isShared = false;
   int _numberOfComments = 0;
   int _numberOfReactions = 0;
 
@@ -38,7 +38,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
     _ownerId = widget.postContent["textPost"]["postBy"]["_id"].toString();
     _thisUserId = PrimaryUserData.primaryUserData.userId.toString();
     _isOwner = _ownerId == _thisUserId;
-
+    _isShared = widget.postContent["primary"].toString() != "true";
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
 
@@ -103,7 +103,8 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                       ),
                       Container(
                         child: Text(
-                          TimeStampProvider.timeStampProvider(widget.postContent["createdAt"].toString()),
+                          TimeStampProvider.timeStampProvider(
+                              widget.postContent["createdAt"].toString()),
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 12.0),
                         ),
@@ -140,7 +141,6 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                   widget.postContent["textPost"]["description"] == ""
               ? Container()
               : Container(
-                
                   width: screenWidth,
                   padding: EdgeInsets.only(
                       top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
@@ -149,80 +149,82 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                     widget.postContent["textPost"]["description"]
                         .toString()
                         .capitalizeFirst,
-                    style: TextStyle(fontSize: 16.0,color: Theme.of(context).accentColor.withOpacity(0.9)),
-                    
-                    trimLines:5,
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: Theme.of(context).accentColor.withOpacity(0.9)),
+                    trimLines: 5,
                     trimExpandedText: " less",
                     trimCollapsedText: "...more",
                     trimMode: TrimMode.Line,
                     colorClickableText: Colors.blue,
                   )),
-
-          Container(
-            height: 50.0,
-            width: screenWidth,
-            padding: EdgeInsets.symmetric(horizontal: 2.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
+          _isShared
+              ? Container()
+              : Container(
+                  height: 50.0,
+                  width: screenWidth,
+                  padding: EdgeInsets.symmetric(horizontal: 2.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                          icon: _likes.contains(
-                            _thisUserId,
-                          )
-                              ? Icon(
-                                  Octicons.heart,
-                                  size: 24.0,
-                                  color: Colors.red,
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                                icon: _likes.contains(
+                                  _thisUserId,
                                 )
-                              : Icon(
-                                  EvilIcons.heart,
+                                    ? Icon(
+                                        Octicons.heart,
+                                        size: 24.0,
+                                        color: Colors.red,
+                                      )
+                                    : Icon(
+                                        EvilIcons.heart,
+                                        size: 28.0,
+                                        color: Colors.white,
+                                      ),
+                                onPressed: () {
+                                  reactionCountUpdater(_thisUserId);
+                                }),
+                            Text(_numberOfReactions.toString())
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            IconButton(
+                                icon: Icon(
+                                  EvilIcons.comment,
                                   size: 28.0,
-                                  color: Colors.white,
                                 ),
-                          onPressed: () {
-                            reactionCountUpdater(_thisUserId);
-                          }),
-                      Text(_numberOfReactions.toString())
+                                onPressed: () {
+                                  Get.to(() => CommentsDisplayScreen(
+                                        postId: widget.postContent["_id"],
+                                      ));
+                                }),
+                            Text(_numberOfComments.toString() + " "),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            IconButton(
+                                icon: Icon(MaterialCommunityIcons.share),
+                                onPressed: () {}),
+                            Text(" 1.1k")
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
                     ],
                   ),
                 ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(
-                            EvilIcons.comment,
-                            size: 28.0,
-                          ),
-                          onPressed: () {
-                            Get.to(() => CommentsDisplayScreen(
-                                  postId: widget.postContent["_id"],
-                                ));
-                          }),
-                      Text(_numberOfComments.toString() + " "),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(MaterialCommunityIcons.share),
-                          onPressed: () {}),
-                      Text(" 1.1k")
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
