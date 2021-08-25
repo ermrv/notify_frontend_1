@@ -34,7 +34,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
   bool _isOwner = false;
   String _ownerId;
   String _thisUserId;
-
+  bool _isShared = false;
   int _numberOfComments = 0;
   int _numberOfReactions = 0;
   int _numberOfShares = 0;
@@ -45,6 +45,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
     _thisUserId = PrimaryUserData.primaryUserData.userId.toString();
     _isOwner = _ownerId == _thisUserId;
     _likes = widget.postContent["likes"];
+    _isShared = widget.postContent["primary"].toString() == "false";
     _numberOfReactions = _likes.length;
     super.initState();
   }
@@ -110,7 +111,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                 Expanded(
                   child: Container(),
                 ),
-                 _isOwner
+                _isOwner
                     ? Container(
                         child: TextButton(
                           onPressed: () {
@@ -163,71 +164,73 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
             postContent: widget.postContent,
           ),
 
-          Container(
-            height: 50.0,
-            width: screenWidth,
-            padding: EdgeInsets.symmetric(horizontal: 2.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
+          _isShared
+              ? Container()
+              : Container(
+                  height: 50.0,
+                  width: screenWidth,
+                  padding: EdgeInsets.symmetric(horizontal: 2.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                          icon: _likes.contains(
-                            _thisUserId,
-                          )
-                              ? Icon(
-                                  Octicons.heart,
-                                  size: 24.0,
-                                  color: Colors.red,
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                                icon: _likes.contains(
+                                  _thisUserId,
                                 )
-                              : Icon(
-                                  EvilIcons.heart,
+                                    ? Icon(
+                                        Octicons.heart,
+                                        size: 24.0,
+                                        color: Colors.red,
+                                      )
+                                    : Icon(
+                                        EvilIcons.heart,
+                                        size: 28.0,
+                                        color: Colors.white,
+                                      ),
+                                onPressed: () {
+                                  reactionCountUpdater(_thisUserId);
+                                }),
+                            Text(_numberOfReactions.toString())
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            IconButton(
+                                icon: Icon(
+                                  EvilIcons.comment,
                                   size: 28.0,
-                                  color: Colors.white,
                                 ),
-                          onPressed: () {
-                            reactionCountUpdater(_thisUserId);
-                          }),
-                      Text(_numberOfReactions.toString())
+                                onPressed: () {
+                                  Get.to(() => CommentsDisplayScreen(
+                                        postId: widget.postContent["_id"],
+                                      ));
+                                }),
+                            Text(_numberOfComments.toString() + " "),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            IconButton(
+                                icon: Icon(MaterialCommunityIcons.share),
+                                onPressed: () {}),
+                            Text(" 1.1k")
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
                     ],
                   ),
                 ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(
-                            EvilIcons.comment,
-                            size: 28.0,
-                          ),
-                          onPressed: () {
-                            Get.to(() => CommentsDisplayScreen(
-                                  postId: widget.postContent["_id"],
-                                ));
-                          }),
-                      Text(_numberOfComments.toString() + " "),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(MaterialCommunityIcons.share),
-                          onPressed: () {}),
-                      Text(" 1.1k")
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
