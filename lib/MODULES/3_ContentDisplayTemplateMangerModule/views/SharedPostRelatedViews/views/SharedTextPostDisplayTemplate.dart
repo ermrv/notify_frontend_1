@@ -136,11 +136,13 @@ class _SharedTextPostDisplayTemplateState
               ],
             ),
           ),
-          widget.postContent["sharedDiscription"] == null
+          widget.postContent["sharedDescription"] == null
               ? Container()
               : Container(
+                padding: EdgeInsets.symmetric(horizontal: 4.0),
+                alignment: Alignment.centerLeft,
                   child: ReadMoreText(
-                    widget.postContent["sharedDiscription"].toString(),
+                    widget.postContent["sharedDescription"].toString(),
                     style: TextStyle(
                         fontSize: 15.0,
                         color: Theme.of(context).accentColor.withOpacity(0.9)),
@@ -235,7 +237,7 @@ class _SharedTextPostDisplayTemplateState
 
   //edited description updater
   updateEditedDescription(String editedDescription) {
-    widget.postContent["sharedDiscription"] = editedDescription;
+    widget.postContent["sharedDescription"] = editedDescription;
     if (this.mounted) {
       setState(() {});
     }

@@ -132,7 +132,7 @@ class _SharedImagePostDisplayTemplateState
                     ? PostOwnerActionsOnPost(
                         postId: widget.postContent["_id"].toString(),
                         postDescription:
-                            widget.postContent["sharedDiscription"].toString(),
+                            widget.postContent["sharedDescription"].toString(),
                         editedDescriptionUpdater: (String description) {
                           updateEditedDescription(description);
                         },
@@ -145,11 +145,11 @@ class _SharedImagePostDisplayTemplateState
               ],
             ),
           ),
-          widget.postContent["sharedDiscription"] == null
+          widget.postContent["sharedDescription"] == null
               ? Container()
               : Container(
                   child: ReadMoreText(
-                    widget.postContent["sharedDiscription"].toString(),
+                    widget.postContent["sharedDescription"].toString(),
                     style: TextStyle(
                         fontSize: 15.0,
                         color: Theme.of(context).accentColor.withOpacity(0.9)),
@@ -297,7 +297,7 @@ class _SharedImagePostDisplayTemplateState
 
   //edited description updater
   updateEditedDescription(String editedDescription) {
-    widget.postContent["sharedDiscription"] = editedDescription;
+    widget.postContent["sharedDescription"] = editedDescription;
     if (this.mounted) {
       setState(() {});
     }
