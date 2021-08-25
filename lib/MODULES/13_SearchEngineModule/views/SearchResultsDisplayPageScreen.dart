@@ -29,13 +29,19 @@ class SearchResultsDisplayPageScreen extends StatelessWidget {
               Get.back();
             },
             child: Container(
-              height: 40.0,
-              width: screenWidth,
-              child: TextFormField(
-                initialValue: searchedKeywords,
-                readOnly: true,
-              ),
-            ),
+                decoration: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          color:
+                              Theme.of(context).accentColor.withOpacity(0.8))),
+                ),
+                height: 25.0,
+                width: screenWidth,
+                child: Text(
+                  searchedKeywords,
+                  style:
+                      TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
+                )),
           ),
         ),
         body: controller.searchResults == null

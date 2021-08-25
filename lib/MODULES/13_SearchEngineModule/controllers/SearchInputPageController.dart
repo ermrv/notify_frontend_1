@@ -12,7 +12,7 @@ class SearchInputPageController extends GetxController {
   }
 
   search() {
-    if (textEditingController.text != null) {
+    if (textEditingController.text != "") {
       Get.to(() => SearchResultsDisplayPageScreen(
             searchedKeywords:textEditingController.text,
           ));
