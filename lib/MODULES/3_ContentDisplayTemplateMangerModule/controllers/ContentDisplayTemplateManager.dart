@@ -5,6 +5,8 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Ima
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PollPostRelatedViews/PollPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ImagePostReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SharedPostRelatedViews/views/SharedImagePostDisplayTemplate.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SharedPostRelatedViews/views/SharedTextPostDisplayTemplate.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SharedPostRelatedViews/views/SharedVideoPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/TextPostRelatedViews/TextPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/VideoPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
@@ -32,16 +34,25 @@ class ContentDisplayManager extends GetxController {
   }
 
   getContentDisplayTemplate(var content) {
-    print(content["postContentType"].toString().toLowerCase());
     switch (content["postContentType"].toString().toLowerCase()) {
       //for images post
       case "image":
-        return ImagePostDisplayTemplate(postContent: content);
-        break;
-
+        {
+          if (content["primary"].toString() == "true") {
+            return ImagePostDisplayTemplate(postContent: content);
+          } else if (content["primary"].toString() == "false")
+            return SharedImagePostDisplayTemplate(postContent: content);
+          break;
+        }
       //for video post
       case "video":
-        return VideoPostDisplayTemplate(postContent: content);
+        {
+          if (content["primary"].toString() == "true") {
+            return VideoPostDisplayTemplate(postContent: content);
+          } else if (content["primary"].toString() == "false")
+            return SharedVideoPostDisplayTemplate(postContent: content);
+          break;
+        }
         break;
 
       //for contest post
@@ -64,9 +75,17 @@ class ContentDisplayManager extends GetxController {
         );
         break;
       case "text":
-        return TextPostDisplayTemplate(
-          postContent: content,
-        );
+        {
+          if (content["primary"].toString() == "true") {
+            return TextPostDisplayTemplate(
+              postContent: content,
+            );
+          } else if (content["primary"].toString() == "false")
+            return SharedTextPostDisplayTemplate(
+              postContent: content,
+            );
+        }
+
         break;
 
 //------------------------------------post reference views-----------------------------------------------------------//

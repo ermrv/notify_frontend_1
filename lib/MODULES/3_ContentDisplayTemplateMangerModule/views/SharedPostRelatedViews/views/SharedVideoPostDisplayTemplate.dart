@@ -12,16 +12,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 
-class SharedVideoPostDisplayPost extends StatefulWidget {
+class SharedVideoPostDisplayTemplate extends StatefulWidget {
   final postContent;
 
-  const SharedVideoPostDisplayPost({Key key, this.postContent}) : super(key: key);
+  const SharedVideoPostDisplayTemplate({Key key, this.postContent}) : super(key: key);
 
   @override
   _SharedVideoPostDisplayPostState createState() => _SharedVideoPostDisplayPostState();
 }
 
-class _SharedVideoPostDisplayPostState extends State<SharedVideoPostDisplayPost> {
+class _SharedVideoPostDisplayPostState extends State<SharedVideoPostDisplayTemplate> {
    String _ownerId;
   String _thisUserId;
   bool _isOwner = false;
