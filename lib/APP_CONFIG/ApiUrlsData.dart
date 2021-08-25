@@ -49,7 +49,8 @@ abstract class ApiUrlsData {
   //................................share post...............................
     static String sharePost = "$domain/api/post/share";
 
-
+  //.................................search..........................
+  static String search = "$domain/api/search";
   ///edit post
   ///[postId,description]
   static String editPost = "$domain/api/post/edit";

@@ -50,7 +50,7 @@ class _SharedVideoPostDisplayPostState extends State<SharedVideoPostDisplayTempl
         children: [
           //basic info of the post
           Container(
-            height: 60.0,
+            height: 50.0,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -137,6 +137,8 @@ class _SharedVideoPostDisplayPostState extends State<SharedVideoPostDisplayTempl
           widget.postContent["sharedDescription"] == null
               ? Container()
               : Container(
+                padding: EdgeInsets.symmetric(horizontal: 4.0),
+                alignment: Alignment.centerLeft,
                   child: ReadMoreText(
                     widget.postContent["sharedDescription"].toString(),
                     style: TextStyle(
@@ -151,17 +153,13 @@ class _SharedVideoPostDisplayPostState extends State<SharedVideoPostDisplayTempl
                 ),
           //original post contents display
           Container(
-              margin: EdgeInsets.only(left: 8.0),
+              margin: EdgeInsets.only(left: 5.0),
+              padding: EdgeInsets.only(left: 3.0),
               decoration: BoxDecoration(
-                  border: Border(
-                      top: BorderSide(
-                          width: 0.5,
-                          color:
-                              Theme.of(context).accentColor.withOpacity(0.5)),
-                      left: BorderSide(
-                          width: 0.5,
-                          color:
-                              Theme.of(context).accentColor.withOpacity(0.5)))),
+                borderRadius: BorderRadius.circular(5.0),
+                  border: Border.all(
+                      width: 0.5,
+                      color: Theme.of(context).accentColor.withOpacity(0.5))),
               child: VideoPostDisplayTemplate(
                 postContent: widget.postContent,
               )),

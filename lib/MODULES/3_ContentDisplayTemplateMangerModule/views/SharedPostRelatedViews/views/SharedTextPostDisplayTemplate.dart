@@ -155,7 +155,8 @@ class _SharedTextPostDisplayTemplateState
                 ),
           //original post contents display
           Container(
-              margin: EdgeInsets.only(left: 8.0),
+              margin: EdgeInsets.only(left: 5.0),
+              padding: EdgeInsets.only(left: 3.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5.0),
                   border: Border.all(
