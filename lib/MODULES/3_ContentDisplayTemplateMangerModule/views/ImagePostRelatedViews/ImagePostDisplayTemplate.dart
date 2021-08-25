@@ -22,7 +22,6 @@ import 'package:get/get.dart';
 ///widget to dispaly the image posts, given [postContent]
 class ImagePostDisplayTemplate extends StatefulWidget {
   final postContent;
-
   ImagePostDisplayTemplate({Key key, this.postContent}) : super(key: key);
 
   @override
@@ -34,7 +33,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
   String _ownerId;
   String _thisUserId;
   bool _isOwner = false;
-
+  bool _isShared = false;
   int _numberOfComments = 0;
   int _numberOfReactions = 0;
 
@@ -45,7 +44,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
     _ownerId = widget.postContent["imagePost"]["postBy"]["_id"].toString();
     _thisUserId = PrimaryUserData.primaryUserData.userId.toString();
     _isOwner = _ownerId == _thisUserId;
-
+    _isShared = widget.postContent["primary"].toString() != "true";
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
 
@@ -63,7 +62,8 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
         children: [
           //basic info of the post
           Container(
-            height: 60.0,
+           height: 45.0,
+           padding: _isShared?EdgeInsets.zero:EdgeInsets.symmetric(vertical: 3.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -117,7 +117,8 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                       ),
                       Container(
                         child: Text(
-                          TimeStampProvider.timeStampProvider(widget.postContent["createdAt"].toString()),
+                          TimeStampProvider.timeStampProvider(
+                              widget.postContent["createdAt"].toString()),
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 12.0),
                         ),
@@ -191,71 +192,73 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                 widget.postContent["imagePost"]["templateType"]),
           ),
 
-          Container(
-            height: 50.0,
-            width: screenWidth,
-            padding: EdgeInsets.symmetric(horizontal: 2.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
+          _isShared
+              ? Container()
+              : Container(
+                  height: 50.0,
+                  width: screenWidth,
+                  padding: EdgeInsets.symmetric(horizontal: 2.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                          icon: _likes.contains(
-                            _thisUserId,
-                          )
-                              ? Icon(
-                                  Octicons.heart,
-                                  size: 24.0,
-                                  color: Colors.red,
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                                icon: _likes.contains(
+                                  _thisUserId,
                                 )
-                              : Icon(
-                                  EvilIcons.heart,
+                                    ? Icon(
+                                        Octicons.heart,
+                                        size: 24.0,
+                                        color: Colors.red,
+                                      )
+                                    : Icon(
+                                        EvilIcons.heart,
+                                        size: 28.0,
+                                        color: Colors.white,
+                                      ),
+                                onPressed: () {
+                                  reactionCountUpdater(_thisUserId);
+                                }),
+                            Text(_numberOfReactions.toString())
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            IconButton(
+                                icon: Icon(
+                                  EvilIcons.comment,
                                   size: 28.0,
-                                  color: Colors.white,
                                 ),
-                          onPressed: () {
-                            reactionCountUpdater(_thisUserId);
-                          }),
-                      Text(_numberOfReactions.toString())
+                                onPressed: () {
+                                  Get.to(() => CommentsDisplayScreen(
+                                        postId: widget.postContent["_id"],
+                                      ));
+                                }),
+                            Text(_numberOfComments.toString() + " "),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            IconButton(
+                                icon: Icon(MaterialCommunityIcons.share),
+                                onPressed: () {}),
+                            Text(" 1.1k")
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
                     ],
                   ),
                 ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(
-                            EvilIcons.comment,
-                            size: 28.0,
-                          ),
-                          onPressed: () {
-                            Get.to(() => CommentsDisplayScreen(
-                                  postId: widget.postContent["_id"],
-                                ));
-                          }),
-                      Text(_numberOfComments.toString() + " "),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(MaterialCommunityIcons.share),
-                          onPressed: () {}),
-                      Text(" 1.1k")
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
