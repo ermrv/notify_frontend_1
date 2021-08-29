@@ -15,14 +15,17 @@ import 'package:get/get.dart';
 class SharedVideoPostDisplayTemplate extends StatefulWidget {
   final postContent;
 
-  const SharedVideoPostDisplayTemplate({Key key, this.postContent}) : super(key: key);
+  const SharedVideoPostDisplayTemplate({Key key, this.postContent})
+      : super(key: key);
 
   @override
-  _SharedVideoPostDisplayPostState createState() => _SharedVideoPostDisplayPostState();
+  _SharedVideoPostDisplayPostState createState() =>
+      _SharedVideoPostDisplayPostState();
 }
 
-class _SharedVideoPostDisplayPostState extends State<SharedVideoPostDisplayTemplate> {
-   String _ownerId;
+class _SharedVideoPostDisplayPostState
+    extends State<SharedVideoPostDisplayTemplate> {
+  String _ownerId;
   String _thisUserId;
   bool _isOwner = false;
 
@@ -36,12 +39,13 @@ class _SharedVideoPostDisplayPostState extends State<SharedVideoPostDisplayTempl
     _ownerId = widget.postContent["postBy"]["_id"].toString();
     _thisUserId = PrimaryUserData.primaryUserData.userId.toString();
     _isOwner = _ownerId == _thisUserId;
-    
+
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -67,8 +71,7 @@ class _SharedVideoPostDisplayPostState extends State<SharedVideoPostDisplayTempl
                       borderRadius: BorderRadius.circular(30.0),
                       child: CachedNetworkImage(
                         imageUrl: ApiUrlsData.domain +
-                            widget.postContent["postBy"]
-                                ["profilePic"],
+                            widget.postContent["postBy"]["profilePic"],
                         fit: BoxFit.fill,
                       )),
                 ),
@@ -86,8 +89,7 @@ class _SharedVideoPostDisplayPostState extends State<SharedVideoPostDisplayTempl
                         child: Row(
                           children: [
                             Text(
-                              widget.postContent["postBy"]["name"]
-                                      .toString() +
+                              widget.postContent["postBy"]["name"].toString() +
                                   "  ",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 15.0),
@@ -137,8 +139,8 @@ class _SharedVideoPostDisplayPostState extends State<SharedVideoPostDisplayTempl
           widget.postContent["sharedDescription"] == null
               ? Container()
               : Container(
-                padding: EdgeInsets.symmetric(horizontal: 4.0),
-                alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: 4.0),
+                  alignment: Alignment.centerLeft,
                   child: ReadMoreText(
                     widget.postContent["sharedDescription"].toString(),
                     style: TextStyle(
@@ -156,10 +158,11 @@ class _SharedVideoPostDisplayPostState extends State<SharedVideoPostDisplayTempl
               margin: EdgeInsets.only(left: 5.0),
               padding: EdgeInsets.only(left: 3.0),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.0),
-                  border: Border.all(
-                      width: 0.5,
-                      color: Theme.of(context).accentColor.withOpacity(0.5))),
+                  border: Border(
+                      left: BorderSide(
+                          width: 1.0,
+                          color:
+                              Theme.of(context).accentColor.withOpacity(0.6)))),
               child: VideoPostDisplayTemplate(
                 postContent: widget.postContent,
               )),
@@ -263,5 +266,3 @@ class _SharedVideoPostDisplayPostState extends State<SharedVideoPostDisplayTempl
     }
   }
 }
-
-

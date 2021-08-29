@@ -167,10 +167,12 @@ class _SharedImagePostDisplayTemplateState
               margin: EdgeInsets.only(left: 5.0),
               padding: EdgeInsets.only(left: 3.0),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.0),
-                  border: Border.all(
-                      width: 0.5,
-                      color: Theme.of(context).accentColor.withOpacity(0.5))),
+                  border: Border(
+                      
+                      left: BorderSide(
+                          width:1.0,
+                          color:
+                              Theme.of(context).accentColor.withOpacity(0.6)))),
               child: GestureDetector(
                 onDoubleTap: () {
                   reactionCountUpdater(_thisUserId);
