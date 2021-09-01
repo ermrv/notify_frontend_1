@@ -65,10 +65,11 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  height: 40.0,
-                  width: 40.0,
+                  padding: EdgeInsets.all(1.0),
+                  height: 35.0,
+                  width: 35.0,
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.grey[300]),
+                      shape: BoxShape.circle, color: Colors.deepOrange[900]),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(30.0),
                       child: CachedNetworkImage(

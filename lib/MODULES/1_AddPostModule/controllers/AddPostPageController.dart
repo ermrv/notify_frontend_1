@@ -239,7 +239,6 @@ class AddPostPageController extends GetxController {
       method: UploadMethod.POST,
       headers: {
         "authorization": "Bearer " + userToken,
-        "Content-type": "multipart/form-data"
       },
       data: {
         "description": textEditingController.text,
