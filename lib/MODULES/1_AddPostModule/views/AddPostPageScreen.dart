@@ -34,11 +34,7 @@ class AddPostPageScreen extends StatelessWidget {
                         onPressed: () {
                           controller.getVideoFile();
                         }),
-                    IconButton(
-                        icon: Icon(Icons.event),
-                        onPressed: () {
-                          Get.to(() => CreateEventPageScreen());
-                        }),
+                   
                     IconButton(
                         icon: Icon(Icons.poll),
                         onPressed: () {

@@ -184,6 +184,7 @@ class UserDrawerScreen extends StatelessWidget {
                     onPressed: () async {
                       final storage = GetStorage();
                       userToken = "";
+                      await storage.remove("unRegisteredUserToken");
                       await storage
                           .remove("userToken")
                           .then((value) => Get.offAll(() => LoginScreen()));

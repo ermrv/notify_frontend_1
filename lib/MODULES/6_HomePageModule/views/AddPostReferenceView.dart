@@ -55,13 +55,13 @@ class AddPostReferenceView extends StatelessWidget {
                   Expanded(
                     child: Container(),
                   ),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: Icon(Icons.event),
-                    onPressed: () {
-                      Get.to(() => CreateEventPageScreen());
-                    },
-                  ),
+                  // IconButton(
+                  //   padding: EdgeInsets.zero,
+                  //   icon: Icon(Icons.event),
+                  //   onPressed: () {
+                  //     Get.to(() => CreateEventPageScreen());
+                  //   },
+                  // ),
                   IconButton(
                     padding: EdgeInsets.zero,
                     icon: Icon(Icons.poll),

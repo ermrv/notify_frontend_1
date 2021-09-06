@@ -1,6 +1,6 @@
 abstract class ApiUrlsData {
 
-  static String domain = "http://192.168.43.160:3000";
+  static String domain = "http://139.59.8.116:3000";
   //..................................appStart........................................
   static String appStart = "$domain/api/appstart";
 

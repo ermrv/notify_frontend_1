@@ -13,7 +13,7 @@ class AddPostScreenBottomSheet extends StatelessWidget {
     return GetBuilder<AddPostPageController>(
       builder: (controller) => Card(
         child: Container(
-          height: 260.0,
+          height: 160.0,
           child: Column(
             children: [
               Container(
@@ -50,18 +50,18 @@ class AddPostScreenBottomSheet extends StatelessWidget {
                       Text("   Add Video")
                     ],
                   )),
-              TextButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith(
-                          (states) => Colors.transparent),
-                      side: MaterialStateProperty.resolveWith(
-                          (states) => BorderSide.none)),
-                  onPressed: () {
-                    Get.off(() => CreateEventPageScreen());
-                  },
-                  child: Row(
-                    children: [Icon(Icons.event), Text("   Create Event")],
-                  )),
+              // TextButton(
+              //     style: ButtonStyle(
+              //         backgroundColor: MaterialStateProperty.resolveWith(
+              //             (states) => Colors.transparent),
+              //         side: MaterialStateProperty.resolveWith(
+              //             (states) => BorderSide.none)),
+              //     onPressed: () {
+              //       Get.off(() => CreateEventPageScreen());
+              //     },
+              //     child: Row(
+              //       children: [Icon(Icons.event), Text("   Create Event")],
+              //     )),
               TextButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.resolveWith(

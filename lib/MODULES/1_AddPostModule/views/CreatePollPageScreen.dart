@@ -81,7 +81,7 @@ class CreatePollPageScreen extends StatelessWidget {
                           type: DateTimePickerType.dateTime,
                           dateMask: 'E   d MMMM, yyyy - hh:mm a',
                           use24HourFormat: false,
-                          firstDate: DateTime.now().add(Duration(days: 1)),
+                          firstDate: DateTime.now().subtract(Duration(days: 1)),
                           lastDate:
                               DateTime.now().add(Duration(days: 365 * 10)),
                           onChanged: (value) {
