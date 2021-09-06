@@ -289,6 +289,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.26.0"
+  get_mac:
+    dependency: "direct main"
+    description:
+      name: get_mac
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   get_storage:
     dependency: "direct main"
     description:

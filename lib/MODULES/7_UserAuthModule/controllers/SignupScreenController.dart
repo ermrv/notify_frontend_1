@@ -3,6 +3,7 @@ import 'package:MediaPlus/MODULES/1_AddPostModule/SingleImagePickerModule/views/
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/GetUserData.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:get/get.dart';
+import 'package:get_mac/get_mac.dart';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
@@ -103,9 +104,21 @@ class SignUpScreenController extends GetxController {
   _navigator() {
     if (rcvdData["login"].toString() == "true" &&
         rcvdData["registered"].toString() == "true") {
+      _sendMacAddress();
       Get.offAll(() => GetUserData());
     } else {
       Get.defaultDialog(radius: 5.0, title: "Ooops! something went wrong");
+    }
+  }
+
+  _sendMacAddress() async {
+    String macAddress;
+    try {
+      macAddress = await GetMac.macAddress;
+      var response = await ApiServices.postWithAuth(
+          ApiUrlsData.userLoginActivity, {"macAdress": macAddress}, userToken);
+    } catch (e) {
+      print(e);
     }
   }
 }

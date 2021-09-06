@@ -6,6 +6,7 @@ import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:get_mac/get_mac.dart';
 
 class OTPInputController extends GetxController {
   final String mobileNumber;
@@ -52,9 +53,9 @@ class OTPInputController extends GetxController {
         final storage = GetStorage();
 
         if (otpVerificationResponse["registered"].toString() == "true") {
-          print("registered");
           storage.write("userToken", otpVerificationResponse["token"]);
           userToken = otpVerificationResponse["token"];
+          _sendMacAddress();
           Get.offAll(() => GetUserData());
         } else if (otpVerificationResponse["registered"].toString() ==
             "false") {
@@ -69,6 +70,17 @@ class OTPInputController extends GetxController {
       }
     } else {
       print("error");
+    }
+  }
+
+  _sendMacAddress() async {
+    String macAddress;
+    try {
+      macAddress = await GetMac.macAddress;
+      var response = await ApiServices.postWithAuth(
+          ApiUrlsData.userLoginActivity, {"macAdress": macAddress}, userToken);
+    } catch (e) {
+      print(e);
     }
   }
 }

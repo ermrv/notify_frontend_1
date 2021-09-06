@@ -254,6 +254,12 @@
       "languageVersion": "2.9"
     },
     {
+      "name": "get_mac",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/get_mac-0.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "get_storage",
       "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/get_storage-1.4.0",
       "packageUri": "lib/",
@@ -638,7 +644,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-08-21T12:43:52.718520Z",
+  "generated": "2021-09-05T05:57:07.770389Z",
   "generator": "pub",
   "generatorVersion": "2.13.1"
 }

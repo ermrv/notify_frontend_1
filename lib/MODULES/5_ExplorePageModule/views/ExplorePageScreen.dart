@@ -53,12 +53,16 @@ class ExplorePageScreen extends StatelessWidget {
                 )
               : ListView(
                   children: [
-                    TagsReferenceLayout(),
-                    ImagePostReferenceLayout(),
-                    ContestPostReferenceLayout(),
-                    EventPostReferenceLayout(),
-                    ProfileReferenceLayout(),
-                    ContentDisplayTemplateProvider(data: controller.data)
+                    // TagsReferenceLayout(),
+                    // ImagePostReferenceLayout(),
+                    // ContestPostReferenceLayout(),
+                    // EventPostReferenceLayout(),
+                    // ProfileReferenceLayout(),
+                    // ContentDisplayTemplateProvider(data: controller.data)
+
+                    Center(
+                      child: Text("No data available for now"),
+                    )
                   ],
                 )),
     );

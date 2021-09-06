@@ -15,7 +15,7 @@ class NewsFeedPageScreen extends StatelessWidget {
         builder: (controller) => MediaQuery.removeViewPadding(
               removeTop: true,
               context: context,
-              child: controller.data.length == 0
+              child: controller.newsFeedData == null
                   ? Container(
                       child: Center(
                         child: SpinKitPulse(
@@ -38,8 +38,10 @@ class NewsFeedPageScreen extends StatelessWidget {
                                 boxContents: controller.userStatusData,
                               ),
                               AddPostReferenceView(),
-                              ContentDisplayTemplateProvider(
-                                  data: controller.data)
+                              controller.newsFeedData.length == 0
+                                  ? Center(child: Text("No posts yet"))
+                                  : ContentDisplayTemplateProvider(
+                                      data: controller.newsFeedData)
                             ],
                           )),
                     ),

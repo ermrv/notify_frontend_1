@@ -46,7 +46,7 @@ dependencies:
 
   flex_color_scheme: ^2.1.1
   path_provider: any
-
+  get_mac: ^0.0.1
   flick_video_player:
     path: ./../LocalPackages/flick-video-player
 

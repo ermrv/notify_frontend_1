@@ -5,6 +5,8 @@ abstract class ApiUrlsData {
   static String appStart = "$domain/api/appstart";
 
   //.......................................user............................................
+  static String userLoginActivity =
+      "$domain/api/user/loginactivity";
   static String userProfilePicUpdate =
       "$domain/api/user/profilepicupdate";
   static String userProfileDetailsUpdate =

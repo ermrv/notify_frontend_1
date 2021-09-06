@@ -3,6 +3,7 @@ import 'package:MediaPlus/MODULES/14_MainNavigationModule/views/MainNavigation.d
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/NotificationServices/NotificationServices.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
@@ -16,9 +17,10 @@ class GetUserDataController extends GetxController {
   }
 
   getData() async {
+    String fcmToken = await NotificationServices.getFcmToken();
     print("token" + userToken.toString());
     var response = await ApiServices.postWithAuth(
-        ApiUrlsData.appStart, {}, userToken.toString());
+        ApiUrlsData.appStart, {"fcmToken":fcmToken}, userToken.toString());
     if (response == "error") {
       Get.snackbar("Error", "Cannot get the data");
     } else {

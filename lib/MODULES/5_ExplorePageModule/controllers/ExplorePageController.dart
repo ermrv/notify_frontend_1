@@ -6,8 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
 
-class ExplorePageController extends GetxController
-    with SingleGetTickerProviderMixin {
+class ExplorePageController extends GetxController {
   double maxScrollExtent = 2.0;
   bool callScrollListener = true;
   List data = [];

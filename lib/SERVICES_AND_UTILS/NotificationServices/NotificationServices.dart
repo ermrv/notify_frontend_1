@@ -16,8 +16,8 @@ abstract class NotificationServices {
     }
 
     if (Platform.isIOS || Platform.isAndroid) {
-      print("getting token");
-
+      
+      
       //subscribe to the general topic
       NotificationServices.subscribeToNotificationChannel("general");
       AndroidNotificationChannel channel = const AndroidNotificationChannel(
@@ -93,5 +93,11 @@ abstract class NotificationServices {
 
   static usubscribeToNotificationChannel(String channelName) {
     FirebaseMessaging.instance.unsubscribeFromTopic(channelName);
+  }
+
+  static Future<String> getFcmToken() async {
+    String _token = await FirebaseMessaging.instance.getToken();
+    print("toekn  $_token");
+    return _token;
   }
 }

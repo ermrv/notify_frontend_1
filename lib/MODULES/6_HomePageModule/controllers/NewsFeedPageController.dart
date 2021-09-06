@@ -7,7 +7,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 class NewsFeedPageController extends GetxController {
   double maxScrollExtent = 2.0;
   bool callScrollListener = true;
-  List data = [];
+  List newsFeedData;
   List userStatusData = [];
 
   @override
@@ -18,20 +18,20 @@ class NewsFeedPageController extends GetxController {
   }
 
   getData() async {
+    update();
     var response =
         await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl, {}, userToken);
-    //store the previous data
-    List _previousData = data;
+    // //store the previous data
+    // List _previousData = data;
 
-    //make the data list null
-    data = [];
-    //add the recent data in the data list
+    // //make the data list null
+    // data = [];
+    // //add the recent data in the data list
 
-    data.addAll(response);
+    newsFeedData=response;
 
-    //now add the previous data to the list
-    data.addAll(_previousData);
-
+    // //now add the previous data to the list
+    // data.addAll(_previousData);
     update();
   }
 
