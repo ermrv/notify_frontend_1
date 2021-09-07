@@ -15,6 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 ///selects the template of the display
+///
+///NOT IN USE//
 class ContentDisplayManager extends GetxController {
   List data;
 
