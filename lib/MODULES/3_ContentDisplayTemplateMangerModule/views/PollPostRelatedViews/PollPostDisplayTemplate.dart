@@ -130,7 +130,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                 _isOwner
                     ? PostOwnerActionsOnPost(
                         postId: widget.postContent["_id"].toString(),
-                        postDescription: widget.postContent["textPost"]
+                        postDescription: widget.postContent["pollPost"]
                                 ["description"]
                             .toString(),
                         editedDescriptionUpdater: (String description) {
@@ -138,7 +138,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                         },
                       )
                     : OtherUserActionsOnPost(
-                        postUserId: widget.postContent["textPost"]["postBy"]
+                        postUserId: widget.postContent["pollPost"]["postBy"]
                                 ["_id"]
                             .toString(),
                         postId: widget.postContent["_id"].toString(),

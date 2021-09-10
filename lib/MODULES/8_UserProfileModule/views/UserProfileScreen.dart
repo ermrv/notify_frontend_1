@@ -88,22 +88,23 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   _getData() async {
-    if (!_userIsProfileOwner){
+    if (!_userIsProfileOwner) {
       await _getBasicProfileData();
-    } 
-
-    var response = await ApiServices.postWithAuth(
-        ApiUrlsData.userPosts, {"_id": widget.profileOwnerId}, userToken);
-    if (response != "error") {
-      data = response["posts"];
-      if (this.mounted) {
-        setState(() {});
-      }
     }
+
+    // var response = await ApiServices.postWithAuth(
+    //     ApiUrlsData.userPosts, {"_id": widget.profileOwnerId}, userToken);
+    // if (response != "error") {
+    //   data = response["posts"];
+    //   if (this.mounted) {
+    //     setState(() {});
+    //   }
+    // }
   }
 
   ///getting basic user data
   _getBasicProfileData() async {
+    print(widget.profileOwnerId);
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.userProfileBasicData,
         {"profileId": widget.profileOwnerId},

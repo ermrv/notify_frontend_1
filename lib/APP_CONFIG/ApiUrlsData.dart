@@ -27,10 +27,10 @@ abstract class ApiUrlsData {
   ///user profile data and related posts
   static String userPosts = "$domain/api/user/posts";
   static String userProfileBasicData =
-      "$domain/api/user/profile";
+      "$domain/api/user";
 
 //..........................................newsfeed.......................................................
-  static String newsFeedUrl = "$domain/api/home/newsfeed";
+  static String newsFeedUrl = "$domain/api/newsfeed";
 
   static String contestUrl = "$domain/api/home/contests";
 //............................................explore..................................................
