@@ -42,10 +42,10 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.MediaPlus"
+        
+        applicationId "com.aspire100.MediaPlus"
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -79,4 +79,4 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 }
 
-
+}

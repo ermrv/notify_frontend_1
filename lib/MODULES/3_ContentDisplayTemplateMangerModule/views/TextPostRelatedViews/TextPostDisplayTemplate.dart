@@ -4,6 +4,7 @@ import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserProfileScreen.dart';
 
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
@@ -65,20 +66,28 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                 //
                 //
                 //user profile pic
-                Container(
-                  padding: EdgeInsets.all(1.0),
-                  height: 35.0,
-                  width: 35.0,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.deepOrange[900]),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30.0),
-                      child: CachedNetworkImage(
-                        imageUrl: ApiUrlsData.domain +
-                            widget.postContent["textPost"]["postBy"]
-                                ["profilePic"],
-                        fit: BoxFit.fill,
-                      )),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => UserProfileScreen(
+                          profileOwnerId: widget.postContent["textPost"]
+                              ["postBy"]["_id"],
+                        ));
+                  },
+                                  child: Container(
+                    padding: EdgeInsets.all(1.0),
+                    height: 35.0,
+                    width: 35.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.deepOrange[900]),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30.0),
+                        child: CachedNetworkImage(
+                          imageUrl: ApiUrlsData.domain +
+                              widget.postContent["textPost"]["postBy"]
+                                  ["profilePic"],
+                          fit: BoxFit.fill,
+                        )),
+                  ),
                 ),
                 //
                 //

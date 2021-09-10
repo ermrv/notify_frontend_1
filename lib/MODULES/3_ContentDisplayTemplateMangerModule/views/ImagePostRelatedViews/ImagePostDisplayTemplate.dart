@@ -11,6 +11,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Ima
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/SingleImageDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserProfileScreen.dart';
 
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
@@ -63,28 +64,38 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
         children: [
           //basic info of the post
           Container(
-           height: 45.0,
-           padding: _isShared?EdgeInsets.zero:EdgeInsets.symmetric(vertical: 3.0),
+            height: 45.0,
+            padding: _isShared
+                ? EdgeInsets.zero
+                : EdgeInsets.symmetric(vertical: 3.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 //
                 //
                 //user profile pic
-                Container(
-                  padding: EdgeInsets.all(1.0),
-                  height: 35.0,
-                  width: 35.0,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.deepOrange[900]),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30.0),
-                      child: CachedNetworkImage(
-                        imageUrl: ApiUrlsData.domain +
-                            widget.postContent["imagePost"]["postBy"]
-                                ["profilePic"],
-                        fit: BoxFit.fill,
-                      )),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => UserProfileScreen(
+                          profileOwnerId: widget.postContent["imagePost"]
+                              ["postBy"]["_id"],
+                        ));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(1.0),
+                    height: 35.0,
+                    width: 35.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.deepOrange[900]),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30.0),
+                        child: CachedNetworkImage(
+                          imageUrl: ApiUrlsData.domain +
+                              widget.postContent["imagePost"]["postBy"]
+                                  ["profilePic"],
+                          fit: BoxFit.fill,
+                        )),
+                  ),
                 ),
                 //
                 //
@@ -253,8 +264,12 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                                   Get.to(() => SharePostPageScreen(
                                         postId: widget.postContent["imagePost"]
                                             ["_id"],
-                                            postOwnerName: widget.postContent["imagePost"]["postBy"]["name"],
-                                            postOwnerProfilePic:widget.postContent["imagePost"]["postBy"]["profilePic"],
+                                        postOwnerName:
+                                            widget.postContent["imagePost"]
+                                                ["postBy"]["name"],
+                                        postOwnerProfilePic:
+                                            widget.postContent["imagePost"]
+                                                ["postBy"]["profilePic"],
                                       ));
                                 }),
                             Text(" 1.1k")

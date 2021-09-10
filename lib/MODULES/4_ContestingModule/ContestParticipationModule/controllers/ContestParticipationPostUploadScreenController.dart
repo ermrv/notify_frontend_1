@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/SingleImagePickerModule/views/SingleImagePicker.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/SingleVideoPickerModule/views/SingleVideoPicker.dart';
+import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserProfileScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +83,7 @@ class ContestParticipationPostUploadScreenController extends GetxController {
       if (response.statusCode == 200) {
         print(response);
         // Get.offUntil(GetPageRoute(page: () => UserProfileScreen()),(route)=>Get.until((route) =>Get.isDialogOpen);
-        Get.off(() => UserProfileScreen());
+        Get.off(() => UserProfileScreen(profileOwnerId: PrimaryUserData.primaryUserData.userId,));
       } else {
         print(response.statusCode);
       }

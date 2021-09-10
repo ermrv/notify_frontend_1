@@ -16,7 +16,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 class UserProfileScreen extends StatefulWidget {
   final String profileOwnerId;
 
-  const UserProfileScreen({Key key, this.profileOwnerId}) : super(key: key);
+  const UserProfileScreen({Key key, @required this.profileOwnerId})
+      : super(key: key);
 
   @override
   _UserProfileScreenState createState() => _UserProfileScreenState();
@@ -87,7 +88,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   _getData() async {
-    if (!_userIsProfileOwner) _getBasicProfileData();
+    if (!_userIsProfileOwner){
+      await _getBasicProfileData();
+    } 
 
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.userPosts, {"_id": widget.profileOwnerId}, userToken);

@@ -63,7 +63,7 @@ class UserDrawerScreen extends StatelessWidget {
                           EdgeInsets.symmetric(
                               horizontal: 10.0, vertical: 10.0))),
                   onPressed: () {
-                    Get.to(() => UserProfileScreen());
+                    Get.to(() => UserProfileScreen(profileOwnerId: PrimaryUserData.primaryUserData.userId,));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

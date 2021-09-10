@@ -6,6 +6,7 @@ import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsD
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/InPostVideoPlayer.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
@@ -64,20 +65,28 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  padding: EdgeInsets.all(1.0),
-                  height: 35.0,
-                  width: 35.0,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.deepOrange[900]),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30.0),
-                      child: CachedNetworkImage(
-                        imageUrl: ApiUrlsData.domain +
-                            widget.postContent["videoPost"]["postBy"]
-                                ["profilePic"],
-                        fit: BoxFit.fill,
-                      )),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => UserProfileScreen(
+                          profileOwnerId: widget.postContent["videoPost"]
+                              ["postBy"]["_id"],
+                        ));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(1.0),
+                    height: 35.0,
+                    width: 35.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.deepOrange[900]),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30.0),
+                        child: CachedNetworkImage(
+                          imageUrl: ApiUrlsData.domain +
+                              widget.postContent["videoPost"]["postBy"]
+                                  ["profilePic"],
+                          fit: BoxFit.fill,
+                        )),
+                  ),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 8.0),
@@ -223,11 +232,15 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                             IconButton(
                                 icon: Icon(MaterialCommunityIcons.share),
                                 onPressed: () {
-                                   Get.to(() => SharePostPageScreen(
+                                  Get.to(() => SharePostPageScreen(
                                         postId: widget.postContent["videoPost"]
                                             ["_id"],
-                                            postOwnerName: widget.postContent["videoPost"]["postBy"]["name"],
-                                            postOwnerProfilePic:widget.postContent["videoPost"]["postBy"]["profilePic"],
+                                        postOwnerName:
+                                            widget.postContent["videoPost"]
+                                                ["postBy"]["name"],
+                                        postOwnerProfilePic:
+                                            widget.postContent["videoPost"]
+                                                ["postBy"]["profilePic"],
                                       ));
                                 }),
                             Text(" 1.1k")

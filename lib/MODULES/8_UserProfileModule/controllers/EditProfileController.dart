@@ -36,7 +36,7 @@ class EditProfileController extends GetxController {
       PrimaryUserData.primaryUserData.setName(response["userData"]["name"]);
       PrimaryUserData.primaryUserData.setBio(response["userData"]["bio"]);
 
-      Get.off(() => UserProfileScreen());
+      Get.off(() => UserProfileScreen(profileOwnerId: PrimaryUserData.primaryUserData.userId,));
     }
   }
 }
