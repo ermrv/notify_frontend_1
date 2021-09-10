@@ -5,7 +5,7 @@ import 'package:MediaPlus/MODULES/6_HomePageModule/views/HomePageScreen.dart';
 import 'package:MediaPlus/MODULES/14_MainNavigationModule/controllers/MainNavigationController.dart';
 import 'package:MediaPlus/MODULES/14_MainNavigationModule/views/CustomBottomNavigationBar.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserProfileScreen.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/KeepWidgetAliveModule/KeepWidgetAliveWrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

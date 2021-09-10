@@ -1,6 +1,6 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserProfileScreen.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:flutter/widgets.dart';

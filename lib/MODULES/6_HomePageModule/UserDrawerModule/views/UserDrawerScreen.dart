@@ -3,7 +3,7 @@ import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/4_ContestingModule/ContestHostingModule/views/ContestHostingHistoryScreen.dart';
 import 'package:MediaPlus/MODULES/4_ContestingModule/ContestParticipationModule/views/ContestParticipationHistoryScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserProfileScreen.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/LoginScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';

@@ -11,7 +11,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Ima
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/SingleImageDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserProfileScreen.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';

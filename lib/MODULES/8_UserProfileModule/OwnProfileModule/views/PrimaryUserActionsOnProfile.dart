@@ -1,6 +1,6 @@
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/CommonPostDisplayPageScreen.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/EditProfileScreen.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/EditProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

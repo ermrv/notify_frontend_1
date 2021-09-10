@@ -1,12 +1,13 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserFollowersList.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserFollowingsList.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/ShowProfilePicScreen.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/UserFollowersList.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/UserFollowingsList.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'ShowProfilePicScreen.dart';
 
 ///
 ///all the data for this widget is derived from the [PrimaryUserDataModel]

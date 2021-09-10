@@ -4,10 +4,11 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Con
 import 'package:MediaPlus/MODULES/6_HomePageModule/views/AddPostReferenceView.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/PrimaryUserActionsOnProfile.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/SecondaryUserActionsOnProfile.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/PrimaryUserBasicInfoContainer.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/SecondaryUserBasicInfoContainer.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OthersProfileModule/views/SecondaryUserActionsOnProfile.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OthersProfileModule/views/SecondaryUserBasicInfoContainer.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/PrimaryUserActionsOnProfile.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/PrimaryUserBasicInfoContainer.dart';
+
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -92,14 +93,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       await _getBasicProfileData();
     }
 
-    // var response = await ApiServices.postWithAuth(
-    //     ApiUrlsData.userPosts, {"_id": widget.profileOwnerId}, userToken);
-    // if (response != "error") {
-    //   data = response["posts"];
-    //   if (this.mounted) {
-    //     setState(() {});
-    //   }
-    // }
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.userPosts, {"_id": widget.profileOwnerId}, userToken);
+    if (response != "error") {
+      data = response["posts"];
+      if (this.mounted) {
+        setState(() {});
+      }
+    }
   }
 
   ///getting basic user data
@@ -107,7 +108,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     print(widget.profileOwnerId);
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.userProfileBasicData,
-        {"profileId": widget.profileOwnerId},
+        {"userId": widget.profileOwnerId},
         userToken);
     if (response != "error") {
       profileData = response;

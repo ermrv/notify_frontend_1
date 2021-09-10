@@ -17,7 +17,6 @@ import 'package:MediaPlus/MODULES/1_AddPostModule/views/VideoGridDisplay.dart';
 
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';

@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:MediaPlus/MODULES/8_UserProfileModule/controllers/EditProfileController.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/controllers/EditProfileController.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/ShowProfilePicScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/ShowProfilePicScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

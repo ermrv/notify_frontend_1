@@ -1,12 +1,12 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserFollowersList.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/UserFollowingsList.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/views/ShowProfilePicScreen.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/UserFollowersList.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../UserFollowingsList.dart';
 
 ///
 ///all the data for this widget is derived from the [PrimaryUserDataModel]
@@ -100,9 +100,10 @@ class SecondaryUserBasicInfoContainer extends StatelessWidget {
                                   width: 100.0,
                                   alignment: Alignment.topCenter,
                                   child: Text(
-                                    basicUserData["followers"]
-                                        .length()
-                                        .toString(),
+                                    // basicUserData["followers"]
+                                    //     .length()
+                                    //     .toString(),
+                                    "3",
                                     style: TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.bold),
@@ -137,9 +138,10 @@ class SecondaryUserBasicInfoContainer extends StatelessWidget {
                                 width: 100.0,
                                 alignment: Alignment.topCenter,
                                 child: Text(
-                                  basicUserData["followings"]
-                                      .length()
-                                      .toString(),
+                                  // basicUserData["followings"]
+                                  //     .length()
+                                  //     .toString(),
+                                  "2",
                                   style: TextStyle(
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.bold),
