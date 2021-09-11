@@ -62,7 +62,7 @@ class _OwnProfilePageScreenState extends State<OwnProfilePageScreen> {
     var response =
         await ApiServices.postWithAuth(ApiUrlsData.userPosts, {}, userToken);
     if (response != "error") {
-      postData = response["posts"];
+      postData = response;
       if (this.mounted) {
         setState(() {});
       }

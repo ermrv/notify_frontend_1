@@ -100,10 +100,10 @@ class SecondaryUserBasicInfoContainer extends StatelessWidget {
                                   width: 100.0,
                                   alignment: Alignment.topCenter,
                                   child: Text(
-                                    // basicUserData["followers"]
-                                    //     .length()
-                                    //     .toString(),
-                                    "3",
+                                    basicUserData["followers"]
+                                        .length
+                                        .toString(),
+                                    
                                     style: TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.bold),
@@ -138,10 +138,9 @@ class SecondaryUserBasicInfoContainer extends StatelessWidget {
                                 width: 100.0,
                                 alignment: Alignment.topCenter,
                                 child: Text(
-                                  // basicUserData["followings"]
-                                  //     .length()
-                                  //     .toString(),
-                                  "2",
+                                  basicUserData["following"]
+                                      .length
+                                      .toString(),
                                   style: TextStyle(
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.bold),

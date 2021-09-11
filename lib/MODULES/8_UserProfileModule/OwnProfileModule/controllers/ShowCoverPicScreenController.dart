@@ -10,9 +10,9 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
-class ShowProfilePicController extends GetxController {
+class ShowCoverPicController extends GetxController {
+  File coverPicFile;
   bool isUpdating = false;
-  File profilePicFile;
 
   @override
   void onInit() {
@@ -21,36 +21,35 @@ class ShowProfilePicController extends GetxController {
 
   ///get the selected profile pic
   ///
-  getProfilePicFile() async {
-    profilePicFile = await Get.to(SingleImagePicker(
-      intendedFor: "profilePic",
+  getCoverPicFile() async {
+    coverPicFile = await Get.to(SingleImagePicker(
+      intendedFor: "coverPic",
     ));
     update();
   }
 
   ///method for updating the selected profile pic
   ///
-  updateProfilePic() async {
-    if (profilePicFile == null) {
+  updateCoverPic() async {
+    if (coverPicFile == null) {
       return null;
     }
 
     isUpdating = true;
     update();
     var request = http.MultipartRequest(
-        "POST", Uri.parse(ApiUrlsData.userProfilePicUpdate));
+        "POST", Uri.parse(ApiUrlsData.userCoverPicUpdate));
     request.headers["authorization"] = "Bearer " + userToken;
     request.files.add(await http.MultipartFile.fromPath(
       "image",
-      profilePicFile.path,
-      contentType: MediaType("image", profilePicFile.path.split(".").last),
+      coverPicFile.path,
+      contentType: MediaType("image", coverPicFile.path.split(".").last),
     ));
     var streamedResponse = await request.send();
     if (streamedResponse.statusCode == 200) {
       var response = await http.Response.fromStream(streamedResponse);
       var data = json.decode(response.body);
-      PrimaryUserData.primaryUserData
-          .setProfilePic(data["userData"]["profilePic"]);
+      PrimaryUserData.primaryUserData.setCoverPic(data["userData"]["coverPic"]);
       isUpdating = false;
       update();
       Get.back();

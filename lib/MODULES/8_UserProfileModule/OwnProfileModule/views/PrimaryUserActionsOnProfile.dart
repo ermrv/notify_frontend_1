@@ -1,3 +1,4 @@
+import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/CommonPostDisplayPageScreen.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/EditProfileScreen.dart';
@@ -36,9 +37,9 @@ class PrimaryUserActionsOnProfile extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text("Promotions")),
                       onPressed: () {
-                        Get.to(() => CommonPostDisplayPageScreen(
-                              title: "Promotions",
-                            ));
+                        // Get.to(() => CommonPostDisplayPageScreen(
+                        //       title: "Promotions",
+                        //     ));
                       }),
                 ),
                 Container(
@@ -49,6 +50,8 @@ class PrimaryUserActionsOnProfile extends StatelessWidget {
                       onPressed: () {
                         Get.to(() => CommonPostDisplayPageScreen(
                               title: "Photos",
+                              apiUrl: ApiUrlsData.userPosts,
+                              apiData: {"type":"image"},
                             ));
                       }),
                 ),
@@ -60,31 +63,33 @@ class PrimaryUserActionsOnProfile extends StatelessWidget {
                       onPressed: () {
                         Get.to(() => CommonPostDisplayPageScreen(
                               title: "Videos",
+                               apiUrl: ApiUrlsData.userPosts,
+                              apiData: {"type":"video"},
                             ));
                       }),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextButton(
-                      child: Container(
-                          alignment: Alignment.center, child: Text("Events")),
-                      onPressed: () {
-                        Get.to(() => CommonPostDisplayPageScreen(
-                              title: "Events",
-                            ));
-                      }),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextButton(
-                      child: Container(
-                          alignment: Alignment.center, child: Text("Contests")),
-                      onPressed: () {
-                        Get.to(() => CommonPostDisplayPageScreen(
-                              title: "Contests",
-                            ));
-                      }),
-                ),
+                // Container(
+                //   margin: EdgeInsets.symmetric(horizontal: 8.0),
+                //   child: TextButton(
+                //       child: Container(
+                //           alignment: Alignment.center, child: Text("Events")),
+                //       onPressed: () {
+                //         Get.to(() => CommonPostDisplayPageScreen(
+                //               title: "Events",
+                //             ));
+                //       }),
+                // ),
+                // Container(
+                //   margin: EdgeInsets.symmetric(horizontal: 8.0),
+                //   child: TextButton(
+                //       child: Container(
+                //           alignment: Alignment.center, child: Text("Contests")),
+                //       onPressed: () {
+                //         Get.to(() => CommonPostDisplayPageScreen(
+                //               title: "Contests",
+                //             ));
+                //       }),
+                // ),
               ],
             ),
           ),

@@ -1,9 +1,13 @@
 import 'dart:ui';
 
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/controllers/EditProfileController.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/controllers/ShowCoverPicScreenController.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/ShowCoverPicScreen.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/ShowProfilePicScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 class EditProfileScreen extends StatelessWidget {
@@ -15,12 +19,7 @@ class EditProfileScreen extends StatelessWidget {
               appBar: AppBar(
                 title: Text(
                   "Edit Profile",
-                  style: TextStyle(color: Colors.black),
                 ),
-                brightness: Brightness.light,
-                backgroundColor: Colors.white,
-                elevation: 1.0,
-                iconTheme: IconThemeData(color: Colors.black),
               ),
               extendBodyBehindAppBar: true,
               body: ListView(
@@ -30,27 +29,24 @@ class EditProfileScreen extends StatelessWidget {
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 15.0),
-                    child: RaisedButton(
-                        elevation: 0.0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0)),
+                    child: TextButton(
                         child: Container(
-                          height: 45.0,
+                          height: 40.0,
                           alignment: Alignment.center,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                  height: 40.0,
-                                  width: 40.0,
+                                  height: 35.0,
+                                  width: 35.0,
                                   decoration:
                                       BoxDecoration(shape: BoxShape.circle),
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(30.0),
-                                      child: Image.network(
-                                        PrimaryUserData
+                                      child: CachedNetworkImage(
+                                        imageUrl: PrimaryUserData
                                             .primaryUserData.profilePic,
-                                        fit: BoxFit.fill,
+                                        fit: BoxFit.cover,
                                       ))),
                               Text("  Change Profile Pic"),
                             ],
@@ -65,34 +61,31 @@ class EditProfileScreen extends StatelessWidget {
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 15.0),
-                    child: RaisedButton(
-                        elevation: 0.0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0)),
+                    child: TextButton(
                         child: Container(
-                          height: 45.0,
+                          height: 40.0,
                           alignment: Alignment.center,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                  height: 40.0,
-                                  width: 40.0,
+                                  height: 35.0,
+                                  width: 35.0,
                                   decoration:
                                       BoxDecoration(shape: BoxShape.circle),
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(30.0),
-                                      child: Image.network(
-                                        PrimaryUserData
-                                            .primaryUserData.profilePic,
-                                        fit: BoxFit.fill,
+                                      child: CachedNetworkImage(
+                                        imageUrl: PrimaryUserData
+                                            .primaryUserData.coverPic,
+                                        fit: BoxFit.cover,
                                       ))),
                               Text("  Change Cover Pic"),
                             ],
                           ),
                         ),
                         onPressed: () {
-                          print("update profile screen");
+                          Get.to(() => ShowCoverPicScreen());
                         }),
                   ),
                   Container(
@@ -154,16 +147,16 @@ class EditProfileScreen extends StatelessWidget {
                   Container(
                     margin:
                         EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
-                    child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                          8.0,
-                        )),
-                        elevation: 0.0,
+                    child: TextButton(
                         child: Container(
-                          height: 45.0,
+                          height: 35.0,
                           alignment: Alignment.center,
-                          child: Text("Done"),
+                          child: controller.isUpdating
+                              ? SpinKitThreeBounce(
+                                  color: Colors.blue,
+                                  size: 18.0,
+                                )
+                              : Text("Done"),
                         ),
                         onPressed: () {
                           controller.sendEditedData();

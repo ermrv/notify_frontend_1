@@ -7,8 +7,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CommonPostDisplayPageScreen extends StatefulWidget {
   final String title;
+  final String apiUrl;
+  final Map<String, dynamic> apiData;
 
-  const CommonPostDisplayPageScreen({Key key, this.title}) : super(key: key);
+  const CommonPostDisplayPageScreen(
+      {Key key, this.title, @required this.apiUrl, @required this.apiData})
+      : super(key: key);
   @override
   _CommonPostDisplayPageScreenState createState() =>
       _CommonPostDisplayPageScreenState();
@@ -16,7 +20,7 @@ class CommonPostDisplayPageScreen extends StatefulWidget {
 
 class _CommonPostDisplayPageScreenState
     extends State<CommonPostDisplayPageScreen> {
-  List data = [];
+  List data;
   String title = "Posts";
   @override
   void initState() {
@@ -33,13 +37,15 @@ class _CommonPostDisplayPageScreenState
       appBar: AppBar(
         title: Text(title),
       ),
-      body: data.length == 0
+      body: data == null
           ? Container(
               child: Center(
                 child: SpinKitPulse(
                   color: Colors.blue,
                 ),
               ),
+            ):data.length==0?Center(
+              child: Text("No post yet!!"),
             )
           : ListView(
               children: [
@@ -52,12 +58,22 @@ class _CommonPostDisplayPageScreenState
   }
 
   _getData() async {
-    var response =
-        await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl, {}, userToken);
+    var response = await ApiServices.postWithAuth(
+        widget.apiUrl, widget.apiData, userToken);
 
-    data.addAll(response);
-    setState(() {
-      
-    });
+    if (response != "error") {
+      if (data == null) {
+        data = response;
+      } else {
+        data.addAll(response);
+      }
+    }
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    data = null;
+    super.dispose();
   }
 }

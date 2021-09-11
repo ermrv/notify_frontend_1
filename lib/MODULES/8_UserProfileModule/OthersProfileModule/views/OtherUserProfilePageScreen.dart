@@ -48,10 +48,16 @@ class _OtherUserProfilePageScreenState
           context: context,
           child: ListView(
             children: [
-              SecondaryUserBasicInfoContainer(
-                basicUserData: profileData,
-              ),
-              SecondaryUserActionsOnProfile(),
+              profileData == null
+                  ? Container()
+                  : SecondaryUserBasicInfoContainer(
+                      basicUserData: profileData,
+                    ),
+              profileData == null
+                  ? Container()
+                  : SecondaryUserActionsOnProfile(
+                      profileId: _profileOwnerId,
+                    ),
 
               postData == null
                   ? Center(
@@ -76,9 +82,9 @@ class _OtherUserProfilePageScreenState
     await _getBasicProfileData();
 
     var response = await ApiServices.postWithAuth(
-        ApiUrlsData.otherUserPosts, {"_id": _profileOwnerId}, userToken);
+        ApiUrlsData.otherUserPosts, {"userId": _profileOwnerId}, userToken);
     if (response != "error") {
-      postData = response["posts"];
+      postData = response;
       if (this.mounted) {
         setState(() {});
       }
@@ -89,7 +95,7 @@ class _OtherUserProfilePageScreenState
   _getBasicProfileData() async {
     print(widget.profileOwnerId);
     var response = await ApiServices.postWithAuth(
-        ApiUrlsData.userProfileBasicData,
+        ApiUrlsData.otherUserProfileBasicData,
         {"userId": _profileOwnerId},
         userToken);
     if (response != "error") {

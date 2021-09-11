@@ -1,9 +1,13 @@
+import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/CommonPostDisplayPageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SecondaryUserActionsOnProfile extends StatelessWidget {
+  final String profileId;
+
+  const SecondaryUserActionsOnProfile({Key key,@required this.profileId}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,18 +32,7 @@ class SecondaryUserActionsOnProfile extends StatelessWidget {
                         
                       }),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextButton(
-                      child: Container(
-                          alignment: Alignment.center,
-                          child: Text("Photos")),
-                      onPressed: () {
-                        Get.to(() => CommonPostDisplayPageScreen(
-                              title: "Photos",
-                            ));
-                      }),
-                ),
+                
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 8.0),
                   child: TextButton(
@@ -48,6 +41,8 @@ class SecondaryUserActionsOnProfile extends StatelessWidget {
                       onPressed: () {
                         Get.to(() => CommonPostDisplayPageScreen(
                               title: "Photos",
+                              apiUrl: ApiUrlsData.otherUserPosts,
+                              apiData: {"type":"image","userId":profileId},
                             ));
                       }),
                 ),
@@ -59,31 +54,12 @@ class SecondaryUserActionsOnProfile extends StatelessWidget {
                       onPressed: () {
                         Get.to(() => CommonPostDisplayPageScreen(
                               title: "Videos",
+                              apiUrl: ApiUrlsData.otherUserPosts,
+                              apiData: {"type":"video","userId":profileId},
                             ));
                       }),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextButton(
-                      child: Container(
-                          alignment: Alignment.center, child: Text("Events")),
-                      onPressed: () {
-                        Get.to(() => CommonPostDisplayPageScreen(
-                              title: "Events",
-                            ));
-                      }),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextButton(
-                      child: Container(
-                          alignment: Alignment.center, child: Text("Contests")),
-                      onPressed: () {
-                        Get.to(() => CommonPostDisplayPageScreen(
-                              title: "Contests",
-                            ));
-                      }),
-                ),
+                
               ],
             ),
           ),

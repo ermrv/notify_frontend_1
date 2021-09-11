@@ -14,6 +14,9 @@ class PrimaryUserData {
 
   ///complete address of profile pic
   String profilePic;
+
+  ///complete address of cover pic
+  String coverPic;
   String email;
 
   jsonToModel(var jsonData) {
@@ -27,6 +30,7 @@ class PrimaryUserData {
     this.mobile = jsonData["userdata"]["mobile"];
     this.bio = jsonData["userdata"]["bio"];
     this.profilePic = ApiUrlsData.domain + jsonData["userdata"]["profilePic"];
+    this.coverPic = ApiUrlsData.domain + jsonData["userData"]["coverPic"];
     this.email = jsonData["userdata"]["email"];
   }
 
@@ -56,7 +60,9 @@ class PrimaryUserData {
 
   String get getUserName => this.userName;
 
-  set setUserName(String userName) => this.userName = userName;
+  void setUserName(String userName) {
+    this.userName = userName;
+  }
 
   String get getMobile => this.mobile;
 
@@ -80,5 +86,9 @@ class PrimaryUserData {
 
   setProfilePic(String profilePic) {
     this.profilePic = ApiUrlsData.domain + profilePic;
+  }
+
+  setCoverPic(String coverPic) {
+    this.coverPic = ApiUrlsData.domain + coverPic;
   }
 }
