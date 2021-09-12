@@ -212,8 +212,6 @@ class UserDrawerScreen extends StatelessWidget {
   }
 
   _deleteFileSystem() async {
-    await LocalDataFiles.newsFeedPostsDataFile.delete();
-    await LocalDataFiles.userBasicDataFile.delete();
-    await LocalDataFiles.profilePostsDataFile.delete();
+   ///TODO  DELETE THE LOCAL FILES
   }
 }

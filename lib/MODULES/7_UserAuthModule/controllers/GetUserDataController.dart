@@ -5,6 +5,7 @@ import 'package:MediaPlus/MODULES/14_MainNavigationModule/views/MainNavigation.d
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/NotificationServices/NotificationServices.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -16,6 +17,12 @@ class GetUserDataController extends GetxController {
 
   @override
   onReady() {
+    _initialiseFileSystem();
+  }
+
+  ///creates the files for local storage of user data
+  _initialiseFileSystem() async {
+    await LocalDataFiles.initialiseLocalFilesPath();
     getData();
   }
 
@@ -38,5 +45,4 @@ class GetUserDataController extends GetxController {
       Get.offAll(() => MainNavigationScreen());
     }
   }
-
 }

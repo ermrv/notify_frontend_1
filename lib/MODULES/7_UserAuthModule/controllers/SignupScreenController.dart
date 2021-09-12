@@ -107,7 +107,7 @@ class SignUpScreenController extends GetxController {
     if (rcvdData["login"].toString() == "true" &&
         rcvdData["registered"].toString() == "true") {
       _sendMacAddress();
-      _initialiseFileSystem();
+    
       Get.offAll(() => GetUserData());
     } else {
       Get.defaultDialog(radius: 5.0, title: "Ooops! something went wrong");
@@ -125,14 +125,5 @@ class SignUpScreenController extends GetxController {
     }
   }
 
-  ///creates the files for local storage of user data
-  _initialiseFileSystem() async {
-    final appDirectory = await getApplicationDocumentsDirectory();
-    String path = appDirectory.path;
-    LocalDataFiles.newsFeedPostsDataFile =
-        File("$path/newsFeedPostsDataFile.json");
-    LocalDataFiles.userBasicDataFile = File("$path/userBasicDataFile.json");
-    LocalDataFiles.profilePostsDataFile =
-        File("$path/userProfilePostsDataFile");
-  }
+  
 }

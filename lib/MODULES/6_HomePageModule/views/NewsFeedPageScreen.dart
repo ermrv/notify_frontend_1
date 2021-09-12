@@ -25,7 +25,7 @@ class NewsFeedPageScreen extends StatelessWidget {
                     )
                   : RefreshIndicator(
                       onRefresh: () {
-                        return controller.getData();
+                        return controller.getRecentPostsData();
                       },
                       child: NotificationListener<ScrollNotification>(
                           // ignore: missing_return

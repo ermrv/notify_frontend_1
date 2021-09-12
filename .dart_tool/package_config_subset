@@ -70,14 +70,6 @@ eventify
 2.12
 file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/eventify-1.0.0/
 file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/eventify-1.0.0/lib/
-extended_image
-2.6
-file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/extended_image-2.0.0/
-file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/extended_image-2.0.0/lib/
-extended_image_library
-2.1
-file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/extended_image_library-1.0.1/
-file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/extended_image_library-1.0.1/lib/
 fake_async
 2.12
 file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/
@@ -170,10 +162,6 @@ http
 2.4
 file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.2/
 file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.2/lib/
-http_client_helper
-2.1
-file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http_client_helper-1.0.0/
-file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http_client_helper-1.0.0/lib/
 http_parser
 2.3
 file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-3.1.4/

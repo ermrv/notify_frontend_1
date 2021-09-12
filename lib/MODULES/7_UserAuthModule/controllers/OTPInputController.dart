@@ -59,7 +59,6 @@ class OTPInputController extends GetxController {
           storage.write("userToken", otpVerificationResponse["token"]);
           userToken = otpVerificationResponse["token"];
           _sendMacAddress();
-          _initialiseFileSystem();
           Get.offAll(() => GetUserData());
         } else if (otpVerificationResponse["registered"].toString() ==
             "false") {
@@ -88,12 +87,5 @@ class OTPInputController extends GetxController {
     }
   }
 
-  ///creates the files for local storage of user data
-  _initialiseFileSystem() async {
-    final appDirectory = await getApplicationDocumentsDirectory();
-    String path = appDirectory.path;
-   LocalDataFiles.newsFeedPostsDataFile= File("$path/newsFeedPostsDataFile.json");
-  LocalDataFiles.userBasicDataFile=  File("$path/userBasicDataFile.json");
-   LocalDataFiles.profilePostsDataFile= File("$path/userProfilePostsDataFile");
-  }
+  
 }

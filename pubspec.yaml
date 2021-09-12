@@ -42,8 +42,6 @@ dependencies:
   date_time_picker: "^2.0.0"
   foldable_sidebar: ^1.0.0
 
-  extended_image: any
-
   flex_color_scheme: ^2.1.1
   path_provider: any
   get_mac: ^0.0.1
