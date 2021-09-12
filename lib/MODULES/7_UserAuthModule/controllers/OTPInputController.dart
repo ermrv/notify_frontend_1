@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/GetUserData.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/SignupScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
@@ -56,6 +59,7 @@ class OTPInputController extends GetxController {
           storage.write("userToken", otpVerificationResponse["token"]);
           userToken = otpVerificationResponse["token"];
           _sendMacAddress();
+          _initialiseFileSystem();
           Get.offAll(() => GetUserData());
         } else if (otpVerificationResponse["registered"].toString() ==
             "false") {
@@ -82,5 +86,14 @@ class OTPInputController extends GetxController {
     } catch (e) {
       print(e);
     }
+  }
+
+  ///creates the files for local storage of user data
+  _initialiseFileSystem() async {
+    final appDirectory = await getApplicationDocumentsDirectory();
+    String path = appDirectory.path;
+   LocalDataFiles.newsFeedPostsDataFile= File("$path/newsFeedPostsDataFile.json");
+  LocalDataFiles.userBasicDataFile=  File("$path/userBasicDataFile.json");
+   LocalDataFiles.profilePostsDataFile= File("$path/userProfilePostsDataFile");
   }
 }

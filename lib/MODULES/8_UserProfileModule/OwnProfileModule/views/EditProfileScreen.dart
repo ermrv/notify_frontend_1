@@ -43,11 +43,13 @@ class EditProfileScreen extends StatelessWidget {
                                       BoxDecoration(shape: BoxShape.circle),
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(30.0),
-                                      child: CachedNetworkImage(
-                                        imageUrl: PrimaryUserData
-                                            .primaryUserData.profilePic,
-                                        fit: BoxFit.cover,
-                                      ))),
+                                      child: Obx(
+                                () => CachedNetworkImage(
+                                  imageUrl: PrimaryUserData
+                                      .primaryUserData.profilePic.value,
+                                  fit: BoxFit.cover,
+                                ),
+                              ))),
                               Text("  Change Profile Pic"),
                             ],
                           ),
@@ -75,11 +77,13 @@ class EditProfileScreen extends StatelessWidget {
                                       BoxDecoration(shape: BoxShape.circle),
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(30.0),
-                                      child: CachedNetworkImage(
-                                        imageUrl: PrimaryUserData
-                                            .primaryUserData.coverPic,
-                                        fit: BoxFit.cover,
-                                      ))),
+                                      child: Obx(
+                                () => CachedNetworkImage(
+                                  imageUrl: PrimaryUserData
+                                      .primaryUserData.coverPic.value,
+                                  fit: BoxFit.cover,
+                                ),
+                              ))),
                               Text("  Change Cover Pic"),
                             ],
                           ),

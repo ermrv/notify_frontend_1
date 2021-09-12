@@ -7,6 +7,7 @@ import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/LoginScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,19 +34,23 @@ class UserDrawerScreen extends StatelessWidget {
                       border: Border.all(
                           color: Theme.of(context).accentColor, width: 1.0)),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50.0),
-                    child: CachedNetworkImage(
-                      imageUrl: PrimaryUserData.primaryUserData.profilePic,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      borderRadius: BorderRadius.circular(50.0),
+                      child: Obx(
+                        () => CachedNetworkImage(
+                          imageUrl:
+                              PrimaryUserData.primaryUserData.profilePic.value,
+                          fit: BoxFit.cover,
+                        ),
+                      )),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 10.0),
-                  child: Text(
-                    PrimaryUserData.primaryUserData.name,
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 21.0),
+                  child: Obx(
+                    () => Text(
+                      PrimaryUserData.primaryUserData.name.value.toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 18.0),
+                    ),
                   ),
                 )
               ],
@@ -63,7 +68,10 @@ class UserDrawerScreen extends StatelessWidget {
                           EdgeInsets.symmetric(
                               horizontal: 10.0, vertical: 10.0))),
                   onPressed: () {
-                    Get.to(() => UserProfileScreen(profileOwnerId: PrimaryUserData.primaryUserData.userId,));
+                    Get.to(() => UserProfileScreen(
+                          profileOwnerId:
+                              PrimaryUserData.primaryUserData.userId,
+                        ));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -184,6 +192,7 @@ class UserDrawerScreen extends StatelessWidget {
                     onPressed: () async {
                       final storage = GetStorage();
                       userToken = "";
+                      await _deleteFileSystem();
                       await storage.remove("unRegisteredUserToken");
                       await storage
                           .remove("userToken")
@@ -200,5 +209,11 @@ class UserDrawerScreen extends StatelessWidget {
             ],
           )),
     );
+  }
+
+  _deleteFileSystem() async {
+    await LocalDataFiles.newsFeedPostsDataFile.delete();
+    await LocalDataFiles.userBasicDataFile.delete();
+    await LocalDataFiles.profilePostsDataFile.delete();
   }
 }

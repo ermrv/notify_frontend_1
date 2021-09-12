@@ -38,10 +38,13 @@ class AddPostReferenceView extends StatelessWidget {
                     ),
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(50.0),
-                        child: CachedNetworkImage(
-                          imageUrl: PrimaryUserData.primaryUserData.profilePic,
-                          fit: BoxFit.cover,
-                        )),
+                        child: Obx(
+                                () => CachedNetworkImage(
+                                  imageUrl: PrimaryUserData
+                                      .primaryUserData.profilePic.value,
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
                   ),
                   Container(
                     child: Text(

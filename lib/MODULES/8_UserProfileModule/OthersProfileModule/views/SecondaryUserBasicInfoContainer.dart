@@ -31,13 +31,12 @@ class SecondaryUserBasicInfoContainer extends StatelessWidget {
                 ),
                 Positioned(
                   child: Container(
-                    height: 250.0,
-                    width: screenWidth,
-                    child: Image.asset(
-                      "assets/nature.jpg",
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                      height: 250.0,
+                      width: screenWidth,
+                      child: CachedNetworkImage(
+                        imageUrl:ApiUrlsData.domain+ basicUserData["coverPic"],
+                        fit: BoxFit.cover,
+                      )),
                 ),
                 Positioned(
                     bottom: 0,
@@ -103,7 +102,6 @@ class SecondaryUserBasicInfoContainer extends StatelessWidget {
                                     basicUserData["followers"]
                                         .length
                                         .toString(),
-                                    
                                     style: TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.bold),
@@ -138,9 +136,7 @@ class SecondaryUserBasicInfoContainer extends StatelessWidget {
                                 width: 100.0,
                                 alignment: Alignment.topCenter,
                                 child: Text(
-                                  basicUserData["following"]
-                                      .length
-                                      .toString(),
+                                  basicUserData["following"].length.toString(),
                                   style: TextStyle(
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.bold),

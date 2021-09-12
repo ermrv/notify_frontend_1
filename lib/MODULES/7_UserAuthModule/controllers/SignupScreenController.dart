@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:MediaPlus/MODULES/1_AddPostModule/SingleImagePickerModule/views/SingleImagePicker.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/GetUserData.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:get/get.dart';
 import 'package:get_mac/get_mac.dart';
 import 'package:http_parser/http_parser.dart';
@@ -11,6 +12,7 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 class SignUpScreenController extends GetxController {
   TextEditingController nameEditingController, passwordEditingController;
@@ -105,6 +107,7 @@ class SignUpScreenController extends GetxController {
     if (rcvdData["login"].toString() == "true" &&
         rcvdData["registered"].toString() == "true") {
       _sendMacAddress();
+      _initialiseFileSystem();
       Get.offAll(() => GetUserData());
     } else {
       Get.defaultDialog(radius: 5.0, title: "Ooops! something went wrong");
@@ -120,5 +123,16 @@ class SignUpScreenController extends GetxController {
     } catch (e) {
       print(e);
     }
+  }
+
+  ///creates the files for local storage of user data
+  _initialiseFileSystem() async {
+    final appDirectory = await getApplicationDocumentsDirectory();
+    String path = appDirectory.path;
+    LocalDataFiles.newsFeedPostsDataFile =
+        File("$path/newsFeedPostsDataFile.json");
+    LocalDataFiles.userBasicDataFile = File("$path/userBasicDataFile.json");
+    LocalDataFiles.profilePostsDataFile =
+        File("$path/userProfilePostsDataFile");
   }
 }

@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart' as flutterServices;
 
 class NewsFeedPageController extends GetxController {
   double maxScrollExtent = 2.0;
@@ -18,6 +24,8 @@ class NewsFeedPageController extends GetxController {
   }
 
   getData() async {
+    var data = await LocalDataFiles.newsFeedPostsDataFile.readAsString();
+    print(data);
     update();
     var response =
         await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl, {}, userToken);
@@ -28,8 +36,8 @@ class NewsFeedPageController extends GetxController {
     // data = [];
     // //add the recent data in the data list
 
-    newsFeedData=response;
-
+    newsFeedData = response;
+    await LocalDataFiles.newsFeedPostsDataFile.writeAsString(jsonEncode(response));
     // //now add the previous data to the list
     // data.addAll(_previousData);
     update();

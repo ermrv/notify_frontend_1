@@ -17,7 +17,7 @@ class EditProfileController extends GetxController {
   @override
   onInit() {
     nameEditingController = TextEditingController();
-    nameEditingController.text = PrimaryUserData.primaryUserData.name;
+    nameEditingController.text = PrimaryUserData.primaryUserData.name.value;
     userNameIdEdititngController = TextEditingController();
     userNameIdEdititngController.text =
         PrimaryUserData.primaryUserData.userName;

@@ -39,10 +39,13 @@ class CommentsDisplayScreen extends StatelessWidget {
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(25.0),
-                      child: CachedNetworkImage(
-                        imageUrl: PrimaryUserData.primaryUserData.profilePic,
-                        fit: BoxFit.fill,
-                      )),
+                      child: Obx(
+                                () => CachedNetworkImage(
+                                  imageUrl: PrimaryUserData
+                                      .primaryUserData.profilePic.value,
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
                 ),
                 Expanded(
                     child: Container(

@@ -51,11 +51,13 @@ class ContestParticipationHistoryScreen extends StatelessWidget {
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(30.0),
-                                    child: CachedNetworkImage(
-                                      imageUrl: PrimaryUserData
-                                          .primaryUserData.profilePic,
-                                      fit: BoxFit.cover,
-                                    ),
+                                    child: Obx(
+                                () => CachedNetworkImage(
+                                  imageUrl: PrimaryUserData
+                                      .primaryUserData.profilePic.value,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                                   ),
                                 ),
                                 Container(

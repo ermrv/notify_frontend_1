@@ -34,7 +34,7 @@ class AddPostPageScreen extends StatelessWidget {
                         onPressed: () {
                           controller.getVideoFile();
                         }),
-                   
+
                     IconButton(
                         icon: Icon(Icons.poll),
                         onPressed: () {
@@ -95,11 +95,13 @@ class AddPostPageScreen extends StatelessWidget {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(50.0),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                PrimaryUserData.primaryUserData.profilePic,
-                            fit: BoxFit.cover,
-                          ),
+                          child: Obx(
+                                () => CachedNetworkImage(
+                                  imageUrl: PrimaryUserData
+                                      .primaryUserData.profilePic.value,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                         ),
                       ),
                       Container(
@@ -109,11 +111,14 @@ class AddPostPageScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              child: Text(
-                                PrimaryUserData.primaryUserData.name,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
+                              child: Obx(
+                                () => Text(
+                                  PrimaryUserData.primaryUserData.name.value
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0),
+                                ),
                               ),
                             ),
                             Container(

@@ -28,13 +28,12 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
                 ),
                 Positioned(
                   child: Container(
-                    height: 250.0,
-                    width: screenWidth,
-                    child: Image.asset(
-                      "assets/nature.jpg",
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                      height: 250.0,
+                      width: screenWidth,
+                      child: Obx(() => CachedNetworkImage(
+                            imageUrl: PrimaryUserData.primaryUserData.coverPic.value.toString(),
+                            fit: BoxFit.cover,
+                          ))),
                 ),
                 Positioned(
                     bottom: 0,
@@ -54,13 +53,14 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
                                   color: Theme.of(context).accentColor,
                                   width: 2.0)),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(50.0),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  PrimaryUserData.primaryUserData.profilePic,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                              borderRadius: BorderRadius.circular(50.0),
+                              child: Obx(
+                                () => CachedNetworkImage(
+                                  imageUrl: PrimaryUserData
+                                      .primaryUserData.profilePic.value,
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
                         ),
                       ),
                     )),
@@ -166,9 +166,12 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  PrimaryUserData.primaryUserData.name.toString(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                Obx(
+                  () => Text(
+                    PrimaryUserData.primaryUserData.name.toString(),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                  ),
                 ),
                 PrimaryUserData.primaryUserData.bio == null
                     ? Container()

@@ -1,5 +1,6 @@
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/controllers/ShowProfilePicController.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -30,17 +31,14 @@ class ShowProfilePicScreen extends StatelessWidget {
                   child: Stack(
                 children: [
                   AspectRatio(
-                    aspectRatio: 1,
-                    child: controller.profilePicFile == null
-                        ? Image.network(
-                            PrimaryUserData.primaryUserData.profilePic,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.file(
-                            controller.profilePicFile,
-                            fit: BoxFit.cover,
-                          ),
-                  ),
+                      aspectRatio: 1,
+                      child: Obx(
+                                () => CachedNetworkImage(
+                                  imageUrl: PrimaryUserData
+                                      .primaryUserData.profilePic.value,
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
                   Positioned(
                       bottom: 5.0,
                       right: 5.0,
@@ -59,8 +57,11 @@ class ShowProfilePicScreen extends StatelessWidget {
                       height: 45.0,
                       alignment: Alignment.center,
                       child: controller.isUpdating
-                              ? SpinKitThreeBounce(color: Colors.blue,size: 18.0,)
-                              : Text("Done"),
+                          ? SpinKitThreeBounce(
+                              color: Colors.blue,
+                              size: 18.0,
+                            )
+                          : Text("Done"),
                     ),
                     onPressed: () {
                       controller.updateProfilePic();

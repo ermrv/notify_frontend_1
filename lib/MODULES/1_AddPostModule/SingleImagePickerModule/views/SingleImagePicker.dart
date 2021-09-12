@@ -52,6 +52,7 @@ class SingleImagePicker extends StatelessWidget {
                       child: Center(
                         child: SpinKitThreeBounce(
                           color: Colors.blue,
+                          size: 18.0,
                         ),
                       ),
                     )

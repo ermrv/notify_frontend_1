@@ -1,6 +1,7 @@
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/controllers/ShowCoverPicScreenController.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/controllers/ShowProfilePicController.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -32,20 +33,13 @@ class ShowCoverPicScreen extends StatelessWidget {
                 children: [
                   AspectRatio(
                     aspectRatio: 1.2,
-                    child: controller.coverPicFile != null
-                        ? Image.file(
-                            controller.coverPicFile,
-                            fit: BoxFit.cover,
-                          )
-                        : PrimaryUserData.primaryUserData.coverPic != null
-                            ? Image.network(
-                                PrimaryUserData.primaryUserData.coverPic,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.asset(
-                                "assets/nature.jpg",
-                                fit: BoxFit.cover,
-                              ),
+                    child:controller.coverPicFile==null? Obx(
+                                () => CachedNetworkImage(
+                                  imageUrl: PrimaryUserData
+                                      .primaryUserData.coverPic.value,
+                                  fit: BoxFit.cover,
+                                ),
+                              ):Image.file(controller.coverPicFile,fit: BoxFit.cover,)
                   ),
                   Positioned(
                       bottom: 5.0,

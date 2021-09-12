@@ -53,6 +53,10 @@ class ShowCoverPicController extends GetxController {
       isUpdating = false;
       update();
       Get.back();
+    } else {
+      print(streamedResponse.statusCode);
+      isUpdating = false;
+      update();
     }
   }
 }

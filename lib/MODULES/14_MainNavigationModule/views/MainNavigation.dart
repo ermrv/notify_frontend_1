@@ -62,7 +62,7 @@ class MainNavigationScreen extends StatelessWidget {
                       label: 'Notifications',
                     ),
                     CustomBottomNavigationItem(
-                      imageUrl: PrimaryUserData.primaryUserData.profilePic,
+                      imageUrl: PrimaryUserData.primaryUserData.profilePic.value.toString(),
                       label: 'Profile',
                     )
                   ],
