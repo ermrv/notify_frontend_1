@@ -25,7 +25,6 @@ class PrimaryUserData {
   String email;
 
   jsonToModel(var jsonData) {
-    print(jsonData);
     this.userId = jsonData["userdata"]["_id"];
     followers.addAll(jsonData["userdata"]["followers"]);
     followings.addAll(jsonData["userdata"]["following"]);
@@ -42,90 +41,43 @@ class PrimaryUserData {
 
   static final PrimaryUserData primaryUserData = PrimaryUserData();
 
-
-///set the userName of the user
+  ///set the userName of the user
   void setUserName(String userName) async {
     this.userName = userName;
-    var userBasicData;
-
-    try {
-      json.decode(
-        userBasicData =
-            await File(LocalDataFiles.userBasicDataFilePath).readAsString(),
-      );
-      userBasicData["userdata"]["username"] = userName;
-      await File(LocalDataFiles.userBasicDataFilePath)
-          .writeAsString(json.encode(userBasicData), mode: FileMode.write);
-    } catch (e) {
-      print(e);
-    }
+    deleteLocalUserBasicDataFile();
   }
-///set name of the user
-  void setName(String name) async{
+
+  ///set name of the user
+  void setName(String name) async {
     this.name.value = name;
-    var userBasicData;
-
-    try {
-      json.decode(
-        userBasicData =
-            await File(LocalDataFiles.userBasicDataFilePath).readAsString(),
-      );
-      userBasicData["userdata"]["name"] = name;
-      await File(LocalDataFiles.userBasicDataFilePath)
-          .writeAsString(json.encode(userBasicData), mode: FileMode.write);
-    } catch (e) {
-      print(e);
-    }
+    deleteLocalUserBasicDataFile();
   }
-///set bio of the user
-  void setBio(String bio) async{
+
+  ///set bio of the user
+  void setBio(String bio) async {
     this.bio = bio;
-    var userBasicData;
-
-    try {
-      json.decode(
-        userBasicData =
-            await File(LocalDataFiles.userBasicDataFilePath).readAsString(),
-      );
-      userBasicData["userdata"]["bio"] = bio;
-      await File(LocalDataFiles.userBasicDataFilePath)
-          .writeAsString(json.encode(userBasicData), mode: FileMode.write);
-    } catch (e) {
-      print(e);
-    }
+    deleteLocalUserBasicDataFile();
   }
-///set profile pic of the user
-  setProfilePic(String profilePic) async{
+
+  ///set profile pic of the user
+  setProfilePic(String profilePic) async {
     this.profilePic.value = ApiUrlsData.domain + profilePic;
-    var userBasicData;
-
-    try {
-      json.decode(
-        userBasicData =
-            await File(LocalDataFiles.userBasicDataFilePath).readAsString(),
-      );
-      userBasicData["userdata"]["profilePic"] = profilePic;
-      await File(LocalDataFiles.userBasicDataFilePath)
-          .writeAsString(json.encode(userBasicData), mode: FileMode.write);
-    } catch (e) {
-      print(e);
-    }
+    deleteLocalUserBasicDataFile();
   }
-///set cover pic of the user
-  setCoverPic(String coverPic) async{
-    this.coverPic.value = ApiUrlsData.domain + coverPic;
-    var userBasicData;
 
+  ///set cover pic of the user
+  setCoverPic(String coverPic) async {
+    this.coverPic.value = ApiUrlsData.domain + coverPic;
+    deleteLocalUserBasicDataFile();
+  }
+
+  ///deleting the local file in case of profile data edited by the user
+  ///
+  deleteLocalUserBasicDataFile() async {
     try {
-      json.decode(
-        userBasicData =
-            await File(LocalDataFiles.userBasicDataFilePath).readAsString(),
-      );
-      userBasicData["userdata"]["coverPic"] = coverPic;
-      await File(LocalDataFiles.userBasicDataFilePath)
-          .writeAsString(json.encode(userBasicData), mode: FileMode.write);
+      await File(LocalDataFiles.userBasicDataFilePath).delete(recursive: true);
     } catch (e) {
-      print(e);
+      print("error");
     }
   }
 }

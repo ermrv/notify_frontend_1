@@ -36,11 +36,12 @@ class GetUserDataController extends GetxController {
       ///
       ///end of the [7_AddPostModule]
       if (rcvdData != null) {
-       await PrimaryUserData.primaryUserData.jsonToModel(rcvdData);
+        await PrimaryUserData.primaryUserData.jsonToModel(rcvdData);
         Get.offAll(() => MainNavigationScreen());
       }
     } catch (e) {
       print(e);
+      print("getting user basic data");
       String fcmToken = await NotificationServices.getFcmToken();
       var response = await ApiServices.postWithAuth(
           ApiUrlsData.appStart, {"fcmToken": fcmToken}, userToken.toString());
@@ -48,17 +49,18 @@ class GetUserDataController extends GetxController {
         Get.snackbar("Error", "Cannot get the data");
       } else {
         rcvdData = response;
+        print(rcvdData);
         PrimaryUserData.primaryUserData.jsonToModel(response);
 
         //write the data to local file
         await File(LocalDataFiles.userBasicDataFilePath)
-            .writeAsString(json.encode(response), mode: FileMode.write);
-        print(rcvdData);
+            .writeAsString(json.encode(response), mode: FileMode.write)
+            .then((value) => Get.offAll(() => MainNavigationScreen()));
 
         ///naviagting to the [MainNavigationScreen]
         ///
         ///end of the [7_AddPostModule]
-        Get.offAll(() => MainNavigationScreen());
+
       }
     }
   }

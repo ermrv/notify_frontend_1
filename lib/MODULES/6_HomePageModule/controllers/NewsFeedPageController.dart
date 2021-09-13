@@ -20,7 +20,6 @@ class NewsFeedPageController extends GetxController {
   @override
   void onInit() {
     newsFeedDataFilePath = LocalDataFiles.newsFeedPostsDataFilePath;
-    print(newsFeedDataFilePath);
     getFileData();
     getUserStatusData();
     super.onInit();

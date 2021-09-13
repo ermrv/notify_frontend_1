@@ -10,8 +10,6 @@ import 'package:get_storage/get_storage.dart';
 class UserAuthScreenController extends GetxController {
   String _userToken;
 
-  
-
   @override
   onReady() {
     super.onReady();
@@ -41,7 +39,7 @@ class UserAuthScreenController extends GetxController {
       Get.offAll(() => LoginScreen());
     } else {
       userToken = _token;
-      Get.offAll(GetUserData());
+      Get.offAll(() => GetUserData());
     }
   }
 }
