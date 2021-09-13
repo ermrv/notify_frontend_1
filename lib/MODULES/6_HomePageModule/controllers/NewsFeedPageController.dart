@@ -46,19 +46,19 @@ class NewsFeedPageController extends GetxController {
     //if newsfeed data is null get all data from back end
     if (newsFeedData == null) {
       response = await ApiServices.postWithAuth(
-          ApiUrlsData.newsFeedUrl, {"type": "latest"}, userToken);
+          ApiUrlsData.newsFeedUrl, {"dataType": "latest"}, userToken);
     }
     //if list is empty get all data from backend
      else if (newsFeedData.length == 0) {
       response = await ApiServices.postWithAuth(
-          ApiUrlsData.newsFeedUrl, {"type": "latest"}, userToken);
+          ApiUrlsData.newsFeedUrl, {"dataType": "latest"}, userToken);
     }
     //if newsfeed data is available, get only those data that is  recent 
      else if (newsFeedData.length >= 1) {
       String latestPostId = newsFeedData[0]["_id"];
       print(latestPostId);
       response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
-          {"type": "latest", "postId": latestPostId}, userToken);
+          {"dataType": "latest", "postId": latestPostId}, userToken);
     }
 
     if (response != "error") {
@@ -84,10 +84,10 @@ class NewsFeedPageController extends GetxController {
     var response;
     if (lastPostId == "null") {
       response = await ApiServices.postWithAuth(
-          ApiUrlsData.newsFeedUrl, {"type": "previous"}, userToken);
+          ApiUrlsData.newsFeedUrl, {"dataType": "previous"}, userToken);
     } else {
       response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
-          {"type": "previous", "postId": lastPostId}, userToken);
+          {"dataType": "previous", "postId": lastPostId}, userToken);
     }
 
     if (response != "error") {

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
@@ -27,22 +28,38 @@ class GetUserDataController extends GetxController {
   }
 
   getData() async {
-    String fcmToken = await NotificationServices.getFcmToken();
-    print("token" + userToken.toString());
-    var response = await ApiServices.postWithAuth(
-        ApiUrlsData.appStart, {"fcmToken": fcmToken}, userToken.toString());
-    if (response == "error") {
-      Get.snackbar("Error", "Cannot get the data");
-    } else {
-      rcvdData = response;
-      //variable
-      PrimaryUserData.primaryUserData.jsonToModel(response);
-      print(rcvdData);
+    try {
+      rcvdData = json.decode(
+          await File(LocalDataFiles.userBasicDataFilePath).readAsString());
 
       ///naviagting to the [MainNavigationScreen]
       ///
       ///end of the [7_AddPostModule]
-      Get.offAll(() => MainNavigationScreen());
+      if (rcvdData != null) {
+       await PrimaryUserData.primaryUserData.jsonToModel(rcvdData);
+        Get.offAll(() => MainNavigationScreen());
+      }
+    } catch (e) {
+      print(e);
+      String fcmToken = await NotificationServices.getFcmToken();
+      var response = await ApiServices.postWithAuth(
+          ApiUrlsData.appStart, {"fcmToken": fcmToken}, userToken.toString());
+      if (response == "error") {
+        Get.snackbar("Error", "Cannot get the data");
+      } else {
+        rcvdData = response;
+        PrimaryUserData.primaryUserData.jsonToModel(response);
+
+        //write the data to local file
+        await File(LocalDataFiles.userBasicDataFilePath)
+            .writeAsString(json.encode(response), mode: FileMode.write);
+        print(rcvdData);
+
+        ///naviagting to the [MainNavigationScreen]
+        ///
+        ///end of the [7_AddPostModule]
+        Get.offAll(() => MainNavigationScreen());
+      }
     }
   }
 }

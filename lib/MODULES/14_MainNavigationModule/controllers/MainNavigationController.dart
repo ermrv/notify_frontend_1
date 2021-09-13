@@ -18,16 +18,12 @@ class MainNavigationController extends GetxController {
   }
 
   pageTransitionHandler(int index) {
-    if (index == 2) {
-      Get.to(() => AddPostPageScreen());
-    } else {
-      pageController.jumpToPage(
-        index,
-      );
+    currentIndex = index;
+    pageController.jumpToPage(
+      index,
+    );
 
-      currentIndex = index;
-      update();
-    }
+    update();
   }
 
   //hide the bottom nav bar when scrolling upward

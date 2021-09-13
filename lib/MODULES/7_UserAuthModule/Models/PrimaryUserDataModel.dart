@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
 
@@ -30,66 +34,98 @@ class PrimaryUserData {
     this.userName = jsonData["userdata"]["username"];
     this.mobile = jsonData["userdata"]["mobile"];
     this.bio = jsonData["userdata"]["bio"];
-    this.profilePic.value = ApiUrlsData.domain + jsonData["userdata"]["profilePic"];
+    this.profilePic.value =
+        ApiUrlsData.domain + jsonData["userdata"]["profilePic"];
     this.coverPic.value = ApiUrlsData.domain + jsonData["userdata"]["coverPic"];
     this.email = jsonData["userdata"]["email"];
   }
 
   static final PrimaryUserData primaryUserData = PrimaryUserData();
 
-  String get getUserId => this.userId;
 
-  set setUserId(String userId) => this.userId = userId;
-
-  List<String> get getFollowers => this.followers;
-
-  set addToFollowersList(String followerId) => this.followers.add(followerId);
-
-  List<String> get getFollowings => this.followings;
-
-  set addToFollowingsList(String followingId) =>
-      this.followings.add(followingId);
-
-  List<String> get getBlockedUsers => this.blockedUsers;
-
-  set addToBlockedUsersList(String blockedUserId) =>
-      this.blockedUsers.add(blockedUserId);
-
-  get getName => this.name;
-
-  // set setName(String name) => this.name = name;
-
-  String get getUserName => this.userName;
-
-  void setUserName(String userName) {
+///set the userName of the user
+  void setUserName(String userName) async {
     this.userName = userName;
+    var userBasicData;
+
+    try {
+      json.decode(
+        userBasicData =
+            await File(LocalDataFiles.userBasicDataFilePath).readAsString(),
+      );
+      userBasicData["userdata"]["username"] = userName;
+      await File(LocalDataFiles.userBasicDataFilePath)
+          .writeAsString(json.encode(userBasicData), mode: FileMode.write);
+    } catch (e) {
+      print(e);
+    }
   }
-
-  String get getMobile => this.mobile;
-
-  set setMobile(String mobile) => this.mobile = mobile;
-
-  String get getBio => this.bio;
-
-  String get getProfilePic => this.profilePic.value;
-
-  String get getEmail => this.email;
-
-  set setEmail(String email) => this.email = email;
-
-  void setName(String name) {
+///set name of the user
+  void setName(String name) async{
     this.name.value = name;
-  }
+    var userBasicData;
 
-  void setBio(String bio) {
+    try {
+      json.decode(
+        userBasicData =
+            await File(LocalDataFiles.userBasicDataFilePath).readAsString(),
+      );
+      userBasicData["userdata"]["name"] = name;
+      await File(LocalDataFiles.userBasicDataFilePath)
+          .writeAsString(json.encode(userBasicData), mode: FileMode.write);
+    } catch (e) {
+      print(e);
+    }
+  }
+///set bio of the user
+  void setBio(String bio) async{
     this.bio = bio;
-  }
+    var userBasicData;
 
-  setProfilePic(String profilePic) {
+    try {
+      json.decode(
+        userBasicData =
+            await File(LocalDataFiles.userBasicDataFilePath).readAsString(),
+      );
+      userBasicData["userdata"]["bio"] = bio;
+      await File(LocalDataFiles.userBasicDataFilePath)
+          .writeAsString(json.encode(userBasicData), mode: FileMode.write);
+    } catch (e) {
+      print(e);
+    }
+  }
+///set profile pic of the user
+  setProfilePic(String profilePic) async{
     this.profilePic.value = ApiUrlsData.domain + profilePic;
-  }
+    var userBasicData;
 
-  setCoverPic(String coverPic) {
+    try {
+      json.decode(
+        userBasicData =
+            await File(LocalDataFiles.userBasicDataFilePath).readAsString(),
+      );
+      userBasicData["userdata"]["profilePic"] = profilePic;
+      await File(LocalDataFiles.userBasicDataFilePath)
+          .writeAsString(json.encode(userBasicData), mode: FileMode.write);
+    } catch (e) {
+      print(e);
+    }
+  }
+///set cover pic of the user
+  setCoverPic(String coverPic) async{
     this.coverPic.value = ApiUrlsData.domain + coverPic;
+    var userBasicData;
+
+    try {
+      json.decode(
+        userBasicData =
+            await File(LocalDataFiles.userBasicDataFilePath).readAsString(),
+      );
+      userBasicData["userdata"]["coverPic"] = coverPic;
+      await File(LocalDataFiles.userBasicDataFilePath)
+          .writeAsString(json.encode(userBasicData), mode: FileMode.write);
+    } catch (e) {
+      print(e);
+    }
   }
 }

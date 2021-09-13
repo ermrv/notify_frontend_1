@@ -6,12 +6,16 @@ import 'package:http/http.dart' as http;
 abstract class ApiServices {
   //get request
   static get(String url) async {
-    var response = await http.get(url);
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      return data;
-    } else {
+    try {
+      var response = await http.get(url);
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        return data;
+      } else {
+        return "error";
+      }
+    } catch (e) {
       return "error";
     }
   }
@@ -19,13 +23,18 @@ abstract class ApiServices {
   //post request
   static post(String url, var body) async {
     var dataToSend = json.encode(body);
-    var response = await http.post(url,
-        body: dataToSend, headers: {"content-type": "application/json"});
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      return data;
-    } else {
+    try {
+      var response = await http.post(url,
+          body: dataToSend, headers: {"content-type": "application/json"});
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        return data;
+      } else {
+        return "error";
+      }
+    } catch (e) {
+      print(e);
       return "error";
     }
   }
@@ -33,15 +42,20 @@ abstract class ApiServices {
   //post request with auth
   static postWithAuth(String url, var body, String token) async {
     var dataToSend = json.encode(body);
-    var response = await http.post(url, body: dataToSend, headers: {
-      "content-type": "application/json",
-      HttpHeaders.authorizationHeader: "Bearer " + token
-    });
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      return data;
-    } else {
+    try {
+      var response = await http.post(url, body: dataToSend, headers: {
+        "content-type": "application/json",
+        HttpHeaders.authorizationHeader: "Bearer " + token
+      });
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        return data;
+      } else {
+        return "error";
+      }
+    } catch (e) {
+      print(e);
       return "error";
     }
   }

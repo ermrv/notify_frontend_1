@@ -1,3 +1,4 @@
+import 'package:MediaPlus/MODULES/17_ShortVideoPlayerModule/views/ShortVideoPlayerPageScreen.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/AddPostPageScreen.dart';
 
 import 'package:MediaPlus/MODULES/5_ExplorePageModule/views/ExplorePageScreen.dart';
@@ -47,8 +48,8 @@ class MainNavigationScreen extends StatelessWidget {
                       label: 'Explore',
                     ),
                     CustomBottomNavigationItem(
-                      icon: Icons.add_box,
-                      label: 'Post',
+                      icon: Icons.music_video,
+                      label: 'Shorts',
                     ),
                     CustomBottomNavigationItem(
                       suffix: Text(
@@ -76,7 +77,7 @@ class MainNavigationScreen extends StatelessWidget {
                 children: [
                   HomeScreen(),
                   ExplorePageScreen(),
-                  AddPostPageScreen(),
+                  ShortVideoPlayerPageScreen(),
                   Container(),
                   KeepWidgetAliveWrapper(
                       child: UserProfileScreen(

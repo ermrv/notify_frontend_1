@@ -32,6 +32,9 @@ abstract class ApiUrlsData {
 //............................................explore..................................................
   static String explorePage = "$domain/api/explore";
 
+  //.....................................shorts........................................
+  static String shortVideos = "$domain/api/shortvideos";
+
   //rewards
   static String rewardsPage = "$domain/api/home/rewards";
 
