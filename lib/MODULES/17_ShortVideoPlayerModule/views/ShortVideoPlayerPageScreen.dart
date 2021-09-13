@@ -29,7 +29,7 @@ class _ShortVideoPlayerPageScreenState
 
   @override
   void initState() {
-    if (widget.postContent !=null) {
+    if (widget.postContent != null) {
       videos.add(widget.postContent);
     }
     _getData();
