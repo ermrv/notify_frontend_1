@@ -17,11 +17,13 @@ import 'package:MediaPlus/MODULES/1_AddPostModule/views/VideoGridDisplay.dart';
 
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/controllers/OwnProfilePageScreenController.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -43,8 +45,6 @@ class AddPostPageController extends GetxController {
   Uint8List videoThumbImage;
   List<File> imageFiles;
   String templateType;
-
-  FlutterUploader _flutterUploader;
   //compressed images and videos in Uint8Lst
   //ready to be uploaded
   List<Uint8List> compressedImages;
@@ -54,7 +54,6 @@ class AddPostPageController extends GetxController {
   @override
   void onInit() {
     textEditingController = TextEditingController();
-    _flutterUploader = FlutterUploader();
     super.onInit();
   }
 
@@ -190,7 +189,8 @@ class AddPostPageController extends GetxController {
         userToken);
 
     if (response != "error") {
-      ///navigate to the news feed screen
+      final controller = Get.find<OwnProfilePageScreenController>();
+      controller.getRecentPostsData();
       Get.offAll(() => MainNavigationScreen(
             tabNumber: 0,
           ));
@@ -199,6 +199,7 @@ class AddPostPageController extends GetxController {
 
   ///....................to upload the  images.........................
   uploadImages() async {
+    FlutterUploader _flutterImageUploader = FlutterUploader();
     List<FileItem> _imageFiles = [];
     for (File i in imageFiles) {
       _imageFiles.add(
@@ -208,7 +209,7 @@ class AddPostPageController extends GetxController {
             savedDir: (i.path).split("/")[0].toString()),
       );
     }
-    final taskId = await _flutterUploader.enqueue(
+    final taskId = await _flutterImageUploader.enqueue(
       url: ApiUrlsData.addImagePost,
       method: UploadMethod.POST,
       headers: {
@@ -225,6 +226,13 @@ class AddPostPageController extends GetxController {
       tag: "image upload",
     );
 
+    _flutterImageUploader.result.listen((result) {
+      if(result.status==UploadTaskStatus.complete){
+        final controller = Get.find<OwnProfilePageScreenController>();
+      controller.getRecentPostsData();
+      }
+    });
+
     ///navigate to the news feed screen
     Get.offAll(() => MainNavigationScreen(
           tabNumber: 0,
@@ -233,7 +241,8 @@ class AddPostPageController extends GetxController {
 
   ///....................to upload video................................
   uploadVideo() async {
-    final taskId = await _flutterUploader.enqueue(
+    FlutterUploader _flutterVideoUploader = FlutterUploader();
+    final taskId = await _flutterVideoUploader.enqueue(
       url: ApiUrlsData.addVideoPost,
       method: UploadMethod.POST,
       headers: {
@@ -253,6 +262,12 @@ class AddPostPageController extends GetxController {
       showNotification: true,
       tag: "video upload",
     );
+    _flutterVideoUploader.result.listen((result) {
+      if(result.status==UploadTaskStatus.complete){
+        final controller = Get.find<OwnProfilePageScreenController>();
+      controller.getRecentPostsData();
+      }
+    });
 
     ///navigate to the news feed screen
     Get.offAll(() => MainNavigationScreen(
