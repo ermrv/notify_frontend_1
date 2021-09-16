@@ -45,7 +45,7 @@ class ExplorePageScreen extends StatelessWidget {
               ),
             ),
           ),
-          body: controller.data.length == 0
+          body: controller.explorePageData.length == 0
               ? Center(
                   child: SpinKitPulse(
                     color: Colors.blue,
@@ -53,13 +53,8 @@ class ExplorePageScreen extends StatelessWidget {
                 )
               : ListView(
                   children: [
-                    // TagsReferenceLayout(),
-                    // ImagePostReferenceLayout(),
-                    // ContestPostReferenceLayout(),
-                    // EventPostReferenceLayout(),
-                    // ProfileReferenceLayout(),
-                    // ContentDisplayTemplateProvider(data: controller.data)
-
+                    ContentDisplayTemplateProvider(
+                        data: controller.explorePageData),
                     Center(
                       child: Text("No data available for now"),
                     )

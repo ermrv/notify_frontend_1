@@ -7,7 +7,6 @@ import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart' as flutterServices;
 
 class NewsFeedPageController extends GetxController {

@@ -1,6 +1,6 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
-import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/ShortVideoPlayerLayout.dart';
+import 'package:MediaPlus/MODULES/17_ShortVideoPlayerModule/views/ShortVideoPlayerPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/VideoPostFeedPlayerPageScreen.dart';
 
 import 'package:flutter/material.dart';
@@ -53,7 +53,7 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
           if (widget.postContent["videoPost"]["shortVideo"].toString() ==
               "true") {
             Get.to(
-                () => ShortVideoPlayerLayout(postContent: widget.postContent));
+                () => ShortVideoPlayerPageScreen(postContent: widget.postContent));
           } else {
             Get.to(() => VideoPostFeedPlayerPageScreen(
                   postContent: widget.postContent,

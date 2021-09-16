@@ -1,3 +1,4 @@
+import 'package:MediaPlus/MODULES/17_ShortVideoPlayerModule/views/ShortVideoPlayerPageScreen.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/AddPostPageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -18,10 +19,16 @@ class MainNavigationController extends GetxController {
   }
 
   pageTransitionHandler(int index) {
-    currentIndex = index;
-    pageController.jumpToPage(
-      index,
-    );
+    print(index);
+    if (index == 2) {
+      Get.to(() => ShortVideoPlayerPageScreen());
+    } else {
+      pageController.jumpToPage(
+        index,
+      );
+      currentIndex = index;
+    }
+    
 
     update();
   }
