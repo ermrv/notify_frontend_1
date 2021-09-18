@@ -6,7 +6,7 @@ abstract class ApiUrlsData {
   //.......................................user............................................
   static String userLoginActivity = "$domain/api/user/loginactivity";
   static String userProfilePicUpdate = "$domain/api/user/profilepic/update";
-    static String userCoverPicUpdate = "$domain/api/user/coverpic/update";
+  static String userCoverPicUpdate = "$domain/api/user/coverpic/update";
 
   static String userProfileDetailsUpdate = "$domain/api/user/updateprofile";
 
@@ -125,4 +125,8 @@ abstract class ApiUrlsData {
   static String promotionPaymentOrder = "$domain/api/paymentorder";
 
   static String promotionPaymentVerify = "$domain/api/paymentverify";
+
+  //----------------------follow--------------------------------------------
+  static String followUser = "$domain/api/user/follow";
+  static String unfollowUser = "$domain/api/user/unfollow";
 }

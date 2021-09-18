@@ -1,6 +1,7 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart';
+import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/BelowPostCommentDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
@@ -73,7 +74,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                               ["postBy"]["_id"],
                         ));
                   },
-                                  child: Container(
+                  child: Container(
                     padding: EdgeInsets.all(1.0),
                     height: 35.0,
                     width: 35.0,
@@ -229,11 +230,15 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                                   Get.to(() => SharePostPageScreen(
                                         postId: widget.postContent["textPost"]
                                             ["_id"],
-                                            postOwnerName: widget.postContent["textPost"]["postBy"]["name"],
-                                            postOwnerProfilePic:widget.postContent["textPost"]["postBy"]["profilePic"],
+                                        postOwnerName:
+                                            widget.postContent["textPost"]
+                                                ["postBy"]["name"],
+                                        postOwnerProfilePic:
+                                            widget.postContent["textPost"]
+                                                ["postBy"]["profilePic"],
                                       ));
                                 }),
-                            Text(" 1.1k")
+                            // Text(" 1.1k")
                           ],
                         ),
                       ),
@@ -243,6 +248,13 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                     ],
                   ),
                 ),
+          widget.postContent["comments"] == null
+              ? Container()
+              : widget.postContent["comments"].length == 0
+                  ? Container()
+                  : BelowPostCommentDisplayTemplate(
+                      commentData: widget.postContent["comments"][0],
+                      postId: widget.postContent["_id"])
         ],
       ),
     );

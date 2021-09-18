@@ -30,19 +30,18 @@ class ExplorePageController extends GetxController {
       explorePageData =
           json.decode(await File(explorePageDataFilePath).readAsString());
       update();
+      getRecentPostsData();
     } catch (e) {
       print(e);
+      getRecentPostsData();
     }
-
-    getRecentPostsData();
   }
 
   ///to get the latest post data
   getRecentPostsData() async {
-    var response;
     //if newsfeed data is null get all data from back end
 
-    response = await ApiServices.postWithAuth(
+    var response = await ApiServices.postWithAuth(
         ApiUrlsData.explorePage, {"dataType": "latest"}, userToken);
 
     if (response != "error") {
@@ -53,7 +52,7 @@ class ExplorePageController extends GetxController {
       update();
       _handleLocalFile(explorePageData);
     } else {
-      print("error getting newsfeed latest data");
+      print("error getting explorepage latest data");
     }
   }
 
@@ -73,7 +72,7 @@ class ExplorePageController extends GetxController {
       update();
       _handleLocalFile(explorePageData);
     } else {
-      print("error getting newsfeed previous data");
+      print("error getting explore previous data");
     }
   }
 

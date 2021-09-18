@@ -28,10 +28,11 @@ class MainNavigationController extends GetxController {
       );
       currentIndex = index;
     }
-    
 
     update();
   }
+
+  
 
   //hide the bottom nav bar when scrolling upward
   //

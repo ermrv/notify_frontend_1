@@ -1,6 +1,7 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/ShortVideoPlayerLayout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -48,7 +49,7 @@ class ShortVideosPostReferenceLayout extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  for (var i in boxContents["contents"])
+                  for (var i in boxContents["data"])
                     _Template(
                       content: i,
                     ),
@@ -85,13 +86,12 @@ class _Template extends StatelessWidget {
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(4.0)),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4.0),
-                  child: Image.asset(
-                    "assets/nature.jpg",
-                    // ApiUrlsData.domain + content["postContent"][0]["thumbnail"],
-                    fit: BoxFit.fill,
-                  ),
-                ),
+                    borderRadius: BorderRadius.circular(4.0),
+                    child: CachedNetworkImage(
+                      imageUrl: ApiUrlsData.domain +
+                          content["videoPost"]["thumbnail"].toString(),
+                      fit: BoxFit.cover,
+                    )),
               ),
               //user profile pic
               Positioned(

@@ -55,9 +55,6 @@ class ExplorePageScreen extends StatelessWidget {
                   children: [
                     ContentDisplayTemplateProvider(
                         data: controller.explorePageData),
-                    Center(
-                      child: Text("No data available for now"),
-                    )
                   ],
                 )),
     );

@@ -1,4 +1,5 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/BelowPostCommentDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
@@ -57,95 +58,99 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //basic info of the post
-          Container(
-            height: 50.0,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //
-                //
-                //user profile pic
-                GestureDetector(
-                  onTap: () {
-                    Get.to(() => UserProfileScreen(
-                          profileOwnerId: widget.postContent["pollPost"]
-                              ["postBy"]["_id"],
-                        ));
-                  },
-                                  child: Container(
-                    padding: EdgeInsets.all(1.0),
-                    height: 35.0,
-                    width: 35.0,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.deepOrange[900]),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30.0),
-                        child: CachedNetworkImage(
-                          imageUrl: ApiUrlsData.domain +
-                              widget.postContent["pollPost"]["postBy"]
-                                  ["profilePic"],
-                          fit: BoxFit.fill,
-                        )),
-                  ),
-                ),
-                //
-                //
-                //user name,userName and location
                 Container(
-                  margin: EdgeInsets.only(left: 8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  height: 50.0,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      //
+                      //
+                      //user profile pic
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => UserProfileScreen(
+                                profileOwnerId: widget.postContent["pollPost"]
+                                    ["postBy"]["_id"],
+                              ));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(1.0),
+                          height: 35.0,
+                          width: 35.0,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.deepOrange[900]),
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(30.0),
+                              child: CachedNetworkImage(
+                                imageUrl: ApiUrlsData.domain +
+                                    widget.postContent["pollPost"]["postBy"]
+                                        ["profilePic"],
+                                fit: BoxFit.fill,
+                              )),
+                        ),
+                      ),
+                      //
+                      //
+                      //user name,userName and location
                       Container(
-                        margin: EdgeInsets.only(bottom: 2.0),
-                        child: Row(
+                        margin: EdgeInsets.only(left: 8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              widget.postContent["pollPost"]["postBy"]["name"]
-                                      .toString() +
-                                  "  ",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 15.0),
+                            Container(
+                              margin: EdgeInsets.only(bottom: 2.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    widget.postContent["pollPost"]["postBy"]
+                                                ["name"]
+                                            .toString() +
+                                        "  ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15.0),
+                                  ),
+                                ],
+                              ),
                             ),
+                            Container(
+                              child: Text(
+                                TimeStampProvider.timeStampProvider(
+                                    widget.postContent["createdAt"].toString()),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12.0),
+                              ),
+                            )
                           ],
                         ),
                       ),
-                      Container(
-                        child: Text(
-                          TimeStampProvider.timeStampProvider(
-                              widget.postContent["createdAt"].toString()),
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 12.0),
-                        ),
-                      )
+                      Expanded(
+                        child: Container(),
+                      ),
+
+                      //actions on post
+                      _isOwner
+                          ? PostOwnerActionsOnPost(
+                              postId: widget.postContent["_id"].toString(),
+                              postDescription: widget.postContent["pollPost"]
+                                      ["description"]
+                                  .toString(),
+                              editedDescriptionUpdater: (String description) {
+                                // updateEditedDescription(description);
+                              },
+                            )
+                          : OtherUserActionsOnPost(
+                              postUserId: widget.postContent["pollPost"]
+                                      ["postBy"]["_id"]
+                                  .toString(),
+                              postId: widget.postContent["_id"].toString(),
+                            )
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Container(),
-                ),
-
-                //actions on post
-                _isOwner
-                    ? PostOwnerActionsOnPost(
-                        postId: widget.postContent["_id"].toString(),
-                        postDescription: widget.postContent["pollPost"]
-                                ["description"]
-                            .toString(),
-                        editedDescriptionUpdater: (String description) {
-                          // updateEditedDescription(description);
-                        },
-                      )
-                    : OtherUserActionsOnPost(
-                        postUserId: widget.postContent["pollPost"]["postBy"]
-                                ["_id"]
-                            .toString(),
-                        postId: widget.postContent["_id"].toString(),
-                      )
-              ],
-            ),
-          ),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
                   child: Text(
@@ -422,7 +427,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                       IconButton(
                           icon: Icon(MaterialCommunityIcons.share),
                           onPressed: () {}),
-                      Text(" 1.1k")
+                      // Text(" 1.1k")
                     ],
                   ),
                 ),
@@ -431,7 +436,14 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                 ),
               ],
             ),
-          )
+          ),
+          widget.postContent["comments"] == null
+              ? Container()
+              : widget.postContent["comments"].length == 0
+                  ? Container()
+                  : BelowPostCommentDisplayTemplate(
+                      commentData: widget.postContent["comments"][0],
+                      postId: widget.postContent["_id"])
         ],
       ),
     );

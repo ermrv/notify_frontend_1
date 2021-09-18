@@ -2,6 +2,7 @@ import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/10_PostPromotionModule/views/EstimatedBudgetPageScreen.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart';
+import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/BelowPostCommentDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/DuobleImageHorizontalDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/DuobleImageVerticalDisplayTemplate.dart';
@@ -272,7 +273,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                                                 ["postBy"]["profilePic"],
                                       ));
                                 }),
-                            Text(" 1.1k")
+                            // Text(" 1.1k")
                           ],
                         ),
                       ),
@@ -282,6 +283,13 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                     ],
                   ),
                 ),
+          widget.postContent["comments"] == null
+              ? Container()
+              : widget.postContent["comments"].length == 0
+                  ? Container()
+                  : BelowPostCommentDisplayTemplate(
+                      commentData: widget.postContent["comments"][0],
+                      postId: widget.postContent["_id"])
         ],
       ),
     );

@@ -1,4 +1,6 @@
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/controllers/ContentDisplayTemplateManager.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceLayout.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ShortVideosPostReferenceLayout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ContestPostRelatedViews/ContestPostDisplayTemplate.dart';
@@ -23,11 +25,11 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 class ContentDisplayTemplateProvider extends StatelessWidget {
   final List data;
 
-  ContentDisplayTemplateProvider(
-      {Key key, @required this.data,})
-      : super(key: key);
+  ContentDisplayTemplateProvider({
+    Key key,
+    @required this.data,
+  }) : super(key: key);
 
- 
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,7 +39,6 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
       ],
     );
   }
-
 
   getContentDisplayTemplate(var content) {
     switch (content["postContentType"].toString().toLowerCase()) {
@@ -57,7 +58,6 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
             return VideoPostDisplayTemplate(postContent: content);
           } else if (content["primary"].toString() == "false")
             return SharedVideoPostDisplayTemplate(postContent: content);
-          break;
         }
         break;
 
@@ -95,7 +95,11 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
         break;
 
 //------------------------------------post reference views-----------------------------------------------------------//
-
+      case "profilereference":
+        return ProfileReferenceLayout(
+          boxContents: content,
+        );
+        break;
       //for user status or story reference post
       case "imagePostReference":
         return ImagePostReferenceLayout(
@@ -104,10 +108,9 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
         break;
 
       //for short video post reference
-      case "shortVideoPostReference":
-        return EventPostDisplayTemplate(
-          postContent: content,
-        );
+      case "shortvideoreference":
+        return ShortVideosPostReferenceLayout(boxContents: content);
+
         break;
 
       //for image post reference

@@ -56,6 +56,7 @@ class _OtherUserProfilePageScreenState
               profileData == null
                   ? Container()
                   : SecondaryUserActionsOnProfile(
+                    profileData:profileData,
                       profileId: _profileOwnerId,
                     ),
 
@@ -105,4 +106,7 @@ class _OtherUserProfilePageScreenState
       }
     }
   }
+
+
+
 }

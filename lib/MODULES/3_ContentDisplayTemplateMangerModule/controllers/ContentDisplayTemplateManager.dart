@@ -4,6 +4,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Eve
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImagePostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PollPostRelatedViews/PollPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ImagePostReferenceLayout.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SharedPostRelatedViews/views/SharedImagePostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SharedPostRelatedViews/views/SharedTextPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SharedPostRelatedViews/views/SharedVideoPostDisplayTemplate.dart';
@@ -100,7 +101,7 @@ class ContentDisplayManager extends GetxController {
         break;
 
       //for short video post reference
-      case "shortVideoPostReference":
+      case "shortVideoReference":
         return EventPostDisplayTemplate(
           postContent: content,
         );
@@ -112,6 +113,10 @@ class ContentDisplayManager extends GetxController {
           postContent: content,
         );
         break;
+      case "profileReference":
+        return ProfileReferenceLayout(
+          boxContents: content,
+        );
 
       default:
         return Container();
