@@ -1,6 +1,8 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BelowPostCommentDisplayTemplate extends StatelessWidget {
   final commentData;
@@ -13,51 +15,57 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              //profile pic
-              Container(
-                child: CircleAvatar(
-                  radius: 14.0,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25.0),
-                    child: CachedNetworkImage(
-                        imageUrl: ApiUrlsData.domain +
-                            commentData["commentBy"]["profilePic"].toString()),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => CommentsDisplayScreen(postId: postId));
+          },
+          child: Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                //profile pic
+                Container(
+                  child: CircleAvatar(
+                    radius: 14.0,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(25.0),
+                      child: CachedNetworkImage(
+                          imageUrl: ApiUrlsData.domain +
+                              commentData["commentBy"]["profilePic"]
+                                  .toString()),
+                    ),
                   ),
                 ),
-              ),
-              //name and comment container
-              Container(
-                padding: EdgeInsets.only(left: 5.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 2.0),
-                      child: Text(
-                        commentData["commentBy"]["name"].toString(),
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                //name and comment container
+                Container(
+                  padding: EdgeInsets.only(left: 5.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 2.0),
+                        child: Text(
+                          commentData["commentBy"]["name"].toString(),
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
                       ),
-                    ),
-                    Container(
-                      child: Text(
-                        commentData["comment"].toString(),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                      Container(
+                        child: Text(
+                          commentData["comment"].toString(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 10.0,bottom: 10.0),
+          margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -2,6 +2,7 @@ import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/controllers/CommentDisplayController.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -75,7 +76,7 @@ class CommentDisplayTemplate extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.only(left: 10.0),
                       child: Text(
-                        "15m ago",
+                        TimeStampProvider.timeStampProvider(data["createdAt"]),
                         style: TextStyle(fontSize: 13.0),
                       ),
                     ),
@@ -278,12 +279,14 @@ class CommentDisplayTemplate extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(25.0),
                                                 child: Obx(
-                                () => CachedNetworkImage(
-                                  imageUrl: PrimaryUserData
-                                      .primaryUserData.profilePic.value,
-                                  fit: BoxFit.cover,
-                                ),
-                              )),
+                                                  () => CachedNetworkImage(
+                                                    imageUrl: PrimaryUserData
+                                                        .primaryUserData
+                                                        .profilePic
+                                                        .value,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                )),
                                           ),
                                           Expanded(
                                               child: Container(
@@ -380,12 +383,12 @@ class CommentDisplayTemplate extends StatelessWidget {
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(25.0),
                     child: Obx(
-                                () => CachedNetworkImage(
-                                  imageUrl: PrimaryUserData
-                                      .primaryUserData.profilePic.value,
-                                  fit: BoxFit.cover,
-                                ),
-                              )),
+                      () => CachedNetworkImage(
+                        imageUrl:
+                            PrimaryUserData.primaryUserData.profilePic.value,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
               ),
               Expanded(
                   child: Container(
@@ -474,12 +477,12 @@ class CommentDisplayTemplate extends StatelessWidget {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(25.0),
                           child: Obx(
-                                () => CachedNetworkImage(
-                                  imageUrl: PrimaryUserData
-                                      .primaryUserData.profilePic.value,
-                                  fit: BoxFit.cover,
-                                ),
-                              )),
+                            () => CachedNetworkImage(
+                              imageUrl: PrimaryUserData
+                                  .primaryUserData.profilePic.value,
+                              fit: BoxFit.cover,
+                            ),
+                          )),
                     ),
                     Expanded(
                         child: Container(

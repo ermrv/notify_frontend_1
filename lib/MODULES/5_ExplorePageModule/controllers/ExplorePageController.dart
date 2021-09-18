@@ -26,15 +26,17 @@ class ExplorePageController extends GetxController {
 
   ///to get the post data stored in the local storage
   getFileData() async {
-    try {
-      explorePageData =
-          json.decode(await File(explorePageDataFilePath).readAsString());
-      update();
-      getRecentPostsData();
-    } catch (e) {
-      print(e);
-      getRecentPostsData();
-    }
+    // try {
+    //   explorePageData =
+    //       json.decode(await File(explorePageDataFilePath).readAsString());
+    //   update();
+    //   getRecentPostsData();
+    // } catch (e) {
+    //   print(e);
+    //   getRecentPostsData();
+    // }
+
+    getRecentPostsData();
   }
 
   ///to get the latest post data
@@ -42,7 +44,7 @@ class ExplorePageController extends GetxController {
     //if newsfeed data is null get all data from back end
 
     var response = await ApiServices.postWithAuth(
-        ApiUrlsData.explorePage, {"dataType": "latest"}, userToken);
+        "http://139.59.8.116:3000/api/explore", {}, userToken);
 
     if (response != "error") {
       List _temp = response;

@@ -165,7 +165,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                       top: 3.0, bottom: 3.0, right: 2.0, left: 2.0),
                   alignment: Alignment.centerLeft,
                   child: ReadMoreText(
-                    widget.postContent["description"].toString(),
+                    widget.postContent["videoPost"]["description"].toString(),
                     style: TextStyle(fontSize: 15.0),
                     trimLines: 2,
                     trimMode: TrimMode.Line,
