@@ -16,25 +16,30 @@ class ExplorePageController extends GetxController {
   List explorePageData = [];
   String explorePageDataFilePath;
 
+  ScrollController scrollController;
+
   @override
   void onInit() {
+     scrollController = ScrollController();
+    scrollController.addListener(scrollListener);
     explorePageDataFilePath = LocalDataFiles.explorePageDataFilePath;
     getFileData();
+
 
     super.onInit();
   }
 
   ///to get the post data stored in the local storage
   getFileData() async {
-    // try {
-    //   explorePageData =
-    //       json.decode(await File(explorePageDataFilePath).readAsString());
-    //   update();
-    //   getRecentPostsData();
-    // } catch (e) {
-    //   print(e);
-    //   getRecentPostsData();
-    // }
+    try {
+      explorePageData =
+          json.decode(await File(explorePageDataFilePath).readAsString());
+      update();
+      getRecentPostsData();
+    } catch (e) {
+      print(e);
+      getRecentPostsData();
+    }
 
     getRecentPostsData();
   }
@@ -85,35 +90,15 @@ class ExplorePageController extends GetxController {
         .writeAsString(json.encode(data), mode: FileMode.write);
   }
 
-  scrollListenerToGetData(ScrollNotification notification) {
-    if (notification.metrics.axisDirection == AxisDirection.down) {
-      double _maxScrollExtent = notification.metrics.maxScrollExtent;
-      if (notification.metrics.pixels.floor() >=
-              (notification.metrics.maxScrollExtent * 0.9).floor() &&
-          callScrollListener) {
-        print("bottom");
-
-        maxScrollExtent = _maxScrollExtent;
-        callScrollListener = false;
-        update();
-      } else if (notification.metrics.pixels.floor() >=
-              maxScrollExtent.floor() &&
-          !callScrollListener) {
-        callScrollListener = true;
-        update();
-      }
+   ///listen to the scroll of the newfeed in order to load more data
+  ///calls [getPreviousPostsData] when scroll is attend to a limit
+  scrollListener() {
+    if (scrollController.position.maxScrollExtent ==
+        scrollController.position.pixels) {
+      String lastPostId = explorePageData.last["_id"];
+      getPreviousPostsData(lastPostId);
     }
   }
 
-  // ///function to collapse and build the appbar during scroll
-  // appBarHeightHandler(ScrollNotification notification) {
-  //   if (notification.metrics.axis == Axis.vertical) {
-  //     //collapse if scroll extent is  more than 50 pxls and build if less than 50
-  //     if (notification.metrics.pixels >= 50.0) {
-  //       animationController.forward();
-  //     } else if (notification.metrics.pixels < 50.0) {
-  //       animationController.reverse();
-  //     }
-  //   }
-  // }
+ 
 }

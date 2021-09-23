@@ -45,37 +45,37 @@ class _OtherUserProfilePageScreenState
         elevation: 0.0,
       ),
       body: MediaQuery.removePadding(
-          context: context,
-          child: ListView(
-            children: [
-              profileData == null
-                  ? Container()
-                  : SecondaryUserBasicInfoContainer(
-                      basicUserData: profileData,
-                    ),
-              profileData == null
-                  ? Container()
-                  : SecondaryUserActionsOnProfile(
-                    profileData:profileData,
-                      profileId: _profileOwnerId,
-                    ),
+        context: context,
+        child: ListView(
+          children: [
+            profileData == null
+                ? Container()
+                : SecondaryUserBasicInfoContainer(
+                    basicUserData: profileData,
+                  ),
+            profileData == null
+                ? Container()
+                : SecondaryUserActionsOnProfile(
+                    profileId: _profileOwnerId,
+                  ),
 
-              postData == null
-                  ? Center(
-                      child: SpinKitPulse(
-                        color: Colors.blue,
-                      ),
-                    )
-                  : postData.length == 0
-                      ? Center(
-                          child: Text("No post yet!!!"),
-                        )
-                      : ContentDisplayTemplateProvider(
-                          data: postData,
-                        )
-              // PrimaryUserHighlightsContainer(),
-            ],
-          )),
+            postData == null
+                ? Center(
+                    child: SpinKitPulse(
+                      color: Colors.blue,
+                    ),
+                  )
+                : postData.length == 0
+                    ? Center(
+                        child: Text("No post yet!!!"),
+                      )
+                    : ContentDisplayTemplateProvider(
+                        data: postData,
+                      )
+            // PrimaryUserHighlightsContainer(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -85,9 +85,10 @@ class _OtherUserProfilePageScreenState
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.otherUserPosts, {"userId": _profileOwnerId}, userToken);
     if (response != "error") {
-      postData = response;
       if (this.mounted) {
-        setState(() {});
+        setState(() {
+          postData = response;
+        });
       }
     }
   }
@@ -100,13 +101,11 @@ class _OtherUserProfilePageScreenState
         {"userId": _profileOwnerId},
         userToken);
     if (response != "error") {
-      profileData = response;
       if (this.mounted) {
-        setState(() {});
+        setState(() {
+          profileData = response;
+        });
       }
     }
   }
-
-
-
 }

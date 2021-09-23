@@ -19,7 +19,7 @@ class MainNavigationScreen extends StatelessWidget {
   final int tabNumber;
   final mainNavigationController = Get.put(MainNavigationController());
 
-  MainNavigationScreen({Key key,this.tabNumber}) : super(key: key);
+  MainNavigationScreen({Key key, this.tabNumber}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MainNavigationController>(
@@ -63,7 +63,8 @@ class MainNavigationScreen extends StatelessWidget {
                       label: 'Notifications',
                     ),
                     CustomBottomNavigationItem(
-                      imageUrl: PrimaryUserData.primaryUserData.profilePic.value.toString(),
+                      imageUrl: PrimaryUserData.primaryUserData.profilePic.value
+                          .toString(),
                       label: 'Profile',
                     )
                   ],

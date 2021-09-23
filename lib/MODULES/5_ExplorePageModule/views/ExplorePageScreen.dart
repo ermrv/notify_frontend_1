@@ -52,6 +52,7 @@ class ExplorePageScreen extends StatelessWidget {
                   ),
                 )
               : ListView(
+                controller: controller.scrollController,
                   children: [
                     ContentDisplayTemplateProvider(
                         data: controller.explorePageData),

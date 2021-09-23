@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/4_ContestingModule/ContestHostingModule/views/ContestHostingHistoryScreen.dart';
@@ -212,6 +214,14 @@ class UserDrawerScreen extends StatelessWidget {
   }
 
   _deleteFileSystem() async {
-   ///TODO  DELETE THE LOCAL FILES
+    try {
+      await File(LocalDataFiles.explorePageDataFilePath).delete();
+      await File(LocalDataFiles.newsFeedPostsDataFilePath).delete();
+      await File(LocalDataFiles.userBasicDataFilePath).delete();
+      await File(LocalDataFiles.profilePostsDataFilePath).delete();
+      await File(LocalDataFiles.notificationPageDataFilePath).delete();
+    } catch (e) {
+      print("error");
+    }
   }
 }

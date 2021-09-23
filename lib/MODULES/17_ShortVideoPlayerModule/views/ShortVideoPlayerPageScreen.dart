@@ -70,8 +70,11 @@ class _ShortVideoPlayerPageScreenState
     var response =
         await ApiServices.postWithAuth(ApiUrlsData.shortVideos, {}, userToken);
     if (response != "error") {
-      videos.addAll(response);
+      if (this.mounted) {
+        setState(() {
+          videos.addAll(response);
+        });
+      }
     }
-    setState(() {});
   }
 }

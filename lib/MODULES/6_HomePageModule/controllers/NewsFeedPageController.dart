@@ -16,11 +16,15 @@ class NewsFeedPageController extends GetxController {
   List userStatusData = [];
   String newsFeedDataFilePath;
 
+  ScrollController scrollController;
+
   @override
   void onInit() {
     newsFeedDataFilePath = LocalDataFiles.newsFeedPostsDataFilePath;
     getFileData();
     getUserStatusData();
+    scrollController = ScrollController();
+    scrollController.addListener(scrollListener);
     super.onInit();
   }
 
@@ -47,12 +51,12 @@ class NewsFeedPageController extends GetxController {
           ApiUrlsData.newsFeedUrl, {"dataType": "latest"}, userToken);
     }
     //if list is empty get all data from backend
-     else if (newsFeedData.length == 0) {
+    else if (newsFeedData.length == 0) {
       response = await ApiServices.postWithAuth(
           ApiUrlsData.newsFeedUrl, {"dataType": "latest"}, userToken);
     }
-    //if newsfeed data is available, get only those data that is  recent 
-     else if (newsFeedData.length >= 1) {
+    //if newsfeed data is available, get only those data that is  recent
+    else if (newsFeedData.length >= 1) {
       String latestPostId = newsFeedData[0]["_id"];
       print(latestPostId);
       response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
@@ -113,7 +117,7 @@ class NewsFeedPageController extends GetxController {
           .writeAsString(json.encode(_data), mode: FileMode.write);
     }
     //if it is less than 30, store all the data to the file
-     else {
+    else {
       File(newsFeedDataFilePath)
           .writeAsString(json.encode(data), mode: FileMode.write);
     }
@@ -133,23 +137,11 @@ class NewsFeedPageController extends GetxController {
 
   ///listen to the scroll of the newfeed in order to load more data
   ///calls [getPreviousPostsData] when scroll is attend to a limit
-  scrollListener(ScrollNotification notification) {
-    if (notification.metrics.axisDirection == AxisDirection.down) {
-      double _maxScrollExtent = notification.metrics.maxScrollExtent;
-      if (notification.metrics.pixels.floor() >=
-              (notification.metrics.maxScrollExtent * 0.9).floor() &&
-          callScrollListener) {
-        print("bottom");
-
-        maxScrollExtent = _maxScrollExtent;
-        callScrollListener = false;
-        update();
-      } else if (notification.metrics.pixels.floor() >=
-              maxScrollExtent.floor() &&
-          !callScrollListener) {
-        callScrollListener = true;
-        update();
-      }
+  scrollListener() {
+    if (scrollController.position.maxScrollExtent ==
+        scrollController.position.pixels) {
+      String lastPostId = newsFeedData.last["_id"];
+      getPreviousPostsData(lastPostId);
     }
   }
 }

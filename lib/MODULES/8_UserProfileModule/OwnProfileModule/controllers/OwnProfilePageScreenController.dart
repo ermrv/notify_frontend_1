@@ -5,23 +5,26 @@ import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
-class OwnProfilePageScreenController extends GetxController{
+class OwnProfilePageScreenController extends GetxController {
   List profilePostData;
 
   String userProfileDataFilePath;
 
+ScrollController scrollController;
 
   @override
   void onInit() {
+    scrollController = ScrollController();
+    scrollController.addListener(scrollListener);
     userProfileDataFilePath = LocalDataFiles.profilePostsDataFilePath;
     getFileData();
     super.onInit();
   }
 
-
-///to get the post data stored in the local storage
+  ///to get the post data stored in the local storage
   getFileData() async {
     try {
       profilePostData =
@@ -35,7 +38,6 @@ class OwnProfilePageScreenController extends GetxController{
     getRecentPostsData();
   }
 
-
   ///to get the latest post data
   getRecentPostsData() async {
     var response;
@@ -45,12 +47,12 @@ class OwnProfilePageScreenController extends GetxController{
           ApiUrlsData.userPosts, {"dataType": "latest"}, userToken);
     }
     //if list is empty get all data from backend
-     else if (profilePostData.length == 0) {
+    else if (profilePostData.length == 0) {
       response = await ApiServices.postWithAuth(
           ApiUrlsData.userPosts, {"dataType": "latest"}, userToken);
     }
-    //if  data is available, get only those data that is  recent 
-     else if (profilePostData.length >= 1) {
+    //if  data is available, get only those data that is  recent
+    else if (profilePostData.length >= 1) {
       String latestPostId = profilePostData[0]["_id"];
       print(latestPostId);
       response = await ApiServices.postWithAuth(ApiUrlsData.userPosts,
@@ -111,9 +113,19 @@ class OwnProfilePageScreenController extends GetxController{
           .writeAsString(json.encode(_data), mode: FileMode.write);
     }
     //if it is less than 30, store all the data to the file
-     else {
+    else {
       File(userProfileDataFilePath)
           .writeAsString(json.encode(data), mode: FileMode.write);
+    }
+  }
+
+   ///listen to the scroll of the newfeed in order to load more data
+  ///calls [getPreviousPostsData] when scroll is attend to a limit
+  scrollListener() {
+    if (scrollController.position.maxScrollExtent ==
+        scrollController.position.pixels) {
+      String lastPostId = profilePostData.last["_id"];
+      getPreviousPostsData(lastPostId);
     }
   }
 

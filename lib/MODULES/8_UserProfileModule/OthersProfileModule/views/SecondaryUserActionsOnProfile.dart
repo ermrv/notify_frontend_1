@@ -8,11 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SecondaryUserActionsOnProfile extends StatefulWidget {
-  final profileData;
   final String profileId;
 
   const SecondaryUserActionsOnProfile(
-      {Key key, @required this.profileId, @required this.profileData})
+      {Key key, @required this.profileId})
       : super(key: key);
 
   @override
@@ -22,12 +21,8 @@ class SecondaryUserActionsOnProfile extends StatefulWidget {
 
 class _SecondaryUserActionsOnProfileState
     extends State<SecondaryUserActionsOnProfile> {
-  List<String> followers;
-  List<String> followings;
   @override
   void initState() {
-    followers = widget.profileData["followers"];
-    followings = widget.profileData["following"];
     super.initState();
   }
 

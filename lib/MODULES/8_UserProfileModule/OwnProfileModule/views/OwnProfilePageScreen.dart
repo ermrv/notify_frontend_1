@@ -28,6 +28,7 @@ class OwnProfilePageScreen extends StatelessWidget {
         body: MediaQuery.removePadding(
             context: context,
             child: ListView(
+              controller: controller.scrollController,
               children: [
                 PrimaryUserBasicInfoContainer(),
 
@@ -46,7 +47,6 @@ class OwnProfilePageScreen extends StatelessWidget {
                         : ContentDisplayTemplateProvider(
                             data: controller.profilePostData,
                           )
-                // PrimaryUserHighlightsContainer(),
               ],
             )),
       ),

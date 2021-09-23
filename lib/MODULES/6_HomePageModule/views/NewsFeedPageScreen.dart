@@ -27,23 +27,19 @@ class NewsFeedPageScreen extends StatelessWidget {
                       onRefresh: () {
                         return controller.getRecentPostsData();
                       },
-                      child: NotificationListener<ScrollNotification>(
-                          // ignore: missing_return
-                          onNotification: (notification) {
-                            controller.scrollListener(notification);
-                          },
-                          child: ListView(
-                            children: [
-                              UserStatusReferenceLayout(
-                                boxContents: controller.userStatusData,
-                              ),
-                              AddPostReferenceView(),
-                              controller.newsFeedData.length == 0
-                                  ? Center(child: Text("No posts yet"))
-                                  : ContentDisplayTemplateProvider(
-                                      data: controller.newsFeedData)
-                            ],
-                          )),
+                      child: ListView(
+                        controller: controller.scrollController,
+                        children: [
+                          UserStatusReferenceLayout(
+                            boxContents: controller.userStatusData,
+                          ),
+                          AddPostReferenceView(),
+                          controller.newsFeedData.length == 0
+                              ? Center(child: Text("No posts yet"))
+                              : ContentDisplayTemplateProvider(
+                                  data: controller.newsFeedData)
+                        ],
+                      ),
                     ),
             ));
   }
