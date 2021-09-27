@@ -2,12 +2,8 @@ import 'dart:typed_data';
 
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/controllers/AddPostPageController.dart';
-import 'package:MediaPlus/MODULES/1_AddPostModule/views/AddPostScreenBottomSheet.dart';
-import 'package:MediaPlus/MODULES/1_AddPostModule/views/CreateEventPageScreen.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/CreatePollPageScreen.dart';
-import 'package:MediaPlus/MODULES/1_AddPostModule/views/SelectedImagesDisplayTemplates/DuobleImageHorizontalDisplayTemplate.dart';
-import 'package:MediaPlus/MODULES/1_AddPostModule/views/SelectedImagesDisplayTemplates/DuobleImageVerticalDisplayTemplate.dart';
-import 'package:MediaPlus/MODULES/4_ContestingModule/ContestHostingModule/views/CreateContestScreen.dart';
+import 'package:MediaPlus/MODULES/1_AddPostModule/views/ShowSuggestionsWidget.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -96,12 +92,12 @@ class AddPostPageScreen extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(50.0),
                           child: Obx(
-                                () => CachedNetworkImage(
-                                  imageUrl: PrimaryUserData
-                                      .primaryUserData.profilePic.value,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                            () => CachedNetworkImage(
+                              imageUrl: PrimaryUserData
+                                  .primaryUserData.profilePic.value,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
                       Container(
@@ -149,6 +145,10 @@ class AddPostPageScreen extends StatelessWidget {
                   width: screenWidth,
                   child: TextFormField(
                     controller: controller.textEditingController,
+                    onChanged: (value) {
+                      controller
+                          .stringParser(controller.textEditingController.text);
+                    },
                     maxLines: null,
                     textCapitalization: TextCapitalization.sentences,
                     style: TextStyle(fontSize: 16.0),
@@ -160,30 +160,35 @@ class AddPostPageScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: 15.0,
+                  height: 1.0,
+                  color: Theme.of(context).accentColor.withOpacity(1.0),
                 ),
-                controller.imageFiles == null
-                    ? Container()
-                    : Stack(
-                        children: [
-                          controller.getTemplate(controller.templateType),
-                          Positioned(
-                              top: 5.0,
-                              right: 5.0,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.8)),
-                                child: IconButton(
-                                    icon: Icon(Icons.close),
-                                    onPressed: () {
-                                      controller.removeFiles();
-                                    }),
-                              ))
-                        ],
-                      ),
+                controller.showSuggestions
+                    ? ShowSuggestionsWidget(
+                        controller: controller,
+                      )
+                    : controller.imageFiles == null
+                        ? Container()
+                        : Stack(
+                            children: [
+                              controller.getTemplate(controller.templateType),
+                              Positioned(
+                                  top: 5.0,
+                                  right: 5.0,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.8)),
+                                    child: IconButton(
+                                        icon: Icon(Icons.close),
+                                        onPressed: () {
+                                          controller.removeFiles();
+                                        }),
+                                  ))
+                            ],
+                          ),
                 controller.videoFile == null
                     ? Container()
                     : Stack(

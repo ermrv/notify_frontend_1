@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/14_MainNavigationModule/views/MainNavigation.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/MediaCompressorModule/ImageCompressor.dart';
-import 'package:MediaPlus/MODULES/1_AddPostModule/MediaCompressorModule/VideoCompressor.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/AddPostScreenBottomSheet.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/ImagesGridDisplay.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/SelectedImagesDisplayTemplates/DuobleImageHorizontalDisplayTemplate.dart';
@@ -15,26 +14,20 @@ import 'package:MediaPlus/MODULES/1_AddPostModule/views/SelectedImagesDisplayTem
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/SelectedImagesDisplayTemplates/SingleImageDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/VideoGridDisplay.dart';
 
-import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/controllers/OwnProfilePageScreenController.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
-import 'package:dio/dio.dart' as dio;
-import 'package:workmanager/workmanager.dart';
 
 class AddPostPageController extends GetxController {
   //to show the upload task
   bool isUploading = false;
   bool isUploaded = false;
   bool isError = false;
+
   //
   bool showBottomNavbar = true;
   double aspectRatio;
@@ -50,6 +43,11 @@ class AddPostPageController extends GetxController {
   List<Uint8List> compressedImages;
   Uint8List compressedVideo;
   Uint8List compressedThumbnail;
+
+  ///autosuggestions
+  bool showSuggestions = false;
+  List tagsSuggestions;
+  List userSuggestions;
 
   @override
   void onInit() {
@@ -227,9 +225,9 @@ class AddPostPageController extends GetxController {
     );
 
     _flutterImageUploader.result.listen((result) {
-      if(result.status==UploadTaskStatus.complete){
+      if (result.status == UploadTaskStatus.complete) {
         final controller = Get.find<OwnProfilePageScreenController>();
-      controller.getRecentPostsData();
+        controller.getRecentPostsData();
       }
     });
 
@@ -263,9 +261,9 @@ class AddPostPageController extends GetxController {
       tag: "video upload",
     );
     _flutterVideoUploader.result.listen((result) {
-      if(result.status==UploadTaskStatus.complete){
+      if (result.status == UploadTaskStatus.complete) {
         final controller = Get.find<OwnProfilePageScreenController>();
-      controller.getRecentPostsData();
+        controller.getRecentPostsData();
       }
     });
 
@@ -273,5 +271,61 @@ class AddPostPageController extends GetxController {
     Get.offAll(() => MainNavigationScreen(
           tabNumber: 0,
         ));
+  }
+//---------------------------------------------user and tags suggestins related--------------------------------
+
+  ///string parser for tagging and mentioning
+  stringParser(String text) {
+    List<String> words;
+    words = text.split(" ").toList();
+    String lastWord = words.last.trim();
+    String firstCharacter = lastWord.characters.first;
+    if (firstCharacter == "#") {
+      String query = lastWord.replaceFirst("#", "");
+      showSuggestions = true;
+      update();
+      _getTagsSuggestions(query);
+    } else if (firstCharacter == "@") {
+      String query = lastWord.replaceFirst("@", "");
+      showSuggestions = true;
+      update();
+      if (query.characters.length >= 1) {
+        _getUserSuggestions(query);
+      }
+    }
+  }
+///get the user suggestions from the server
+  _getUserSuggestions(String query) async {
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.userSuggestions, {"query": query}, userToken);
+    if (response != "error") {
+      print(response);
+      userSuggestions = response["search-results"];
+      update();
+    }
+  }
+///get the tag suggestions from the server
+  _getTagsSuggestions(String query) async {}
+
+  ///mention the the selected name to the text
+  includeName(String name) {
+    userSuggestions = null;
+    showSuggestions = false;
+    textEditingController.text =
+        textEditingController.text.split(" ").removeLast().toString() +
+            " @" +
+            name;
+    update();
+  }
+
+  ///include the tag name to the text
+  includeTag(String tag) async {
+    tagsSuggestions = null;
+    showSuggestions = false;
+    textEditingController.text =
+        textEditingController.text.split(" ").removeLast().toString() +
+            " #" +
+            tag;
+    update();
   }
 }

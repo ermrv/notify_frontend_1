@@ -45,6 +45,8 @@ abstract class ApiUrlsData {
   static String createContest = "$domain/api/contestpost/add";
   static String addPollPost = "$domain/api/pollpost/add";
   static String addEventPost = "$domain/api/eventpost/add";
+    static String userSuggestions = "$domain/api/user/search";
+
 
   //................................share post...............................
   static String sharePost = "$domain/api/post/share";

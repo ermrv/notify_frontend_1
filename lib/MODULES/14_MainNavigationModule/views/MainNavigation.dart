@@ -77,7 +77,7 @@ class MainNavigationScreen extends StatelessWidget {
                 controller: controller.pageController,
                 children: [
                   HomeScreen(),
-                  ExplorePageScreen(),
+                  KeepWidgetAliveWrapper(child: ExplorePageScreen()),
                   ShortVideoPlayerPageScreen(),
                   Container(),
                   KeepWidgetAliveWrapper(
