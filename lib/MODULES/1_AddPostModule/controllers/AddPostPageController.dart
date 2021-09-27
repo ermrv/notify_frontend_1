@@ -292,9 +292,13 @@ class AddPostPageController extends GetxController {
       if (query.characters.length >= 1) {
         _getUserSuggestions(query);
       }
+    } else {
+      showSuggestions = false;
+      update();
     }
   }
-///get the user suggestions from the server
+
+  ///get the user suggestions from the server
   _getUserSuggestions(String query) async {
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.userSuggestions, {"query": query}, userToken);
@@ -304,17 +308,21 @@ class AddPostPageController extends GetxController {
       update();
     }
   }
-///get the tag suggestions from the server
+
+  ///get the tag suggestions from the server
   _getTagsSuggestions(String query) async {}
 
   ///mention the the selected name to the text
   includeName(String name) {
     userSuggestions = null;
     showSuggestions = false;
-    textEditingController.text =
-        textEditingController.text.split(" ").removeLast().toString() +
-            " @" +
-            name;
+    List<String> _initialTextList = textEditingController.text.split(" ");
+    String _initialText =
+        _initialTextList.sublist(0, _initialTextList.length - 1).join(" ");
+    textEditingController.text = _initialText + " @" + name+" ";
+    textEditingController.selection = TextSelection.fromPosition(
+        TextPosition(offset: textEditingController.text.length));
+    print(_initialText);
     update();
   }
 
@@ -325,7 +333,7 @@ class AddPostPageController extends GetxController {
     textEditingController.text =
         textEditingController.text.split(" ").removeLast().toString() +
             " #" +
-            tag;
+            tag+" ";
     update();
   }
 }

@@ -148,6 +148,7 @@ class AddPostPageScreen extends StatelessWidget {
                     onChanged: (value) {
                       controller
                           .stringParser(controller.textEditingController.text);
+                      
                     },
                     maxLines: null,
                     textCapitalization: TextCapitalization.sentences,

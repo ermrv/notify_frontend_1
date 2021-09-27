@@ -13,40 +13,52 @@ class ShowSuggestionsWidget extends StatelessWidget {
     return GetBuilder<AddPostPageController>(
         builder: (controller) => Container(
               child: controller.tagsSuggestions != null
-                  ? ListView(
-                      shrinkWrap: true,
-                      children: [],
-                      //to show tags suggestions
-                    )
-                  : controller.userSuggestions != null
-                      ? ListView(
-                          shrinkWrap: true,
-                          children: [
-                            for (var i in controller.userSuggestions)
-                              ListTile(
-                                leading: CircleAvatar(
-                                  radius: 15.0,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(50.0),
-                                    child: CachedNetworkImage(
-                                      imageUrl:
-                                          ApiUrlsData.domain + i["profilePic"],
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                title: Text(
-                                  i["name"].toString(),
-                                  style: TextStyle(fontWeight: FontWeight.w700),
-                                ),
-                                onTap: () {
-                                  controller.includeName(i["name"]);
-                                },
-                              )
-                          ],
+                  ? controller.tagsSuggestions.length == 0
+                      ? Center(
+                          heightFactor: 5.0,
+                          child: Text("No results"),
                         )
+                      : ListView(
+                          shrinkWrap: true,
+                          children: [],
+                          //to show tags suggestions
+                        )
+                  : controller.userSuggestions != null
+                      ? controller.userSuggestions.length == 0
+                          ? Center(
+                              heightFactor: 5.0,
+                              child: Text("No results"),
+                            )
+                          : ListView(
+                              shrinkWrap: true,
+                              children: [
+                                for (var i in controller.userSuggestions)
+                                  ListTile(
+                                    leading: CircleAvatar(
+                                      radius: 15.0,
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                        child: CachedNetworkImage(
+                                          imageUrl: ApiUrlsData.domain +
+                                              i["profilePic"],
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    title: Text(
+                                      i["name"].toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    onTap: () {
+                                      controller.includeName(i["name"]);
+                                    },
+                                  )
+                              ],
+                            )
                       : Center(
-                          heightFactor: 50.0,
+                          heightFactor: 5.0,
                           child: CircularProgressIndicator(
                             color: Colors.blue,
                           ),
