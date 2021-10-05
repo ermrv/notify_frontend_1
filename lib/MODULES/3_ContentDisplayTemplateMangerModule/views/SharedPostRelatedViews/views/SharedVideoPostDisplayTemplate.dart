@@ -5,6 +5,8 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Use
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/VideoPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -163,8 +165,13 @@ class _SharedVideoPostDisplayPostState
                           width: 1.0,
                           color:
                               Theme.of(context).accentColor.withOpacity(0.6)))),
-              child: VideoPostDisplayTemplate(
-                postContent: widget.postContent,
+              child: GestureDetector(
+                onDoubleTap: () {
+                  reactionCountUpdater(_thisUserId);
+                },
+                child: VideoPostDisplayTemplate(
+                  postContent: widget.postContent,
+                ),
               )),
           //like comment and share button container
           Container(
@@ -210,6 +217,9 @@ class _SharedVideoPostDisplayPostState
                           onPressed: () {
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],
+                                  commentCountUpdater: (int count) {
+                                      commentCountUpdater(count);
+                                    },
                                 ));
                           }),
                       Text(_numberOfComments.toString() + " "),
@@ -252,17 +262,29 @@ class _SharedVideoPostDisplayPostState
   }
 
   //reaction count updater
-  reactionCountUpdater(String userId) {
+  reactionCountUpdater(String userId) async {
     if (_likes.contains(userId)) {
       _likes.remove(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
+      var response = await ApiServices.postWithAuth(
+          ApiUrlsData.removePostReaction,
+          {"postId": widget.postContent["_id"]},
+          userToken);
+      if (response == "error") {
+        Get.snackbar("Somethings wrong", "Your reaction is not updated");
+      }
     } else {
       _likes.add(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
+      var response = await ApiServices.postWithAuth(ApiUrlsData.addPostReaction,
+          {"postId": widget.postContent["_id"]}, userToken);
+      if (response == "error") {
+        Get.snackbar("Somethings wrong", "Your reaction is not updated");
+      }
     }
   }
 }

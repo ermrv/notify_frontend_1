@@ -7,9 +7,13 @@ import 'package:get/get.dart';
 class BelowPostCommentDisplayTemplate extends StatelessWidget {
   final commentData;
   final postId;
+  final Function(int) commentCountUpdater;
 
   const BelowPostCommentDisplayTemplate(
-      {Key key, @required this.commentData, @required this.postId})
+      {Key key,
+      @required this.commentData,
+      @required this.postId,
+      @required this.commentCountUpdater})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,14 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Get.to(() => CommentsDisplayScreen(postId: postId));
+            Get.to(
+              () => CommentsDisplayScreen(
+                postId: postId,
+                commentCountUpdater: (int count) {
+                  commentCountUpdater.call(count);
+                },
+              ),
+            );
           },
           child: Container(
             child: Row(

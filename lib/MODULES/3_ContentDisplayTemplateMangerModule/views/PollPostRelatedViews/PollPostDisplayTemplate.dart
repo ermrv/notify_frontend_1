@@ -415,6 +415,10 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           onPressed: () {
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],
+                                  commentCountUpdater:
+                                            (int commentCount) {
+                                          commentCountUpdater(commentCount);
+                                        },
                                 ));
                           }),
                       Text(_numberOfComments.toString() + " "),
@@ -443,7 +447,9 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                   ? Container()
                   : BelowPostCommentDisplayTemplate(
                       commentData: widget.postContent["comments"][0],
-                      postId: widget.postContent["_id"])
+                      postId: widget.postContent["_id"],commentCountUpdater: (int count) {
+                                      commentCountUpdater(count);
+                                    },)
         ],
       ),
     );
@@ -455,17 +461,30 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
     });
   }
 
-  reactionCountUpdater(String userId) {
+  //reaction count updater
+  reactionCountUpdater(String userId) async {
     if (_likes.contains(userId)) {
       _likes.remove(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
+      var response = await ApiServices.postWithAuth(
+          ApiUrlsData.removePostReaction,
+          {"postId": widget.postContent["_id"]},
+          userToken);
+      if (response == "error") {
+        Get.snackbar("Somethings wrong", "Your reaction is not updated");
+      }
     } else {
       _likes.add(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
+      var response = await ApiServices.postWithAuth(ApiUrlsData.addPostReaction,
+          {"postId": widget.postContent["_id"]}, userToken);
+      if (response == "error") {
+        Get.snackbar("Somethings wrong", "Your reaction is not updated");
+      }
     }
   }
 }

@@ -5,7 +5,9 @@ import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/BelowPost
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
+import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
@@ -215,6 +217,10 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                                 onPressed: () {
                                   Get.to(() => CommentsDisplayScreen(
                                         postId: widget.postContent["_id"],
+                                        commentCountUpdater:
+                                            (int commentCount) {
+                                          commentCountUpdater(commentCount);
+                                        },
                                       ));
                                 }),
                             Text(_numberOfComments.toString() + " "),
@@ -254,7 +260,9 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                   ? Container()
                   : BelowPostCommentDisplayTemplate(
                       commentData: widget.postContent["comments"][0],
-                      postId: widget.postContent["_id"])
+                      postId: widget.postContent["_id"],commentCountUpdater: (int count) {
+                                      commentCountUpdater(count);
+                                    },)
         ],
       ),
     );
@@ -275,17 +283,29 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
   }
 
   //reaction count updater
-  reactionCountUpdater(String userId) {
+  reactionCountUpdater(String userId) async {
     if (_likes.contains(userId)) {
       _likes.remove(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
+      var response = await ApiServices.postWithAuth(
+          ApiUrlsData.removePostReaction,
+          {"postId": widget.postContent["_id"]},
+          userToken);
+      if (response == "error") {
+        Get.snackbar("Somethings wrong", "Your reaction is not updated");
+      }
     } else {
       _likes.add(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
+      var response = await ApiServices.postWithAuth(ApiUrlsData.addPostReaction,
+          {"postId": widget.postContent["_id"]}, userToken);
+      if (response == "error") {
+        Get.snackbar("Somethings wrong", "Your reaction is not updated");
+      }
     }
   }
 }

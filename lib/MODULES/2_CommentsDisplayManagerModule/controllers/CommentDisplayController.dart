@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class CommentDisplayController extends GetxController {
+  Function(int) commentCountUpdater;
   String postId;
   List comments = [].obs;
   bool isCommentsLoaded = false;
@@ -52,6 +53,7 @@ class CommentDisplayController extends GetxController {
       update();
       print(response);
       update();
+      commentCountUpdater.call(comments.length);
     }
   }
 
@@ -90,6 +92,7 @@ class CommentDisplayController extends GetxController {
       //remove the comment and then
       comments.removeAt(_index);
       update();
+      commentCountUpdater.call(comments.length);
     }
   }
 

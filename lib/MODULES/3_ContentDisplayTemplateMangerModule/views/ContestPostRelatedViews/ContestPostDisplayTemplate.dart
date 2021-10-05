@@ -276,6 +276,9 @@ class _ContestPostDisplayTemplateState
                             onPressed: () {
                               Get.to(() => CommentsDisplayScreen(
                                     postId: widget.postContent["_id"],
+                                    commentCountUpdater: (int count) {
+                                      commentCountUpdater(count);
+                                    },
                                   ));
                             }),
                         Text(_numberOfComments.toString() + " "),

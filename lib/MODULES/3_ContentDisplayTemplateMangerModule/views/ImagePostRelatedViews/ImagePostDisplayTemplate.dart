@@ -12,7 +12,9 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Ima
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/SingleImageDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
+import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
@@ -196,14 +198,20 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                     trimMode: TrimMode.Line,
                     colorClickableText: Colors.blue,
                   )),
-          GestureDetector(
-            onDoubleTap: () {
-              reactionCountUpdater(_thisUserId);
-            },
-            child: _imageLayoutSelector(
-                widget.postContent["imagePost"]["postContent"],
-                widget.postContent["imagePost"]["templateType"]),
-          ),
+          _isShared
+              ? Container(
+                  child: _imageLayoutSelector(
+                      widget.postContent["imagePost"]["postContent"],
+                      widget.postContent["imagePost"]["templateType"]),
+                )
+              : GestureDetector(
+                  onDoubleTap: () {
+                    reactionCountUpdater(_thisUserId);
+                  },
+                  child: _imageLayoutSelector(
+                      widget.postContent["imagePost"]["postContent"],
+                      widget.postContent["imagePost"]["templateType"]),
+                ),
 
           _isShared
               ? Container()
@@ -250,6 +258,10 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                                 onPressed: () {
                                   Get.to(() => CommentsDisplayScreen(
                                         postId: widget.postContent["_id"],
+                                        commentCountUpdater:
+                                            (int commentCount) {
+                                          commentCountUpdater(commentCount);
+                                        },
                                       ));
                                 }),
                             Text(_numberOfComments.toString() + " "),
@@ -289,7 +301,11 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                   ? Container()
                   : BelowPostCommentDisplayTemplate(
                       commentData: widget.postContent["comments"][0],
-                      postId: widget.postContent["_id"])
+                      postId: widget.postContent["_id"],
+                      commentCountUpdater: (int count) {
+                        commentCountUpdater(count);
+                      },
+                    ),
         ],
       ),
     );
@@ -348,22 +364,34 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
 
   commentCountUpdater(int count) {
     setState(() {
-      _numberOfReactions = count;
+      _numberOfComments = count;
     });
   }
 
   //reaction count updater
-  reactionCountUpdater(String userId) {
+  reactionCountUpdater(String userId) async {
     if (_likes.contains(userId)) {
       _likes.remove(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
+      var response = await ApiServices.postWithAuth(
+          ApiUrlsData.removePostReaction,
+          {"postId": widget.postContent["_id"]},
+          userToken);
+      if (response == "error") {
+        Get.snackbar("Somethings wrong", "Your reaction is not updated");
+      }
     } else {
       _likes.add(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
+      var response = await ApiServices.postWithAuth(ApiUrlsData.addPostReaction,
+          {"postId": widget.postContent["_id"]}, userToken);
+      if (response == "error") {
+        Get.snackbar("Somethings wrong", "Your reaction is not updated");
+      }
     }
   }
 }

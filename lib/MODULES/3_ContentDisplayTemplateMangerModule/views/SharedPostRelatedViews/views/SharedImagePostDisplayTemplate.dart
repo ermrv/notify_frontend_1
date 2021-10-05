@@ -12,6 +12,8 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Ima
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -46,7 +48,7 @@ class _SharedImagePostDisplayTemplateState
     _ownerId = widget.postContent["postBy"]["_id"].toString();
     _thisUserId = PrimaryUserData.primaryUserData.userId.toString();
     _isOwner = _ownerId == _thisUserId;
-    
+
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
 
@@ -78,8 +80,7 @@ class _SharedImagePostDisplayTemplateState
                       borderRadius: BorderRadius.circular(30.0),
                       child: CachedNetworkImage(
                         imageUrl: ApiUrlsData.domain +
-                            widget.postContent["postBy"]
-                                ["profilePic"],
+                            widget.postContent["postBy"]["profilePic"],
                         fit: BoxFit.fill,
                       )),
                 ),
@@ -97,8 +98,7 @@ class _SharedImagePostDisplayTemplateState
                         child: Row(
                           children: [
                             Text(
-                              widget.postContent["postBy"]["name"]
-                                      .toString() +
+                              widget.postContent["postBy"]["name"].toString() +
                                   "  ",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 15.0),
@@ -148,8 +148,8 @@ class _SharedImagePostDisplayTemplateState
           widget.postContent["sharedDescription"] == null
               ? Container()
               : Container(
-                padding: EdgeInsets.symmetric(horizontal: 4.0),
-                alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: 4.0),
+                  alignment: Alignment.centerLeft,
                   child: ReadMoreText(
                     widget.postContent["sharedDescription"].toString(),
                     style: TextStyle(
@@ -168,9 +168,8 @@ class _SharedImagePostDisplayTemplateState
               padding: EdgeInsets.only(left: 3.0),
               decoration: BoxDecoration(
                   border: Border(
-                      
                       left: BorderSide(
-                          width:1.0,
+                          width: 1.0,
                           color:
                               Theme.of(context).accentColor.withOpacity(0.6)))),
               child: GestureDetector(
@@ -225,6 +224,9 @@ class _SharedImagePostDisplayTemplateState
                           onPressed: () {
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],
+                                  commentCountUpdater: (int count) {
+                                      commentCountUpdater(count);
+                                    },
                                 ));
                           }),
                       Text(_numberOfComments.toString() + " "),
@@ -252,48 +254,6 @@ class _SharedImagePostDisplayTemplateState
     );
   }
 
-  _imageLayoutSelector(List imagesData, String templateType) {
-    if (imagesData.length == 1) {
-      return SingleImageDisplayTemplate(
-        imageData: imagesData[0],
-        aspectRatio: 0.8,
-      );
-    } else {
-      switch (templateType.toLowerCase()) {
-        case "imagecarousel":
-          return ImageCarouselDisplayTemplate(
-            images: imagesData,
-            aspectRatio: 0.8,
-          );
-          break;
-        case "vertical":
-          if (imagesData.length == 2) {
-            return DoubleImageVerticalDisplayTemplate(
-              images: imagesData,
-            );
-          } else {
-            return MultiImageVerticalDisplayTemplate(
-              images: imagesData,
-            );
-          }
-
-          break;
-        case "horizontal":
-          if (imagesData.length == 2) {
-            return DoubleImageHorizontalDisplayTemplate(
-              images: imagesData,
-            );
-          } else {
-            return MultiImageHorizontalDisplayTemplate(
-              images: imagesData,
-            );
-          }
-
-          break;
-        default:
-      }
-    }
-  }
 
   //edited description updater
   updateEditedDescription(String editedDescription) {
@@ -310,17 +270,30 @@ class _SharedImagePostDisplayTemplateState
   }
 
   //reaction count updater
-  reactionCountUpdater(String userId) {
+  //reaction count updater
+  reactionCountUpdater(String userId) async {
     if (_likes.contains(userId)) {
       _likes.remove(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
+      var response = await ApiServices.postWithAuth(
+          ApiUrlsData.removePostReaction,
+          {"postId": widget.postContent["_id"]},
+          userToken);
+      if (response == "error") {
+        Get.snackbar("Somethings wrong", "Your reaction is not updated");
+      }
     } else {
       _likes.add(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
+      var response = await ApiServices.postWithAuth(ApiUrlsData.addPostReaction,
+          {"postId": widget.postContent["_id"]}, userToken);
+      if (response == "error") {
+        Get.snackbar("Somethings wrong", "Your reaction is not updated");
+      }
     }
   }
 }

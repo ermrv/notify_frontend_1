@@ -3,6 +3,8 @@ import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -141,6 +143,9 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
                       Get.to(
                         () => CommentsDisplayScreen(
                           postId: widget.postContent["_id"],
+                          commentCountUpdater: (int count) {
+                                      commentCountUpdater(count);
+                                    },
                         ),
                       ).then((value) {
                         setState(() {
@@ -243,17 +248,30 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
     });
   }
 
-  reactionCountUpdater(String userId) {
+  //reaction count updater
+  reactionCountUpdater(String userId) async {
     if (_likes.contains(userId)) {
       _likes.remove(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
+      var response = await ApiServices.postWithAuth(
+          ApiUrlsData.removePostReaction,
+          {"postId": widget.postContent["_id"]},
+          userToken);
+      if (response == "error") {
+        Get.snackbar("Somethings wrong", "Your reaction is not updated");
+      }
     } else {
       _likes.add(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
+      var response = await ApiServices.postWithAuth(ApiUrlsData.addPostReaction,
+          {"postId": widget.postContent["_id"]}, userToken);
+      if (response == "error") {
+        Get.snackbar("Somethings wrong", "Your reaction is not updated");
+      }
     }
   }
 }

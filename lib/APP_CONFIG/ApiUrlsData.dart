@@ -74,9 +74,7 @@ abstract class ApiUrlsData {
   static String editSubComment = "$domain/api/post/subcomment/edit";
 
   //reactions
-  static String allPostReaction = "$domain/api/post/reactions";
-  static String addPostReaction = "$domain/api/post/reaction/add";
-  static String removePostReaction = "$domain/api/post/reaction/remove";
+  
 
   //..............................................user story or status.................................
 
@@ -131,4 +129,10 @@ abstract class ApiUrlsData {
   //----------------------follow--------------------------------------------
   static String followUser = "$domain/api/user/follow";
   static String unfollowUser = "$domain/api/user/unfollow";
+
+
+  //...........................like a post..............................
+  static String allPostReaction = "$domain/api/post/reactions";
+  static String addPostReaction = "$domain/api/post/reaction/add";
+  static String removePostReaction = "$domain/api/post/reaction/remove";
 }

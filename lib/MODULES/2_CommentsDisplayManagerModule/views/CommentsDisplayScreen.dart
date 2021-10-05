@@ -7,8 +7,11 @@ import 'package:get/get.dart';
 
 class CommentsDisplayScreen extends StatelessWidget {
   final String postId;
+  final Function(int) commentCountUpdater;
 
-  CommentsDisplayScreen({Key key, @required this.postId}) : super(key: key);
+  CommentsDisplayScreen(
+      {Key key, @required this.postId, @required this.commentCountUpdater})
+      : super(key: key);
   final commentsDisplayController = Get.put(CommentDisplayController());
   @override
   Widget build(BuildContext context) {
@@ -16,6 +19,7 @@ class CommentsDisplayScreen extends StatelessWidget {
       initState: (state) {
         commentsDisplayController.postId = postId;
         commentsDisplayController.getComments();
+        commentsDisplayController.commentCountUpdater = commentCountUpdater;
       },
       builder: (controller) => Scaffold(
         bottomSheet: Container(
@@ -40,12 +44,12 @@ class CommentsDisplayScreen extends StatelessWidget {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(25.0),
                       child: Obx(
-                                () => CachedNetworkImage(
-                                  imageUrl: PrimaryUserData
-                                      .primaryUserData.profilePic.value,
-                                  fit: BoxFit.cover,
-                                ),
-                              )),
+                        () => CachedNetworkImage(
+                          imageUrl:
+                              PrimaryUserData.primaryUserData.profilePic.value,
+                          fit: BoxFit.cover,
+                        ),
+                      )),
                 ),
                 Expanded(
                     child: Container(

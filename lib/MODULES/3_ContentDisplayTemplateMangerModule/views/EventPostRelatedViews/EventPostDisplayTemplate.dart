@@ -281,6 +281,9 @@ class _EventPostDisplayTemplateState extends State<EventPostDisplayTemplate> {
                             onPressed: () {
                               Get.to(() => CommentsDisplayScreen(
                                     postId: widget.postContent["_id"],
+                                    commentCountUpdater: (int count) {
+                                      commentCountUpdater(count);
+                                    },
                                   ));
                             }),
                         Text(_numberOfComments.toString() + " "),
