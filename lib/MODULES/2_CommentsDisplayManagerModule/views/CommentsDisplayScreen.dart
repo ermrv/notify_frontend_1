@@ -65,6 +65,7 @@ class CommentsDisplayScreen extends StatelessWidget {
                             maxLines: null,
                             decoration: InputDecoration.collapsed(
                                 border: InputBorder.none,
+                                
                                 hintText: "Add Comment"),
                           ),
                         ),

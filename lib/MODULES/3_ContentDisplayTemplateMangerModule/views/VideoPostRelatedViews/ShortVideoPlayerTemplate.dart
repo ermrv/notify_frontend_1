@@ -256,7 +256,7 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
         _numberOfReactions = _likes.length;
       });
       var response = await ApiServices.postWithAuth(
-          ApiUrlsData.removePostReaction,
+          ApiUrlsData.postReaction,
           {"postId": widget.postContent["_id"]},
           userToken);
       if (response == "error") {
@@ -267,7 +267,7 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
       setState(() {
         _numberOfReactions = _likes.length;
       });
-      var response = await ApiServices.postWithAuth(ApiUrlsData.addPostReaction,
+      var response = await ApiServices.postWithAuth(ApiUrlsData.postReaction,
           {"postId": widget.postContent["_id"]}, userToken);
       if (response == "error") {
         Get.snackbar("Somethings wrong", "Your reaction is not updated");

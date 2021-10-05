@@ -132,7 +132,6 @@ abstract class ApiUrlsData {
 
 
   //...........................like a post..............................
-  static String allPostReaction = "$domain/api/post/reactions";
-  static String addPostReaction = "$domain/api/post/reaction/add";
-  static String removePostReaction = "$domain/api/post/reaction/remove";
+  static String allPostReaction = "$domain/api/post/reacted";
+  static String postReaction = "$domain/api/post/react";
 }

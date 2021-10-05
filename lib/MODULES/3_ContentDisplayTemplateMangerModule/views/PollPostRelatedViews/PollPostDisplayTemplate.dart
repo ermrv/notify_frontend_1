@@ -468,10 +468,8 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
       setState(() {
         _numberOfReactions = _likes.length;
       });
-      var response = await ApiServices.postWithAuth(
-          ApiUrlsData.removePostReaction,
-          {"postId": widget.postContent["_id"]},
-          userToken);
+      var response = await ApiServices.postWithAuth(ApiUrlsData.postReaction,
+          {"postId": widget.postContent["_id"], "like": false}, userToken);
       if (response == "error") {
         Get.snackbar("Somethings wrong", "Your reaction is not updated");
       }
@@ -480,8 +478,8 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
       setState(() {
         _numberOfReactions = _likes.length;
       });
-      var response = await ApiServices.postWithAuth(ApiUrlsData.addPostReaction,
-          {"postId": widget.postContent["_id"]}, userToken);
+      var response = await ApiServices.postWithAuth(ApiUrlsData.postReaction,
+          {"postId": widget.postContent["_id"], "like": true}, userToken);
       if (response == "error") {
         Get.snackbar("Somethings wrong", "Your reaction is not updated");
       }

@@ -40,7 +40,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
   bool _isOwner = false;
   bool _isShared = false;
   int _numberOfComments = 0;
-  int _numberOfReactions = 0;
+  int _numberOfReactions;
 
   List _likes = [];
 
@@ -50,7 +50,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
     _thisUserId = PrimaryUserData.primaryUserData.userId.toString();
     _isOwner = _ownerId == _thisUserId;
     _isShared = widget.postContent["primary"].toString() != "true";
-    _likes = widget.postContent["likes"];
+    _likes.addAll(widget.postContent["likes"]);
     _numberOfReactions = _likes.length;
 
     super.initState();
@@ -375,10 +375,8 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
       setState(() {
         _numberOfReactions = _likes.length;
       });
-      var response = await ApiServices.postWithAuth(
-          ApiUrlsData.removePostReaction,
-          {"postId": widget.postContent["_id"]},
-          userToken);
+      var response = await ApiServices.postWithAuth(ApiUrlsData.postReaction,
+          {"postId": widget.postContent["_id"], "like": false}, userToken);
       if (response == "error") {
         Get.snackbar("Somethings wrong", "Your reaction is not updated");
       }
@@ -387,8 +385,8 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
       setState(() {
         _numberOfReactions = _likes.length;
       });
-      var response = await ApiServices.postWithAuth(ApiUrlsData.addPostReaction,
-          {"postId": widget.postContent["_id"]}, userToken);
+      var response = await ApiServices.postWithAuth(ApiUrlsData.postReaction,
+          {"postId": widget.postContent["_id"], "like": true}, userToken);
       if (response == "error") {
         Get.snackbar("Somethings wrong", "Your reaction is not updated");
       }

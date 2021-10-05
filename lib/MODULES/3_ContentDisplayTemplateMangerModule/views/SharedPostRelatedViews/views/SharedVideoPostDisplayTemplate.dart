@@ -218,8 +218,8 @@ class _SharedVideoPostDisplayPostState
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],
                                   commentCountUpdater: (int count) {
-                                      commentCountUpdater(count);
-                                    },
+                                    commentCountUpdater(count);
+                                  },
                                 ));
                           }),
                       Text(_numberOfComments.toString() + " "),
@@ -262,16 +262,15 @@ class _SharedVideoPostDisplayPostState
   }
 
   //reaction count updater
+  //reaction count updater
   reactionCountUpdater(String userId) async {
     if (_likes.contains(userId)) {
       _likes.remove(userId);
       setState(() {
         _numberOfReactions = _likes.length;
       });
-      var response = await ApiServices.postWithAuth(
-          ApiUrlsData.removePostReaction,
-          {"postId": widget.postContent["_id"]},
-          userToken);
+      var response = await ApiServices.postWithAuth(ApiUrlsData.postReaction,
+          {"postId": widget.postContent["_id"], "like": false}, userToken);
       if (response == "error") {
         Get.snackbar("Somethings wrong", "Your reaction is not updated");
       }
@@ -280,8 +279,8 @@ class _SharedVideoPostDisplayPostState
       setState(() {
         _numberOfReactions = _likes.length;
       });
-      var response = await ApiServices.postWithAuth(ApiUrlsData.addPostReaction,
-          {"postId": widget.postContent["_id"]}, userToken);
+      var response = await ApiServices.postWithAuth(ApiUrlsData.postReaction,
+          {"postId": widget.postContent["_id"], "like": true}, userToken);
       if (response == "error") {
         Get.snackbar("Somethings wrong", "Your reaction is not updated");
       }
