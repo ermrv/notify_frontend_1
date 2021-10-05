@@ -27,7 +27,10 @@ import 'package:get/get.dart';
 ///widget to dispaly the image posts, given [postContent]
 class ImagePostDisplayTemplate extends StatefulWidget {
   final postContent;
-  ImagePostDisplayTemplate({Key key, this.postContent}) : super(key: key);
+  final parentController;
+  ImagePostDisplayTemplate(
+      {Key key, this.postContent, @required this.parentController})
+      : super(key: key);
 
   @override
   _ImagePostDisplayTemplateState createState() =>
@@ -166,6 +169,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                         editedDescriptionUpdater: (String description) {
                           updateEditedDescription(description);
                         },
+                        parentController: widget.parentController,
                       )
                     : OtherUserActionsOnPost(
                         postUserId: widget.postContent["imagePost"]["postBy"]

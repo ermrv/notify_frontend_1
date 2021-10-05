@@ -47,7 +47,7 @@ class _ShortVideoPlayerLayoutState extends State<ShortVideoPlayerLayout> {
       body: PageView(
         scrollDirection: Axis.vertical,
         children: [
-          for (var i in videos) ShortVideoPlayerTemplate(postContent: i)
+          for (var i in videos) ShortVideoPlayerTemplate(postContent: i,)
         ],
       ),
     );

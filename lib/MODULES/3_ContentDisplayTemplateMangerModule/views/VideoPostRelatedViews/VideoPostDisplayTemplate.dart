@@ -26,7 +26,9 @@ import 'package:video_player/video_player.dart';
 ///depending upon the type of the video
 class VideoPostDisplayTemplate extends StatefulWidget {
   final postContent;
-  const VideoPostDisplayTemplate({Key key, @required this.postContent})
+  final parentController;
+  const VideoPostDisplayTemplate(
+      {Key key, @required this.postContent, @required this.parentController})
       : super(key: key);
 
   @override
@@ -147,6 +149,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                         editedDescriptionUpdater: (String description) {
                           updateEditedDescription(description);
                         },
+                        parentController: widget.parentController,
                       )
                     : OtherUserActionsOnPost(
                         postUserId: widget.postContent["videoPost"]["postBy"]
@@ -287,7 +290,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
 
   //edited description updater
   updateEditedDescription(String editedDescription) {
-    widget.postContent["imagePost"]["description"] = editedDescription;
+    widget.postContent["videoPost"]["description"] = editedDescription;
     if (this.mounted) {
       setState(() {});
     }

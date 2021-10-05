@@ -16,8 +16,9 @@ import 'package:get/get.dart';
 
 class SharedTextPostDisplayTemplate extends StatefulWidget {
   final postContent;
+  final parentController;
 
-  const SharedTextPostDisplayTemplate({Key key, @required this.postContent})
+  const SharedTextPostDisplayTemplate({Key key, @required this.postContent,@required this.parentController})
       : super(key: key);
 
   @override
@@ -128,7 +129,7 @@ class _SharedTextPostDisplayTemplateState
                             widget.postContent["sharedDiscription"].toString(),
                         editedDescriptionUpdater: (String description) {
                           updateEditedDescription(description);
-                        },
+                        },parentController:widget.parentController,
                       )
                     : OtherUserActionsOnPost(
                         postUserId:
@@ -161,13 +162,13 @@ class _SharedTextPostDisplayTemplateState
               padding: EdgeInsets.only(left: 3.0),
               decoration: BoxDecoration(
                   border: Border(
-                      
                       left: BorderSide(
-                          width:1.0,
+                          width: 1.0,
                           color:
                               Theme.of(context).accentColor.withOpacity(0.6)))),
               child: TextPostDisplayTemplate(
                 postContent: widget.postContent,
+                parentController: widget.parentController,
               )),
           //like comment and share button container
           Container(
@@ -214,8 +215,8 @@ class _SharedTextPostDisplayTemplateState
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],
                                   commentCountUpdater: (int count) {
-                                      commentCountUpdater(count);
-                                    },
+                                    commentCountUpdater(count);
+                                  },
                                 ));
                           }),
                       Text(_numberOfComments.toString() + " "),

@@ -14,8 +14,9 @@ import 'package:video_player/video_player.dart';
 
 class ShortVideoPlayerTemplate extends StatefulWidget {
   final postContent;
+  final parentController;
 
-  const ShortVideoPlayerTemplate({Key key, @required this.postContent})
+  const ShortVideoPlayerTemplate({Key key, @required this.postContent,this.parentController})
       : super(key: key);
 
   @override
@@ -144,8 +145,8 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
                         () => CommentsDisplayScreen(
                           postId: widget.postContent["_id"],
                           commentCountUpdater: (int count) {
-                                      commentCountUpdater(count);
-                                    },
+                            commentCountUpdater(count);
+                          },
                         ),
                       ).then((value) {
                         setState(() {
@@ -255,10 +256,8 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
       setState(() {
         _numberOfReactions = _likes.length;
       });
-      var response = await ApiServices.postWithAuth(
-          ApiUrlsData.postReaction,
-          {"postId": widget.postContent["_id"]},
-          userToken);
+      var response = await ApiServices.postWithAuth(ApiUrlsData.postReaction,
+          {"postId": widget.postContent["_id"]}, userToken);
       if (response == "error") {
         Get.snackbar("Somethings wrong", "Your reaction is not updated");
       }

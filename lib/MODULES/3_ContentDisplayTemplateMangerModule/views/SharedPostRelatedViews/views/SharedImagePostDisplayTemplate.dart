@@ -23,8 +23,9 @@ import 'package:get/get.dart';
 
 class SharedImagePostDisplayTemplate extends StatefulWidget {
   final postContent;
+  final parentController;
 
-  const SharedImagePostDisplayTemplate({Key key, @required this.postContent})
+  const SharedImagePostDisplayTemplate({Key key, @required this.postContent,@required this.parentController})
       : super(key: key);
 
   @override
@@ -136,6 +137,7 @@ class _SharedImagePostDisplayTemplateState
                         editedDescriptionUpdater: (String description) {
                           updateEditedDescription(description);
                         },
+                        parentController:widget.parentController,
                       )
                     : OtherUserActionsOnPost(
                         postUserId:
@@ -178,6 +180,7 @@ class _SharedImagePostDisplayTemplateState
                 },
                 child: ImagePostDisplayTemplate(
                   postContent: widget.postContent,
+                  parentController: widget.parentController,
                 ),
               )),
           //like comment and share button container
@@ -225,8 +228,8 @@ class _SharedImagePostDisplayTemplateState
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],
                                   commentCountUpdater: (int count) {
-                                      commentCountUpdater(count);
-                                    },
+                                    commentCountUpdater(count);
+                                  },
                                 ));
                           }),
                       Text(_numberOfComments.toString() + " "),
@@ -253,7 +256,6 @@ class _SharedImagePostDisplayTemplateState
       ),
     );
   }
-
 
   //edited description updater
   updateEditedDescription(String editedDescription) {

@@ -289,9 +289,15 @@ class __TemplateState extends State<_Template> {
                                         GestureDetector(
                                           onTap: () => Get.to(() =>
                                               CommentsDisplayScreen(
-                                                  postId: statusContents[
-                                                          currentIndex]["_id"]
-                                                      .toString())),
+                                                postId:
+                                                    statusContents[currentIndex]
+                                                            ["_id"]
+                                                        .toString(),
+                                                commentCountUpdater:
+                                                    (int count) {
+                                                  commentCountUpdater(count);
+                                                },
+                                              )),
                                           child: Icon(
                                             EvilIcons.comment,
                                             size: 28.0,
@@ -421,6 +427,12 @@ class __TemplateState extends State<_Template> {
       setState(() {});
     } else {
       _likes.add(userId);
+      setState(() {});
+    }
+  }
+
+  commentCountUpdater(int count) {
+    if (this.mounted) {
       setState(() {});
     }
   }

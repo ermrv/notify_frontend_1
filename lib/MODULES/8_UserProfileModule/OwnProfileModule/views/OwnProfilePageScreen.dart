@@ -46,6 +46,7 @@ class OwnProfilePageScreen extends StatelessWidget {
                           )
                         : ContentDisplayTemplateProvider(
                             data: controller.profilePostData,
+                            controller: controller,
                           )
               ],
             )),

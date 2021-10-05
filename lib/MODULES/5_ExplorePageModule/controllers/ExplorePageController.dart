@@ -90,6 +90,23 @@ class ExplorePageController extends GetxController {
         .writeAsString(json.encode(data), mode: FileMode.write);
   }
 
+  //delete post
+  //delete a post
+  deletePost(String postId) async {
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.deletePost, {"postId": postId}, userToken);
+    if (response == "error") {
+      Get.snackbar("Some error occured", "error deleting post");
+    } else {
+      int index = explorePageData.indexWhere((post) => post["_id"] == postId);
+      if (index != -1) {
+        explorePageData.removeAt(index);
+      }
+      _handleLocalFile(explorePageData);
+      update();
+    }
+  }
+
    ///listen to the scroll of the newfeed in order to load more data
   ///calls [getPreviousPostsData] when scroll is attend to a limit
   scrollListener() {

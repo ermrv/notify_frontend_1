@@ -59,6 +59,7 @@ class SearchResultsDisplayPageScreen extends StatelessWidget {
                     children: [
                       ContentDisplayTemplateProvider(
                         data: controller.searchResults,
+                        controller: controller,
                       )
                     ],
                   ),

@@ -20,8 +20,9 @@ import 'package:get/get.dart';
 ///widget to dispaly the image posts, given [postContent]
 class TextPostDisplayTemplate extends StatefulWidget {
   final postContent;
+  final parentController;
 
-  TextPostDisplayTemplate({Key key, this.postContent}) : super(key: key);
+  TextPostDisplayTemplate({Key key, this.postContent,@required this.parentController}) : super(key: key);
 
   @override
   _TextPostDisplayTemplateState createState() =>
@@ -139,7 +140,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                             .toString(),
                         editedDescriptionUpdater: (String description) {
                           updateEditedDescription(description);
-                        },
+                        },parentController:widget.parentController,
                       )
                     : OtherUserActionsOnPost(
                         postUserId: widget.postContent["textPost"]["postBy"]
@@ -260,9 +261,11 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                   ? Container()
                   : BelowPostCommentDisplayTemplate(
                       commentData: widget.postContent["comments"][0],
-                      postId: widget.postContent["_id"],commentCountUpdater: (int count) {
-                                      commentCountUpdater(count);
-                                    },)
+                      postId: widget.postContent["_id"],
+                      commentCountUpdater: (int count) {
+                        commentCountUpdater(count);
+                      },
+                    )
         ],
       ),
     );

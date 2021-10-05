@@ -24,10 +24,12 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 ///uses the postType key to find the corresponding template
 class ContentDisplayTemplateProvider extends StatelessWidget {
   final List data;
+  final controller;
 
   ContentDisplayTemplateProvider({
     Key key,
     @required this.data,
+    @required this.controller
   }) : super(key: key);
 
   @override
@@ -46,18 +48,18 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
       case "image":
         {
           if (content["primary"].toString() == "true") {
-            return ImagePostDisplayTemplate(postContent: content);
+            return ImagePostDisplayTemplate(postContent: content,parentController: controller,);
           } else if (content["primary"].toString() == "false")
-            return SharedImagePostDisplayTemplate(postContent: content);
+            return SharedImagePostDisplayTemplate(postContent: content,parentController: controller);
           break;
         }
       //for video post
       case "video":
         {
           if (content["primary"].toString() == "true") {
-            return VideoPostDisplayTemplate(postContent: content);
+            return VideoPostDisplayTemplate(postContent: content,parentController: controller);
           } else if (content["primary"].toString() == "false")
-            return SharedVideoPostDisplayTemplate(postContent: content);
+            return SharedVideoPostDisplayTemplate(postContent: content,parentController: controller);
         }
         break;
 
@@ -71,6 +73,7 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
       case "poll":
         return PollPostDisplayTemplate(
           postContent: content,
+          parentController: controller
         );
         break;
 
@@ -85,10 +88,11 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
           if (content["primary"].toString() == "true") {
             return TextPostDisplayTemplate(
               postContent: content,
+              parentController: controller
             );
           } else if (content["primary"].toString() == "false")
             return SharedTextPostDisplayTemplate(
-              postContent: content,
+              postContent: content,parentController: controller
             );
         }
 

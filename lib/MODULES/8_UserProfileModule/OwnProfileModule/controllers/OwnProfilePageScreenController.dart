@@ -6,6 +6,7 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class OwnProfilePageScreenController extends GetxController {
@@ -116,6 +117,22 @@ ScrollController scrollController;
     else {
       File(userProfileDataFilePath)
           .writeAsString(json.encode(data), mode: FileMode.write);
+    }
+  }
+
+  //delete a post
+  deletePost(String postId) async {
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.deletePost, {"postId": postId}, userToken);
+    if (response == "error") {
+      Get.snackbar("Some error occured", "error deleting post");
+    } else {
+      int index = profilePostData.indexWhere((post) => post["_id"] == postId);
+      if (index != -1) {
+        profilePostData.removeAt(index);
+      }
+      _handleLocalFile(profilePostData);
+      update();
     }
   }
 

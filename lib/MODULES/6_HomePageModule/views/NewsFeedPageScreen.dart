@@ -37,7 +37,7 @@ class NewsFeedPageScreen extends StatelessWidget {
                           controller.newsFeedData.length == 0
                               ? Center(child: Text("No posts yet"))
                               : ContentDisplayTemplateProvider(
-                                  data: controller.newsFeedData)
+                                  data: controller.newsFeedData,controller: controller,)
                         ],
                       ),
                     ),

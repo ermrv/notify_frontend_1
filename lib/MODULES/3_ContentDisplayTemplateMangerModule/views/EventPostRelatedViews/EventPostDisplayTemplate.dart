@@ -16,8 +16,9 @@ import 'package:get/get.dart';
 ///template for post of type contest
 class EventPostDisplayTemplate extends StatefulWidget {
   final postContent;
+  final controller;
 
-  const EventPostDisplayTemplate({Key key, @required this.postContent})
+  const EventPostDisplayTemplate({Key key, @required this.postContent, this.controller})
       : super(key: key);
   @override
   _EventPostDisplayTemplateState createState() =>
@@ -183,6 +184,7 @@ class _EventPostDisplayTemplateState extends State<EventPostDisplayTemplate> {
                           editedDescriptionUpdater: (String description) {
                             updateEditedDescription(description);
                           },
+                          parentController:widget.controller,
                         )
                       : OtherUserActionsOnPost(
                           postUserId: widget.postContent["eventPost"]["postBy"]

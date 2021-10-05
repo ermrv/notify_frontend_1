@@ -16,8 +16,9 @@ import 'package:get/get.dart';
 
 class PollPostDisplayTemplate extends StatefulWidget {
   final postContent;
+  final parentController;
 
-  const PollPostDisplayTemplate({Key key, this.postContent}) : super(key: key);
+  const PollPostDisplayTemplate({Key key, this.postContent,@required this.parentController}) : super(key: key);
 
   @override
   _PollPostDisplayTemplateState createState() =>
@@ -141,6 +142,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                               editedDescriptionUpdater: (String description) {
                                 // updateEditedDescription(description);
                               },
+                              parentController:widget.parentController,
                             )
                           : OtherUserActionsOnPost(
                               postUserId: widget.postContent["pollPost"]
@@ -415,10 +417,9 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           onPressed: () {
                             Get.to(() => CommentsDisplayScreen(
                                   postId: widget.postContent["_id"],
-                                  commentCountUpdater:
-                                            (int commentCount) {
-                                          commentCountUpdater(commentCount);
-                                        },
+                                  commentCountUpdater: (int commentCount) {
+                                    commentCountUpdater(commentCount);
+                                  },
                                 ));
                           }),
                       Text(_numberOfComments.toString() + " "),
@@ -447,9 +448,11 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                   ? Container()
                   : BelowPostCommentDisplayTemplate(
                       commentData: widget.postContent["comments"][0],
-                      postId: widget.postContent["_id"],commentCountUpdater: (int count) {
-                                      commentCountUpdater(count);
-                                    },)
+                      postId: widget.postContent["_id"],
+                      commentCountUpdater: (int count) {
+                        commentCountUpdater(count);
+                      },
+                    )
         ],
       ),
     );

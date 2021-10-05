@@ -39,7 +39,7 @@ class ContestParticipantsPostScreen extends StatelessWidget {
                   : ListView(
                       children: [
                         ContentDisplayTemplateProvider(
-                            data: controller.contestPosts)
+                            data: controller.contestPosts,controller: controller,)
                       ],
                     ),
         );

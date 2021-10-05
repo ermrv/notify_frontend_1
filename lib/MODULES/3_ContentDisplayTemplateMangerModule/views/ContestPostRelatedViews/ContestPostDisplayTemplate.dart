@@ -16,8 +16,9 @@ import 'package:get/get.dart';
 ///template for post of type contest
 class ContestPostDisplayTemplate extends StatefulWidget {
   final postContent;
+  final controller;
 
-  const ContestPostDisplayTemplate({Key key, @required this.postContent})
+  const ContestPostDisplayTemplate({Key key, @required this.postContent, this.controller})
       : super(key: key);
   @override
   _ContestPostDisplayTemplateState createState() =>
@@ -180,13 +181,16 @@ class _ContestPostDisplayTemplateState
                               .toString(),
                           editedDescriptionUpdater: (String description) {
                             updateEditedDescription(description);
+                            
                           },
+                          parentController:widget.controller,
                         )
                       : OtherUserActionsOnPost(
                           postUserId: widget.postContent["contestPost"]
                                   ["postBy"]["_id"]
                               .toString(),
                           postId: widget.postContent["_id"].toString(),
+                          
                         )
                 ],
               ),

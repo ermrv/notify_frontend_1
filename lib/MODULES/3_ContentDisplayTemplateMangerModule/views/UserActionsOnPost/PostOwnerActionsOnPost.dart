@@ -8,12 +8,14 @@ class PostOwnerActionsOnPost extends StatelessWidget {
   final String postId;
   final String postDescription;
   final Function(String) editedDescriptionUpdater;
+  final parentController;
 
   const PostOwnerActionsOnPost(
       {Key key,
       @required this.postId,
       @required this.postDescription,
-      @required this.editedDescriptionUpdater})
+      @required this.editedDescriptionUpdater,
+      @required this.parentController})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -38,9 +40,22 @@ class PostOwnerActionsOnPost extends StatelessWidget {
             PopupMenuItem<TextButton>(
                 child: TextButton(
               onPressed: () {
-                ContentDisplayManager _controller =
-                    Get.find<ContentDisplayManager>();
-                _controller.deletePost(postId);
+                Get.dialog(AlertDialog(
+                  title: Text("Post will be deleted permanently"),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Text("Cancel")),
+                    TextButton(
+                        onPressed: () async {
+                          await parentController.deletePost(postId);
+                          Get.back();
+                        },
+                        child: Text("Okay"))
+                  ],
+                ));
               },
               child: Text('Delete Post'),
             )),

@@ -6,6 +6,7 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:flutter/services.dart' as flutterServices;
 
@@ -131,6 +132,23 @@ class NewsFeedPageController extends GetxController {
       print("error");
     } else {
       userStatusData.addAll(response);
+      update();
+    }
+  }
+
+  ///delete post
+  //delete a post
+  deletePost(String postId) async {
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.deletePost, {"postId": postId}, userToken);
+    if (response == "error") {
+      Get.snackbar("Some error occured", "error deleting post");
+    } else {
+      int index = newsFeedData.indexWhere((post) => post["_id"] == postId);
+      if (index != -1) {
+        newsFeedData.removeAt(index);
+      }
+      _handleLocalFile(newsFeedData);
       update();
     }
   }

@@ -16,8 +16,9 @@ import 'package:get/get.dart';
 
 class SharedVideoPostDisplayTemplate extends StatefulWidget {
   final postContent;
+  final parentController;
 
-  const SharedVideoPostDisplayTemplate({Key key, this.postContent})
+  const SharedVideoPostDisplayTemplate({Key key, this.postContent,@required this.parentController})
       : super(key: key);
 
   @override
@@ -128,7 +129,7 @@ class _SharedVideoPostDisplayPostState
                             widget.postContent["sharedDescription"].toString(),
                         editedDescriptionUpdater: (String description) {
                           updateEditedDescription(description);
-                        },
+                        },parentController:widget.parentController,
                       )
                     : OtherUserActionsOnPost(
                         postUserId:
@@ -171,6 +172,7 @@ class _SharedVideoPostDisplayPostState
                 },
                 child: VideoPostDisplayTemplate(
                   postContent: widget.postContent,
+                  parentController: widget.parentController,
                 ),
               )),
           //like comment and share button container
