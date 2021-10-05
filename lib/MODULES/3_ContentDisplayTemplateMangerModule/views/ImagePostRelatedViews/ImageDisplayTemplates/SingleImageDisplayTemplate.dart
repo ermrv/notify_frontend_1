@@ -24,10 +24,12 @@ class SingleImageDisplayTemplate extends StatelessWidget {
             ));
       },
       child: Container(
-        width: screenWidth,
-        height: screenWidth * 0.8,
         child: CachedNetworkImage(
           imageUrl: ApiUrlsData.domain + imageData["path"],
+          placeholder: (context, string) => Container(
+            width: screenWidth,
+            height: screenWidth,
+          ),
           alignment: Alignment.topCenter,
           fit: BoxFit.fitWidth,
         ),

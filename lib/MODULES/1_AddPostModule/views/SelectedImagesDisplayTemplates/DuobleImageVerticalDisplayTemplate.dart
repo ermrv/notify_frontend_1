@@ -20,14 +20,14 @@ class DoubleImageVerticalDisplayTemplate extends StatelessWidget {
                 width: screenWidth,
                 child: AspectRatio(
                   aspectRatio: 1.81,
-                  child: Image.file(files[0],fit: BoxFit.cover,)
+                  child: Image.file(files[0],fit: BoxFit.cover,alignment: Alignment.topCenter,)
                 )),
             Container(
                 decoration: BoxDecoration(border: Border.all(width: 1.0)),
                 width: screenWidth,
                 child: AspectRatio(
                   aspectRatio: 1.81,
-                 child: Image.file(files[1],fit: BoxFit.cover,)
+                 child: Image.file(files[1],fit: BoxFit.cover,alignment: Alignment.topCenter,)
                 ))
           ],
         ),

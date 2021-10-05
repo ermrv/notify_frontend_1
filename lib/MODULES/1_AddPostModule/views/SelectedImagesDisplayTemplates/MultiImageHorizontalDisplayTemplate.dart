@@ -22,6 +22,7 @@ class MultiImageHorizontalDisplayTemplate extends StatelessWidget {
                 child: Image.file(
                   files[0],
                   fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
                 ),
               ),
             ),
@@ -36,6 +37,7 @@ class MultiImageHorizontalDisplayTemplate extends StatelessWidget {
                         child: Image.file(
                           files[1],
                           fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
                         ),
                       )),
                   Stack(
@@ -47,6 +49,7 @@ class MultiImageHorizontalDisplayTemplate extends StatelessWidget {
                             child: Image.file(
                               files[2],
                               fit: BoxFit.cover,
+                              alignment: Alignment.topCenter,
                             ),
                           )),
                       files.length > 3

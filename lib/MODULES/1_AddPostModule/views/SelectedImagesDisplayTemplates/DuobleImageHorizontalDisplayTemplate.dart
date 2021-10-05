@@ -24,6 +24,7 @@ class DoubleImageHorizontalDisplayTemplate extends StatelessWidget {
                     child: Image.file(
                       files[0],
                       fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
                     ))),
             Container(
                 decoration: BoxDecoration(border: Border.all(width: 1.0)),
@@ -33,6 +34,7 @@ class DoubleImageHorizontalDisplayTemplate extends StatelessWidget {
                     child: Image.file(
                       files[1],
                       fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
                     )))
           ],
         ),

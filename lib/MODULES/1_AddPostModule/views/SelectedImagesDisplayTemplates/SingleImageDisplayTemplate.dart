@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:flutter/material.dart';
 
 class SingleImageDisplayTemplate extends StatelessWidget {
@@ -12,11 +13,11 @@ class SingleImageDisplayTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: AspectRatio(
-          aspectRatio:aspectRatio<0.8?0.8:aspectRatio,
+      child: Container(
+          width: screenWidth,
           child: Image.file(
             imageFile,
-            fit: BoxFit.cover,
+            fit: BoxFit.fitWidth,
             alignment: Alignment.topCenter,
           )),
     );
