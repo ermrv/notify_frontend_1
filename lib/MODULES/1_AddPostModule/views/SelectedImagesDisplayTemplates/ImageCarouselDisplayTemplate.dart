@@ -19,11 +19,19 @@ class ImageCarouselDisplayTemplate extends StatefulWidget {
 class _ImageCarouselDisplayTemplateState
     extends State<ImageCarouselDisplayTemplate> {
   int currentIndex = 0;
+  double _aspectRatio;
+
+  @override
+  void initState() {
+    _aspectRatio=widget.aspectRatio > 0.8?widget.aspectRatio:0.8;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: AspectRatio(
-        aspectRatio: widget.aspectRatio < 0.8 ? 0.8 : widget.aspectRatio>0.5?0.5:widget.aspectRatio,
+        aspectRatio: _aspectRatio,
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
@@ -34,7 +42,7 @@ class _ImageCarouselDisplayTemplateState
                 child: CarouselSlider(
                   items: widget.files.map((e) {
                     return AspectRatio(
-                      aspectRatio: widget.aspectRatio < 0.8 ? 0.8 : widget.aspectRatio>0.5?0.5:widget.aspectRatio,
+                      aspectRatio: _aspectRatio,
                       child: Image.file(
                         e,
                         alignment: Alignment.topCenter,
@@ -43,7 +51,7 @@ class _ImageCarouselDisplayTemplateState
                     );
                   }).toList(),
                   options: CarouselOptions(
-                    aspectRatio:widget.aspectRatio < 0.8 ? 0.8 : widget.aspectRatio>0.5?0.5:widget.aspectRatio,
+                    aspectRatio: _aspectRatio,
                     enableInfiniteScroll: false,
                     viewportFraction: 1.0,
                     autoPlay: false,

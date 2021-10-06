@@ -66,6 +66,10 @@ dio
 2.4
 file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/dio-3.0.10/
 file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/dio-3.0.10/lib/
+double_back_to_close
+2.12
+file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/double_back_to_close-2.0.0/
+file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/double_back_to_close-2.0.0/lib/
 eventify
 2.12
 file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/eventify-1.0.0/
@@ -344,8 +348,8 @@ file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/
 file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/video_compress-2.1.1/lib/
 video_player
 2.12
-file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/video_player-2.1.4/
-file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/video_player-2.1.4/lib/
+file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/video_player-2.1.0/
+file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/video_player-2.1.0/lib/
 video_player_platform_interface
 2.12
 file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/video_player_platform_interface-4.1.0/

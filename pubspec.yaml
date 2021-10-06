@@ -30,7 +30,7 @@ dependencies:
   flutter_spinkit: ^4.1.2+1
   otp_text_field: ^1.0.2
   photo_manager: ^0.6.0
-  video_player: any
+  video_player: ^2.1.0
   visibility_detector: ^0.1.5 
   flutter_blurhash: ^0.5.0
   share: ^0.6.5+4
@@ -77,6 +77,7 @@ dependencies:
   flutter_uploader: ^1.2.1
   razorpay_flutter: ^1.2.7
   flutter_local_notifications: ^4.0.1+2
+  double_back_to_close: ^2.0.0
 
 dev_dependencies:
   flutter_test:

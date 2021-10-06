@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'dart:math';
 
 class ImagesGridDisplayController extends GetxController {
   //selected images file will be stored here

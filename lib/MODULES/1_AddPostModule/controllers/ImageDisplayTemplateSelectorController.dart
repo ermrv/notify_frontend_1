@@ -23,7 +23,7 @@ class ImageDisplayTemplateSelectorController extends GetxController {
       selectedAspectRatio = aspectRatio[0];
     } else {
       aspectRatio.sort();
-      selectedAspectRatio = aspectRatio.last;
+      selectedAspectRatio = aspectRatio.first;
     }
   }
 
