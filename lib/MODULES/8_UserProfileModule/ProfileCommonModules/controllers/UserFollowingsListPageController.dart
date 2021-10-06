@@ -15,8 +15,8 @@ class UserFollowingsListPageController extends GetxController {
   }
 
   getData() async {
-    var response = await ApiServices.postWithAuth(
-        ApiUrlsData.userFollowings, {"userId":profileId}, userToken.toString());
+    var response = await ApiServices.postWithAuth(ApiUrlsData.userFollowings,
+        {"userId": profileId}, userToken.toString());
     if (response == "error") {
       print("some error occured");
     } else {
@@ -59,21 +59,19 @@ class UserFollowingsListPageController extends GetxController {
   TextButton getFollowButton(String userId) {
     if (PrimaryUserData.primaryUserData.followings.contains(userId)) {
       return TextButton(
-          child:
-              Container(alignment: Alignment.center, child: Text("Unfollow")),
+          child: Container(child: Text("Unfollow")),
           onPressed: () {
             unFollowUser(userId);
           });
     } else if (PrimaryUserData.primaryUserData.followers.contains(userId)) {
       return TextButton(
-          child: Container(
-              alignment: Alignment.center, child: Text("Follow Back")),
+          child: Container(child: Text("Follow Back")),
           onPressed: () {
             followUser(userId);
           });
     } else {
       return TextButton(
-          child: Container(alignment: Alignment.center, child: Text("Follow")),
+          child: Container(child: Text("Follow")),
           onPressed: () {
             followUser(userId);
           });

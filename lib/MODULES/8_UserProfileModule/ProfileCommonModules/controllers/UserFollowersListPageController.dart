@@ -60,20 +60,20 @@ class UserFollowersListPageController extends GetxController {
     if (PrimaryUserData.primaryUserData.followings.contains(userId)) {
       return TextButton(
           child:
-              Container(alignment: Alignment.center, child: Text("Unfollow")),
+              Container(child: Text("Unfollow")),
           onPressed: () {
             unFollowUser(userId);
           });
     } else if (PrimaryUserData.primaryUserData.followers.contains(userId)) {
       return TextButton(
           child: Container(
-              alignment: Alignment.center, child: Text("Follow Back")),
+             child: Text("Follow Back")),
           onPressed: () {
             followUser(userId);
           });
     } else {
       return TextButton(
-          child: Container(alignment: Alignment.center, child: Text("Follow")),
+          child: Container( child: Text("Follow")),
           onPressed: () {
             followUser(userId);
           });
