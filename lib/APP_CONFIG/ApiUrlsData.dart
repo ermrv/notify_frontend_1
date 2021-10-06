@@ -45,8 +45,7 @@ abstract class ApiUrlsData {
   static String createContest = "$domain/api/contestpost/add";
   static String addPollPost = "$domain/api/pollpost/add";
   static String addEventPost = "$domain/api/eventpost/add";
-    static String userSuggestions = "$domain/api/user/search";
-
+  static String userSuggestions = "$domain/api/user/search";
 
   //................................share post...............................
   static String sharePost = "$domain/api/post/share";
@@ -74,7 +73,6 @@ abstract class ApiUrlsData {
   static String editSubComment = "$domain/api/post/subcomment/edit";
 
   //reactions
-  
 
   //..............................................user story or status.................................
 
@@ -130,8 +128,10 @@ abstract class ApiUrlsData {
   static String followUser = "$domain/api/user/follow";
   static String unfollowUser = "$domain/api/user/unfollow";
 
-
   //...........................like a post..............................
   static String allPostReaction = "$domain/api/post/reacted";
   static String postReaction = "$domain/api/post/react";
+
+  //...............................poll post........................
+  static String castAPoll = "$domain/api/pollpost/react";
 }

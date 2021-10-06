@@ -202,11 +202,11 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                               if (opOnePolls.contains(_thisUserId)) {
                                 totalPolls.remove(_thisUserId);
                                 opOnePolls.remove(_thisUserId);
-                                castPollHandler();
+                                castPollHandler(0);
                               } else {
                                 totalPolls.add(_thisUserId);
                                 opOnePolls.add(_thisUserId);
-                                castPollHandler();
+                                castPollHandler(1);
                               }
                             });
                           },
@@ -263,11 +263,11 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                               if (opOnePolls.contains(_thisUserId)) {
                                 totalPolls.remove(_thisUserId);
                                 opTwoPolls.remove(_thisUserId);
-                                castPollHandler();
+                                castPollHandler(0);
                               } else {
                                 totalPolls.add(_thisUserId);
                                 opTwoPolls.add(_thisUserId);
-                                castPollHandler();
+                                castPollHandler(2);
                               }
                             });
                           },
@@ -324,11 +324,11 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                               if (opOnePolls.contains(_thisUserId)) {
                                 totalPolls.remove(_thisUserId);
                                 opThreePolls.remove(_thisUserId);
-                                castPollHandler();
+                                castPollHandler(0);
                               } else {
                                 totalPolls.add(_thisUserId);
                                 opThreePolls.add(_thisUserId);
-                                castPollHandler();
+                                castPollHandler(3);
                               }
                             });
                           },
@@ -357,11 +357,11 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                         .withOpacity(0.9)),
                               ),
                               _isPollCasted
-                                  ? Text(
-                                      ((opThreePolls.length / totalPolls.length) *
-                                                  100)
-                                              .toString() +
-                                          "%")
+                                  ? Text(((opThreePolls.length /
+                                                  totalPolls.length) *
+                                              100)
+                                          .toString() +
+                                      "%")
                                   : Container()
                             ],
                           ),
@@ -386,11 +386,11 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                               if (opOnePolls.contains(_thisUserId)) {
                                 totalPolls.remove(_thisUserId);
                                 opFourPolls.remove(_thisUserId);
-                                castPollHandler();
+                                castPollHandler(0);
                               } else {
                                 totalPolls.add(_thisUserId);
                                 opFourPolls.add(_thisUserId);
-                                castPollHandler();
+                                castPollHandler(4);
                               }
                             });
                           },
@@ -419,11 +419,11 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                         .withOpacity(0.9)),
                               ),
                               _isPollCasted
-                                  ? Text(
-                                      ((opFourPolls.length / totalPolls.length) *
-                                                  100)
-                                              .toString() +
-                                          "%")
+                                  ? Text(((opFourPolls.length /
+                                                  totalPolls.length) *
+                                              100)
+                                          .toString() +
+                                      "%")
                                   : Container()
                             ],
                           ),
@@ -547,8 +547,15 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
   }
 
   ///call the function when user cas a poll
-  castPollHandler() {
+  castPollHandler(int option) async {
     pollCastUpdater();
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.castAPoll,
+        {"pollPostId": widget.postContent["_id"], "optionChoice": option},
+        userToken);
+    if (response == "error") {
+      Get.snackbar("Cannot process request", "response is not recorded");
+    }
   }
 
   commentCountUpdater(int count) {
