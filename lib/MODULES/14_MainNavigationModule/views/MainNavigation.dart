@@ -1,5 +1,6 @@
 import 'package:MediaPlus/MODULES/17_ShortVideoPlayerModule/views/ShortVideoPlayerPageScreen.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/AddPostPageScreen.dart';
+import 'package:MediaPlus/MODULES/5_ExplorePageModule/views/ExplorePageDisplayScreen.dart';
 
 import 'package:MediaPlus/MODULES/5_ExplorePageModule/views/ExplorePageScreen.dart';
 import 'package:MediaPlus/MODULES/6_HomePageModule/views/HomePageScreen.dart';
@@ -77,18 +78,13 @@ class MainNavigationScreen extends StatelessWidget {
                 controller: controller.pageController,
                 children: [
                   HomeScreen(),
-                  KeepWidgetAliveWrapper(child: ExplorePageScreen()),
+                  ExplorePageDisplayScreen(),
                   ShortVideoPlayerPageScreen(),
                   Container(),
                   KeepWidgetAliveWrapper(
                       child: UserProfileScreen(
                     profileOwnerId: PrimaryUserData.primaryUserData.userId,
                   )),
-                  // HomeScreen(),
-                  // ExploreScreen(),
-                  // AddPostScreen(),
-                  // RewardsScreen(),
-                  // ChatScreen()
                 ],
               ),
             ));

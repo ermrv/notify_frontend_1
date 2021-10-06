@@ -82,6 +82,7 @@ class Themes {
       radioTheme: RadioThemeData(),
       switchTheme: SwitchThemeData(),
       fixTextFieldOutlineLabel:false,
+      progressIndicatorTheme:ProgressIndicatorThemeData(color: Colors.blue),
       useTextSelectionTheme: true);
   //light theme data
   static ThemeData lightTheme = ThemeData.light().copyWith(

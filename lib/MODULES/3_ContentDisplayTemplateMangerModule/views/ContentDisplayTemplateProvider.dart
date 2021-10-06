@@ -111,11 +111,11 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
             );
         break;
 
-      //for short video post reference
-      case "shortvideoreference":
-        return ShortVideosPostReferenceLayout(boxContents: content);
+      // //for short video post reference
+      // case "shortvideoreference":
+      //   return ShortVideosPostReferenceLayout(boxContents: content);
 
-        break;
+      //   break;
 
       //for image post reference
       case "imagePostReference":
