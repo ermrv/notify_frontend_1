@@ -83,7 +83,14 @@ class NewsFeedPageController extends GetxController {
   }
 
   /// to get the previous post data
-  getPreviousPostsData(String lastPostId) async {
+  getPreviousPostsData() async {
+    String lastPostId;
+    var length = newsFeedData.length;
+    if (length != 0) {
+      lastPostId = newsFeedData[length-1]["_id"];
+    }else {
+      lastPostId = null;
+    }
     var response;
     if (lastPostId == "null") {
       response = await ApiServices.postWithAuth(
@@ -158,8 +165,7 @@ class NewsFeedPageController extends GetxController {
   scrollListener() {
     if (scrollController.position.maxScrollExtent ==
         scrollController.position.pixels) {
-      String lastPostId = newsFeedData.last["_id"];
-      getPreviousPostsData(lastPostId);
+      getPreviousPostsData();
     }
   }
 }

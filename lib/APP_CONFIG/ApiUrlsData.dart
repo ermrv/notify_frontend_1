@@ -134,4 +134,7 @@ abstract class ApiUrlsData {
 
   //...............................poll post........................
   static String castAPoll = "$domain/api/pollpost/react";
+
+  //..................................notifications........................
+  static String notifications = "$domain/api/notification";
 }

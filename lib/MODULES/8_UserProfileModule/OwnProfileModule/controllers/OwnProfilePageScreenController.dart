@@ -14,7 +14,7 @@ class OwnProfilePageScreenController extends GetxController {
 
   String userProfileDataFilePath;
 
-ScrollController scrollController;
+  ScrollController scrollController;
 
   @override
   void onInit() {
@@ -79,7 +79,14 @@ ScrollController scrollController;
   }
 
   /// to get the previous post data
-  getPreviousPostsData(String lastPostId) async {
+  getPreviousPostsData() async {
+    String lastPostId;
+    var length = profilePostData.length;
+    if (length != 0) {
+      lastPostId = profilePostData[length - 1]["_id"];
+    } else {
+      lastPostId = null;
+    }
     var response;
     if (lastPostId == "null") {
       response = await ApiServices.postWithAuth(
@@ -136,14 +143,12 @@ ScrollController scrollController;
     }
   }
 
-   ///listen to the scroll of the newfeed in order to load more data
+  ///listen to the scroll of the newfeed in order to load more data
   ///calls [getPreviousPostsData] when scroll is attend to a limit
   scrollListener() {
     if (scrollController.position.maxScrollExtent ==
         scrollController.position.pixels) {
-      String lastPostId = profilePostData.last["_id"];
-      getPreviousPostsData(lastPostId);
+      getPreviousPostsData();
     }
   }
-
 }

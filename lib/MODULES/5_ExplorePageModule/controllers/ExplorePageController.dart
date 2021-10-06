@@ -20,11 +20,10 @@ class ExplorePageController extends GetxController {
 
   @override
   void onInit() {
-     scrollController = ScrollController();
+    scrollController = ScrollController();
     scrollController.addListener(scrollListener);
     explorePageDataFilePath = LocalDataFiles.explorePageDataFilePath;
     getFileData();
-
 
     super.onInit();
   }
@@ -64,7 +63,14 @@ class ExplorePageController extends GetxController {
   }
 
   /// to get the previous post data
-  getPreviousPostsData(String lastPostId) async {
+  getPreviousPostsData() async {
+    String lastPostId;
+    var length = explorePageData.length;
+    if (length != 0) {
+      lastPostId = explorePageData[length - 1]["_id"];
+    } else {
+      lastPostId = null;
+    }
     var response;
     if (lastPostId == "null") {
       response = await ApiServices.postWithAuth(
@@ -107,15 +113,12 @@ class ExplorePageController extends GetxController {
     }
   }
 
-   ///listen to the scroll of the newfeed in order to load more data
+  ///listen to the scroll of the newfeed in order to load more data
   ///calls [getPreviousPostsData] when scroll is attend to a limit
   scrollListener() {
     if (scrollController.position.maxScrollExtent ==
         scrollController.position.pixels) {
-      String lastPostId = explorePageData.last["_id"];
-      getPreviousPostsData(lastPostId);
+      getPreviousPostsData();
     }
   }
-
- 
 }
