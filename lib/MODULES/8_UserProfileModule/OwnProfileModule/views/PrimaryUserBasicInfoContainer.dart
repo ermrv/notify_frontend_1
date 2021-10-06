@@ -1,8 +1,8 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/UserFollowersList.dart';
-import 'package:MediaPlus/MODULES/8_UserProfileModule/UserFollowingsList.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/ProfileCommonModules/views/UserFollowersListPageScreen.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/ProfileCommonModules/views/UserFollowingsListPageScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -85,7 +85,7 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
                                 margin: EdgeInsets.only(top: 19.0),
                                 child: TextButton(
                                   onPressed: () {
-                                    Get.to(() => UserFollowersList(
+                                    Get.to(() => UserFollowersListPageScreen(
                                           userId: PrimaryUserData
                                               .primaryUserData.userId,
                                         ));
@@ -123,7 +123,7 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
                               margin: EdgeInsets.only(top: 19.0),
                               child: TextButton(
                                 onPressed: () {
-                                  Get.to(() => UserFollowingsList(
+                                  Get.to(() => UserFollowingsListPageScreen(
                                         userId: PrimaryUserData
                                             .primaryUserData.userId,
                                       ));
