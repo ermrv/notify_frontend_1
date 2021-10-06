@@ -1,4 +1,5 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OthersProfileModule/views/OtherUserProfilePageScreen.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/ProfileCommonModules/controllers/UserFollowersListPageController.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,11 @@ class UserFollowersListPageScreen extends StatelessWidget {
                                         .secondaryHeaderColor))),
                         child: ListTile(
                           horizontalTitleGap: 3.0,
+                           onTap: () {
+                            Get.to((OtherUserProfilePageScreen(
+                                profileOwnerId: controller.data[index]
+                                    ["_id"])));
+                          },
                           leading: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
                             child: Container(
