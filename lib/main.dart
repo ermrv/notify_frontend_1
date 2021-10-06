@@ -10,6 +10,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:double_back_to_close/double_back_to_close.dart';
+
 
 //handling the background notification
 Future<void> _backgroundNotificationHandler(RemoteMessage message) async {
@@ -46,6 +48,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: themeController.getTheme("dark"),
-        home: UserAuthScreen());
+        home: DoubleBack(
+          message: "Press back again to exit",
+          
+          child: UserAuthScreen()));
   }
 }
