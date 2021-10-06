@@ -32,6 +32,7 @@ class UserFollowingsListPageScreen extends StatelessWidget {
         body: controller.requestProcessed
             ? controller.data.length == 0
                 ? Center(
+                    heightFactor: 5.0,
                     child: Text("No Followings!"),
                   )
                 : ListView.builder(

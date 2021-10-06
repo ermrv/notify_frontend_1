@@ -18,7 +18,9 @@ class PollPostDisplayTemplate extends StatefulWidget {
   final postContent;
   final parentController;
 
-  const PollPostDisplayTemplate({Key key, this.postContent,@required this.parentController}) : super(key: key);
+  const PollPostDisplayTemplate(
+      {Key key, this.postContent, @required this.parentController})
+      : super(key: key);
 
   @override
   _PollPostDisplayTemplateState createState() =>
@@ -38,6 +40,15 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
 
   Color likeButtonColor = Colors.white;
 
+  //poll post related variables
+  List<String> totalPolls;
+  List<String> opOnePolls;
+  List<String> opTwoPolls;
+  List<String> opThreePolls;
+  List<String> opFourPolls;
+
+  bool _isPollCasted = false;
+
   @override
   void initState() {
     _ownerId = widget.postContent["pollPost"]["postBy"]["_id"].toString();
@@ -45,6 +56,15 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
     _isOwner = _ownerId == _thisUserId;
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
+//polls calculations
+    totalPolls = widget.postContent["pollPost"]["totalResponse"];
+    opOnePolls = widget.postContent["pollPost"]["opOneResponse"];
+    opTwoPolls = widget.postContent["pollPost"]["opTwoResponse"];
+    opThreePolls = widget.postContent["pollPost"]["opThreeResponse"];
+    opFourPolls = widget.postContent["pollPost"]["opFourResponse"];
+
+    pollCastUpdater();
+
     super.initState();
   }
 
@@ -142,7 +162,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                               editedDescriptionUpdater: (String description) {
                                 // updateEditedDescription(description);
                               },
-                              parentController:widget.parentController,
+                              parentController: widget.parentController,
                             )
                           : OtherUserActionsOnPost(
                               postUserId: widget.postContent["pollPost"]
@@ -179,12 +199,14 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                           onPressed: () {
                             setState(() {
-                              if (_vote ==
-                                  widget.postContent["pollPost"]["opOne"]) {
-                                _vote = "";
+                              if (opOnePolls.contains(_thisUserId)) {
+                                totalPolls.remove(_thisUserId);
+                                opOnePolls.remove(_thisUserId);
+                                castPollHandler();
                               } else {
-                                _vote = widget.postContent["pollPost"]["opOne"]
-                                    .toString();
+                                totalPolls.add(_thisUserId);
+                                opOnePolls.add(_thisUserId);
+                                castPollHandler();
                               }
                             });
                           },
@@ -211,6 +233,13 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                         .accentColor
                                         .withOpacity(0.9)),
                               ),
+                              _isPollCasted
+                                  ? Text(
+                                      ((opOnePolls.length / totalPolls.length) *
+                                                  100)
+                                              .toString() +
+                                          "%")
+                                  : Container()
                             ],
                           ),
                         )),
@@ -231,12 +260,14 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                           onPressed: () {
                             setState(() {
-                              if (_vote ==
-                                  widget.postContent["pollPost"]["opTwo"]) {
-                                _vote = "";
+                              if (opOnePolls.contains(_thisUserId)) {
+                                totalPolls.remove(_thisUserId);
+                                opTwoPolls.remove(_thisUserId);
+                                castPollHandler();
                               } else {
-                                _vote = widget.postContent["pollPost"]["opTwo"]
-                                    .toString();
+                                totalPolls.add(_thisUserId);
+                                opTwoPolls.add(_thisUserId);
+                                castPollHandler();
                               }
                             });
                           },
@@ -263,6 +294,13 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                         .accentColor
                                         .withOpacity(0.9)),
                               ),
+                              _isPollCasted
+                                  ? Text(
+                                      ((opTwoPolls.length / totalPolls.length) *
+                                                  100)
+                                              .toString() +
+                                          "%")
+                                  : Container()
                             ],
                           ),
                         )),
@@ -283,13 +321,14 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                           onPressed: () {
                             setState(() {
-                              if (_vote ==
-                                  widget.postContent["pollPost"]["opThree"]) {
-                                _vote = "";
+                              if (opOnePolls.contains(_thisUserId)) {
+                                totalPolls.remove(_thisUserId);
+                                opThreePolls.remove(_thisUserId);
+                                castPollHandler();
                               } else {
-                                _vote = widget.postContent["pollPost"]
-                                        ["opThree"]
-                                    .toString();
+                                totalPolls.add(_thisUserId);
+                                opThreePolls.add(_thisUserId);
+                                castPollHandler();
                               }
                             });
                           },
@@ -317,6 +356,13 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                         .accentColor
                                         .withOpacity(0.9)),
                               ),
+                              _isPollCasted
+                                  ? Text(
+                                      ((opThreePolls.length / totalPolls.length) *
+                                                  100)
+                                              .toString() +
+                                          "%")
+                                  : Container()
                             ],
                           ),
                         )),
@@ -337,12 +383,14 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                           onPressed: () {
                             setState(() {
-                              if (_vote ==
-                                  widget.postContent["pollPost"]["opFour"]) {
-                                _vote = "";
+                              if (opOnePolls.contains(_thisUserId)) {
+                                totalPolls.remove(_thisUserId);
+                                opFourPolls.remove(_thisUserId);
+                                castPollHandler();
                               } else {
-                                _vote = widget.postContent["pollPost"]["opFour"]
-                                    .toString();
+                                totalPolls.add(_thisUserId);
+                                opFourPolls.add(_thisUserId);
+                                castPollHandler();
                               }
                             });
                           },
@@ -370,6 +418,13 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                         .accentColor
                                         .withOpacity(0.9)),
                               ),
+                              _isPollCasted
+                                  ? Text(
+                                      ((opFourPolls.length / totalPolls.length) *
+                                                  100)
+                                              .toString() +
+                                          "%")
+                                  : Container()
                             ],
                           ),
                         )),
@@ -456,6 +511,44 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
         ],
       ),
     );
+  }
+
+  //checking if the user has already casted the poll
+  pollCastUpdater() {
+    if (totalPolls.contains(_thisUserId)) {
+      //check which option is selected
+      if (opOnePolls.contains(_thisUserId)) {
+        setState(() {
+          _isPollCasted = true;
+          _vote = widget.postContent["pollPost"]["opOne"].toString();
+        });
+      } else if (opTwoPolls.contains(_thisUserId)) {
+        setState(() {
+          _isPollCasted = true;
+          _vote = widget.postContent["pollPost"]["opTwo"].toString();
+        });
+      } else if (opThreePolls.contains(_thisUserId)) {
+        setState(() {
+          _isPollCasted = true;
+          _vote = widget.postContent["pollPost"]["opThree"].toString();
+        });
+      } else if (opFourPolls.contains(_thisUserId)) {
+        setState(() {
+          _isPollCasted = true;
+          _vote = widget.postContent["pollPost"]["opFour"].toString();
+        });
+      }
+    } else {
+      setState(() {
+        _vote = "";
+        _isPollCasted = false;
+      });
+    }
+  }
+
+  ///call the function when user cas a poll
+  castPollHandler() {
+    pollCastUpdater();
   }
 
   commentCountUpdater(int count) {
