@@ -9,6 +9,7 @@ import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/LoginScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/AppThemeModule/controllers/ThemeController.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -133,6 +134,24 @@ class UserDrawerScreen extends StatelessWidget {
               //   ),
               // ),
               Expanded(child: Container()),
+              Container(
+                margin: EdgeInsets.only(left: 8.0, right: 18.0),
+                padding: EdgeInsets.symmetric(vertical: 5.0),
+                child: TextButton(
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.resolveWith((states) =>
+                            EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0))),
+                    onPressed: () {
+                      ThemeController().changeTheme("light");
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Change Theme"),
+                      ],
+                    )),
+              ),
               Container(
                   margin: EdgeInsets.only(left: 8.0, right: 18.0),
                   padding: EdgeInsets.symmetric(vertical: 5.0),

@@ -18,14 +18,6 @@ class ThemeController extends GetxController {
       case "dark":
         return Themes.darkTheme;
         break;
-      case "red":
-        return ThemeData.light().copyWith(
-          primaryColor: Colors.red,
-        );
-        break;
-      case "pink":
-        return ThemeData.light().copyWith(primaryColor: Colors.green);
-        break;
       default:
         return Themes.darkTheme;
     }
