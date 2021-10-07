@@ -9,19 +9,17 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:get/get.dart';
+import 'package:photo_manager/photo_manager.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 class AddStatusTextPageController extends GetxController {
-  List<File> imageFiles;
-  List<File> videoFiles;
-
-  List<Uint8List> compressedImageFiles = [];
-  List<Uint8List> compressedVideoFiles = [];
+  List assetEntity;
 
   bool isUploading = false;
+
   Future<Uint8List> getVideoThumbnail(File videoFile) async {
     Uint8List thumbdata = await VideoThumbnail.thumbnailData(
       video: videoFile.path,
@@ -37,46 +35,46 @@ class AddStatusTextPageController extends GetxController {
     isUploading = true;
     update();
 
-    _uploadFiles();
+    // _uploadFiles();
   }
 
-  _uploadFiles() async {
-    FlutterUploader _flutterUploader = FlutterUploader();
-    List<FileItem> _files = [];
-    for (File i in imageFiles) {
-      _files.add(
-        FileItem(
-            fieldname: "statusFile",
-            filename: i.path,
-            savedDir: (i.path).split("/")[0].toString()),
-      );
-    }
-    for (File i in videoFiles) {
-      _files.add(
-        FileItem(
-            fieldname: "statusFile",
-            filename: i.path,
-            savedDir: (i.path).split("/")[0].toString()),
-      );
-    }
-    final taskId = await _flutterUploader.enqueue(
-      url: ApiUrlsData.addStatus,
-      method: UploadMethod.POST,
-      headers: {
-        "authorization": "Bearer " + userToken,
-        "Content-type": "multipart/form-data"
-      },
-      data: {
-        "statusText": "okay",
-      },
-      files: _files,
-      showNotification: true,
-      tag: "status upload",
-    );
+  // _uploadFiles() async {
+  //   FlutterUploader _flutterUploader = FlutterUploader();
+  //   List<FileItem> _files = [];
+  //   for (File i in imageFiles) {
+  //     _files.add(
+  //       FileItem(
+  //           fieldname: "statusFile",
+  //           filename: i.path,
+  //           savedDir: (i.path).split("/")[0].toString()),
+  //     );
+  //   }
+  //   for (File i in videoFiles) {
+  //     _files.add(
+  //       FileItem(
+  //           fieldname: "statusFile",
+  //           filename: i.path,
+  //           savedDir: (i.path).split("/")[0].toString()),
+  //     );
+  //   }
+  //   final taskId = await _flutterUploader.enqueue(
+  //     url: ApiUrlsData.addStatus,
+  //     method: UploadMethod.POST,
+  //     headers: {
+  //       "authorization": "Bearer " + userToken,
+  //       "Content-type": "multipart/form-data"
+  //     },
+  //     data: {
+  //       "statusText": "okay",
+  //     },
+  //     files: _files,
+  //     showNotification: true,
+  //     tag: "status upload",
+  //   );
 
-    ///navigate to the news feed screen
-    Get.offAll(() => MainNavigationScreen(
-          tabNumber: 0,
-        ));
-  }
+  //   ///navigate to the news feed screen
+  //   Get.offAll(() => MainNavigationScreen(
+  //         tabNumber: 0,
+  //       ));
+  // }
 }

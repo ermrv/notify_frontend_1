@@ -205,7 +205,7 @@ class CommentDisplayTemplate extends StatelessWidget {
                                       right: 15.0,
                                       left: 8.0),
                                   child: Icon(
-                                    Icons.thumb_up,
+                                    Icons.favorite_border,
                                     size: 18.0,
                                   )),
                             ),
@@ -305,14 +305,13 @@ class CommentDisplayTemplate extends StatelessWidget {
                                                           TextInputType
                                                               .multiline,
                                                       maxLines: null,
-                                                      decoration:
-                                                          InputDecoration
-                                                              .collapsed(
-                                                        hintText:
-                                                            "Add a comment",
-                                                        border:
-                                                            InputBorder.none,
-                                                      ),
+                                                      decoration: InputDecoration(
+                                                          hintText:
+                                                              "Add a comment",
+                                                          border:
+                                                              InputBorder.none,
+                                                          focusedBorder:
+                                                              InputBorder.none),
                                                     ),
                                                   ),
                                                 ),

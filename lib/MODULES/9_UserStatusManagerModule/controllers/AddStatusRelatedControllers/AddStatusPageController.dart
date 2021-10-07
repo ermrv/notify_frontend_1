@@ -9,12 +9,6 @@ class AddStatusPageController extends GetxController {
   List<File> selectedImagesFiles = [];
   List<File> selectedVideoFiles = [];
 
-  // //selected files id
-  // List selectedImagesId = [];
-  // List selectedVideosId = [];
-
-  List compressedImageFiles = [];
-  List compressedVideoFiles = [];
 
   //selected images file will be stored here
   List selectedassetEntity = [].obs;
@@ -74,15 +68,14 @@ class AddStatusPageController extends GetxController {
     handleLongPress(element);
   }
 
-  // //navigator to the next route
+  ///navigator to the next route
+  ///send the selected entity to the [AddStatusTextPageScreen]
   submitHandler() async {
     if (selectedassetEntity.length == 0)
       print("please select a file");
     else if (selectedassetEntity.length != 0) {
-      await _getFiles();
       Get.off(() => AddStatusTextPageScreen(
-            imageFiles: selectedImagesFiles,
-            videoFiles: selectedVideoFiles,
+            selectedEntities:selectedassetEntity.toList(),
           ));
     }
   }
