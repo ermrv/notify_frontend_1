@@ -23,8 +23,7 @@ class CommentsDisplayScreen extends StatelessWidget {
       },
       builder: (controller) => Scaffold(
         bottomSheet: Container(
-          alignment: Alignment.center,
-          height: 50.0,
+          height:controller.bottomSheetHeight,
           padding: EdgeInsets.only(left: 2.0, right: 2.0),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
@@ -58,6 +57,7 @@ class CommentsDisplayScreen extends StatelessWidget {
                             controller: controller.commentEditingController,
                             onChanged: (value) {
                               controller.update();
+                              controller.getNumberOfLines(value);
                             },
                             keyboardType: TextInputType.multiline,
                             maxLines: null,

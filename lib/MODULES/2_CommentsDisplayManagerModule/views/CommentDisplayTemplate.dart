@@ -28,6 +28,7 @@ class CommentDisplayTemplate extends StatefulWidget {
 
 class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
   final controller = Get.find<CommentDisplayController>();
+  bool showSendButton=false;
 
   bool commentOfPrimaryUser;
   List<String> commentLikes;
@@ -275,7 +276,6 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
                                   ),
                                   Container(
                                     alignment: Alignment.center,
-                                    height: 50.0,
                                     padding:
                                         EdgeInsets.only(left: 2.0, right: 2.0),
                                     child: Container(
@@ -320,11 +320,19 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
                                                   child: Container(
                                                     alignment:
                                                         Alignment.centerLeft,
-                                                    height: 40.0,
                                                     child: TextFormField(
                                                       autofocus: true,
                                                       controller: controller
                                                           .subCommentEditingController,
+                                                      onChanged: (value) {
+                                                        print(value);
+
+                                                        setState(() {
+                                                          showSendButton =
+                                                              value != "";
+                                                        });
+                                                        print(showSendButton);
+                                                      },
                                                       keyboardType:
                                                           TextInputType
                                                               .multiline,
@@ -339,9 +347,10 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
                                                     ),
                                                   ),
                                                 ),
-                                                IconButton(
+                                               IconButton(
                                                     icon: Icon(
                                                       Icons.send,
+                                                      color: Colors.blue,
                                                     ),
                                                     onPressed: () {
                                                       controller.addSubComments(
@@ -350,7 +359,7 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
                                                           controller
                                                               .subCommentEditingController
                                                               .text);
-                                                    })
+                                                    }),
                                               ],
                                             ),
                                           ))
@@ -383,16 +392,13 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
   }
 
   ///comment reaction updater
-  _commentReactionUpdater()async{
-    
-  }
+  _commentReactionUpdater() async {}
 
   _commentEditor(String commentId, String initialComment) {
     controller.editCommentController.text = initialComment;
     Get.bottomSheet(
       Container(
         alignment: Alignment.center,
-        height: 50.0,
         padding: EdgeInsets.only(left: 2.0, right: 2.0),
         child: Container(
           decoration: BoxDecoration(
@@ -426,7 +432,6 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerLeft,
-                        height: 40.0,
                         child: TextFormField(
                           autofocus: true,
                           controller: controller.editCommentController,
@@ -484,7 +489,6 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
             ),
             Container(
               alignment: Alignment.center,
-              height: 50.0,
               padding: EdgeInsets.only(left: 2.0, right: 2.0),
               child: Container(
                 decoration: BoxDecoration(
