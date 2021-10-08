@@ -1,5 +1,6 @@
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ContentDisplayTemplateProvider.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/UserStatusReferenceLayout.dart';
+import 'package:MediaPlus/MODULES/6_HomePageModule/TrendingPostDisplayRelated/views/TrendingPostReferenceTemplate.dart';
 import 'package:MediaPlus/MODULES/6_HomePageModule/controllers/NewsFeedPageController.dart';
 import 'package:MediaPlus/MODULES/6_HomePageModule/views/AddPostReferenceView.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +31,7 @@ class NewsFeedPageScreen extends StatelessWidget {
                       child: ListView(
                         controller: controller.scrollController,
                         children: [
-                          UserStatusReferenceLayout(
-                            boxContents: controller.userStatusData,
-                          ),
+                          TrendingPostReferenceTemplate(data: []),
                           AddPostReferenceView(),
                           controller.newsFeedData.length == 0
                               ? Center(child: Text("No posts yet"))

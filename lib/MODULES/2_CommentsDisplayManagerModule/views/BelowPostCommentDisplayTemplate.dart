@@ -33,18 +33,22 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
           child: Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //profile pic
                 Container(
-                  child: CircleAvatar(
-                    radius: 14.0,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25.0),
-                      child: CachedNetworkImage(
-                          imageUrl: ApiUrlsData.domain +
-                              commentData["commentBy"]["profilePic"]
-                                  .toString()),
-                    ),
+                  margin: EdgeInsets.only(top: 3.0),
+                  height: 20.0,
+                  width: 20.0,
+                  decoration: BoxDecoration(
+
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25.0),
+                    child: CachedNetworkImage(
+                        imageUrl: ApiUrlsData.domain +
+                            commentData["commentBy"]["profilePic"]
+                                .toString(),fit: BoxFit.cover,),
                   ),
                 ),
                 //name and comment container

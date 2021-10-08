@@ -27,10 +27,6 @@ class CommentsDisplayScreen extends StatelessWidget {
           height: 50.0,
           padding: EdgeInsets.only(left: 2.0, right: 2.0),
           child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25.0),
-              border: Border.all(),
-            ),
             padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -38,8 +34,8 @@ class CommentsDisplayScreen extends StatelessWidget {
               children: [
                 Container(
                   margin: EdgeInsets.only(right: 8.0),
-                  height: 35.0,
-                  width: 35.0,
+                  height: 25.0,
+                  width: 25.0,
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(25.0),
@@ -58,27 +54,31 @@ class CommentsDisplayScreen extends StatelessWidget {
                       Expanded(
                         child: Container(
                           alignment: Alignment.centerLeft,
-                          height: 40.0,
                           child: TextFormField(
                             controller: controller.commentEditingController,
+                            onChanged: (value) {
+                              controller.update();
+                            },
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
-                            decoration: InputDecoration.collapsed(
+                            decoration: InputDecoration(
                                 border: InputBorder.none,
-                                
+                                focusedBorder: InputBorder.none,
                                 hintText: "Add Comment"),
                           ),
                         ),
                       ),
-                      IconButton(
-                          icon: Icon(
-                            Icons.send,
-                            color: Colors.blue,
-                          ),
-                          onPressed: () {
-                            controller.addComment(
-                                controller.commentEditingController.text);
-                          })
+                      controller.commentEditingController.text == ""
+                          ? Container()
+                          : IconButton(
+                              icon: Icon(
+                                Icons.send,
+                                color: Colors.blue,
+                              ),
+                              onPressed: () {
+                                controller.addComment(
+                                    controller.commentEditingController.text);
+                              })
                     ],
                   ),
                 ))

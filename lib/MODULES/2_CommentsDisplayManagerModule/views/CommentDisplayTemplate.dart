@@ -2,18 +2,17 @@ import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/controllers/CommentDisplayController.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CommentDisplayTemplate extends StatelessWidget {
+class CommentDisplayTemplate extends StatefulWidget {
   final data;
   final String commentId;
   final double commentBoxWidth;
   final String type;
-  final controller = Get.find<CommentDisplayController>();
-  bool commentOfPrimaryUser;
 
   CommentDisplayTemplate({
     Key key,
@@ -22,38 +21,59 @@ class CommentDisplayTemplate extends StatelessWidget {
     @required this.commentId,
     @required this.type,
   }) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    commentOfPrimaryUser = data["commentBy"]["_id"].toString() ==
+  State<CommentDisplayTemplate> createState() => _CommentDisplayTemplateState();
+}
+
+class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
+  final controller = Get.find<CommentDisplayController>();
+
+  bool commentOfPrimaryUser;
+  List<String> commentLikes;
+  @override
+  void initState() {
+    commentOfPrimaryUser = widget.data["commentBy"]["_id"].toString() ==
             PrimaryUserData.primaryUserData.userId
         ? true
         : false;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return //this contaner contains the user profile pic and the main comment
         Container(
-      margin: EdgeInsets.only(bottom: 20.0, left: 5.0, top: 3.0),
+      margin: EdgeInsets.only(bottom: 10.0, left: 5.0, top: 3.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //user profile pic continer
-          Container(
-            margin: EdgeInsets.only(top: 5.0),
-            height: 40.0,
-            width: 40.0,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
+          GestureDetector(
+            onTap: () {
+              Get.to(() => UserProfileScreen(
+                  profileOwnerId: widget.data["commentBy"]["_id"]));
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 5.0),
+              height: 25.0,
+              width: 25.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+              ),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: CachedNetworkImage(
+                    imageUrl: ApiUrlsData.domain +
+                        widget.data["commentBy"]["profilePic"],
+                    fit: BoxFit.fill,
+                  )),
             ),
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(30.0),
-                child: CachedNetworkImage(
-                  imageUrl:
-                      ApiUrlsData.domain + data["commentBy"]["profilePic"],
-                  fit: BoxFit.fill,
-                )),
           ),
           //user name and main comment container
           Container(
-            width: commentBoxWidth,
+            width: widget.commentBoxWidth,
             padding: EdgeInsets.only(right: 5.0, left: 5.0, top: 5.0),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -68,7 +88,7 @@ class CommentDisplayTemplate extends StatelessWidget {
                   children: [
                     Container(
                       child: Text(
-                        data["commentBy"]["name"].toString(),
+                        widget.data["commentBy"]["name"].toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 16.0),
                       ),
@@ -76,23 +96,27 @@ class CommentDisplayTemplate extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.only(left: 10.0),
                       child: Text(
-                        TimeStampProvider.timeStampProvider(data["createdAt"]),
+                        TimeStampProvider.timeStampProvider(
+                            widget.data["createdAt"]),
                         style: TextStyle(fontSize: 13.0),
                       ),
                     ),
                     Expanded(child: Container()),
                     Container(
                       child: PopupMenuButton(
+                        iconSize: 8.0,
+
                         ///handling of comments
                         onSelected: (value) {
-                          if (type == "comment") {
+                          if (widget.type == "comment") {
                             switch (value) {
                               case "Delete Comment":
-                                controller.removeComment(commentId);
+                                controller.removeComment(widget.commentId);
 
                                 break;
                               case "Edit Comment":
-                                _commentEditor(commentId, data["comment"]);
+                                _commentEditor(
+                                    widget.commentId, widget.data["comment"]);
                                 break;
                               case "Report Comment":
                                 print("report");
@@ -100,16 +124,16 @@ class CommentDisplayTemplate extends StatelessWidget {
 
                               default:
                             }
-                          } else if (type == "subComment") {
+                          } else if (widget.type == "subComment") {
                             switch (value) {
                               case "Delete Comment":
                                 controller.removeSubComment(
-                                    commentId, data["_id"]);
+                                    widget.commentId, widget.data["_id"]);
 
                                 break;
                               case "Edit Comment":
-                                _subCommentEditor(
-                                    commentId, data["_id"], data["comment"]);
+                                _subCommentEditor(widget.commentId,
+                                    widget.data["_id"], widget.data["comment"]);
                                 break;
                               case "Report Comment":
                                 print("report");
@@ -178,9 +202,9 @@ class CommentDisplayTemplate extends StatelessWidget {
                 ),
                 Container(
                     margin: EdgeInsets.only(top: 5.0),
-                    width: commentBoxWidth,
+                    width: widget.commentBoxWidth,
                     child: Text(
-                      data["comment"].toString(),
+                      widget.data["comment"].toString(),
                       style: TextStyle(fontSize: 16.0),
                     )),
                 //comment details container
@@ -196,7 +220,7 @@ class CommentDisplayTemplate extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                print("liked");
+                                _commentReactionUpdater();
                               },
                               child: Container(
                                   padding: EdgeInsets.only(
@@ -241,7 +265,7 @@ class CommentDisplayTemplate extends StatelessWidget {
                                       children: [
                                         Text("Replying to  @"),
                                         Text(
-                                            data["commentBy"]["name"]
+                                            widget.data["commentBy"]["name"]
                                                 .toString(),
                                             style: TextStyle(
                                               fontWeight: FontWeight.w800,
@@ -271,8 +295,8 @@ class CommentDisplayTemplate extends StatelessWidget {
                                         children: [
                                           Container(
                                             margin: EdgeInsets.only(right: 8.0),
-                                            height: 35.0,
-                                            width: 35.0,
+                                            height: 25.0,
+                                            width: 25.0,
                                             decoration: BoxDecoration(
                                                 shape: BoxShape.circle),
                                             child: ClipRRect(
@@ -321,7 +345,8 @@ class CommentDisplayTemplate extends StatelessWidget {
                                                     ),
                                                     onPressed: () {
                                                       controller.addSubComments(
-                                                          commentId.toString(),
+                                                          widget.commentId
+                                                              .toString(),
                                                           controller
                                                               .subCommentEditingController
                                                               .text);
@@ -355,6 +380,11 @@ class CommentDisplayTemplate extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  ///comment reaction updater
+  _commentReactionUpdater()async{
+    
   }
 
   _commentEditor(String commentId, String initialComment) {
@@ -445,7 +475,7 @@ class CommentDisplayTemplate extends StatelessWidget {
               child: Row(
                 children: [
                   Text("Replying to  @"),
-                  Text(data["commentBy"]["name"].toString(),
+                  Text(widget.data["commentBy"]["name"].toString(),
                       style: TextStyle(
                         fontWeight: FontWeight.w800,
                       ))
@@ -496,6 +526,9 @@ class CommentDisplayTemplate extends StatelessWidget {
                                 controller: controller.editSubCommentController,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
+                                onChanged: (value) {
+                                  controller.update();
+                                },
                                 decoration: InputDecoration.collapsed(
                                   hintText: "Add a comment",
                                   border: InputBorder.none,
@@ -503,14 +536,16 @@ class CommentDisplayTemplate extends StatelessWidget {
                               ),
                             ),
                           ),
-                          IconButton(
-                              icon: Icon(
-                                Icons.send,
-                              ),
-                              onPressed: () {
-                                controller.editSubComment(
-                                    commentId, subCommentId);
-                              })
+                          controller.editSubCommentController.text == null
+                              ? Container()
+                              : IconButton(
+                                  icon: Icon(
+                                    Icons.send,
+                                  ),
+                                  onPressed: () {
+                                    controller.editSubComment(
+                                        commentId, subCommentId);
+                                  })
                         ],
                       ),
                     ))

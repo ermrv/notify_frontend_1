@@ -1,4 +1,5 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/HorizontalProfileReferenceTemplate.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OthersProfileModule/views/OtherUserProfilePageScreen.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/ProfileCommonModules/controllers/UserFollowersListPageController.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -33,46 +34,14 @@ class UserFollowersListPageScreen extends StatelessWidget {
         body: controller.requestProcessed
             ? controller.data.length == 0
                 ? Center(
-                  heightFactor: 5.0,
+                    heightFactor: 5.0,
                     child: Text("No Followings!"),
                   )
                 : ListView.builder(
                     itemCount: controller.data.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                            border: Border(
-                                top: BorderSide(
-                                    width: 0.5,
-                                    color: Theme.of(context)
-                                        .secondaryHeaderColor))),
-                        child: ListTile(
-                          horizontalTitleGap: 3.0,
-                           onTap: () {
-                            Get.to((OtherUserProfilePageScreen(
-                                profileOwnerId: controller.data[index]
-                                    ["_id"])));
-                          },
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Container(
-                              height: 35.0,
-                              width: 35.0,
-                              child: CachedNetworkImage(
-                                imageUrl: ApiUrlsData.domain +
-                                    controller.data[index]["profilePic"],
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          title:
-                              Text(controller.data[index]["name"].toString()),
-                          // subtitle: Text(
-                          //     controller.data[index]["userName"].toString()),
-                          trailing: controller
-                              .getFollowButton(controller.data[index]["_id"]),
-                        ),
-                      );
+                      return HorizontalProfileReferenceTemplate(
+                          userData: controller.data[index]);
                     },
                   )
             : Center(

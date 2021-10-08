@@ -23,7 +23,7 @@ class CommentsDisplayLayout extends StatelessWidget {
           CommentDisplayTemplate(
             type: "comment",
             data: commentData,
-            commentBoxWidth: screenWidth - 65.0,
+            commentBoxWidth: screenWidth - 40.0,
             commentId: commentData["_id"].toString(),
           ),
           Container(
@@ -34,7 +34,7 @@ class CommentsDisplayLayout extends StatelessWidget {
                   CommentDisplayTemplate(
                     type: "subComment",
                     data: i,
-                    commentBoxWidth: screenWidth - 95.0,
+                    commentBoxWidth: screenWidth - 70.0,
                     commentId: commentData["_id"].toString(),
                   ),
               ],

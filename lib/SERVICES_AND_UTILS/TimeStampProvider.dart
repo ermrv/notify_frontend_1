@@ -10,6 +10,8 @@ abstract class TimeStampProvider {
       return "$_difference min ago";
     } else if (_difference >= 60 && _difference / 60 <= 24) {
       return "${(_difference ~/ 60)} hrs ago";
+    } else if ((_difference / 60) / 24 <2) {
+      return "${(_difference ~/ 60) ~/ 24} day ago";
     } else if ((_difference / 60) / 24 <= 5) {
       return "${(_difference ~/ 60) ~/ 24} days ago";
     } else {
