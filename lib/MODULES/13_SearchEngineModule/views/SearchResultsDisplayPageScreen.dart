@@ -42,6 +42,65 @@ class SearchResultsDisplayPageScreen extends StatelessWidget {
                       TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
                 )),
           ),
+          bottom: PreferredSize(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              controller.selectedSearchType == "people"
+                                  ? MaterialStateProperty.resolveWith(
+                                      (states) => Colors.grey[800])
+                                  : MaterialStateProperty.resolveWith(
+                                      (states) => Colors.transparent)),
+                      onPressed: () {
+                        controller.updateSearchType("people");
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: screenWidth * 0.2,
+                        child: Text("People"),
+                      )),
+                  TextButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              controller.selectedSearchType == "posts"
+                                  ? MaterialStateProperty.resolveWith(
+                                      (states) => Colors.grey[800])
+                                  : MaterialStateProperty.resolveWith(
+                                      (states) => Colors.transparent)),
+                      onPressed: () {
+                         controller.updateSearchType("posts");
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: screenWidth * 0.2,
+                        child: Text("Posts"),
+                      )),
+                  TextButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              controller.selectedSearchType == "tags"
+                                  ? MaterialStateProperty.resolveWith(
+                                      (states) => Colors.grey[800])
+                                  : MaterialStateProperty.resolveWith(
+                                      (states) => Colors.transparent)),
+                      onPressed: () {
+                         controller.updateSearchType("tags");
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: screenWidth * 0.2,
+                        child: Text("Tags"),
+                      ))
+                ],
+              ),
+            ),
+            preferredSize: Size.fromHeight(40.0),
+          ),
         ),
         body: controller.searchResults == null
             ? Center(
@@ -56,19 +115,23 @@ class SearchResultsDisplayPageScreen extends StatelessWidget {
                   )
                 : ListView(
                     children: [
-                      for(var i in controller.searchResults)Container(
-                        child:ProfileReferenceTemplate(
-                          showVerticalTemplate: false,
-                          userData:i),
-                      ),
+                      for (var i in controller.searchResults)
+                        Container(
+                          child: ProfileReferenceTemplate(
+                              showVerticalTemplate: false, userData: i),
+                        ),
                     ],
                   ),
       ),
     );
   }
-
-
-  
 }
 
-
+class TagsSearchResultsDisplayTemplate extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text("tags"),
+    );
+  }
+}

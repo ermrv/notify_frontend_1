@@ -15,6 +15,7 @@ class SearchResultsDisplayPageController extends GetxController {
 
   intialise() async {
     updateSearchPage(selectedSearchType);
+    
   }
 
   Future<dynamic> getData(String searchType) async {
@@ -25,6 +26,13 @@ class SearchResultsDisplayPageController extends GetxController {
       print(response);
       return response;
     }
+  }
+
+  ///update search result type
+  updateSearchType(String searchType) {
+    selectedSearchType = searchType;
+    update();
+    ///TODO: call the function to update the body of the screen
   }
 
   updateSearchPage(String searchType) async {
@@ -89,5 +97,4 @@ class SearchResultsDisplayPageController extends GetxController {
         }
     }
   }
-
 }
