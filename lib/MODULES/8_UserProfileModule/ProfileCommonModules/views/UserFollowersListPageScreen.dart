@@ -1,5 +1,5 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
-import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/HorizontalProfileReferenceTemplate.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/ProfileReferenceTemplate.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OthersProfileModule/views/OtherUserProfilePageScreen.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/ProfileCommonModules/controllers/UserFollowersListPageController.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -40,7 +40,8 @@ class UserFollowersListPageScreen extends StatelessWidget {
                 : ListView.builder(
                     itemCount: controller.data.length,
                     itemBuilder: (context, index) {
-                      return HorizontalProfileReferenceTemplate(
+                      return ProfileReferenceTemplate(
+                        showVerticalTemplate: false,
                           userData: controller.data[index]);
                     },
                   )

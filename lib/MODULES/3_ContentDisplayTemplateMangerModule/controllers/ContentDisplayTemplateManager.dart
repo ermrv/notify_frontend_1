@@ -4,7 +4,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Eve
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImagePostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PollPostRelatedViews/PollPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ImagePostReferenceLayout.dart';
-import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceLayout.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/ProfileReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SharedPostRelatedViews/views/SharedImagePostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SharedPostRelatedViews/views/SharedTextPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SharedPostRelatedViews/views/SharedVideoPostDisplayTemplate.dart';

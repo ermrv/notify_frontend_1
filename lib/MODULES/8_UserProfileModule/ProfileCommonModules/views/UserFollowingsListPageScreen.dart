@@ -1,4 +1,4 @@
-import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/HorizontalProfileReferenceTemplate.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/ProfileReferenceTemplate.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/ProfileCommonModules/controllers/UserFollowingsListPageController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -36,7 +36,8 @@ class UserFollowingsListPageScreen extends StatelessWidget {
                 : ListView.builder(
                     itemCount: controller.data.length,
                     itemBuilder: (context, index) {
-                      return HorizontalProfileReferenceTemplate(
+                      return ProfileReferenceTemplate(
+                        showVerticalTemplate: false,
                           userData: controller.data[index]);
                     },
                   )

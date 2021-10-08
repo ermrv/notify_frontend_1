@@ -3,7 +3,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Con
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ContestPostReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/EventPostReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ImagePostReferenceLayout.dart';
-import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceLayout.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/ProfileReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/TagsReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/5_ExplorePageModule/controllers/ExplorePageController.dart';
 import 'package:flutter/material.dart';

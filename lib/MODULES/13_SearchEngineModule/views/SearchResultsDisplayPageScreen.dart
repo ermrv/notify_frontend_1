@@ -1,6 +1,6 @@
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/13_SearchEngineModule/controllers/SearchResultsDisplayPageController.dart';
-import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/HorizontalProfileReferenceTemplate.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/ProfileReferenceTemplate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -57,7 +57,9 @@ class SearchResultsDisplayPageScreen extends StatelessWidget {
                 : ListView(
                     children: [
                       for(var i in controller.searchResults)Container(
-                        child:HorizontalProfileReferenceTemplate(userData:i),
+                        child:ProfileReferenceTemplate(
+                          showVerticalTemplate: false,
+                          userData:i),
                       ),
                     ],
                   ),
