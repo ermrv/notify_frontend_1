@@ -14,6 +14,7 @@ class SpecificPostDisplayPageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SpecificPostDisplayPageController>(
         initState: (state) {
+          print(postId);
           controller.specificPostId = postId;
           controller.initialise();
         },

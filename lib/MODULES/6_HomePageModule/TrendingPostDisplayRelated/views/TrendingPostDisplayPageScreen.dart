@@ -18,6 +18,7 @@ class TrendingPostDisplayPageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<TrendingPostDisplayPageController>(
       initState: (state) {
+        print(trendingPostIdList);
         controller.initialIndex = initialIndex;
         controller.initialise();
       },
@@ -25,14 +26,14 @@ class TrendingPostDisplayPageScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text("Top trending"),
         ),
-        body: PageView.builder(
-            scrollDirection: Axis.horizontal,
-            controller: controller.pageController,
-            itemCount: trendingPostIdList.length,
-            itemBuilder: (context, index) {
-              return SpecificPostDisplayPageScreen(
-                  postId: trendingPostIdList[index]["postId"]);
-            }),
+        body: PageView(
+          scrollDirection: Axis.horizontal,
+          controller: controller.pageController,
+          children: [
+            for (var i in trendingPostIdList)
+              SpecificPostDisplayPageScreen(postId: i["postId"])
+          ],
+        ),
       ),
     );
   }
