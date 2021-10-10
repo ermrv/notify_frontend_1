@@ -1,5 +1,6 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ContentDisplayTemplateProvider.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/ProfileReferenceTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SpecificPostRelated/controllers/SpecificPostDisplayPageController.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
@@ -26,7 +27,7 @@ class _SpecificPostDisplayPageScreenState
   @override
   void initState() {
     _getSpecificPostData();
-    
+
     super.initState();
   }
 
@@ -45,9 +46,21 @@ class _SpecificPostDisplayPageScreenState
                 ContentDisplayTemplateProvider(
                   data: [specificPostData],
                 ),
+
+                ///profile reference
                 Container(
-                  child: Text(" shared contents will be displayed here"),
-                ),
+                  margin: EdgeInsets.only(bottom: 5.0,top: 5.0),
+                  decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Theme.of(context).accentColor.withOpacity(0.5)))
+                  ),
+                    child: specificPostData != null
+                        ? ProfileReferenceTemplate(
+                            userData: specificPostData["postBy"],
+                            showVerticalTemplate: false)
+                        : Container()),
+                // Container(
+                //   child: Text(" shared contents will be displayed here"),
+                // ),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
                   child: Text(
@@ -62,7 +75,12 @@ class _SpecificPostDisplayPageScreenState
                         ? Container()
                         : ContentDisplayTemplateProvider(
                             data: recommendedPostData,
-                          )
+                          ),
+                recommendedPostData != null
+                    ? ProfileReferenceTemplate(
+                        userData: specificPostData["postBy"],
+                        showVerticalTemplate: false)
+                    : Container()
               ],
             ),
     );

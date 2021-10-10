@@ -28,6 +28,8 @@ class GetUserDataController extends GetxController {
   }
 
   getData() async {
+    LocalDataFiles.setRefreshNewsFeedFile(true);
+    LocalDataFiles.setRefreshProfilePostsFile(true);
     try {
       rcvdData = json.decode(
           await File(LocalDataFiles.userBasicDataFilePath).readAsString());

@@ -39,16 +39,14 @@ class ExplorePageController extends GetxController {
       print(e);
       getRecentPostsData();
     }
-
-    getRecentPostsData();
   }
 
   ///to get the latest post data
   getRecentPostsData() async {
-    //if newsfeed data is null get all data from back end
+    //if explore page data is null get all data from back end
 
-    var response = await ApiServices.postWithAuth(
-        ApiUrlsData.explorePage, {}, userToken);
+    var response =
+        await ApiServices.postWithAuth(ApiUrlsData.explorePage, {}, userToken);
 
     if (response != "error") {
       List _temp = response;
@@ -92,6 +90,7 @@ class ExplorePageController extends GetxController {
   ///handle the local file to store and delete the data
   ///[data] corresponds to complete list of data
   _handleLocalFile(List data) {
+    print("handling explore page file");
     if (data.length > 10) {
       List _data = data.getRange(0, 10).toList();
       File(explorePageDataFilePath)

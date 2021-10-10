@@ -8,6 +8,10 @@ abstract class LocalDataFiles {
   static String profilePostsDataFilePath;
   static String explorePageDataFilePath;
   static String notificationPageDataFilePath;
+  ///refreshing page status
+  ///if true local file will be updated with new data from server
+  static bool refreshNewsFeedFile = false;
+  static bool refreshProfilePostsFile = false;
 
   static initialiseLocalFilesPath() async {
     final directory = await getApplicationDocumentsDirectory();
@@ -17,5 +21,13 @@ abstract class LocalDataFiles {
     profilePostsDataFilePath = "$path/userProfilePostsDataFile.json";
     explorePageDataFilePath = "$path/explorePageDataFilePath.json";
     notificationPageDataFilePath = "$path/notificationPageDataFilePath.json";
+  }
+
+  static setRefreshNewsFeedFile(bool status) {
+    refreshNewsFeedFile = status;
+  }
+
+  static setRefreshProfilePostsFile(bool status) {
+    refreshProfilePostsFile = status;
   }
 }

@@ -43,7 +43,7 @@ class OwnProfilePageScreenController extends GetxController {
   getRecentPostsData() async {
     var response;
     //if  data is null get all data from back end
-    if (profilePostData == null) {
+    if (profilePostData == null ||LocalDataFiles.refreshProfilePostsFile) {
       response = await ApiServices.postWithAuth(
           ApiUrlsData.userPosts, {"dataType": "latest"}, userToken);
     }
@@ -61,7 +61,7 @@ class OwnProfilePageScreenController extends GetxController {
     }
 
     if (response != "error") {
-      if (profilePostData == null) {
+      if (profilePostData == null ||LocalDataFiles.refreshProfilePostsFile) {
         profilePostData = response;
         update();
         _handleLocalFile(profilePostData);

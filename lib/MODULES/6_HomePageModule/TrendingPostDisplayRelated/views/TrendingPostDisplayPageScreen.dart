@@ -18,7 +18,6 @@ class TrendingPostDisplayPageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<TrendingPostDisplayPageController>(
       initState: (state) {
-        print(trendingPostIdList);
         controller.initialIndex = initialIndex;
         controller.initialise();
       },

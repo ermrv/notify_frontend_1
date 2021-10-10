@@ -47,7 +47,7 @@ class NewsFeedPageController extends GetxController {
   getRecentPostsData() async {
     var response;
     //if newsfeed data is null get all data from back end
-    if (newsFeedData == null) {
+    if (newsFeedData == null || LocalDataFiles.refreshNewsFeedFile) {
       response = await ApiServices.postWithAuth(
           ApiUrlsData.newsFeedUrl, {"dataType": "latest"}, userToken);
     }
@@ -65,10 +65,11 @@ class NewsFeedPageController extends GetxController {
     }
 
     if (response != "error") {
-      if (newsFeedData == null) {
+      if (newsFeedData == null || LocalDataFiles.refreshNewsFeedFile) {
         newsFeedData = response;
         update();
         _handleLocalFile(newsFeedData);
+        LocalDataFiles.setRefreshNewsFeedFile(false);
       } else {
         List _temp = response;
         _temp.addAll(newsFeedData);

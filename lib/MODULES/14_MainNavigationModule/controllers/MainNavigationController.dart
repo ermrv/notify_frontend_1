@@ -14,6 +14,7 @@ class MainNavigationController extends GetxController {
   @override
   void onInit() {
     pageController = PageController(initialPage: currentIndex);
+    
 
     super.onInit();
   }

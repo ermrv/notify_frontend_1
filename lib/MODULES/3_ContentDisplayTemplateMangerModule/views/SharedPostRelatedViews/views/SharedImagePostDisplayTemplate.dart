@@ -7,6 +7,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Use
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OthersProfileModule/views/OtherUserProfilePageScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
@@ -67,19 +68,25 @@ class _SharedImagePostDisplayTemplateState
                 //
                 //
                 //user profile pic
-                Container(
-                  padding: EdgeInsets.all(1.0),
-                  height: 35.0,
-                  width: 35.0,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.deepOrange[900]),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30.0),
-                      child: CachedNetworkImage(
-                        imageUrl: ApiUrlsData.domain +
-                            widget.postContent["postBy"]["profilePic"],
-                        fit: BoxFit.fill,
-                      )),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => OtherUserProfilePageScreen(
+                        profileOwnerId: widget.postContent["postBy"]["_id"]));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(1.0),
+                    height: 35.0,
+                    width: 35.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.deepOrange[900]),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30.0),
+                        child: CachedNetworkImage(
+                          imageUrl: ApiUrlsData.domain +
+                              widget.postContent["postBy"]["profilePic"],
+                          fit: BoxFit.fill,
+                        )),
+                  ),
                 ),
                 //
                 //
@@ -125,21 +132,24 @@ class _SharedImagePostDisplayTemplateState
                   child: Container(),
                 ),
                 //actions on post
-                _isOwner
-                    ? PostOwnerActionsOnPost(
-                        postId: widget.postContent["_id"].toString(),
-                        postDescription:
-                            widget.postContent["sharedDescription"].toString(),
-                        editedDescriptionUpdater: (String description) {
-                          updateEditedDescription(description);
-                        },
-                        parentController: widget.parentController,
-                      )
-                    : OtherUserActionsOnPost(
-                        postUserId:
-                            widget.postContent["postBy"]["_id"].toString(),
-                        postId: widget.postContent["_id"].toString(),
-                      )
+                widget.parentController != null
+                    ? _isOwner
+                        ? PostOwnerActionsOnPost(
+                            postId: widget.postContent["_id"].toString(),
+                            postDescription: widget
+                                .postContent["sharedDescription"]
+                                .toString(),
+                            editedDescriptionUpdater: (String description) {
+                              updateEditedDescription(description);
+                            },
+                            parentController: widget.parentController,
+                          )
+                        : OtherUserActionsOnPost(
+                            postUserId:
+                                widget.postContent["postBy"]["_id"].toString(),
+                            postId: widget.postContent["_id"].toString(),
+                          )
+                    : Container()
               ],
             ),
           ),
