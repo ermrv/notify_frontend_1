@@ -15,7 +15,6 @@ class SearchResultsDisplayPageController extends GetxController {
 
   intialise() async {
     updateSearchPage(selectedSearchType);
-    
   }
 
   Future<dynamic> getData(String searchType) async {
@@ -32,6 +31,7 @@ class SearchResultsDisplayPageController extends GetxController {
   updateSearchType(String searchType) {
     selectedSearchType = searchType;
     update();
+
     ///TODO: call the function to update the body of the screen
   }
 
@@ -45,9 +45,13 @@ class SearchResultsDisplayPageController extends GetxController {
         {
           if (peopleSearchResults == null) {
             var _temp = await getData("people");
-            peopleSearchResults = _temp["users"];
-            searchResults = peopleSearchResults;
-            update();
+            if (_temp["users"] != null) {
+              peopleSearchResults = _temp["users"];
+              searchResults = peopleSearchResults;
+              update();
+            } else {
+              Get.snackbar("Something wrong", "cannot get the data");
+            }
           } else {
             searchResults = peopleSearchResults;
             update();
@@ -59,9 +63,13 @@ class SearchResultsDisplayPageController extends GetxController {
         {
           if (postsSearchResults == null) {
             var _temp = await getData("posts");
-            postsSearchResults = _temp["posts"];
-            searchResults = postsSearchResults;
-            update();
+            if (_temp["users"] != null) {
+              postsSearchResults = _temp["posts"];
+              searchResults = postsSearchResults;
+              update();
+            } else {
+              Get.snackbar("Something wrong", "cannot get the data");
+            }
           } else {
             searchResults = postsSearchResults;
             update();
@@ -73,9 +81,13 @@ class SearchResultsDisplayPageController extends GetxController {
         {
           if (tagsSearchResults == null) {
             var _temp = await getData("tags");
-            tagsSearchResults = _temp["tags"];
-            searchResults = tagsSearchResults;
-            update();
+            if (_temp["users"] != null) {
+              tagsSearchResults = _temp["tags"];
+              searchResults = tagsSearchResults;
+              update();
+            } else {
+              Get.snackbar("Something wrong", "cannot get the data");
+            }
           } else {
             searchResults = tagsSearchResults;
             update();
@@ -87,9 +99,13 @@ class SearchResultsDisplayPageController extends GetxController {
         {
           if (peopleSearchResults == null) {
             var _temp = await getData("people");
-            peopleSearchResults = _temp["users"];
-            searchResults = peopleSearchResults;
-            update();
+            if (_temp["users"] != null) {
+              peopleSearchResults = _temp["users"];
+              searchResults = peopleSearchResults;
+              update();
+            } else {
+              Get.snackbar("Something wrong", "cannot get the data");
+            }
           } else {
             searchResults = peopleSearchResults;
             update();
