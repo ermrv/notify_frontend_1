@@ -38,18 +38,6 @@ class _VideoPostFeedPlayerPageScreenState
                 postContent: i,
                 id: "4",
               ),
-            FullVideoPostPlayerTemplate(
-              postContent: videos[0],
-              id: "1",
-            ),
-            FullVideoPostPlayerTemplate(
-              postContent: videos[0],
-              id: "2",
-            ),
-            FullVideoPostPlayerTemplate(
-              postContent: videos[0],
-              id: "3",
-            )
           ],
         ),
       ),

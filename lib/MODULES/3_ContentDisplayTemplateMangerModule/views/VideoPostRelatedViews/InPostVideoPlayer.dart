@@ -70,13 +70,24 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
                         child: _videoPlayerController.value.isPlaying ||
                                 showFullVideoPlayerButton
                             ? Container()
-                            : IconButton(
-                                onPressed: () {
-                                  try {
-                                    _videoPlayerController.play();
-                                  } catch (e) {}
-                                },
-                                icon: Icon(Icons.play_arrow)),
+                            : Container(
+                                height: 50.0,
+                                width: 50.0,
+                                decoration: BoxDecoration(
+                                    color: Colors.black38,
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    border: Border.all(
+                                        width: 2.0, color: Colors.white)),
+                                child: IconButton(
+                                  onPressed: () {
+                                    try {
+                                      _videoPlayerController.play();
+                                    } catch (e) {}
+                                  },
+                                  icon: Icon(Icons.play_arrow),
+                                  iconSize: 32,
+                                ),
+                              ),
                       ),
                       Positioned(
                         bottom: 3.0,
@@ -150,14 +161,24 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
                       ),
                       Align(
                         alignment: Alignment.center,
-                        child: IconButton(
-                          icon: Icon(Icons.play_arrow),
-                          onPressed: () {
-                            _initialiseVideoPlayer();
-                            setState(() {
-                              _showVideoPlayer = true;
-                            });
-                          },
+                        child: Container(
+                          height: 50.0,
+                          width: 50.0,
+                          decoration: BoxDecoration(
+                              color: Colors.black38,
+                              borderRadius: BorderRadius.circular(50.0),
+                              border:
+                                  Border.all(width: 2.0, color: Colors.white)),
+                          child: IconButton(
+                            icon: Icon(Icons.play_arrow),
+                            iconSize: 32.0,
+                            onPressed: () {
+                              _initialiseVideoPlayer();
+                              setState(() {
+                                _showVideoPlayer = true;
+                              });
+                            },
+                          ),
                         ),
                       )
                     ],
