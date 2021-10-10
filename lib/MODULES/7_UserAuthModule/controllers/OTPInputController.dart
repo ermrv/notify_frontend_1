@@ -14,6 +14,7 @@ import 'package:get_mac/get_mac.dart';
 class OTPInputController extends GetxController {
   final String mobileNumber;
   final String countryCode;
+  bool isVerifying = false;
 
   OTPInputController(this.mobileNumber, this.countryCode);
   String otp;
@@ -39,10 +40,14 @@ class OTPInputController extends GetxController {
   }
 
   verifyOtp(String otp) async {
+    isVerifying = true;
+    update();
     var response = await ApiServices.post(
         ApiUrlsData.verifyOtp, {"mobile": data["mobile"], "code": otp});
     if (response == "error") {
       print("error");
+      isVerifying = false;
+      update();
     } else {
       otpVerificationResponse = response;
       _navigator();
@@ -86,6 +91,4 @@ class OTPInputController extends GetxController {
       print(e);
     }
   }
-
-  
 }

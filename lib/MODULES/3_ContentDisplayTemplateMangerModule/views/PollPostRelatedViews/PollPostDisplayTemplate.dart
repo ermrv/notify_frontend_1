@@ -24,7 +24,7 @@ class PollPostDisplayTemplate extends StatefulWidget {
   final parentController;
 
   const PollPostDisplayTemplate(
-      {Key key, this.postContent, @required this.parentController})
+      {Key key, this.postContent,this.parentController})
       : super(key: key);
 
   @override
@@ -159,7 +159,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                       ),
 
                       //actions on post
-                      _isOwner
+                    widget.parentController!=null?  _isOwner
                           ? PostOwnerActionsOnPost(
                               postId: widget.postContent["_id"].toString(),
                               postDescription: widget.postContent["pollPost"]
@@ -175,7 +175,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                       ["postBy"]["_id"]
                                   .toString(),
                               postId: widget.postContent["_id"].toString(),
-                            )
+                            ):Container()
                     ],
                   ),
                 ),

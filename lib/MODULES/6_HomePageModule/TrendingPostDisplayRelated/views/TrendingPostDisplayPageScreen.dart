@@ -27,8 +27,8 @@ class TrendingPostDisplayPageScreen extends StatelessWidget {
           title: Text("Top trending"),
         ),
         body: PageView(
-          scrollDirection: Axis.horizontal,
           controller: controller.pageController,
+          scrollDirection: Axis.horizontal,
           children: [
             for (var i in trendingPostIdList)
               SpecificPostDisplayPageScreen(postId: i["postId"])

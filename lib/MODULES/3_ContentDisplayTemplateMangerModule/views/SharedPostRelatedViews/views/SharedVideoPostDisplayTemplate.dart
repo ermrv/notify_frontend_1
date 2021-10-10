@@ -20,7 +20,7 @@ class SharedVideoPostDisplayTemplate extends StatefulWidget {
   final parentController;
 
   const SharedVideoPostDisplayTemplate(
-      {Key key, this.postContent, @required this.parentController})
+      {Key key, this.postContent,  this.parentController})
       : super(key: key);
 
   @override

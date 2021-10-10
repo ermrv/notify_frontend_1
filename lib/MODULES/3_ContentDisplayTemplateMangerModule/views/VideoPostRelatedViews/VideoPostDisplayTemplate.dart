@@ -28,7 +28,7 @@ class VideoPostDisplayTemplate extends StatefulWidget {
   final postContent;
   final parentController;
   const VideoPostDisplayTemplate(
-      {Key key, @required this.postContent, @required this.parentController})
+      {Key key, @required this.postContent,this.parentController})
       : super(key: key);
 
   @override
@@ -141,7 +141,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                       )
                     : Container(),
                 //actions on post
-                _isOwner
+             widget.parentController!=null?   _isOwner
                     ? PostOwnerActionsOnPost(
                         postId: widget.postContent["_id"].toString(),
                         postDescription: widget.postContent["videoPost"]
@@ -157,7 +157,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                                 ["_id"]
                             .toString(),
                         postId: widget.postContent["_id"].toString(),
-                      )
+                      ):Container()
               ],
             ),
           ),

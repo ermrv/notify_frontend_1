@@ -29,7 +29,7 @@ class ImagePostDisplayTemplate extends StatefulWidget {
   final postContent;
   final parentController;
   ImagePostDisplayTemplate(
-      {Key key, this.postContent, @required this.parentController})
+      {Key key, this.postContent,this.parentController})
       : super(key: key);
 
   @override
@@ -161,7 +161,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                       )
                     : Container(),
                 //actions on post
-                _isOwner
+              widget.parentController!=null? _isOwner
                     ? PostOwnerActionsOnPost(
                         postId: widget.postContent["_id"].toString(),
                         postDescription: widget.postContent["imagePost"]
@@ -177,7 +177,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                                 ["_id"]
                             .toString(),
                         postId: widget.postContent["_id"].toString(),
-                      )
+                      ):Container()
               ],
             ),
           ),

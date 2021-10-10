@@ -20,7 +20,7 @@ class SharedTextPostDisplayTemplate extends StatefulWidget {
   final parentController;
 
   const SharedTextPostDisplayTemplate(
-      {Key key, @required this.postContent, @required this.parentController})
+      {Key key, @required this.postContent, this.parentController})
       : super(key: key);
 
   @override

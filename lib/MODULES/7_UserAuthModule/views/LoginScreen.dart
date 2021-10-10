@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
         ),
         body: Container(
           margin: EdgeInsets.only(
-              top: Get.size.height * 0.25, left: 15.0, right: 15.0),
+              top: Get.size.height * 0.15, left: 15.0, right: 15.0),
           child: Center(
             child: Column(
               children: [
@@ -32,10 +32,11 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Media",
+                        "media",
                         style: TextStyle(
-                            color: Colors.blue,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
+                             fontStyle: FontStyle.italic,
                             fontSize: 29.0,
                             decoration: TextDecoration.underline,
                             decorationThickness: 1.5),
@@ -43,8 +44,9 @@ class LoginScreen extends StatelessWidget {
                       Text(
                         "Plus",
                         style: TextStyle(
-                            color: Colors.red,
+                            color: Colors.blue,
                             fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
                             fontSize: 29.0,
                             decoration: TextDecoration.underline,
                             decorationThickness: 1.5),
@@ -54,68 +56,74 @@ class LoginScreen extends StatelessWidget {
                 ),
                 //mobile no.
                 Container(
-                  child: Row(
+                  child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //countary code
-                      Card(
-                        elevation: 0.5,
-                        child: Container(
-                          height: 50.0,
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius: BorderRadius.circular(5.0)),
-                          child: DropdownButton(
-                            underline: Container(),
-                            value: controller.selectedCountryCode,
-                            elevation: 2,
-                            items: controller.countryCode.map((e) {
-                              return DropdownMenuItem(
-                                  value: e[1],
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(" " + e[0].toString()),
-                                      Text(" " + e[1].toString()),
-                                    ],
-                                  ));
-                            }).toList(),
-                            onChanged: (value) {
-                              print(value);
-                              controller.updateCountryCode(value.toString());
-                            },
-                          ),
-                        ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 8.0),
+                        child:Text("Enter mobile number:",style: TextStyle(fontSize: 16.0),)
                       ),
-                      //mobile number
-                      Expanded(
-                        child: Card(
-                          elevation: 0.5,
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                                border: Border.all(),
-                                borderRadius: BorderRadius.circular(5.0)),
-                            child: TextFormField(
-                              controller: controller.textEditingController,
-                              onTap: () {},
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.normal),
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 1.0)),
-                                  hintText: " Mobile No.",
-                                  hintStyle: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.normal)),
-                              keyboardType: TextInputType.number,
+                      Row(
+                        children: [
+                          //countary code
+                          Card(
+                            elevation: 0.5,
+                            child: Container(
+                              height: 50.0,
+                              decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              child: DropdownButton(
+                                underline: Container(),
+                                value: controller.selectedCountryCode,
+                                elevation: 2,
+                                items: controller.countryCode.map((e) {
+                                  return DropdownMenuItem(
+                                      value: e[1],
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(" " + e[0].toString()),
+                                          Text(" " + e[1].toString()),
+                                        ],
+                                      ));
+                                }).toList(),
+                                onChanged: (value) {
+                                  print(value);
+                                  controller.updateCountryCode(value.toString());
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                      )
+                          //mobile number
+                          Expanded(
+                            child: Card(
+                              elevation: 0.5,
+                              child: Container(
+                                alignment: Alignment.centerLeft,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                    border: Border.all(),
+                                    borderRadius: BorderRadius.circular(5.0)),
+                                child: TextFormField(
+                                  controller: controller.textEditingController,
+                                  onTap: () {},
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.normal),
+                                  decoration: InputDecoration(
+                                      hintText: " Mobile No.",
+                                      hintStyle: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.normal)),
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -164,59 +172,6 @@ class LoginScreen extends StatelessWidget {
                         }
                       }),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 8.0),
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "Login Using Password",
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(top: 45.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        "-------------OR------------",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              "One Click Register with:    ",
-                              style: TextStyle(
-                                  fontSize: 15.0, fontWeight: FontWeight.w700),
-                            ),
-                            Expanded(
-                              child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  elevation: 0.5,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Text(
-                                        "TrueCaller",
-                                        style: TextStyle(color: Colors.blue),
-                                      ),
-                                      Icon(Icons.phone, color: Colors.blue)
-                                    ],
-                                  ),
-                                  onPressed: () {}),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )
               ],
             ),
           ),

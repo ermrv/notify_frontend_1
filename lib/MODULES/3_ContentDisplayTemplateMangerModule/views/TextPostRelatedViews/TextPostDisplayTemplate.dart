@@ -22,7 +22,9 @@ class TextPostDisplayTemplate extends StatefulWidget {
   final postContent;
   final parentController;
 
-  TextPostDisplayTemplate({Key key, this.postContent,@required this.parentController}) : super(key: key);
+  TextPostDisplayTemplate(
+      {Key key, this.postContent,this.parentController})
+      : super(key: key);
 
   @override
   _TextPostDisplayTemplateState createState() =>
@@ -119,8 +121,9 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                       ),
                       Container(
                         child: Text(
-                          TimeStampProvider.timeStampProvider(
-                              widget.postContent["textPost"]["createdAt"].toString()),
+                          TimeStampProvider.timeStampProvider(widget
+                              .postContent["textPost"]["createdAt"]
+                              .toString()),
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 12.0),
                         ),
@@ -133,22 +136,25 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                 ),
 
                 //actions on post
-                _isOwner
-                    ? PostOwnerActionsOnPost(
-                        postId: widget.postContent["_id"].toString(),
-                        postDescription: widget.postContent["textPost"]
-                                ["description"]
-                            .toString(),
-                        editedDescriptionUpdater: (String description) {
-                          updateEditedDescription(description);
-                        },parentController:widget.parentController,
-                      )
-                    : OtherUserActionsOnPost(
-                        postUserId: widget.postContent["textPost"]["postBy"]
-                                ["_id"]
-                            .toString(),
-                        postId: widget.postContent["_id"].toString(),
-                      )
+                widget.parentController != null
+                    ? _isOwner
+                        ? PostOwnerActionsOnPost(
+                            postId: widget.postContent["_id"].toString(),
+                            postDescription: widget.postContent["textPost"]
+                                    ["description"]
+                                .toString(),
+                            editedDescriptionUpdater: (String description) {
+                              updateEditedDescription(description);
+                            },
+                            parentController: widget.parentController,
+                          )
+                        : OtherUserActionsOnPost(
+                            postUserId: widget.postContent["textPost"]["postBy"]
+                                    ["_id"]
+                                .toString(),
+                            postId: widget.postContent["_id"].toString(),
+                          )
+                    : Container()
               ],
             ),
           ),

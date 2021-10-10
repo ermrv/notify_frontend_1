@@ -29,7 +29,7 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
   ContentDisplayTemplateProvider({
     Key key,
     @required this.data,
-    @required this.controller
+    this.controller
   }) : super(key: key);
 
   @override
