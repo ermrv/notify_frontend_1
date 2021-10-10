@@ -54,14 +54,14 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
           break;
         }
       // //for video post
-      // case "video":
-      //   {
-      //     if (content["primary"].toString() == "true") {
-      //       return VideoPostDisplayTemplate(postContent: content,parentController: controller);
-      //     } else if (content["primary"].toString() == "false")
-      //       return SharedVideoPostDisplayTemplate(postContent: content,parentController: controller);
-      //   }
-      //   break;
+      case "video":
+        {
+          if (content["primary"].toString() == "true") {
+            return VideoPostDisplayTemplate(postContent: content,parentController: controller);
+          } else if (content["primary"].toString() == "false")
+            return SharedVideoPostDisplayTemplate(postContent: content,parentController: controller);
+        }
+        break;
 
       //for contest post
       case "contest":
