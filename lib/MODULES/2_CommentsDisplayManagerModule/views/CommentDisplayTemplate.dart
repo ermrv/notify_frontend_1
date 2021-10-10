@@ -2,10 +2,13 @@ import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/controllers/CommentDisplayController.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 
 class CommentDisplayTemplate extends StatefulWidget {
@@ -14,12 +17,16 @@ class CommentDisplayTemplate extends StatefulWidget {
   final double commentBoxWidth;
   final String type;
 
+  ///in case the template is used for subcomment
+  final String parentCommentId;
+
   CommentDisplayTemplate({
     Key key,
     @required this.data,
     @required this.commentBoxWidth,
     @required this.commentId,
     @required this.type,
+    @required this.parentCommentId,
   }) : super(key: key);
 
   @override
@@ -28,17 +35,22 @@ class CommentDisplayTemplate extends StatefulWidget {
 
 class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
   final controller = Get.find<CommentDisplayController>();
-  bool showSendButton=false;
+  bool showSendButton = false;
 
   bool commentOfPrimaryUser;
-  List<String> commentLikes;
+  List _likes = [];
+  String _thisUserId;
+  int _numberOfReactions;
   @override
   void initState() {
     commentOfPrimaryUser = widget.data["commentBy"]["_id"].toString() ==
             PrimaryUserData.primaryUserData.userId
         ? true
         : false;
+    _likes.addAll(widget.data["likes"]);
+    _thisUserId = PrimaryUserData.primaryUserData.userId;
     super.initState();
+    _numberOfReactions = _likes.length;
   }
 
   @override
@@ -216,25 +228,32 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
                     children: [
                       Container(
                         alignment: Alignment.center,
-                        margin: EdgeInsets.only(right: 10.0),
+                        margin: EdgeInsets.only(right: 5.0),
                         child: Row(
                           children: [
                             GestureDetector(
-                              onTap: () {
-                                _commentReactionUpdater();
-                              },
-                              child: Container(
+                                onTap: () {
+                                  _commentReactionUpdater(_thisUserId);
+                                },
+                                child: Container(
                                   padding: EdgeInsets.only(
                                       top: 2.0,
                                       bottom: 2.0,
                                       right: 15.0,
                                       left: 8.0),
-                                  child: Icon(
-                                    Icons.favorite_border,
-                                    size: 18.0,
-                                  )),
-                            ),
-                            Text("23",
+                                  child: _likes.contains(_thisUserId)
+                                      ? Icon(
+                                          Icons.favorite,
+                                          size: 20.0,
+                                          color: Colors.red,
+                                        )
+                                      : Icon(
+                                          Icons.favorite_border,
+                                          size: 20.0,
+                                          color: Colors.white,
+                                        ),
+                                )),
+                            Text("$_numberOfReactions",
                                 style: TextStyle(fontWeight: FontWeight.w600)),
                           ],
                         ),
@@ -347,7 +366,7 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
                                                     ),
                                                   ),
                                                 ),
-                                               IconButton(
+                                                IconButton(
                                                     icon: Icon(
                                                       Icons.send,
                                                       color: Colors.blue,
@@ -392,7 +411,68 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
   }
 
   ///comment reaction updater
-  _commentReactionUpdater() async {}
+  _commentReactionUpdater(String userId) async {
+    //update  likes if subcomment
+    if (widget.type == "subComment") {
+      if (_likes.contains(userId)) {
+        _likes.remove(userId);
+        setState(() {
+          _numberOfReactions = _likes.length;
+        });
+        var response = await ApiServices.postWithAuth(
+            ApiUrlsData.likeSubComment,
+            {
+              "commentId": widget.parentCommentId,
+              "subCommentId": widget.commentId,
+              "like": false
+            },
+            userToken);
+        if (response == "error") {
+          Get.snackbar("Somethings wrong", "Your reaction is not updated");
+        }
+      } else {
+        _likes.add(userId);
+        setState(() {
+          _numberOfReactions = _likes.length;
+        });
+        var response = await ApiServices.postWithAuth(
+            ApiUrlsData.likeSubComment,
+            {
+              "commentId": widget.parentCommentId,
+              "subCommentId": widget.commentId,
+              "like": true
+            },
+            userToken);
+        if (response == "error") {
+          Get.snackbar("Somethings wrong", "Your reaction is not updated");
+        }
+      }
+    }
+    //update likes if comment
+    else {
+      if (_likes.contains(userId)) {
+        _likes.remove(userId);
+        setState(() {
+          _numberOfReactions = _likes.length;
+        });
+        var response = await ApiServices.postWithAuth(ApiUrlsData.likeComment,
+            {"commentId": widget.commentId, "like": false}, userToken);
+        if (response == "error") {
+          Get.snackbar("Somethings wrong", "Your reaction is not updated");
+        }
+      } else {
+        _likes.add(userId);
+        setState(() {
+          _numberOfReactions = _likes.length;
+        });
+        var response = await ApiServices.postWithAuth(ApiUrlsData.likeComment,
+            {"commentId": widget.commentId, "like": true}, userToken);
+        if (response == "error") {
+          Get.snackbar("Somethings wrong", "Your reaction is not updated");
+        }
+      }
+    }
+  }
 
   _commentEditor(String commentId, String initialComment) {
     controller.editCommentController.text = initialComment;

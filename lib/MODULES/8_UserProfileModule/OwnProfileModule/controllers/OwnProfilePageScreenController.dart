@@ -100,11 +100,11 @@ class OwnProfilePageScreenController extends GetxController {
       if (profilePostData == null) {
         profilePostData = response;
         update();
-        _handleLocalFile(profilePostData);
+       
       } else {
         profilePostData.addAll(response);
         update();
-        _handleLocalFile(profilePostData);
+       
       }
     } else {
       print("error getting profile previous data");
@@ -115,8 +115,8 @@ class OwnProfilePageScreenController extends GetxController {
   ///[data] corresponds to complete list of data
   _handleLocalFile(List data) {
     //if data length is greater than 30, store the first 30 in the file
-    if (data.length > 30) {
-      List _data = data.getRange(0, 30).toList();
+    if (data.length >10) {
+      List _data = data.getRange(0, 10).toList();
       File(userProfileDataFilePath)
           .writeAsString(json.encode(_data), mode: FileMode.write);
     }

@@ -48,7 +48,7 @@ class ExplorePageController extends GetxController {
     //if newsfeed data is null get all data from back end
 
     var response = await ApiServices.postWithAuth(
-        "http://139.59.8.116:3000/api/explore", {}, userToken);
+        ApiUrlsData.explorePage, {}, userToken);
 
     if (response != "error") {
       List _temp = response;
@@ -92,8 +92,16 @@ class ExplorePageController extends GetxController {
   ///handle the local file to store and delete the data
   ///[data] corresponds to complete list of data
   _handleLocalFile(List data) {
-    File(explorePageDataFilePath)
-        .writeAsString(json.encode(data), mode: FileMode.write);
+    if (data.length > 10) {
+      List _data = data.getRange(0, 10).toList();
+      File(explorePageDataFilePath)
+          .writeAsString(json.encode(_data), mode: FileMode.write);
+    }
+    //if it is less than 30, store all the data to the file
+    else {
+      File(explorePageDataFilePath)
+          .writeAsString(json.encode(data), mode: FileMode.write);
+    }
   }
 
   //delete post

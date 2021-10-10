@@ -47,6 +47,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
     _isShared = widget.postContent["primary"].toString() != "true";
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
+    _numberOfComments = widget.postContent["noOfComments"];
 
     super.initState();
   }
@@ -119,7 +120,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                       Container(
                         child: Text(
                           TimeStampProvider.timeStampProvider(
-                              widget.postContent["createdAt"].toString()),
+                              widget.postContent["textPost"]["createdAt"].toString()),
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 12.0),
                         ),
@@ -167,7 +168,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                     style: TextStyle(
                         fontSize: 16.0,
                         color: Theme.of(context).accentColor.withOpacity(0.9)),
-                    trimLines: 5,
+                    trimLines: 10,
                     trimExpandedText: " less",
                     trimCollapsedText: "...more",
                     trimMode: TrimMode.Line,

@@ -104,11 +104,9 @@ class NewsFeedPageController extends GetxController {
       if (newsFeedData == null) {
         newsFeedData = response;
         update();
-        _handleLocalFile(newsFeedData);
       } else {
         newsFeedData.addAll(response);
         update();
-        _handleLocalFile(newsFeedData);
       }
     } else {
       print("error getting newsfeed previous data");
@@ -119,8 +117,8 @@ class NewsFeedPageController extends GetxController {
   ///[data] corresponds to complete list of data
   _handleLocalFile(List data) {
     //if data length is greater than 30, store the first 30 in the file
-    if (data.length > 30) {
-      List _data = data.getRange(0, 30).toList();
+    if (data.length > 10) {
+      List _data = data.getRange(0, 10).toList();
       File(newsFeedDataFilePath)
           .writeAsString(json.encode(_data), mode: FileMode.write);
     }

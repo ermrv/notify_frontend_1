@@ -71,9 +71,11 @@ abstract class ApiUrlsData {
   static String removeSubComment = "$domain/api/post/subcomment/remove";
   static String editComment = "$domain/api/post/comment/edit";
   static String editSubComment = "$domain/api/post/subcomment/edit";
-  static String likeComment="$domain/api/post/comment/like";
-
-  //reactions
+  //...............................comments reactions............................
+  static String likeComment = "$domain/api/comment/react";
+  static String likeSubComment = "$domain/api/subcomment/react";
+  static String usersReactedToComment = "$domain/api/comment/reacted";
+  static String usersReactedToSubComment = "$domain/api/subcomment/reacted";
 
   //..............................................user story or status.................................
 

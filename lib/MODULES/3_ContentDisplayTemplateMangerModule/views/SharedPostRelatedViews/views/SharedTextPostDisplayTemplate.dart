@@ -1,5 +1,6 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
+import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/TextPostRelatedViews/TextPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
@@ -18,7 +19,8 @@ class SharedTextPostDisplayTemplate extends StatefulWidget {
   final postContent;
   final parentController;
 
-  const SharedTextPostDisplayTemplate({Key key, @required this.postContent,@required this.parentController})
+  const SharedTextPostDisplayTemplate(
+      {Key key, @required this.postContent, @required this.parentController})
       : super(key: key);
 
   @override
@@ -45,6 +47,7 @@ class _SharedTextPostDisplayTemplateState
 
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
+    _numberOfComments = widget.postContent["noOfComments"];
 
     super.initState();
   }
@@ -129,7 +132,8 @@ class _SharedTextPostDisplayTemplateState
                             widget.postContent["sharedDiscription"].toString(),
                         editedDescriptionUpdater: (String description) {
                           updateEditedDescription(description);
-                        },parentController:widget.parentController,
+                        },
+                        parentController: widget.parentController,
                       )
                     : OtherUserActionsOnPost(
                         postUserId:
@@ -228,8 +232,16 @@ class _SharedTextPostDisplayTemplateState
                     children: [
                       IconButton(
                           icon: Icon(MaterialCommunityIcons.share),
-                          onPressed: () {}),
-                      Text(" 1.1k")
+                          onPressed: () {
+                            Get.to(() => SharePostPageScreen(
+                                  postId: widget.postContent["textPost"]["_id"],
+                                  postOwnerName: widget.postContent["textPost"]
+                                      ["postBy"]["name"],
+                                  postOwnerProfilePic:
+                                      widget.postContent["textPost"]["postBy"]
+                                          ["profilePic"],
+                                ));
+                          }),
                     ],
                   ),
                 ),

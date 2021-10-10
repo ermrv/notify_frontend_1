@@ -25,6 +25,7 @@ class CommentsDisplayLayout extends StatelessWidget {
             data: commentData,
             commentBoxWidth: screenWidth - 40.0,
             commentId: commentData["_id"].toString(),
+            parentCommentId: commentData["_id"].toString(),
           ),
           Container(
             margin: EdgeInsets.only(left: 30.0),
@@ -36,6 +37,7 @@ class CommentsDisplayLayout extends StatelessWidget {
                     data: i,
                     commentBoxWidth: screenWidth - 70.0,
                     commentId: commentData["_id"].toString(),
+                    parentCommentId: commentData["_id"].toString(),
                   ),
               ],
             ),

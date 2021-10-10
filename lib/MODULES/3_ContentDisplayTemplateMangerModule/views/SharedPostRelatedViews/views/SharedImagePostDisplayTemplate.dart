@@ -1,6 +1,7 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/10_PostPromotionModule/views/EstimatedBudgetPageScreen.dart';
+import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/DuobleImageHorizontalDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/DuobleImageVerticalDisplayTemplate.dart';
@@ -25,7 +26,8 @@ class SharedImagePostDisplayTemplate extends StatefulWidget {
   final postContent;
   final parentController;
 
-  const SharedImagePostDisplayTemplate({Key key, @required this.postContent,@required this.parentController})
+  const SharedImagePostDisplayTemplate(
+      {Key key, @required this.postContent, @required this.parentController})
       : super(key: key);
 
   @override
@@ -52,6 +54,7 @@ class _SharedImagePostDisplayTemplateState
 
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
+    _numberOfComments = widget.postContent["noOfComments"];
 
     super.initState();
   }
@@ -137,7 +140,7 @@ class _SharedImagePostDisplayTemplateState
                         editedDescriptionUpdater: (String description) {
                           updateEditedDescription(description);
                         },
-                        parentController:widget.parentController,
+                        parentController: widget.parentController,
                       )
                     : OtherUserActionsOnPost(
                         postUserId:
@@ -241,8 +244,17 @@ class _SharedImagePostDisplayTemplateState
                     children: [
                       IconButton(
                           icon: Icon(MaterialCommunityIcons.share),
-                          onPressed: () {}),
-                      Text(" 1.1k")
+                          onPressed: () {
+                            Get.to(() => SharePostPageScreen(
+                                  postId: widget.postContent["imagePost"]
+                                      ["_id"],
+                                  postOwnerName: widget.postContent["imagePost"]
+                                      ["postBy"]["name"],
+                                  postOwnerProfilePic:
+                                      widget.postContent["imagePost"]["postBy"]
+                                          ["profilePic"],
+                                ));
+                          }),
                     ],
                   ),
                 ),

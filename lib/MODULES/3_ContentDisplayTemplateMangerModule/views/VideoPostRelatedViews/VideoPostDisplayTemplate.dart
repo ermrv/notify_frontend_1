@@ -54,6 +54,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
     _likes = widget.postContent["likes"];
     _isShared = widget.postContent["primary"].toString() == "false";
     _numberOfReactions = _likes.length;
+    _numberOfComments = widget.postContent["noOfComments"];
     super.initState();
   }
 
@@ -116,7 +117,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                       Container(
                         child: Text(
                           TimeStampProvider.timeStampProvider(
-                              widget.postContent["createdAt"].toString()),
+                              widget.postContent["videoPost"]["createdAt"].toString()),
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 12.0),
                         ),
@@ -171,8 +172,8 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                   alignment: Alignment.centerLeft,
                   child: ReadMoreText(
                     widget.postContent["videoPost"]["description"].toString(),
-                    style: TextStyle(fontSize: 15.0),
-                    trimLines: 2,
+                    style: TextStyle(fontSize: 16.0),
+                    trimLines: 7,
                     trimMode: TrimMode.Line,
                     colorClickableText: Colors.blue,
                   )),

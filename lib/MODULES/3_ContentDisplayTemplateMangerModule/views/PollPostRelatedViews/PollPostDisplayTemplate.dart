@@ -1,6 +1,8 @@
 import 'dart:ffi';
 
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
+import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/BelowPostCommentDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
@@ -9,6 +11,7 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.d
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +61,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
     _isOwner = _ownerId == _thisUserId;
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
+    _numberOfComments = widget.postContent["noOfComments"];
 //polls calculations
     totalPolls = widget.postContent["pollPost"]["totalResponse"];
     opOnePolls = widget.postContent["pollPost"]["opOneResponse"];
@@ -176,14 +180,23 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-                  child: Text(
-                    widget.postContent["pollPost"]["description"],
+                  width: screenWidth,
+                  padding: EdgeInsets.only(
+                      top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
+                  alignment: Alignment.centerLeft,
+                  child: ReadMoreText(
+                    widget.postContent["pollPost"]["description"]
+                        .toString()
+                        .capitalizeFirst,
                     style: TextStyle(
                         fontSize: 16.0,
                         color: Theme.of(context).accentColor.withOpacity(0.9)),
-                  ),
-                ),
+                    trimLines:8,
+                    trimExpandedText: " less",
+                    trimCollapsedText: "...more",
+                    trimMode: TrimMode.Line,
+                    colorClickableText: Colors.blue,
+                  )),
                 //option one
                 widget.postContent["pollPost"]["opOne"] == null
                     ? Container()
@@ -479,8 +492,17 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(MaterialCommunityIcons.share),
-                          onPressed: () {}),
+                          icon: Icon(MaterialCommunityIcons.share,color:Theme.of(context).accentColor.withOpacity(0.5)),
+                          onPressed: () {
+                            // Get.to(() => SharePostPageScreen(
+                            //       postId: widget.postContent["pollPost"]["_id"],
+                            //       postOwnerName: widget.postContent["pollPost"]
+                            //           ["postBy"]["name"],
+                            //       postOwnerProfilePic:
+                            //           widget.postContent["pollPost"]["postBy"]
+                            //               ["profilePic"],
+                            //     ));
+                          }),
                       // Text(" 1.1k")
                     ],
                   ),
