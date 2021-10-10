@@ -13,14 +13,15 @@ class SpecificPostDisplayPageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SpecificPostDisplayPageController>(
+        initState: (state) {
+          controller.specificPostId = postId;
+          controller.initialise();
+        },
         builder: (controller) => Scaffold(
-              appBar: AppBar(
-                title: Text("Post"),
-              ),
               body: controller.specificPostData == null
                   ? Center(
                       heightFactor: 5.0,
-                      child: SpinKitWave(
+                      child: SpinKitPulse(
                         color: Colors.blue,
                       ),
                     )

@@ -34,10 +34,7 @@ class SharePostPageController extends GetxController {
 
       update();
 
-      ///navigate to the news feed screen
-      Get.offAll(() => MainNavigationScreen(
-            tabNumber: 0,
-          ));
+      Get.back();
     } else {
       isUploading = false;
 

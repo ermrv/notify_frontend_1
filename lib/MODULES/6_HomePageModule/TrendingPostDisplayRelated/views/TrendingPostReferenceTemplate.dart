@@ -1,3 +1,4 @@
+import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/6_HomePageModule/TrendingPostDisplayRelated/views/TrendingPostDisplayPageScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -15,7 +16,7 @@ class TrendingPostReferenceTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 8.0, bottom: 8.0,left: 5.0),
+      padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 5.0),
       height: _containerWidth + 16,
       child: ListView(
         scrollDirection: Axis.horizontal,
@@ -84,19 +85,15 @@ class _Template extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: ClipRRect(
-            borderRadius: BorderRadius.circular(
-              50.0,
-            ),
-            child:
-                //content["userId"]["profilePic"] == null
-                // ?
-                Image.asset("assets/person.jpg")
-            // : CachedNetworkImage(
-            //     imageUrl:
-            //         ApiUrlsData.domain + content["userId"]["profilePic"],
-            //     fit: BoxFit.fill,
-            // ),
-            ),
+          borderRadius: BorderRadius.circular(
+            50.0,
+          ),
+          child:CachedNetworkImage(
+                  imageUrl:
+                      ApiUrlsData.domain + content["userProfilePic"].toString(),
+                  fit: BoxFit.fill,
+                ),
+        ),
       ),
     );
   }

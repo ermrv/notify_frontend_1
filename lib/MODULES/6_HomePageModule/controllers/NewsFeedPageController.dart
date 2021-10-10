@@ -14,7 +14,7 @@ class NewsFeedPageController extends GetxController {
   double maxScrollExtent = 2.0;
   bool callScrollListener = true;
   List newsFeedData;
-  List userStatusData = [];
+  List trendingPostData = [];
   String newsFeedDataFilePath;
 
   ScrollController scrollController;
@@ -23,7 +23,7 @@ class NewsFeedPageController extends GetxController {
   void onInit() {
     newsFeedDataFilePath = LocalDataFiles.newsFeedPostsDataFilePath;
     getFileData();
-    getUserStatusData();
+    gettrendingPostData();
     scrollController = ScrollController();
     scrollController.addListener(scrollListener);
     super.onInit();
@@ -87,8 +87,8 @@ class NewsFeedPageController extends GetxController {
     String lastPostId;
     var length = newsFeedData.length;
     if (length != 0) {
-      lastPostId = newsFeedData[length-1]["_id"];
-    }else {
+      lastPostId = newsFeedData[length - 1]["_id"];
+    } else {
       lastPostId = null;
     }
     var response;
@@ -130,13 +130,13 @@ class NewsFeedPageController extends GetxController {
   }
 
   ///getting user status data
-  getUserStatusData() async {
-    var response =
-        await ApiServices.postWithAuth(ApiUrlsData.getStatus, {}, userToken);
+  gettrendingPostData() async {
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.treindingPostData, {}, userToken);
     if (response == "error") {
       print("error");
     } else {
-      userStatusData.addAll(response);
+      trendingPostData.addAll(response);
       update();
     }
   }

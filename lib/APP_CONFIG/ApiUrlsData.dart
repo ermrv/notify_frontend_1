@@ -27,6 +27,8 @@ abstract class ApiUrlsData {
 
 //..........................................newsfeed.......................................................
   static String newsFeedUrl = "$domain/api/newsfeed";
+  static String treindingPostData = "$domain/api/newsFeed/trending";
+
 
   static String contestUrl = "$domain/api/home/contests";
 //............................................explore..................................................

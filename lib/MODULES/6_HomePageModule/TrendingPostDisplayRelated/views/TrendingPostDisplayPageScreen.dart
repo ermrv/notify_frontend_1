@@ -31,7 +31,7 @@ class TrendingPostDisplayPageScreen extends StatelessWidget {
             itemCount: trendingPostIdList.length,
             itemBuilder: (context, index) {
               return SpecificPostDisplayPageScreen(
-                  postId: trendingPostIdList[index]);
+                  postId: trendingPostIdList[index]["postId"]);
             }),
       ),
     );

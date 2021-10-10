@@ -8,6 +8,10 @@ class SpecificPostDisplayPageController extends GetxController {
   var specificPostData;
   List recommendedPostData;
 
+  initialise() {
+    getSpecificPostData();
+  }
+
   getSpecificPostData() async {
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.specificPostDetail, {"postId": specificPostId}, userToken);
