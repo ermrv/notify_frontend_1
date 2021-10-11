@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/PostGettingServices/GettingPostServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -43,7 +44,7 @@ class OwnProfilePageScreenController extends GetxController {
   getRecentPostsData() async {
     var response;
     //if  data is null get all data from back end
-    if (profilePostData == null ||LocalDataFiles.refreshProfilePostsFile) {
+    if (profilePostData == null || LocalDataFiles.refreshProfilePostsFile) {
       response = await ApiServices.postWithAuth(
           ApiUrlsData.userPosts, {"dataType": "latest"}, userToken);
     }
@@ -54,14 +55,14 @@ class OwnProfilePageScreenController extends GetxController {
     }
     //if  data is available, get only those data that is  recent
     else if (profilePostData.length >= 1) {
-      String latestPostId = profilePostData[0]["_id"];
-      print(latestPostId);
+      String _latestPostId = GettingPostServices.getFirstPostId(profilePostData);
+
       response = await ApiServices.postWithAuth(ApiUrlsData.userPosts,
-          {"dataType": "latest", "postId": latestPostId}, userToken);
+          {"dataType": "latest", "postId": _latestPostId}, userToken);
     }
 
     if (response != "error") {
-      if (profilePostData == null ||LocalDataFiles.refreshProfilePostsFile) {
+      if (profilePostData == null || LocalDataFiles.refreshProfilePostsFile) {
         profilePostData = response;
         update();
         _handleLocalFile(profilePostData);
@@ -80,31 +81,18 @@ class OwnProfilePageScreenController extends GetxController {
 
   /// to get the previous post data
   getPreviousPostsData() async {
-    String lastPostId;
-    var length = profilePostData.length;
-    if (length != 0) {
-      lastPostId = profilePostData[length - 1]["_id"];
-    } else {
-      lastPostId = null;
-    }
-    var response;
-    if (lastPostId == "null") {
-      response = await ApiServices.postWithAuth(
-          ApiUrlsData.userPosts, {"dataType": "previous"}, userToken);
-    } else {
-      response = await ApiServices.postWithAuth(ApiUrlsData.userPosts,
-          {"dataType": "previous", "postId": lastPostId}, userToken);
-    }
+    String _lastPostId = GettingPostServices.getLastPostId(profilePostData);
+    print(_lastPostId);
+    var response = await ApiServices.postWithAuth(ApiUrlsData.userPosts,
+        {"dataType": "previous", "postId": _lastPostId}, userToken);
 
     if (response != "error") {
       if (profilePostData == null) {
         profilePostData = response;
         update();
-       
       } else {
         profilePostData.addAll(response);
         update();
-       
       }
     } else {
       print("error getting profile previous data");
@@ -115,7 +103,7 @@ class OwnProfilePageScreenController extends GetxController {
   ///[data] corresponds to complete list of data
   _handleLocalFile(List data) {
     //if data length is greater than 30, store the first 30 in the file
-    if (data.length >10) {
+    if (data.length > 10) {
       List _data = data.getRange(0, 10).toList();
       File(userProfileDataFilePath)
           .writeAsString(json.encode(_data), mode: FileMode.write);

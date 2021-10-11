@@ -30,9 +30,9 @@ class ExplorePageScreen extends StatelessWidget {
                     Feather.search,
                     size: 22.0,
                   )),
-                  Container(
-              width: 3.0,
-            )
+              Container(
+                width: 3.0,
+              )
             ],
           ),
           body: controller.explorePageData.length == 0
@@ -41,14 +41,19 @@ class ExplorePageScreen extends StatelessWidget {
                     color: Colors.blue,
                   ),
                 )
-              : ListView(
-                  controller: controller.scrollController,
-                  children: [
-                    ContentDisplayTemplateProvider(
-                      data: controller.explorePageData,
-                      controller: controller,
-                    ),
-                  ],
+              : RefreshIndicator(
+                  onRefresh: () {
+                    return controller.getRecentPostsData();
+                  },
+                  child: ListView(
+                    controller: controller.scrollController,
+                    children: [
+                      ContentDisplayTemplateProvider(
+                        data: controller.explorePageData,
+                        controller: controller,
+                      ),
+                    ],
+                  ),
                 )),
     );
   }

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/PostGettingServices/GettingPostServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -58,10 +59,9 @@ class NewsFeedPageController extends GetxController {
     }
     //if newsfeed data is available, get only those data that is  recent
     else if (newsFeedData.length >= 1) {
-      String latestPostId = newsFeedData[0]["_id"];
-      print(latestPostId);
+      String _firstPostId = GettingPostServices.getFirstPostId(newsFeedData);
       response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
-          {"dataType": "latest", "postId": latestPostId}, userToken);
+          {"dataType": "latest", "postId": _firstPostId}, userToken);
     }
 
     if (response != "error") {
@@ -79,27 +79,17 @@ class NewsFeedPageController extends GetxController {
         _handleLocalFile(newsFeedData);
       }
     } else {
-      print("error getting newsfeed latest data");
+      Get.snackbar("Cannot get the data", "some error occured");
     }
   }
 
   /// to get the previous post data
   getPreviousPostsData() async {
-    String lastPostId;
-    var length = newsFeedData.length;
-    if (length != 0) {
-      lastPostId = newsFeedData[length - 1]["_id"];
-    } else {
-      lastPostId = null;
-    }
-    var response;
-    if (lastPostId == "null") {
-      response = await ApiServices.postWithAuth(
-          ApiUrlsData.newsFeedUrl, {"dataType": "previous"}, userToken);
-    } else {
-      response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
-          {"dataType": "previous", "postId": lastPostId}, userToken);
-    }
+    String _lastPostId = GettingPostServices.getLastPostId(newsFeedData);
+    print(_lastPostId);
+
+    var response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
+        {"dataType": "previous", "postId": _lastPostId}, userToken);
 
     if (response != "error") {
       if (newsFeedData == null) {
@@ -110,13 +100,17 @@ class NewsFeedPageController extends GetxController {
         update();
       }
     } else {
-      print("error getting newsfeed previous data");
+      Get.snackbar("Cannot get the data", "some error occured");
     }
   }
+
+  
+  
 
   ///handle the local file to store and delete the data
   ///[data] corresponds to complete list of data
   _handleLocalFile(List data) {
+    print(newsFeedData.length);
     //if data length is greater than 30, store the first 30 in the file
     if (data.length > 10) {
       List _data = data.getRange(0, 10).toList();

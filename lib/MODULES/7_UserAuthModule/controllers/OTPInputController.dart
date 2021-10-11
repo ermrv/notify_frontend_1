@@ -82,13 +82,13 @@ class OTPInputController extends GetxController {
   }
 
   _sendMacAddress() async {
-    String macAddress;
-    try {
-      macAddress = await GetMac.macAddress;
-      var response = await ApiServices.postWithAuth(
-          ApiUrlsData.userLoginActivity, {"macAdress": macAddress}, userToken);
-    } catch (e) {
-      print(e);
-    }
+    // String macAddress;
+    // try {
+    //   macAddress = await GetMac.macAddress;
+    //   var response = await ApiServices.postWithAuth(
+    //       ApiUrlsData.userLoginActivity, {"macAdress": macAddress}, userToken);
+    // } catch (e) {
+    //   print(e);
+    // }
   }
 }

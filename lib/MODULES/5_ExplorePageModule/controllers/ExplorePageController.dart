@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/PostGettingServices/GettingPostServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -51,7 +52,7 @@ class ExplorePageController extends GetxController {
     if (response != "error") {
       List _temp = response;
       _temp.addAll(explorePageData);
-      explorePageData.clear();
+      explorePageData=[];
       explorePageData.addAll(_temp);
       update();
       _handleLocalFile(explorePageData);
@@ -62,21 +63,9 @@ class ExplorePageController extends GetxController {
 
   /// to get the previous post data
   getPreviousPostsData() async {
-    String lastPostId;
-    var length = explorePageData.length;
-    if (length != 0) {
-      lastPostId = explorePageData[length - 1]["_id"];
-    } else {
-      lastPostId = null;
-    }
-    var response;
-    if (lastPostId == "null") {
-      response = await ApiServices.postWithAuth(
-          ApiUrlsData.explorePage, {"dataType": "previous"}, userToken);
-    } else {
-      response = await ApiServices.postWithAuth(ApiUrlsData.explorePage,
-          {"dataType": "previous", "postId": lastPostId}, userToken);
-    }
+    String _lastPostId = GettingPostServices.getLastPostId(explorePageData);
+    var response = await ApiServices.postWithAuth(ApiUrlsData.explorePage,
+        {"dataType": "previous", "postId": _lastPostId}, userToken);
 
     if (response != "error") {
       explorePageData.addAll(response);

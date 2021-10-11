@@ -46,9 +46,13 @@ class SearchResultsDisplayPageController extends GetxController {
           if (peopleSearchResults == null) {
             await getData("user").then((value) {
               if (value["search-results"] != null) {
-                peopleSearchResults = value["search-results"];
-                searchResults = peopleSearchResults;
-                update();
+                try {
+                  peopleSearchResults = value["search-results"];
+                  searchResults = peopleSearchResults;
+                  update();
+                } catch (e) {
+                  Get.snackbar("Something wrong", "cannot get the data");
+                }
               } else {
                 Get.snackbar("Something wrong", "cannot get the data");
               }
@@ -65,9 +69,13 @@ class SearchResultsDisplayPageController extends GetxController {
           if (postsSearchResults == null) {
             await getData("post").then((value) {
               if (value["search-results"] != null) {
-                peopleSearchResults = value["search-results"];
-                searchResults = peopleSearchResults;
-                update();
+                try {
+                  postsSearchResults = value["search-results"];
+                  searchResults = postsSearchResults;
+                  update();
+                } catch (e) {
+                  Get.snackbar("Something wrong", "cannot get the data");
+                }
               } else {
                 Get.snackbar("Something wrong", "cannot get the data");
               }
@@ -84,9 +92,13 @@ class SearchResultsDisplayPageController extends GetxController {
           if (tagsSearchResults == null) {
             await getData("hashtag").then((value) {
               if (value["search-results"] != null) {
-                peopleSearchResults = value["search-results"];
-                searchResults = peopleSearchResults;
-                update();
+                try {
+                  tagsSearchResults = value["search-results"];
+                  searchResults = tagsSearchResults;
+                  update();
+                } catch (e) {
+                  Get.snackbar("Something wrong", "cannot get the data");
+                }
               } else {
                 Get.snackbar("Something wrong", "cannot get the data");
               }
@@ -103,9 +115,11 @@ class SearchResultsDisplayPageController extends GetxController {
           if (peopleSearchResults == null) {
             await getData("user").then((value) {
               if (value["search-results"] != null) {
-                peopleSearchResults = value["search-results"];
-                searchResults = peopleSearchResults;
-                update();
+                try {
+                  peopleSearchResults = value["search-results"];
+                  searchResults = peopleSearchResults;
+                  update();
+                } catch (e) {}
               } else {
                 Get.snackbar("Something wrong", "cannot get the data");
               }
