@@ -31,7 +31,9 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
                       height: 250.0,
                       width: screenWidth,
                       child: Obx(() => CachedNetworkImage(
-                            imageUrl: PrimaryUserData.primaryUserData.coverPic.value.toString(),
+                            imageUrl: PrimaryUserData
+                                .primaryUserData.coverPic.value
+                                .toString(),
                             fit: BoxFit.cover,
                           ))),
                 ),
@@ -177,11 +179,12 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
                     ? Container()
                     : Text(
                         PrimaryUserData.primaryUserData.bio.toString(),
-                        style: TextStyle(),
-                      )
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18.0),
+                      ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

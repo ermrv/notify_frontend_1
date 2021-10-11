@@ -27,7 +27,7 @@ class PrimaryUserActionsOnProfile extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text("Edit Profile")),
                       onPressed: () {
-                        Get.to(EditProfileScreen());
+                        Get.to(()=>EditProfileScreen());
                       }),
                 ),
                 Container(

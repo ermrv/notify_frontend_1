@@ -50,10 +50,7 @@ class ExplorePageController extends GetxController {
         await ApiServices.postWithAuth(ApiUrlsData.explorePage, {}, userToken);
 
     if (response != "error") {
-      List _temp = response;
-      _temp.addAll(explorePageData);
-      explorePageData=[];
-      explorePageData.addAll(_temp);
+      explorePageData =response;
       update();
       _handleLocalFile(explorePageData);
     } else {
@@ -64,6 +61,7 @@ class ExplorePageController extends GetxController {
   /// to get the previous post data
   getPreviousPostsData() async {
     String _lastPostId = GettingPostServices.getLastPostId(explorePageData);
+    print(_lastPostId);
     var response = await ApiServices.postWithAuth(ApiUrlsData.explorePage,
         {"dataType": "previous", "postId": _lastPostId}, userToken);
 

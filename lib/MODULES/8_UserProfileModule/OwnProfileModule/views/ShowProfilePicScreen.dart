@@ -32,13 +32,18 @@ class ShowProfilePicScreen extends StatelessWidget {
                 children: [
                   AspectRatio(
                       aspectRatio: 1,
-                      child: Obx(
-                                () => CachedNetworkImage(
-                                  imageUrl: PrimaryUserData
-                                      .primaryUserData.profilePic.value,
-                                  fit: BoxFit.cover,
-                                ),
-                              )),
+                      child: controller.profilePicFile == null
+                          ? Obx(
+                              () => CachedNetworkImage(
+                                imageUrl: PrimaryUserData
+                                    .primaryUserData.profilePic.value,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : Image.file(
+                              controller.profilePicFile,
+                              fit: BoxFit.cover,
+                            )),
                   Positioned(
                       bottom: 5.0,
                       right: 5.0,

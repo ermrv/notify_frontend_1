@@ -67,8 +67,7 @@ class CreatePollPageController extends GetxController {
       isUploading = false;
       Get.snackbar("Uploaded", "Task Completed");
       update();
-      Get.to(() => MainNavigationScreen(tabNumber:0,));
-      // Get.to(() => UserProfileScreen());
+      Get.back();
     } else {
       isUploading = false;
       Get.snackbar("Error", "Error occured");

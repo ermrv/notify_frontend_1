@@ -33,7 +33,7 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
   bool _isOwner = false;
   String _ownerId;
   String _thisUserId;
-
+  double _aspectRatio;
   int _numberOfComments = 0;
   int _numberOfReactions = 0;
 
@@ -53,6 +53,7 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
         widget.postContent["videoPost"]["postContent"][0]["path"].toString());
     _videoPlayerController.initialize();
     _videoPlayerController.play();
+    _aspectRatio = _videoPlayerController.value.aspectRatio;
     _videoPlayerController.setLooping(true);
     super.initState();
   }
@@ -83,7 +84,9 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
                 alignment: Alignment.center,
                 width: screenWidth,
                 height: screenHeight,
-                child: VideoPlayer(_videoPlayerController)),
+                child: AspectRatio(
+                    aspectRatio: _aspectRatio,
+                    child: VideoPlayer(_videoPlayerController))),
           ),
           Positioned(
             bottom: 15.0,

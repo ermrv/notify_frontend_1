@@ -54,6 +54,11 @@ class ShowProfilePicController extends GetxController {
       isUpdating = false;
       update();
       Get.back();
+    } else {
+      print(streamedResponse.statusCode);
+      isUpdating = false;
+      update();
+      Get.snackbar("Cannot upload profile pic", "try again later");
     }
   }
 }

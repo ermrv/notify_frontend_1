@@ -56,8 +56,8 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
           }
         },
         child: VisibilityDetector(
-          key: Key(widget.postContent["_id"]
-              .toString()+widget.postContent["createdAt"].toString()),
+          key: Key(widget.postContent["_id"].toString() +
+              widget.postContent["createdAt"].toString()),
           onVisibilityChanged: (info) {
             _onVisibilityChangeController(info);
           },
@@ -179,10 +179,16 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
                             icon: Icon(Icons.play_arrow),
                             iconSize: 32.0,
                             onPressed: () {
-                              _initialiseVideoPlayer();
-                              setState(() {
-                                _showVideoPlayer = true;
-                              });
+                              if (widget.postContent["videoPost"]["shortVideo"]
+                                      .toString() ==
+                                  "true") {
+                                Get.to(() => ShortVideoPlayerPageScreen(
+                                    postContent: widget.postContent));
+                              } else {
+                                Get.to(() => VideoPostFeedPlayerPageScreen(
+                                      postContent: widget.postContent,
+                                    ));
+                              }
                             },
                           ),
                         ),
@@ -202,6 +208,9 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
         setState(() {
           _showVideoPlayer = true;
         });
+      } else if (_showVideoPlayer && !_videoPlayerController.value.isPlaying) {
+        _videoPlayerController.play();
+        setState(() {});
       }
     } else {
       try {
@@ -209,9 +218,6 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
       } catch (e) {
         print(e);
       }
-      setState(() {
-        _showVideoPlayer = false;
-      });
     }
   }
 
@@ -220,7 +226,7 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
         widget.postContent["videoPost"]["postContent"][0]["path"].toString());
 
     _videoPlayerController.initialize();
-    _videoPlayerController.setVolume(0.5);
+    _videoPlayerController.setVolume(0.0);
 
     _videoPlayerController.play();
     if (widget.postContent["videoPost"]["shortVideo"].toString() == "true") {
@@ -251,18 +257,12 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
   }
 
   _soundController() {
-    if (_videoPlayerController.value.volume == 0.0) {
-      if (this.mounted) {
-        setState(() {
-          _videoPlayerController.setVolume(1.0);
-        });
-      }
-    } else if (_videoPlayerController.value.volume == 1.0) {
-      if (this.mounted) {
-        setState(() {
-          _videoPlayerController.setVolume(0.0);
-        });
-      }
+    print("sound controller");
+    _videoPlayerController.value.volume == 0.0
+        ? _videoPlayerController.setVolume(1.0)
+        : _videoPlayerController.setVolume(0.0);
+    if (this.mounted) {
+      setState(() {});
     }
   }
 

@@ -15,7 +15,7 @@ class PrimaryUserData {
   var name = "".obs;
   String userName;
   String mobile;
-  String bio;
+  var bio="".obs;
 
   ///complete address of profile pic
   var profilePic = "".obs;
@@ -54,7 +54,7 @@ class PrimaryUserData {
   }
 
   ///set bio of the user
-  void setBio(String bio) async {
+  void setBio(var bio) async {
     this.bio = bio;
     deleteLocalUserBasicDataFile();
   }

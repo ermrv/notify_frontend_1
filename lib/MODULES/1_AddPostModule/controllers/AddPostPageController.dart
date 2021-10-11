@@ -187,11 +187,11 @@ class AddPostPageController extends GetxController {
         userToken);
 
     if (response != "error") {
-      final controller = Get.find<OwnProfilePageScreenController>();
-      controller.getRecentPostsData();
-      Get.offAll(() => MainNavigationScreen(
-            tabNumber: 0,
-          ));
+      try {
+        final controller = Get.find<OwnProfilePageScreenController>();
+        controller.getRecentPostsData();
+      } catch (e) {}
+      Get.back();
     }
   }
 
@@ -226,15 +226,14 @@ class AddPostPageController extends GetxController {
 
     _flutterImageUploader.result.listen((result) {
       if (result.status == UploadTaskStatus.complete) {
+         try {
         final controller = Get.find<OwnProfilePageScreenController>();
         controller.getRecentPostsData();
+      } catch (e) {}
       }
     });
 
-    ///navigate to the news feed screen
-    Get.offAll(() => MainNavigationScreen(
-          tabNumber: 0,
-        ));
+    Get.back();
   }
 
   ///....................to upload video................................
@@ -262,15 +261,15 @@ class AddPostPageController extends GetxController {
     );
     _flutterVideoUploader.result.listen((result) {
       if (result.status == UploadTaskStatus.complete) {
+         try {
         final controller = Get.find<OwnProfilePageScreenController>();
         controller.getRecentPostsData();
+      } catch (e) {}
       }
     });
 
     ///navigate to the news feed screen
-    Get.offAll(() => MainNavigationScreen(
-          tabNumber: 0,
-        ));
+    Get.back();
   }
 //---------------------------------------------user and tags suggestins related--------------------------------
 
@@ -319,7 +318,7 @@ class AddPostPageController extends GetxController {
     List<String> _initialTextList = textEditingController.text.split(" ");
     String _initialText =
         _initialTextList.sublist(0, _initialTextList.length - 1).join(" ");
-    textEditingController.text = _initialText + " @" + name+" ";
+    textEditingController.text = _initialText + " @" + name + " ";
     textEditingController.selection = TextSelection.fromPosition(
         TextPosition(offset: textEditingController.text.length));
     print(_initialText);
@@ -333,7 +332,8 @@ class AddPostPageController extends GetxController {
     textEditingController.text =
         textEditingController.text.split(" ").removeLast().toString() +
             " #" +
-            tag+" ";
+            tag +
+            " ";
     update();
   }
 }

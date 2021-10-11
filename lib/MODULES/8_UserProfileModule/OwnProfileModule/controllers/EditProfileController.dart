@@ -22,32 +22,41 @@ class EditProfileController extends GetxController {
     userNameIdEdititngController.text =
         PrimaryUserData.primaryUserData.userName;
     bioEditingController = TextEditingController();
-    bioEditingController.text = PrimaryUserData.primaryUserData.bio;
+    bioEditingController.text = PrimaryUserData.primaryUserData.bio == null
+        ? ""
+        : PrimaryUserData.primaryUserData.bio.value;
     super.onInit();
   }
 
   ///edited data of the form having name email etc
   sendEditedData() async {
-    isUpdating = true;
-    update();
-    var response = await ApiServices.postWithAuth(
-        ApiUrlsData.userProfileDetailsUpdate,
-        {"name": nameEditingController.text, "bio": bioEditingController.text},
-        userToken);
-    if (response == "error") {
-      Get.snackbar("Error Occured", "please try again later");
-      isUpdating = false;
+    if (nameEditingController.text != "") {
+      isUpdating = true;
       update();
+      var response = await ApiServices.postWithAuth(
+          ApiUrlsData.userProfileDetailsUpdate,
+          {
+            "name": nameEditingController.text,
+            "bio": bioEditingController.text
+          },
+          userToken);
+      if (response == "error") {
+        Get.snackbar("Error Occured", "please try again later");
+        isUpdating = false;
+        update();
+      } else {
+        print(response);
+        PrimaryUserData.primaryUserData.setName(response["userData"]["name"]);
+        PrimaryUserData.primaryUserData.setBio(response["userData"]["bio"]);
+        PrimaryUserData.primaryUserData
+            .setUserName(response["userData"]["userName"]);
+        isUpdating = false;
+        update();
+        Get.back();
+      }
     } else {
-      PrimaryUserData.primaryUserData.setName(response["userData"]["name"]);
-      PrimaryUserData.primaryUserData.setBio(response["userData"]["bio"]);
-      PrimaryUserData.primaryUserData.setUserName(response["userData"]["userName"]);
+      Get.snackbar("Name cannot be empty", "please try again");
       isUpdating = false;
-      update();
-
-      Get.offAll(MainNavigationScreen(
-        tabNumber: 4,
-      ));
     }
   }
 }
