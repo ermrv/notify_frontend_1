@@ -273,7 +273,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                     ],
                   ),
                 ),
-          widget.postContent["comments"] == null
+          _isShared?Container(): widget.postContent["comments"] == null
               ? Container()
               : widget.postContent["comments"].length == 0
                   ? Container()

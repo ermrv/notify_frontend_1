@@ -53,7 +53,8 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
         widget.postContent["videoPost"]["postContent"][0]["path"].toString());
     _videoPlayerController.initialize();
     _videoPlayerController.play();
-    _aspectRatio = _videoPlayerController.value.aspectRatio;
+    _aspectRatio =widget.postContent["videoPost"]["aspectRatio"]!=null?double.parse(
+            widget.postContent["videoPost"]["aspectRatio"].toString()): _videoPlayerController.value.aspectRatio;
     _videoPlayerController.setLooping(true);
     super.initState();
   }

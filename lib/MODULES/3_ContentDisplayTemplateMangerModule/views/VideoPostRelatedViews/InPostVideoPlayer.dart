@@ -20,11 +20,13 @@ class InPostVideoPlayer extends StatefulWidget {
 
 class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
   VideoPlayerController _videoPlayerController;
-  double _aspectRatio = 0.8;
+  double _aspectRatio;
   bool _showVideoPlayer = false;
   bool showFullVideoPlayerButton = false;
   @override
   void initState() {
+    _aspectRatio =
+        double.parse(widget.postContent["videoPost"]["aspectRatio"].toString());
     super.initState();
   }
 
@@ -41,114 +43,115 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: _aspectRatio,
-      child: GestureDetector(
-        onTap: () {
-          if (widget.postContent["videoPost"]["shortVideo"].toString() ==
-              "true") {
-            Get.to(() =>
-                ShortVideoPlayerPageScreen(postContent: widget.postContent));
-          } else {
-            Get.to(() => VideoPostFeedPlayerPageScreen(
-                  postContent: widget.postContent,
-                ));
-          }
+    return GestureDetector(
+      onTap: () {
+        if (widget.postContent["videoPost"]["shortVideo"].toString() ==
+            "true") {
+          Get.to(() =>
+              ShortVideoPlayerPageScreen(postContent: widget.postContent));
+        } else {
+          Get.to(() => VideoPostFeedPlayerPageScreen(
+                postContent: widget.postContent,
+              ));
+        }
+      },
+      child: VisibilityDetector(
+        key: Key(widget.postContent["_id"].toString() +
+            widget.postContent["createdAt"].toString()),
+        onVisibilityChanged: (info) {
+          _onVisibilityChangeController(info);
         },
-        child: VisibilityDetector(
-          key: Key(widget.postContent["_id"].toString() +
-              widget.postContent["createdAt"].toString()),
-          onVisibilityChanged: (info) {
-            _onVisibilityChangeController(info);
-          },
-          child: _showVideoPlayer
-              ? Container(
-                  width: screenWidth,
-                  child: Stack(
-                    children: [
-                      AspectRatio(
-                        aspectRatio: _aspectRatio,
-                        child: VideoPlayer(_videoPlayerController),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: _videoPlayerController.value.isPlaying ||
-                                showFullVideoPlayerButton
-                            ? Container()
-                            : Container(
-                                height: 50.0,
-                                width: 50.0,
-                                decoration: BoxDecoration(
-                                    color: Colors.black38,
-                                    borderRadius: BorderRadius.circular(50.0),
-                                    border: Border.all(
-                                        width: 2.0, color: Colors.white)),
-                                child: IconButton(
-                                  onPressed: () {
-                                    try {
-                                      _videoPlayerController.play();
-                                    } catch (e) {}
-                                  },
-                                  icon: Icon(Icons.play_arrow),
-                                  iconSize: 32,
-                                ),
+        child: _showVideoPlayer
+            ? Container(
+                width: screenWidth,
+                child: Stack(
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    AspectRatio(
+                      aspectRatio: _aspectRatio,
+                      child: VideoPlayer(_videoPlayerController),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: _videoPlayerController.value.isPlaying ||
+                              showFullVideoPlayerButton
+                          ? Container()
+                          : Container(
+                              height: 50.0,
+                              width: 50.0,
+                              decoration: BoxDecoration(
+                                  color: Colors.black38,
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  border: Border.all(
+                                      width: 2.0, color: Colors.white)),
+                              child: IconButton(
+                                onPressed: () {
+                                  try {
+                                    _videoPlayerController.play();
+                                  } catch (e) {}
+                                },
+                                icon: Icon(Icons.play_arrow),
+                                iconSize: 32,
                               ),
+                            ),
+                    ),
+                    Positioned(
+                      bottom: 3.0,
+                      right: 3.0,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.black12, shape: BoxShape.circle),
+                        child: IconButton(
+                            color: Colors.black,
+                            icon: _videoPlayerController.value.volume == 0.0
+                                ? Icon(
+                                    Icons.volume_off,
+                                    color: Colors.white,
+                                  )
+                                : Icon(
+                                    Icons.volume_up,
+                                    color: Colors.white,
+                                  ),
+                            onPressed: () {
+                              _soundController();
+                            }),
                       ),
-                      Positioned(
-                        bottom: 3.0,
-                        right: 3.0,
+                    ),
+                    Positioned(
+                        bottom: 0.0,
                         child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black12, shape: BoxShape.circle),
-                          child: IconButton(
-                              color: Colors.black,
-                              icon: _videoPlayerController.value.volume == 0.0
-                                  ? Icon(
-                                      Icons.volume_off,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.volume_up,
-                                      color: Colors.white,
-                                    ),
-                              onPressed: () {
-                                _soundController();
-                              }),
-                        ),
-                      ),
-                      Positioned(
-                          bottom: 0.0,
-                          child: Container(
-                              width: screenWidth,
-                              child: VideoProgressIndicator(
-                                _videoPlayerController,
-                                allowScrubbing: true,
-                              ))),
-                      Positioned(
-                          bottom: 0.0,
-                          child: showFullVideoPlayerButton
-                              ? Container(
-                                  width: screenWidth * 0.98,
-                                  alignment: Alignment.center,
-                                  height: 40.0,
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.7),
-                                    border: Border(),
-                                  ),
-                                  child: Text(
-                                    "Play Full Video",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                )
-                              : Container()),
-                    ],
-                  ),
-                )
-              : Container(
+                            width: screenWidth,
+                            child: VideoProgressIndicator(
+                              _videoPlayerController,
+                              allowScrubbing: true,
+                            ))),
+                    Positioned(
+                        bottom: 0.0,
+                        child: showFullVideoPlayerButton
+                            ? Container(
+                                width: screenWidth * 0.98,
+                                alignment: Alignment.center,
+                                height: 40.0,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .primaryColor
+                                      .withOpacity(0.7),
+                                  border: Border(),
+                                ),
+                                child: Text(
+                                  "Play Full Video",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            : Container()),
+                  ],
+                ),
+              )
+            : AspectRatio(
+                aspectRatio: _aspectRatio,
+                child: Container(
                   child: Stack(
+                    alignment: AlignmentDirectional.center,
                     children: [
                       Container(
                         width: screenWidth,
@@ -196,13 +199,13 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
                     ],
                   ),
                 ),
-        ),
+              ),
       ),
     );
   }
 
   _onVisibilityChangeController(VisibilityInfo info) {
-    if (info.visibleFraction >= 0.8) {
+    if (info.visibleFraction >= 1) {
       if (!_showVideoPlayer) {
         _initialiseVideoPlayer();
         setState(() {
@@ -236,8 +239,10 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
       _videoPlayerControllerListener();
     });
 
-    _aspectRatio =
-        double.parse(widget.postContent["videoPost"]["aspectRatio"].toString());
+    _aspectRatio = widget.postContent["videoPost"]["aspectRatio"] != null
+        ? double.parse(
+            widget.postContent["videoPost"]["aspectRatio"].toString())
+        : _videoPlayerController.value.aspectRatio;
   }
 
   _playPauseControl() {

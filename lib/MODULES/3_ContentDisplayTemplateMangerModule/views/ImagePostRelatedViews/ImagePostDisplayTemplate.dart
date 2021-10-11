@@ -28,8 +28,7 @@ import 'package:get/get.dart';
 class ImagePostDisplayTemplate extends StatefulWidget {
   final postContent;
   final parentController;
-  ImagePostDisplayTemplate(
-      {Key key, this.postContent,this.parentController})
+  ImagePostDisplayTemplate({Key key, this.postContent, this.parentController})
       : super(key: key);
 
   @override
@@ -136,8 +135,9 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                       ),
                       Container(
                         child: Text(
-                          TimeStampProvider.timeStampProvider(
-                              widget.postContent["imagePost"]["createdAt"].toString()),
+                          TimeStampProvider.timeStampProvider(widget
+                              .postContent["imagePost"]["createdAt"]
+                              .toString()),
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 12.0),
                         ),
@@ -161,23 +161,25 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                       )
                     : Container(),
                 //actions on post
-              widget.parentController!=null? _isOwner
-                    ? PostOwnerActionsOnPost(
-                        postId: widget.postContent["_id"].toString(),
-                        postDescription: widget.postContent["imagePost"]
-                                ["description"]
-                            .toString(),
-                        editedDescriptionUpdater: (String description) {
-                          updateEditedDescription(description);
-                        },
-                        parentController: widget.parentController,
-                      )
-                    : OtherUserActionsOnPost(
-                        postUserId: widget.postContent["imagePost"]["postBy"]
-                                ["_id"]
-                            .toString(),
-                        postId: widget.postContent["_id"].toString(),
-                      ):Container()
+                widget.parentController != null
+                    ? _isOwner
+                        ? PostOwnerActionsOnPost(
+                            postId: widget.postContent["_id"].toString(),
+                            postDescription: widget.postContent["imagePost"]
+                                    ["description"]
+                                .toString(),
+                            editedDescriptionUpdater: (String description) {
+                              updateEditedDescription(description);
+                            },
+                            parentController: widget.parentController,
+                          )
+                        : OtherUserActionsOnPost(
+                            postUserId: widget.postContent["imagePost"]
+                                    ["postBy"]["_id"]
+                                .toString(),
+                            postId: widget.postContent["_id"].toString(),
+                          )
+                    : Container()
               ],
             ),
           ),
@@ -300,7 +302,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                     ],
                   ),
                 ),
-          widget.postContent["comments"] == null
+         _isShared?Container(): widget.postContent["comments"] == null
               ? Container()
               : widget.postContent["comments"].length == 0
                   ? Container()
