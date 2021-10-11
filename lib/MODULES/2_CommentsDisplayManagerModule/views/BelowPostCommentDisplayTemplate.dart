@@ -80,7 +80,7 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+          margin: EdgeInsets.symmetric(horizontal: 5.0,vertical: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

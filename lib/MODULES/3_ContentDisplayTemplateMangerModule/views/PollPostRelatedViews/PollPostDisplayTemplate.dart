@@ -257,7 +257,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                         )),
                 // option two
-                widget.postContent["pollPost"]["opTwo"] == null
+                widget.postContent["pollPost"]["opTwo"] == null ||widget.postContent["pollPost"]["opTwo"] == ""
                     ? Container()
                     : Container(
                         height: 45.0,
@@ -316,7 +316,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                         )),
                 //option three
-                widget.postContent["pollPost"]["opThree"] == null
+                widget.postContent["pollPost"]["opThree"] == null ||widget.postContent["pollPost"]["opThree"] == ""
                     ? Container()
                     : Container(
                         height: 45.0,
@@ -376,7 +376,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                         )),
                 //option four
-                widget.postContent["pollPost"]["opFour"] == null
+                widget.postContent["pollPost"]["opFour"] == null ||widget.postContent["pollPost"]["opFour"] == ""
                     ? Container()
                     : Container(
                         height: 45.0,
