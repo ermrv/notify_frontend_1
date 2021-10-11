@@ -96,11 +96,12 @@ abstract class NotificationServices {
   static Future<String> getFcmToken() async {
     String _token;
     try {
-      await FirebaseMessaging.instance.getToken();
-      print("toekn  $_token");
+      await FirebaseMessaging.instance
+          .getToken()
+          .then((value) => _token = value);
       return _token;
     } catch (e) {
-      print("error retrieving token");
+      print(e);
     }
   }
 }

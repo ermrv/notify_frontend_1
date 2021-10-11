@@ -44,14 +44,15 @@ class SearchResultsDisplayPageController extends GetxController {
       case "people":
         {
           if (peopleSearchResults == null) {
-            var _temp = await getData("people");
-            if (_temp["users"] != null) {
-              peopleSearchResults = _temp["users"];
-              searchResults = peopleSearchResults;
-              update();
-            } else {
-              Get.snackbar("Something wrong", "cannot get the data");
-            }
+            await getData("user").then((value) {
+              if (value["search-results"] != null) {
+                peopleSearchResults = value["search-results"];
+                searchResults = peopleSearchResults;
+                update();
+              } else {
+                Get.snackbar("Something wrong", "cannot get the data");
+              }
+            });
           } else {
             searchResults = peopleSearchResults;
             update();
@@ -62,14 +63,15 @@ class SearchResultsDisplayPageController extends GetxController {
       case "posts":
         {
           if (postsSearchResults == null) {
-            var _temp = await getData("posts");
-            if (_temp["users"] != null) {
-              postsSearchResults = _temp["posts"];
-              searchResults = postsSearchResults;
-              update();
-            } else {
-              Get.snackbar("Something wrong", "cannot get the data");
-            }
+            await getData("post").then((value) {
+              if (value["search-results"] != null) {
+                peopleSearchResults = value["search-results"];
+                searchResults = peopleSearchResults;
+                update();
+              } else {
+                Get.snackbar("Something wrong", "cannot get the data");
+              }
+            });
           } else {
             searchResults = postsSearchResults;
             update();
@@ -80,14 +82,15 @@ class SearchResultsDisplayPageController extends GetxController {
       case "tags":
         {
           if (tagsSearchResults == null) {
-            var _temp = await getData("tags");
-            if (_temp["users"] != null) {
-              tagsSearchResults = _temp["tags"];
-              searchResults = tagsSearchResults;
-              update();
-            } else {
-              Get.snackbar("Something wrong", "cannot get the data");
-            }
+            await getData("hashtag").then((value) {
+              if (value["search-results"] != null) {
+                peopleSearchResults = value["search-results"];
+                searchResults = peopleSearchResults;
+                update();
+              } else {
+                Get.snackbar("Something wrong", "cannot get the data");
+              }
+            });
           } else {
             searchResults = tagsSearchResults;
             update();
@@ -98,14 +101,15 @@ class SearchResultsDisplayPageController extends GetxController {
       default:
         {
           if (peopleSearchResults == null) {
-            var _temp = await getData("people");
-            if (_temp["users"] != null) {
-              peopleSearchResults = _temp["users"];
-              searchResults = peopleSearchResults;
-              update();
-            } else {
-              Get.snackbar("Something wrong", "cannot get the data");
-            }
+            await getData("user").then((value) {
+              if (value["search-results"] != null) {
+                peopleSearchResults = value["search-results"];
+                searchResults = peopleSearchResults;
+                update();
+              } else {
+                Get.snackbar("Something wrong", "cannot get the data");
+              }
+            });
           } else {
             searchResults = peopleSearchResults;
             update();

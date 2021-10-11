@@ -1,5 +1,7 @@
+import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/13_SearchEngineModule/controllers/SearchResultsDisplayPageController.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/CommonPostDisplayPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ContentDisplayTemplateProvider.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/ProfileReferenceTemplate.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +76,7 @@ class SearchResultsDisplayPageScreen extends StatelessWidget {
                                   : MaterialStateProperty.resolveWith(
                                       (states) => Colors.transparent)),
                       onPressed: () {
-                         controller.updateSearchType("posts");
+                        controller.updateSearchType("posts");
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -90,7 +92,7 @@ class SearchResultsDisplayPageScreen extends StatelessWidget {
                                   : MaterialStateProperty.resolveWith(
                                       (states) => Colors.transparent)),
                       onPressed: () {
-                         controller.updateSearchType("tags");
+                        controller.updateSearchType("tags");
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -114,23 +116,35 @@ class SearchResultsDisplayPageScreen extends StatelessWidget {
                       child: Text("No results found"),
                     ),
                   )
-                :controller.selectedSearchType=="people"? ListView(
-                    children: [
-                      for (var i in controller.peopleSearchResults)
-                        Container(
-                          child: ProfileReferenceTemplate(
-                              showVerticalTemplate: false, userData: i),
-                        ),
-                    ],
-                  ):controller.selectedSearchType=="posts"?ListView(
-                    children: [
-                      ContentDisplayTemplateProvider(data:controller.postsSearchResults)
-                    ],
-                  ):controller.selectedSearchType=="tags"?ListView(
-                    children: [
-                      for(var i in controller.tagsSearchResults)TagsSearchResultsDisplayTemplate(data: i,)
-                    ],
-                  ):Container(child: Text("No results"),),
+                : controller.selectedSearchType == "people"
+                    ? ListView(
+                        children: [
+                          for (var i in controller.peopleSearchResults)
+                            Container(
+                              child: ProfileReferenceTemplate(
+                                  showVerticalTemplate: false, userData: i),
+                            ),
+                        ],
+                      )
+                    : controller.selectedSearchType == "posts"
+                        ? ListView(
+                            children: [
+                              ContentDisplayTemplateProvider(
+                                  data: controller.postsSearchResults)
+                            ],
+                          )
+                        : controller.selectedSearchType == "tags"
+                            ? ListView(
+                                children: [
+                                  for (var i in controller.tagsSearchResults)
+                                    TagsSearchResultsDisplayTemplate(
+                                      data: i,
+                                    )
+                                ],
+                              )
+                            : Container(
+                                child: Text("No results"),
+                              ),
       ),
     );
   }
@@ -139,26 +153,34 @@ class SearchResultsDisplayPageScreen extends StatelessWidget {
 class TagsSearchResultsDisplayTemplate extends StatelessWidget {
   final data;
 
-  const TagsSearchResultsDisplayTemplate({Key key,@required this.data}) : super(key: key);
+  const TagsSearchResultsDisplayTemplate({Key key, @required this.data})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      child:Row(
+      child: Row(
         children: [
-          TextButton(onPressed:(){}, child: Container(
-            height: 35.0,
-            alignment: Alignment.center,
-            child: Row(
-              children: [
-                Container(
-                  child: Text(data["hashtag"]),
+          TextButton(
+              onPressed: () {
+                Get.to(() => CommonPostDisplayPageScreen(
+                    title: data["hashtag"].toString() + " Posts",
+                    apiUrl: ApiUrlsData.tagRelatedPosts,
+                    apiData: {"hashtag": data["hashtag"].toString()}));
+              },
+              child: Container(
+                height: 35.0,
+                alignment: Alignment.center,
+                child: Row(
+                  children: [
+                    Container(
+                      child: Text(data["hashtag"]),
+                    ),
+                    Container(
+                      child: Text(data["count"].toString() + " posts"),
+                    )
+                  ],
                 ),
-                Container(
-                  child: Text(data["count"].toString()+" posts"),
-                )
-              ],
-            ),
-          ))
+              ))
         ],
       ),
     );

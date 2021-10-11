@@ -30,7 +30,12 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
+    try {
+      _videoPlayerController.dispose();
+    } catch (e) {
+      print(e);
+    }
+
     super.dispose();
   }
 
@@ -51,8 +56,8 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
           }
         },
         child: VisibilityDetector(
-          key: Key(widget.postContent["videoPost"]["postContent"][0]["_id"]
-              .toString()),
+          key: Key(widget.postContent["_id"]
+              .toString()+widget.postContent["createdAt"].toString()),
           onVisibilityChanged: (info) {
             _onVisibilityChangeController(info);
           },
@@ -149,7 +154,8 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
                         width: screenWidth,
                         child: CachedNetworkImage(
                           imageUrl: ApiUrlsData.domain +
-                              widget.postContent["videoPost"]["thumbnail"]
+                              widget.postContent["videoPost"]["postContent"][0]
+                                      ["thumbnail"]
                                   .toString(),
                           placeholder: (context, string) => Container(
                             width: screenWidth,

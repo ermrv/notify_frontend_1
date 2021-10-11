@@ -42,9 +42,9 @@ class GetUserDataController extends GetxController {
         Get.offAll(() => MainNavigationScreen());
       }
     } catch (e) {
-      print(e);
       print("getting user basic data");
       String fcmToken = await NotificationServices.getFcmToken();
+      print("sending fcm token :$fcmToken");
       var response = await ApiServices.postWithAuth(
           ApiUrlsData.appStart, {"fcmToken": fcmToken}, userToken.toString());
       if (response == "error") {
@@ -58,10 +58,6 @@ class GetUserDataController extends GetxController {
         await File(LocalDataFiles.userBasicDataFilePath)
             .writeAsString(json.encode(response), mode: FileMode.write)
             .then((value) => Get.offAll(() => MainNavigationScreen()));
-
-        ///naviagting to the [MainNavigationScreen]
-        ///
-        ///end of the [7_AddPostModule]
 
       }
     }

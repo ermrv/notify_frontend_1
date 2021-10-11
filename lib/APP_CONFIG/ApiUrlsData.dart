@@ -147,6 +147,8 @@ abstract class ApiUrlsData {
 
   ///.............................related posts...................
   static String relatedPosts = "$domain/api/post/related";
+  //tags related posts
+  static String tagRelatedPosts = "$domain/api/hashtag/posts";
   //................................shared post details............
   static String sharedDetailsOfPost = "$domain/api/post/shared";
 }
