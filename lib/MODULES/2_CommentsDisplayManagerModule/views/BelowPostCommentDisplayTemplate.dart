@@ -17,89 +17,91 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            Get.to(
-              () => CommentsDisplayScreen(
-                postId: postId,
-                commentCountUpdater: (int count) {
-                  commentCountUpdater.call(count);
-                },
-              ),
-            );
-          },
-          child: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //profile pic
-                Container(
-                  margin: EdgeInsets.only(top: 3.0),
-                  height: 20.0,
-                  width: 20.0,
-                  decoration: BoxDecoration(
-
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25.0),
-                    child: CachedNetworkImage(
-                        imageUrl: ApiUrlsData.domain +
-                            commentData["commentBy"]["profilePic"]
-                                .toString(),fit: BoxFit.cover,),
-                  ),
+    return Container(
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: () {
+              Get.to(
+                () => CommentsDisplayScreen(
+                  postId: postId,
+                  commentCountUpdater: (int count) {
+                    commentCountUpdater.call(count);
+                  },
                 ),
-                //name and comment container
-                Container(
-                  padding: EdgeInsets.only(left: 5.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 2.0),
-                        child: Text(
-                          commentData["commentBy"]["name"].toString(),
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      Container(
-                        child: Text(
-                          commentData["comment"].toString(),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
+              );
+            },
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //profile pic
+                  Container(
+                    margin: EdgeInsets.only(top: 3.0),
+                    height: 20.0,
+                    width: 20.0,
+                    decoration: BoxDecoration(
+
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(25.0),
+                      child: CachedNetworkImage(
+                          imageUrl: ApiUrlsData.domain +
+                              commentData["commentBy"]["profilePic"]
+                                  .toString(),fit: BoxFit.cover,),
+                    ),
                   ),
-                )
-              ],
+                  //name and comment container
+                  Container(
+                    padding: EdgeInsets.only(left: 5.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 2.0),
+                          child: Text(
+                            commentData["commentBy"]["name"].toString(),
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Container(
+                          child: Text(
+                            commentData["comment"].toString(),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 5.0,vertical: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Container(
-                  height: 1.0,
-                  color: Theme.of(context).accentColor.withOpacity(0.5),
+          Container(
+            margin: EdgeInsets.only(top: 5.0,bottom: 10.0,right: 5.0,left: 25.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 1.0,
+                    color: Theme.of(context).accentColor.withOpacity(0.5),
+                  ),
                 ),
-              ),
-              Container(
-                child: Text(
-                  "Show all comments",
-                  style: TextStyle(fontSize: 12.0),
+                Container(
+                  child: Text(
+                    "Show all comments",
+                    style: TextStyle(fontSize: 12.0),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        )
-      ],
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

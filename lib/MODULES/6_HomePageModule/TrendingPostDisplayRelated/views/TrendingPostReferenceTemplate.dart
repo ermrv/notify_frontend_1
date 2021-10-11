@@ -19,6 +19,7 @@ class TrendingPostReferenceTemplate extends StatelessWidget {
       padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 5.0),
       height: _containerWidth + 16,
       child: ListView(
+        key: PageStorageKey("tendingPostReferenceTemplateKey"),
         scrollDirection: Axis.horizontal,
         children: [
           data.length == 0 ? _BlankTemplate() : Container(),

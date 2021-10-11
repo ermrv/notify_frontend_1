@@ -26,10 +26,10 @@ import 'package:visibility_detector/visibility_detector.dart';
 ///depending upon the type of the video
 class FullVideoPostPlayerTemplate extends StatefulWidget {
   final postContent;
-  final String id;
+  // final String id;
   final parentController;
   const FullVideoPostPlayerTemplate(
-      {Key key, @required this.postContent, this.id, this.parentController})
+      {Key key, @required this.postContent, this.parentController})
       : super(key: key);
 
   @override
@@ -48,6 +48,8 @@ class _FullVideoPostPlayerTemplateState
   int _numberOfReactions = 0;
 
   FlickManager flickManager;
+
+
 
   @override
   void initState() {
@@ -200,7 +202,8 @@ class _FullVideoPostPlayerTemplateState
                   )),
 
           VisibilityDetector(
-            key: Key(widget.id.toString()),
+            key: Key(widget.postContent["_id"].toString() +
+            widget.postContent["createdAt"].toString()),
             onVisibilityChanged: (info) {
               if (info.visibleFraction == 1.0) {
                 if (this.mounted) {
