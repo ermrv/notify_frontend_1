@@ -80,10 +80,9 @@ class MainNavigationScreen extends StatelessWidget {
                   ExplorePageDisplayScreen(),
                   ShortVideoPlayerPageScreen(),
                   NotificationPage(),
-                  KeepWidgetAliveWrapper(
-                      child: UserProfileScreen(
+                  UserProfileScreen(
                     profileOwnerId: PrimaryUserData.primaryUserData.userId,
-                  )),
+                  ),
                 ],
               ),
             ));

@@ -6,7 +6,7 @@ class ExplorePageDisplayScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: KeepWidgetAliveWrapper(child: ExplorePageScreen()),
+      body: ExplorePageScreen(),
     );
   }
 }

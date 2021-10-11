@@ -31,6 +31,7 @@ class NewsFeedPageScreen extends StatelessWidget {
                       ),
                     )
                   : ListView(
+                    key: PageStorageKey("newsFeedPageScreen"),
                       controller: controller.scrollController,
                       children: [
                         Container(

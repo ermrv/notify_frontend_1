@@ -28,6 +28,7 @@ class OwnProfilePageScreen extends StatelessWidget {
         body: MediaQuery.removePadding(
             context: context,
             child: ListView(
+              key: PageStorageKey("ownProfilePageScreen"),
               controller: controller.scrollController,
               children: [
                 PrimaryUserBasicInfoContainer(),

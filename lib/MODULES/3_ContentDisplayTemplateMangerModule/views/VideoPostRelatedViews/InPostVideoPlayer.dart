@@ -25,6 +25,9 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
   bool showFullVideoPlayerButton = false;
   @override
   void initState() {
+    // _videoPlayerWidgetKey = Key(widget.postContent["_id"].toString() +
+    //     widget.postContent["createdAt"].toString());
+
     _aspectRatio =
         double.parse(widget.postContent["videoPost"]["aspectRatio"].toString());
     super.initState();
