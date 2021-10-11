@@ -24,7 +24,7 @@ class PollPostDisplayTemplate extends StatefulWidget {
   final parentController;
 
   const PollPostDisplayTemplate(
-      {Key key, this.postContent,this.parentController})
+      {Key key, this.postContent, this.parentController})
       : super(key: key);
 
   @override
@@ -159,44 +159,48 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                       ),
 
                       //actions on post
-                    widget.parentController!=null?  _isOwner
-                          ? PostOwnerActionsOnPost(
-                              postId: widget.postContent["_id"].toString(),
-                              postDescription: widget.postContent["pollPost"]
-                                      ["description"]
-                                  .toString(),
-                              editedDescriptionUpdater: (String description) {
-                                // updateEditedDescription(description);
-                              },
-                              parentController: widget.parentController,
-                            )
-                          : OtherUserActionsOnPost(
-                              postUserId: widget.postContent["pollPost"]
-                                      ["postBy"]["_id"]
-                                  .toString(),
-                              postId: widget.postContent["_id"].toString(),
-                            ):Container()
+                      widget.parentController != null
+                          ? _isOwner
+                              ? PostOwnerActionsOnPost(
+                                  postId: widget.postContent["_id"].toString(),
+                                  postDescription: widget
+                                      .postContent["pollPost"]["description"]
+                                      .toString(),
+                                  editedDescriptionUpdater:
+                                      (String description) {
+                                    // updateEditedDescription(description);
+                                  },
+                                  parentController: widget.parentController,
+                                )
+                              : OtherUserActionsOnPost(
+                                  postUserId: widget.postContent["pollPost"]
+                                          ["postBy"]["_id"]
+                                      .toString(),
+                                  postId: widget.postContent["_id"].toString(),
+                                )
+                          : Container()
                     ],
                   ),
                 ),
                 Container(
-                  width: screenWidth,
-                  padding: EdgeInsets.only(
-                      top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
-                  alignment: Alignment.centerLeft,
-                  child: ReadMoreText(
-                    widget.postContent["pollPost"]["description"]
-                        .toString()
-                        .capitalizeFirst,
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        color: Theme.of(context).accentColor.withOpacity(0.9)),
-                    trimLines:8,
-                    trimExpandedText: " less",
-                    trimCollapsedText: "...more",
-                    trimMode: TrimMode.Line,
-                    colorClickableText: Colors.blue,
-                  )),
+                    width: screenWidth,
+                    padding: EdgeInsets.only(
+                        top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
+                    alignment: Alignment.centerLeft,
+                    child: ReadMoreText(
+                      widget.postContent["pollPost"]["description"]
+                          .toString()
+                          .capitalizeFirst,
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          color:
+                              Theme.of(context).accentColor.withOpacity(0.9)),
+                      trimLines: 8,
+                      trimExpandedText: " less",
+                      trimCollapsedText: "...more",
+                      trimMode: TrimMode.Line,
+                      colorClickableText: Colors.blue,
+                    )),
                 //option one
                 widget.postContent["pollPost"]["opOne"] == null
                     ? Container()
@@ -257,7 +261,8 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                         )),
                 // option two
-                widget.postContent["pollPost"]["opTwo"] == null ||widget.postContent["pollPost"]["opTwo"] == " "
+                widget.postContent["pollPost"]["opTwo"] == null ||
+                        widget.postContent["pollPost"]["opTwo"] == " "
                     ? Container()
                     : Container(
                         height: 45.0,
@@ -316,7 +321,8 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                         )),
                 //option three
-                widget.postContent["pollPost"]["opThree"] == null ||widget.postContent["pollPost"]["opThree"] == ""
+                widget.postContent["pollPost"]["opThree"] == null ||
+                        widget.postContent["pollPost"]["opThree"] == ""
                     ? Container()
                     : Container(
                         height: 45.0,
@@ -376,7 +382,8 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           ),
                         )),
                 //option four
-                widget.postContent["pollPost"]["opFour"] == null ||widget.postContent["pollPost"]["opFour"] == ""
+                widget.postContent["pollPost"]["opFour"] == null ||
+                        widget.postContent["pollPost"]["opFour"] == ""
                     ? Container()
                     : Container(
                         height: 45.0,
@@ -438,6 +445,16 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
               ],
             ),
           ),
+          //total polls count
+          Container(
+            margin: EdgeInsets.only(top: 3.0, left: 5.0),
+            child: _isPollCasted && totalPolls.length!=0
+                ? Text(
+                    "Total ${totalPolls.length} vote",
+                    style: TextStyle(fontSize: 12.0),
+                  )
+                : Container(),
+          ),
           Container(
             height: 60.0,
             child: Row(
@@ -492,7 +509,10 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(MaterialCommunityIcons.share,color:Theme.of(context).accentColor.withOpacity(0.5)),
+                          icon: Icon(MaterialCommunityIcons.share,
+                              color: Theme.of(context)
+                                  .accentColor
+                                  .withOpacity(0.5)),
                           onPressed: () {
                             // Get.to(() => SharePostPageScreen(
                             //       postId: widget.postContent["pollPost"]["_id"],
@@ -573,6 +593,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
 
           opThreePolls.remove(_thisUserId);
           opFourPolls.remove(_thisUserId);
+          
         }
 
         break;
@@ -584,6 +605,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
 
           opThreePolls.remove(_thisUserId);
           opFourPolls.remove(_thisUserId);
+          
         }
         break;
       case 2:
@@ -594,6 +616,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
 
           opThreePolls.remove(_thisUserId);
           opFourPolls.remove(_thisUserId);
+          
         }
         break;
       case 3:
@@ -604,6 +627,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
 
           opThreePolls.add(_thisUserId);
           opFourPolls.remove(_thisUserId);
+          
         }
         break;
       case 4:
