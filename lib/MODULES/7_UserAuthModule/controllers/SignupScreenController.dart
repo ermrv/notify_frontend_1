@@ -5,6 +5,7 @@ import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:get/get.dart';
 import 'package:get_mac/get_mac.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
@@ -17,9 +18,12 @@ import 'package:path_provider/path_provider.dart';
 class SignUpScreenController extends GetxController {
   TextEditingController nameEditingController, passwordEditingController;
   String newUserRegName;
+
   String newUserRegPassword;
   File profilePic;
   var rcvdData;
+
+  bool isProcessing = false;
 
   @override
   void onInit() {
@@ -35,7 +39,7 @@ class SignUpScreenController extends GetxController {
   }
 
   handleFileReturned() async {
-    profilePic = await Get.to(SingleImagePicker(
+    profilePic = await Get.to(()=>SingleImagePicker(
       intendedFor: "profilePic",
     ));
     if (profilePic != null) {
@@ -47,6 +51,8 @@ class SignUpScreenController extends GetxController {
   ///
   ///if profilePic is selected,[_updateProfilePic] will be called by this function
   sendUserData() async {
+    isProcessing = true;
+    update();
     //if profile pic is selected call _updateProfilePic()
     if (profilePic != null) {
       int statusCode = await _updateProfilePic();
@@ -60,14 +66,18 @@ class SignUpScreenController extends GetxController {
             {"name": name, "password": password, "email": "dfadf@gmail.com"},
             unregisteredUserToken);
         if (response == "error") {
-          print("error sending data");
+          isProcessing = false;
+          update();
+          Get.snackbar("Cannot process the request", "try again");
         } else {
           rcvdData = response;
           userToken = unregisteredUserToken;
           _navigator();
         }
       } else {
-        print("error uploading image");
+        isProcessing = false;
+        update();
+        Get.snackbar("Cannot process the request", "try again");
       }
     } else {
       String name = nameEditingController.text;
@@ -78,10 +88,13 @@ class SignUpScreenController extends GetxController {
           {"name": name, "password": password, "email": "dfadf@gmail.com"},
           unregisteredUserToken);
       if (response == "error") {
-        print("error sending data");
+        isProcessing = false;
+        update();
+        Get.snackbar("Cannot process the request", "try again");
       } else {
         rcvdData = response;
         userToken = unregisteredUserToken;
+
         print(rcvdData);
         _navigator();
       }
@@ -106,8 +119,10 @@ class SignUpScreenController extends GetxController {
   _navigator() {
     if (rcvdData["login"].toString() == "true" &&
         rcvdData["registered"].toString() == "true") {
-      _sendMacAddress();
-    
+      final storage = GetStorage();
+      storage.write("userToken", userToken);
+      // _sendMacAddress();
+
       Get.offAll(() => GetUserData());
     } else {
       Get.defaultDialog(radius: 5.0, title: "Ooops! something went wrong");
@@ -124,6 +139,4 @@ class SignUpScreenController extends GetxController {
       print(e);
     }
   }
-
-  
 }

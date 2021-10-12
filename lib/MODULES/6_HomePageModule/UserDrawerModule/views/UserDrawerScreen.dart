@@ -213,11 +213,18 @@ class UserDrawerScreen extends StatelessWidget {
                     onPressed: () async {
                       final storage = GetStorage();
                       userToken = "";
-                      await _deleteFileSystem();
-                      await storage.remove("unRegisteredUserToken");
-                      await storage
-                          .remove("userToken")
-                          .then((value) => Get.offAll(() => LoginScreen()));
+                      await _deleteFileSystem().then((value) async {
+                        if (value) {
+                          await storage.remove("unRegisteredUserToken").then(
+                              (value) async => await storage
+                                  .remove("userToken")
+                                  .then((value) =>
+                                      Get.offAll(() => LoginScreen())));
+                        } else {
+                          Get.snackbar(
+                              "Cannot process request", "Please try again");
+                        }
+                      });
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -232,15 +239,55 @@ class UserDrawerScreen extends StatelessWidget {
     );
   }
 
-  _deleteFileSystem() async {
+  Future<bool> _deleteFileSystem() async {
+    bool _isFilesDeleted = false;
+    //delete the user basic data file
+    try {
+      await File(LocalDataFiles.userBasicDataFilePath).delete();
+      _isFilesDeleted = true;
+    } on FileSystemException {
+      _isFilesDeleted = true;
+    } catch (e) {
+      Get.snackbar("cannot delete files", "try again");
+      return false;
+    }
+    //delete the user newsFeeddatafile
+    try {
+      await File(LocalDataFiles.newsFeedPostsDataFilePath).delete();
+    } on FileSystemException {
+      _isFilesDeleted = true;
+    } catch (e) {
+      Get.snackbar("cannot delete files", "try again");
+      return false;
+    }
+    //deleter the user profileposts data file
+    try {
+      await File(LocalDataFiles.profilePostsDataFilePath).delete();
+    } on FileSystemException {
+      _isFilesDeleted = true;
+    } catch (e) {
+      Get.snackbar("cannot delete files", "try again");
+      return false;
+    }
+    //delete the user notification page data file
+    try {
+      await File(LocalDataFiles.notificationPageDataFilePath).delete();
+    } on FileSystemException {
+      _isFilesDeleted = true;
+    } catch (e) {
+      Get.snackbar("cannot delete files", "try again");
+      return false;
+    }
+    //delete the user explore page data file
     try {
       await File(LocalDataFiles.explorePageDataFilePath).delete();
-      await File(LocalDataFiles.newsFeedPostsDataFilePath).delete();
-      await File(LocalDataFiles.userBasicDataFilePath).delete();
-      await File(LocalDataFiles.profilePostsDataFilePath).delete();
-      await File(LocalDataFiles.notificationPageDataFilePath).delete();
+    } on FileSystemException {
+      _isFilesDeleted = true;
     } catch (e) {
-      print("error");
+      Get.snackbar("cannot delete files", "try again");
+      return false;
     }
+
+    return _isFilesDeleted;
   }
 }

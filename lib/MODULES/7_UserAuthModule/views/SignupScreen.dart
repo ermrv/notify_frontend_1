@@ -2,6 +2,7 @@ import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/controllers/SignupScreenController.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
@@ -55,19 +56,15 @@ class SignupScreen extends StatelessWidget {
                                     )
                                   : Image.file(
                                       controller.profilePic,
-                                      fit: BoxFit.fill,
+                                      fit: BoxFit.cover,
                                     ),
                             ),
                           ),
                           Positioned(
-                              bottom: -25.0,
+                              bottom: -5.0,
                               right: 0.0,
                               child: Container(
-                                child: RaisedButton(
-                                    elevation: 0.2,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(50.0)),
+                                child: TextButton(
                                     onPressed: () {
                                       controller.handleFileReturned();
                                     },
@@ -97,37 +94,44 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    // Container(
+                    //   margin: EdgeInsets.only(top: 10.0, bottom: 20.0),
+                    //   width: screenWidth * 0.9,
+                    //   child: TextFormField(
+                    //     controller: controller.passwordEditingController,
+                    //     onChanged: (value) {
+                    //       controller.newUserRegPassword = value;
+                    //     },
+                    //     obscureText: true,
+                    //     decoration: InputDecoration(
+                    //       isDense: true,
+                    //       labelText: "Set Password (Optional)",
+                    //     ),
+                    //   ),
+                    // ),
                     Container(
-                      margin: EdgeInsets.only(top: 10.0, bottom: 20.0),
-                      width: screenWidth * 0.9,
-                      child: TextFormField(
-                        controller: controller.passwordEditingController,
-                        onChanged: (value) {
-                          controller.newUserRegPassword = value;
-                        },
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          labelText: "Set Password (Optional)",
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        elevation: 0,
-                        child: Container(
-                          height: 45.0,
-                          width: screenWidth * 0.8,
-                          alignment: Alignment.center,
-                          child: Text(
-                            "DONE",
+                       margin: EdgeInsets.only(top: 20.0, bottom: 10.0),
+                      child: TextButton(
+                          child: Container(
+                           
+                            height: 35.0,
+                            width: screenWidth * 0.9,
+                            alignment: Alignment.center,
+                            child: controller.isProcessing
+                                ? SpinKitThreeBounce(
+                                    color: Colors.blue,
+                                    size: 18.0,
+                                  )
+                                : Text(
+                                    "DONE",
+                                  ),
                           ),
-                        ),
-                        onPressed: () {
-                          controller.sendUserData();
-                          print("okay");
-                        })
+                          onPressed: () {
+                            if (!controller.isProcessing) {
+                              controller.sendUserData();
+                            }
+                          }),
+                    )
                   ],
                 ),
               ),
