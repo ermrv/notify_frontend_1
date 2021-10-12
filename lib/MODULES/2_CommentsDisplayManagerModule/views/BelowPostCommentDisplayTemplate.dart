@@ -19,21 +19,22 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: () {
-              Get.to(
-                () => CommentsDisplayScreen(
-                  postId: postId,
-                  commentCountUpdater: (int count) {
-                    commentCountUpdater.call(count);
-                  },
-                ),
-              );
+    return GestureDetector(
+      onTap: () {
+        Get.to(
+          () => CommentsDisplayScreen(
+            postId: postId,
+            commentCountUpdater: (int count) {
+              commentCountUpdater.call(count);
             },
-            child: Container(
+          ),
+        );
+      },
+      child: Container(
+        alignment: Alignment.centerLeft,
+        child: Column(
+          children: [
+            Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,34 +81,34 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          Container(
-            margin:
-                EdgeInsets.only(top: 5.0, bottom: 10.0, right: 8.0, left: 25.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 1.0,
-                    color: Theme.of(context).accentColor.withOpacity(0.5),
+            Container(
+              margin: EdgeInsets.only(
+                  top: 5.0, bottom: 10.0, right: 8.0, left: 25.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 1.0,
+                      color: Theme.of(context).accentColor.withOpacity(0.5),
+                    ),
                   ),
-                ),
-                Container(
-                  child: commentCount == 1
-                      ? Text(
-                          " Show all ${commentCount.toString()} comment",
-                          style: TextStyle(fontSize: 12.0),
-                        )
-                      : Text(
-                          " Show all ${commentCount.toString()} comments",
-                          style: TextStyle(fontSize: 12.0),
-                        ),
-                ),
-              ],
-            ),
-          )
-        ],
+                  Container(
+                    child: commentCount == 1
+                        ? Text(
+                            " Show all ${commentCount.toString()} comment",
+                            style: TextStyle(fontSize: 12.0),
+                          )
+                        : Text(
+                            " Show all ${commentCount.toString()} comments",
+                            style: TextStyle(fontSize: 12.0),
+                          ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

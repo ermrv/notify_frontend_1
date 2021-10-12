@@ -61,7 +61,10 @@ class _ProfileReferenceTemplateState extends State<ProfileReferenceTemplate> {
                   height: 30.0,
                   child: Container(
                       alignment: Alignment.center,
-                      child: getFollowButton(widget.userData["_id"], true)),
+                      child: widget.userData["_id"] ==
+                              PrimaryUserData.primaryUserData.userId
+                          ? Container(height: 0,width: 0,)
+                          : getFollowButton(widget.userData["_id"], true)),
                 )
               ],
             ),
@@ -93,7 +96,10 @@ class _ProfileReferenceTemplateState extends State<ProfileReferenceTemplate> {
               title: Text(widget.userData["name"].toString()),
               // subtitle: Text(
               //     controller.data[index]["userName"].toString()),
-              trailing: getFollowButton(widget.userData["_id"], false),
+              trailing: widget.userData["_id"] ==
+                      PrimaryUserData.primaryUserData.userId
+                  ? Container(height: 0,width: 0,)
+                  : getFollowButton(widget.userData["_id"], false),
             ),
           );
   }
@@ -138,7 +144,8 @@ class _ProfileReferenceTemplateState extends State<ProfileReferenceTemplate> {
     } else if (PrimaryUserData.primaryUserData.followers.contains(userId)) {
       return TextButton(
           child: isCenterAligned
-              ? Container(alignment: Alignment.center, child: Text("Follow Back"))
+              ? Container(
+                  alignment: Alignment.center, child: Text("Follow Back"))
               : Container(child: Text("Follow Back")),
           onPressed: () {
             followUser(userId);

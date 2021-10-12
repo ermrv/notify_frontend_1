@@ -5,6 +5,7 @@ import 'package:MediaPlus/MODULES/17_ShortVideoPlayerModule/views/ShortVideoPlay
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/BelowPostCommentDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PostLikesDisplayPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/VideoPostFeedPlayerPageScreen.dart';
@@ -268,92 +269,113 @@ class _FullVideoPostPlayerTemplateState
                         ),
                       ),
                     )),
-
+//total reactions count
           Container(
-                  height: 50.0,
-                  width: screenWidth,
-                  padding: EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //like
-                      Container(
-                        height: 40.0,
-                        width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
-                        child: IconButton(
-                            padding: EdgeInsets.all(4.0),
-                            icon: _likes.contains(
-                              _thisUserId,
-                            )
-                                ? Icon(
-                                    Octicons.heart,
-                                    size: 24.0,
-                                    color: Colors.red,
-                                  )
-                                : Icon(
-                                    EvilIcons.heart,
-                                    size: 28.0,
-                                    color: Colors.white,
-                                  ),
-                            onPressed: () {
-                              reactionCountUpdater(_thisUserId);
-                            }),
+            alignment: Alignment.centerLeft,
+            child: _likes.length != 0
+                ? GestureDetector(
+                    onTap: () {
+                      Get.to(() => PostLikesDisplayPageScreen(
+                          postId: widget.postContent["_id"]));
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
+                      child: Text(
+                        "${_likes.length} likes",
+                        style: TextStyle(fontSize: 14.0),
                       ),
-                      //comment
-                      Container(
-                       height: 40.0,
-                        width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
-                        child: IconButton(
-                            padding: EdgeInsets.all(4.0),
-                            icon: Icon(
-                              EvilIcons.comment,
-                              size: 28.0,
-                            ),
-                            onPressed: () {
-                              Get.to(() => CommentsDisplayScreen(
-                                    postId: widget.postContent["_id"],
-                                    commentCountUpdater: (int commentCount) {
-                                      commentCountUpdater(commentCount);
-                                    },
-                                  ));
-                            }),
-                      ),
-                      Container(
-                        height: 40.0,
-                        width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
-                        child: IconButton(
-                            icon: Icon(MaterialCommunityIcons.share),
-                            onPressed: () {
-                              Get.to(() => SharePostPageScreen(
-                                    postId: widget.postContent["imagePost"]
-                                        ["_id"],
-                                    postOwnerName:
-                                        widget.postContent["imagePost"]
-                                            ["postBy"]["name"],
-                                    postOwnerProfilePic:
-                                        widget.postContent["imagePost"]
-                                            ["postBy"]["profilePic"],
-                                  ));
-                            }),
-                      ),
-                      Expanded(
-                        child: Container(),
-                      ),
-                    ],
+                    ),
+                  )
+                : Container(
+                    margin: EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
+                    child: Text("Be the first to like",
+                        style: TextStyle(fontSize: 14.0)),
                   ),
+          ),
+          Container(
+            height: 50.0,
+            width: screenWidth,
+            padding: EdgeInsets.symmetric(horizontal: 2.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //like
+                Container(
+                  height: 40.0,
+                  width: 40.0,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(right: 5.0),
+                  child: IconButton(
+                      padding: EdgeInsets.all(4.0),
+                      icon: _likes.contains(
+                        _thisUserId,
+                      )
+                          ? Icon(
+                              Octicons.heart,
+                              size: 24.0,
+                              color: Colors.red,
+                            )
+                          : Icon(
+                              EvilIcons.heart,
+                              size: 28.0,
+                              color: Colors.white,
+                            ),
+                      onPressed: () {
+                        reactionCountUpdater(_thisUserId);
+                      }),
                 ),
+                //comment
+                Container(
+                  height: 40.0,
+                  width: 40.0,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(right: 5.0),
+                  child: IconButton(
+                      padding: EdgeInsets.all(4.0),
+                      icon: Icon(
+                        EvilIcons.comment,
+                        size: 28.0,
+                      ),
+                      onPressed: () {
+                        Get.to(() => CommentsDisplayScreen(
+                              postId: widget.postContent["_id"],
+                              commentCountUpdater: (int commentCount) {
+                                commentCountUpdater(commentCount);
+                              },
+                            ));
+                      }),
+                ),
+                Container(
+                  height: 40.0,
+                  width: 40.0,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(right: 5.0),
+                  child: IconButton(
+                      icon: Icon(MaterialCommunityIcons.share),
+                      onPressed: () {
+                        Get.to(() => SharePostPageScreen(
+                              postId: widget.postContent["imagePost"]["_id"],
+                              postOwnerName: widget.postContent["imagePost"]
+                                  ["postBy"]["name"],
+                              postOwnerProfilePic:
+                                  widget.postContent["imagePost"]["postBy"]
+                                      ["profilePic"],
+                            ));
+                      }),
+                ),
+                Expanded(
+                  child: Container(),
+                ),
+              ],
+            ),
+          ),
           widget.postContent["comments"] == null
               ? Container()
               : widget.postContent["comments"].length == 0
                   ? Container()
                   : BelowPostCommentDisplayTemplate(
-                    commentCount: _numberOfComments,
+                      commentCount: _numberOfComments,
                       commentData: widget.postContent["comments"][0],
                       postId: widget.postContent["_id"],
                       commentCountUpdater: (int count) {

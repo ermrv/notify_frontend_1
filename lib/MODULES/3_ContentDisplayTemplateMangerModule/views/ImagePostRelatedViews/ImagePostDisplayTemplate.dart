@@ -10,6 +10,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Ima
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/MultiImageHorizontalDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/MultiImageVerticalDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/SingleImageDisplayTemplate.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PostLikesDisplayPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
@@ -222,18 +223,33 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
 //total reactions count
           Container(
             alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(top: 10.0, left: 8.0, right: 5.0),
             child: _likes.length != 0
-                ? Text(
-                    "${_likes.length} likes",
-                    style: TextStyle(fontSize: 14.0),
+                ? GestureDetector(
+                    onTap: () {
+                      Get.to(() => PostLikesDisplayPageScreen(
+                          postId: widget.postContent["_id"]));
+                    },
+                    child: Container(
+                      
+                     
+                      padding:
+                          EdgeInsets.only(top: 10.0,left:8.0,right: 8.0),
+                      child: Text(
+                        "${_likes.length} likes",
+                        style: TextStyle(fontSize: 14.0),
+                      ),
+                    ),
                   )
-                : Text("Be the first to like",
-                    style: TextStyle(fontSize: 14.0)),
+                : Container(
+                    margin: EdgeInsets.only(top: 10.0,left:8.0,right: 8.0),
+                    child: Text("Be the first to like",
+                        style: TextStyle(fontSize: 14.0)),
+                  ),
           ),
           _isShared
               ? Container()
               : Container(
+                
                   height: 50.0,
                   width: screenWidth,
                   padding: EdgeInsets.symmetric(horizontal: 2.0),
@@ -244,8 +260,8 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                       Container(
                         height: 40.0,
                         width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(right: 5.0),
                         child: IconButton(
                             padding: EdgeInsets.all(4.0),
                             icon: _likes.contains(
@@ -267,10 +283,10 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                       ),
                       //comment
                       Container(
-                       height: 40.0,
+                        height: 40.0,
                         width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(right: 5.0),
                         child: IconButton(
                             padding: EdgeInsets.all(4.0),
                             icon: Icon(
@@ -289,8 +305,8 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                       Container(
                         height: 40.0,
                         width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(right: 5.0),
                         child: IconButton(
                             icon: Icon(MaterialCommunityIcons.share),
                             onPressed: () {
@@ -319,7 +335,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                   : widget.postContent["comments"].length == 0
                       ? Container()
                       : BelowPostCommentDisplayTemplate(
-                        commentCount: _numberOfComments,
+                          commentCount: _numberOfComments,
                           commentData: widget.postContent["comments"][0],
                           postId: widget.postContent["_id"],
                           commentCountUpdater: (int count) {

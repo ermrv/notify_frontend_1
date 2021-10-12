@@ -4,6 +4,7 @@ import 'package:MediaPlus/MODULES/10_PostPromotionModule/views/EstimatedBudgetPa
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/BelowPostCommentDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PostLikesDisplayPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
@@ -193,14 +194,28 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
 //total reactions count
           Container(
             alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(top: 10.0, left: 8.0,right: 5.0),
             child: _likes.length != 0
-                ? Text(
-                    "${_likes.length} likes",
-                    style: TextStyle(fontSize: 14.0),
+                ? GestureDetector(
+                    onTap: () {
+                      Get.to(() => PostLikesDisplayPageScreen(
+                          postId: widget.postContent["_id"]));
+                    },
+                    child: Container(
+                      
+                     
+                      padding:
+                          EdgeInsets.only(top: 10.0,left:8.0,right: 8.0),
+                      child: Text(
+                        "${_likes.length} likes",
+                        style: TextStyle(fontSize: 14.0),
+                      ),
+                    ),
                   )
-                : Text("Be the first to like",
-                    style: TextStyle(fontSize: 14.0)),
+                : Container(
+                    margin: EdgeInsets.only(top: 10.0,left:8.0,right: 8.0),
+                    child: Text("Be the first to like",
+                        style: TextStyle(fontSize: 14.0)),
+                  ),
           ),
           _isShared
               ? Container()
