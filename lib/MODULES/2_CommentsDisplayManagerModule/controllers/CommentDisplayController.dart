@@ -59,11 +59,12 @@ class CommentDisplayController extends GetxController {
   }
 
   ///check the number of lines in the comment to adjust the bottomSheet height
-  getNumberOfLines(String text) {
+  int getNumberOfLines(String text) {
     int numOfLines = "\n".allMatches(text).toList().length;
     print(numOfLines);
-    bottomSheetHeight = 50 + numOfLines.toDouble() *18;
+    bottomSheetHeight = 50 + numOfLines.toDouble() * 18;
     update();
+    return numOfLines;
   }
 
   //add subcomments

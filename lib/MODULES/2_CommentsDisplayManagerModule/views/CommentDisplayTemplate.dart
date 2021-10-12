@@ -1,6 +1,8 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
-import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/controllers/CommentDisplayController.dart';
+import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/EditPreviousCommentTemplate.dart';
+import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/EditPreviousSubCommentTemplate.dart';
+import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/ReplyToCommentTemplate.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
@@ -8,7 +10,6 @@ import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 
 class CommentDisplayTemplate extends StatefulWidget {
@@ -264,132 +265,7 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
                           margin: EdgeInsets.symmetric(horizontal: 5.0)),
                       GestureDetector(
                         onTap: () {
-                          Get.bottomSheet(
-                            Container(
-                              padding: EdgeInsets.only(
-                                  top: 5.0, right: 2.0, left: 2.0),
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context).primaryColor,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10.0),
-                                      topRight: Radius.circular(10.0))),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                        left: 8.0, top: 2.0, bottom: 5.0),
-                                    child: Row(
-                                      children: [
-                                        Text("Replying to  @"),
-                                        Text(
-                                            widget.data["commentBy"]["name"]
-                                                .toString(),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w800,
-                                            ))
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding:
-                                        EdgeInsets.only(left: 2.0, right: 2.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(25.0),
-                                        border: Border.all(),
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 5.0,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(right: 8.0),
-                                            height: 25.0,
-                                            width: 25.0,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle),
-                                            child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(25.0),
-                                                child: Obx(
-                                                  () => CachedNetworkImage(
-                                                    imageUrl: PrimaryUserData
-                                                        .primaryUserData
-                                                        .profilePic
-                                                        .value,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                )),
-                                          ),
-                                          Expanded(
-                                              child: Container(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: TextFormField(
-                                                      autofocus: true,
-                                                      controller: controller
-                                                          .subCommentEditingController,
-                                                      onChanged: (value) {
-                                                        print(value);
-
-                                                        setState(() {
-                                                          showSendButton =
-                                                              value != "";
-                                                        });
-                                                        print(showSendButton);
-                                                      },
-                                                      keyboardType:
-                                                          TextInputType
-                                                              .multiline,
-                                                      maxLines: null,
-                                                      decoration: InputDecoration(
-                                                          hintText:
-                                                              "Add a comment",
-                                                          border:
-                                                              InputBorder.none,
-                                                          focusedBorder:
-                                                              InputBorder.none),
-                                                    ),
-                                                  ),
-                                                ),
-                                                IconButton(
-                                                    icon: Icon(
-                                                      Icons.send,
-                                                      color: Colors.blue,
-                                                    ),
-                                                    onPressed: () {
-                                                      controller.addSubComments(
-                                                          widget.commentId
-                                                              .toString(),
-                                                          controller
-                                                              .subCommentEditingController
-                                                              .text);
-                                                    }),
-                                              ],
-                                            ),
-                                          ))
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
+                          _replyToComment(widget.commentId,controller);
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -474,172 +350,27 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
     }
   }
 
-  _commentEditor(String commentId, String initialComment) {
-    controller.editCommentController.text = initialComment;
+  ///.......................replay to a comment.......................
+  _replyToComment(String commentId,CommentDisplayController controller) {
     Get.bottomSheet(
-      Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.only(left: 2.0, right: 2.0),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25.0),
-            border: Border.all(),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.only(right: 8.0),
-                height: 35.0,
-                width: 35.0,
-                decoration: BoxDecoration(shape: BoxShape.circle),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25.0),
-                    child: Obx(
-                      () => CachedNetworkImage(
-                        imageUrl:
-                            PrimaryUserData.primaryUserData.profilePic.value,
-                        fit: BoxFit.cover,
-                      ),
-                    )),
-              ),
-              Expanded(
-                  child: Container(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        child: TextFormField(
-                          autofocus: true,
-                          controller: controller.editCommentController,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          decoration: InputDecoration.collapsed(
-                              border: InputBorder.none,
-                              hintText: "Add Comment"),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                        icon: Icon(
-                          Icons.send,
-                        ),
-                        onPressed: () {
-                          controller.editComment(commentId);
-                        })
-                  ],
-                ),
-              ))
-            ],
-          ),
-        ),
-      ),
+      ReplyToCommentTemplate(commentId:commentId, controller:controller, commentData: widget.data)
     );
   }
 
+  ///......................................edit comment......................................
+  _commentEditor(String commentId, String initialComment) {
+    controller.editCommentController.text = initialComment;
+    Get.bottomSheet(
+      EditPreviousCommentTemplate(commentData:widget.data, commentId: commentId, controller: controller, initialComment: initialComment),
+    );
+  }
+
+  ///.........edit sub comment...............
   _subCommentEditor(
       String commentId, String subCommentId, String initialSubComment) {
     controller.editSubCommentController.text = initialSubComment;
     Get.bottomSheet(
-      Container(
-        padding: EdgeInsets.only(top: 5.0, right: 2.0, left: 2.0),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10.0),
-                topRight: Radius.circular(10.0))),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: EdgeInsets.only(left: 8.0, top: 2.0, bottom: 5.0),
-              child: Row(
-                children: [
-                  Text("Replying to  @"),
-                  Text(widget.data["commentBy"]["name"].toString(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                      ))
-                ],
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 2.0, right: 2.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25.0),
-                  border: Border.all(),
-                ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 5.0,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 8.0),
-                      height: 35.0,
-                      width: 35.0,
-                      decoration: BoxDecoration(shape: BoxShape.circle),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(25.0),
-                          child: Obx(
-                            () => CachedNetworkImage(
-                              imageUrl: PrimaryUserData
-                                  .primaryUserData.profilePic.value,
-                              fit: BoxFit.cover,
-                            ),
-                          )),
-                    ),
-                    Expanded(
-                        child: Container(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.centerLeft,
-                              height: 40.0,
-                              child: TextFormField(
-                                autofocus: true,
-                                controller: controller.editSubCommentController,
-                                keyboardType: TextInputType.multiline,
-                                maxLines: null,
-                                onChanged: (value) {
-                                  controller.update();
-                                },
-                                decoration: InputDecoration.collapsed(
-                                  hintText: "Add a comment",
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ),
-                          controller.editSubCommentController.text == null
-                              ? Container()
-                              : IconButton(
-                                  icon: Icon(
-                                    Icons.send,
-                                  ),
-                                  onPressed: () {
-                                    controller.editSubComment(
-                                        commentId, subCommentId);
-                                  })
-                        ],
-                      ),
-                    ))
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      EditPreviousSubCommentTemplate(subCommentData:widget.data, subCommentId: subCommentId, commentId: commentId, initialSubComment: initialSubComment, controller: controller)
     );
   }
 }

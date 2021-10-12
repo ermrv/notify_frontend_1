@@ -47,7 +47,6 @@ dependencies:
   get_mac: ^0.0.1
   flick_video_player:
     path: ./../LocalPackages/flick-video-player
-  location: any
 
   video_compress: ^2.1.0
 

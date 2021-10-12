@@ -53,8 +53,10 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
         widget.postContent["videoPost"]["postContent"][0]["path"].toString());
     _videoPlayerController.initialize();
     _videoPlayerController.play();
-    _aspectRatio =widget.postContent["videoPost"]["aspectRatio"]!=null?double.parse(
-            widget.postContent["videoPost"]["aspectRatio"].toString()): _videoPlayerController.value.aspectRatio;
+    _aspectRatio = widget.postContent["videoPost"]["aspectRatio"] != null
+        ? double.parse(
+            widget.postContent["videoPost"]["aspectRatio"].toString())
+        : _videoPlayerController.value.aspectRatio;
     _videoPlayerController.setLooping(true);
     super.initState();
   }
@@ -71,6 +73,7 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
   Widget build(BuildContext context) {
     return Container(
       child: Stack(
+        alignment: AlignmentDirectional.center,
         children: [
           GestureDetector(
             onDoubleTap: () {
@@ -80,6 +83,10 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
               _videoPlayerController.value.isPlaying
                   ? _videoPlayerController.pause()
                   : _videoPlayerController.play();
+
+              if (this.mounted) {
+                setState(() {});
+              }
             },
             child: Container(
                 alignment: Alignment.center,
@@ -89,6 +96,29 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
                     aspectRatio: _aspectRatio,
                     child: VideoPlayer(_videoPlayerController))),
           ),
+          _videoPlayerController.value.isPlaying
+              ? Container()
+              : Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: 50.0,
+                    width: 50.0,
+                    decoration: BoxDecoration(
+                        color: Colors.black38,
+                        borderRadius: BorderRadius.circular(50.0),
+                        border: Border.all(width: 2.0, color: Colors.white)),
+                    child: IconButton(
+                      icon: Icon(Icons.play_arrow),
+                      iconSize: 32.0,
+                      onPressed: () {
+                        _videoPlayerController.play();
+                        if (this.mounted) {
+                          setState(() {});
+                        }
+                      },
+                    ),
+                  ),
+                ),
           Positioned(
             bottom: 15.0,
             right: 0.0,
@@ -137,7 +167,7 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 4.0, vertical: 4.0),
                             decoration: BoxDecoration(
-                                color: Colors.black26,
+                                color: Colors.black12,
                                 borderRadius: BorderRadius.circular(25.0)),
                             child: _likes.contains(_thisUserId)
                                 ? Icon(
@@ -185,7 +215,7 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 4.0, vertical: 4.0),
                             decoration: BoxDecoration(
-                                color: Colors.black26,
+                                color: Colors.black12,
                                 borderRadius: BorderRadius.circular(25.0)),
                             child: Icon(
                               EvilIcons.comment,
@@ -220,7 +250,7 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 4.0, vertical: 4.0),
                             decoration: BoxDecoration(
-                                color: Colors.black26,
+                                color: Colors.black12,
                                 borderRadius: BorderRadius.circular(25.0)),
                             child: Icon(
                               MaterialCommunityIcons.share,

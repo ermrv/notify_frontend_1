@@ -206,15 +206,18 @@ class _FullVideoPostPlayerTemplateState
                 _onVisibilityChangeController(info);
               },
               child: _showVideoPlayer
-                  ? Container(
-                      child: FlickVideoPlayer(
-                        flickManager: flickManager,
-                        flickVideoWithControlsFullscreen:
-                            FlickVideoWithControls(
-                          controls: FlickLandscapeControls(),
-                        ),
-                        flickVideoWithControls: FlickVideoWithControls(
-                          controls: FlickPortraitControls(),
+                  ? AspectRatio(
+                      aspectRatio: _aspectRatio,
+                      child: Container(
+                        child: FlickVideoPlayer(
+                          flickManager: flickManager,
+                          flickVideoWithControlsFullscreen:
+                              FlickVideoWithControls(
+                            controls: FlickLandscapeControls(),
+                          ),
+                          flickVideoWithControls: FlickVideoWithControls(
+                            controls: FlickPortraitControls(),
+                          ),
                         ),
                       ),
                     )
@@ -362,7 +365,7 @@ class _FullVideoPostPlayerTemplateState
 
   ///visibility change controller
   _onVisibilityChangeController(VisibilityInfo info) {
-    if (info.visibleFraction>=0.9) {
+    if (info.visibleFraction >= 0.9) {
       if (!_showVideoPlayer) {
         _initialiseVideoPlayer();
         if (this.mounted) {
@@ -389,7 +392,7 @@ class _FullVideoPostPlayerTemplateState
   ///initialise video player
   _initialiseVideoPlayer() {
     flickManager = FlickManager(
-        autoPlay: false,
+        autoPlay: true,
         autoInitialize: true,
         videoPlayerController: VideoPlayerController.network(
             ApiUrlsData.domain +
