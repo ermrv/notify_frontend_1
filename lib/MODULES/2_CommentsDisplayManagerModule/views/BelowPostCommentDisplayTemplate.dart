@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BelowPostCommentDisplayTemplate extends StatelessWidget {
+  final int commentCount;
   final commentData;
   final postId;
   final Function(int) commentCountUpdater;
@@ -13,7 +14,8 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
       {Key key,
       @required this.commentData,
       @required this.postId,
-      @required this.commentCountUpdater})
+      @required this.commentCountUpdater,
+      @required this.commentCount})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -41,15 +43,14 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
                     margin: EdgeInsets.only(top: 3.0),
                     height: 20.0,
                     width: 20.0,
-                    decoration: BoxDecoration(
-
-                    ),
+                    decoration: BoxDecoration(),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25.0),
                       child: CachedNetworkImage(
-                          imageUrl: ApiUrlsData.domain +
-                              commentData["commentBy"]["profilePic"]
-                                  .toString(),fit: BoxFit.cover,),
+                        imageUrl: ApiUrlsData.domain +
+                            commentData["commentBy"]["profilePic"].toString(),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   //name and comment container
@@ -81,7 +82,8 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 5.0,bottom: 10.0,right: 5.0,left: 25.0),
+            margin:
+                EdgeInsets.only(top: 5.0, bottom: 10.0, right: 8.0, left: 25.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -92,10 +94,15 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  child: Text(
-                    "Show all comments",
-                    style: TextStyle(fontSize: 12.0),
-                  ),
+                  child: commentCount == 1
+                      ? Text(
+                          " Show all ${commentCount.toString()} comment",
+                          style: TextStyle(fontSize: 12.0),
+                        )
+                      : Text(
+                          " Show all ${commentCount.toString()} comments",
+                          style: TextStyle(fontSize: 12.0),
+                        ),
                 ),
               ],
             ),

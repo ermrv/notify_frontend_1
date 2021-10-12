@@ -2,6 +2,7 @@ import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/controllers/LoginScreenController.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/OTPInputScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
@@ -36,7 +37,7 @@ class LoginScreen extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                             fontStyle: FontStyle.italic,
+                            fontStyle: FontStyle.italic,
                             fontSize: 29.0,
                             decoration: TextDecoration.underline,
                             decorationThickness: 1.5),
@@ -57,12 +58,14 @@ class LoginScreen extends StatelessWidget {
                 //mobile no.
                 Container(
                   child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(bottom: 8.0),
-                        child:Text("Enter mobile number:",style: TextStyle(fontSize: 16.0),)
-                      ),
+                          margin: EdgeInsets.only(bottom: 8.0),
+                          child: Text(
+                            "Enter mobile number:",
+                            style: TextStyle(fontSize: 16.0),
+                          )),
                       Row(
                         children: [
                           //countary code
@@ -91,7 +94,8 @@ class LoginScreen extends StatelessWidget {
                                 }).toList(),
                                 onChanged: (value) {
                                   print(value);
-                                  controller.updateCountryCode(value.toString());
+                                  controller
+                                      .updateCountryCode(value.toString());
                                 },
                               ),
                             ),
@@ -108,6 +112,9 @@ class LoginScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(5.0)),
                                 child: TextFormField(
                                   controller: controller.textEditingController,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   onTap: () {},
                                   style: TextStyle(
                                       fontSize: 18.0,
@@ -130,13 +137,10 @@ class LoginScreen extends StatelessWidget {
                 //Get otp button
                 Container(
                   margin: EdgeInsets.only(top: 15.0),
-                  child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0)),
-                      elevation: 0.5,
+                  child: TextButton(
                       child: Container(
                         alignment: Alignment.center,
-                        height: 45.0,
+                        height: 35.0,
                         child: Text(
                           "GET OTP",
                           style: TextStyle(fontWeight: FontWeight.bold),
