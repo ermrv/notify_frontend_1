@@ -285,7 +285,7 @@ class _SharedTextPostDisplayTemplateState
 
   commentCountUpdater(int count) {
     setState(() {
-      _numberOfReactions = count;
+      _numberOfComments = count;
     });
   }
 

@@ -288,7 +288,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
 
   commentCountUpdater(int count) {
     setState(() {
-      _numberOfReactions = count;
+      _numberOfComments = count;
     });
   }
 

@@ -41,7 +41,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
   String _thisUserId;
   bool _isOwner = false;
   bool _isShared = false;
-  int _numberOfComments = 0;
+  int _numberOfComments;
   int _numberOfReactions;
 
   List _likes = [];
@@ -229,6 +229,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      //like
                       Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -254,6 +255,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                           ],
                         ),
                       ),
+                      //comment
                       Container(
                         child: Row(
                           children: [
@@ -302,17 +304,19 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                     ],
                   ),
                 ),
-         _isShared?Container(): widget.postContent["comments"] == null
+          _isShared
               ? Container()
-              : widget.postContent["comments"].length == 0
+              : widget.postContent["comments"] == null
                   ? Container()
-                  : BelowPostCommentDisplayTemplate(
-                      commentData: widget.postContent["comments"][0],
-                      postId: widget.postContent["_id"],
-                      commentCountUpdater: (int count) {
-                        commentCountUpdater(count);
-                      },
-                    ),
+                  : widget.postContent["comments"].length == 0
+                      ? Container()
+                      : BelowPostCommentDisplayTemplate(
+                          commentData: widget.postContent["comments"][0],
+                          postId: widget.postContent["_id"],
+                          commentCountUpdater: (int count) {
+                            commentCountUpdater(count);
+                          },
+                        ),
         ],
       ),
     );

@@ -294,7 +294,7 @@ class _SharedImagePostDisplayTemplateState
 
   commentCountUpdater(int count) {
     setState(() {
-      _numberOfReactions = count;
+      _numberOfComments = count;
     });
   }
 

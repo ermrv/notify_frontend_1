@@ -52,8 +52,6 @@ class CommentDisplayController extends GetxController {
       print(response);
       commentEditingController.text = "";
       update();
-      print(response);
-      update();
       commentCountUpdater.call(comments.length);
     }
   }
@@ -171,6 +169,7 @@ class CommentDisplayController extends GetxController {
 
   @override
   void dispose() {
+    commentCountUpdater.call(comments.length);
     Get.delete<CommentDisplayController>();
     super.dispose();
   }
