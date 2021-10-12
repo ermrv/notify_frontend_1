@@ -1,11 +1,13 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/10_PostPromotionModule/views/EstimatedBudgetPageScreen.dart';
+import 'package:MediaPlus/MODULES/17_ShortVideoPlayerModule/views/ShortVideoPlayerPageScreen.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/BelowPostCommentDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/VideoPostFeedPlayerPageScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
@@ -49,7 +51,8 @@ class _FullVideoPostPlayerTemplateState
 
   FlickManager flickManager;
 
-
+  double _aspectRatio;
+  bool _showVideoPlayer = false;
 
   @override
   void initState() {
@@ -60,14 +63,9 @@ class _FullVideoPostPlayerTemplateState
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
     _numberOfComments = widget.postContent["noOfComments"];
-    //initialise videoplayer
-    flickManager = FlickManager(
-        autoPlay: false,
-        autoInitialize: true,
-        videoPlayerController: VideoPlayerController.network(
-            ApiUrlsData.domain +
-                widget.postContent["videoPost"]["postContent"][0]["path"]
-                    .toString()));
+
+    _aspectRatio =
+        double.parse(widget.postContent["videoPost"]["aspectRatio"].toString());
 
     super.initState();
   }
@@ -202,35 +200,71 @@ class _FullVideoPostPlayerTemplateState
                   )),
 
           VisibilityDetector(
-            key: Key(widget.postContent["_id"].toString() +
-            widget.postContent["createdAt"].toString()),
-            onVisibilityChanged: (info) {
-              if (info.visibleFraction == 1.0) {
-                if (this.mounted) {
-                  setState(() {
-                    flickManager.flickControlManager.play();
-                  });
-                }
-              } else {
-                if (this.mounted) {
-                  setState(() {
-                    flickManager.flickControlManager.pause();
-                  });
-                }
-              }
-            },
-            child: Container(
-              child: FlickVideoPlayer(
-                flickManager: flickManager,
-                flickVideoWithControlsFullscreen: FlickVideoWithControls(
-                  controls: FlickLandscapeControls(),
-                ),
-                flickVideoWithControls: FlickVideoWithControls(
-                  controls: FlickPortraitControls(),
-                ),
-              ),
-            ),
-          ),
+              key: Key(widget.postContent["_id"].toString() +
+                  widget.postContent["createdAt"].toString()),
+              onVisibilityChanged: (info) {
+                _onVisibilityChangeController(info);
+              },
+              child: _showVideoPlayer
+                  ? Container(
+                      child: FlickVideoPlayer(
+                        flickManager: flickManager,
+                        flickVideoWithControlsFullscreen:
+                            FlickVideoWithControls(
+                          controls: FlickLandscapeControls(),
+                        ),
+                        flickVideoWithControls: FlickVideoWithControls(
+                          controls: FlickPortraitControls(),
+                        ),
+                      ),
+                    )
+                  : AspectRatio(
+                      aspectRatio: _aspectRatio,
+                      child: Container(
+                        child: Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: [
+                            Container(
+                              width: screenWidth,
+                              child: CachedNetworkImage(
+                                imageUrl: ApiUrlsData.domain +
+                                    widget.postContent["videoPost"]
+                                            ["postContent"][0]["thumbnail"]
+                                        .toString(),
+                                placeholder: (context, string) => Container(
+                                  width: screenWidth,
+                                  height: screenWidth,
+                                ),
+                                alignment: Alignment.topCenter,
+                                fit: BoxFit.fitWidth,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                height: 50.0,
+                                width: 50.0,
+                                decoration: BoxDecoration(
+                                    color: Colors.black38,
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    border: Border.all(
+                                        width: 2.0, color: Colors.white)),
+                                child: IconButton(
+                                  icon: Icon(Icons.play_arrow),
+                                  iconSize: 32.0,
+                                  onPressed: () {
+                                    _initialiseVideoPlayer();
+                                    setState(() {
+                                      _showVideoPlayer = true;
+                                    });
+                                  },
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )),
 
           Container(
             height: 50.0,
@@ -310,7 +344,7 @@ class _FullVideoPostPlayerTemplateState
               ],
             ),
           ),
-           widget.postContent["comments"] == null
+          widget.postContent["comments"] == null
               ? Container()
               : widget.postContent["comments"].length == 0
                   ? Container()
@@ -324,6 +358,49 @@ class _FullVideoPostPlayerTemplateState
         ],
       ),
     );
+  }
+
+  ///visibility change controller
+  _onVisibilityChangeController(VisibilityInfo info) {
+    if (info.visibleFraction>=0.9) {
+      if (!_showVideoPlayer) {
+        _initialiseVideoPlayer();
+        if (this.mounted) {
+          setState(() {
+            _showVideoPlayer = true;
+          });
+        }
+      } else if (_showVideoPlayer &&
+          !flickManager.flickVideoManager.isPlaying) {
+        flickManager.flickControlManager.play();
+        if (this.mounted) {
+          setState(() {});
+        }
+      }
+    } else {
+      try {
+        flickManager.flickControlManager.pause();
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
+  ///initialise video player
+  _initialiseVideoPlayer() {
+    flickManager = FlickManager(
+        autoPlay: false,
+        autoInitialize: true,
+        videoPlayerController: VideoPlayerController.network(
+            ApiUrlsData.domain +
+                widget.postContent["videoPost"]["postContent"][0]["path"]
+                    .toString()));
+
+    _aspectRatio = widget.postContent["videoPost"]["aspectRatio"] != null
+        ? double.parse(
+            widget.postContent["videoPost"]["aspectRatio"].toString())
+        : flickManager
+            .flickVideoManager.videoPlayerController.value.aspectRatio;
   }
 
   //edited description updater
