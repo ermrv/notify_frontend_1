@@ -221,35 +221,35 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                       widget.postContent["imagePost"]["templateType"]),
                 ),
 //total reactions count
-          Container(
-            alignment: Alignment.centerLeft,
-            child: _likes.length != 0
-                ? GestureDetector(
-                    onTap: () {
-                      Get.to(() => PostLikesDisplayPageScreen(
-                          postId: widget.postContent["_id"]));
-                    },
-                    child: Container(
-                      
-                     
-                      padding:
-                          EdgeInsets.only(top: 10.0,left:8.0,right: 8.0),
-                      child: Text(
-                        "${_likes.length} likes",
-                        style: TextStyle(fontSize: 14.0),
-                      ),
-                    ),
-                  )
-                : Container(
-                    margin: EdgeInsets.only(top: 10.0,left:8.0,right: 8.0),
-                    child: Text("Be the first to like",
-                        style: TextStyle(fontSize: 14.0)),
-                  ),
-          ),
           _isShared
               ? Container()
               : Container(
-                
+                  alignment: Alignment.centerLeft,
+                  child: _likes.length != 0
+                      ? GestureDetector(
+                          onTap: () {
+                            Get.to(() => PostLikesDisplayPageScreen(
+                                postId: widget.postContent["_id"]));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                top: 10.0, left: 8.0, right: 8.0),
+                            child: Text(
+                              "${_likes.length} likes",
+                              style: TextStyle(fontSize: 14.0),
+                            ),
+                          ),
+                        )
+                      : Container(
+                          margin:
+                              EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
+                          child: Text("Be the first to like",
+                              style: TextStyle(fontSize: 14.0)),
+                        ),
+                ),
+          _isShared
+              ? Container()
+              : Container(
                   height: 50.0,
                   width: screenWidth,
                   padding: EdgeInsets.symmetric(horizontal: 2.0),

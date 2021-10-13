@@ -27,7 +27,7 @@ class NotificationPageScreen extends StatelessWidget {
           )
         ],
       ),
-      body:controller.notificationsData==null?Center(
+      body:controller.notificationsData!=null?Center(
         heightFactor: 5.0,
         child: SpinKitThreeBounce(color: Colors.blue,size: 18.0,),
       ): ListView(

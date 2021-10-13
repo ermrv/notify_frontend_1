@@ -192,7 +192,9 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                   ),
                 ),
 //total reactions count
-          Container(
+        _isShared
+              ? Container()
+              :   Container(
             alignment: Alignment.centerLeft,
             child: _likes.length != 0
                 ? GestureDetector(

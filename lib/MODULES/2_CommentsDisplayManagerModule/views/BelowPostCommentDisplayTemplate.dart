@@ -88,10 +88,7 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: Container(
-                      height: 1.0,
-                      color: Theme.of(context).accentColor.withOpacity(0.5),
-                    ),
+                    child: Container(),
                   ),
                   Container(
                     child: commentCount == 1

@@ -214,8 +214,12 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                         ),
                         child: TextButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.resolveWith(
-                                (state) => Colors.transparent),
+                            backgroundColor:
+                                _vote == widget.postContent["pollPost"]["opOne"]
+                                    ? MaterialStateProperty.resolveWith(
+                                        (state) => Colors.blue.withOpacity(0.22))
+                                    : MaterialStateProperty.resolveWith(
+                                        (state) => Colors.transparent),
                           ),
                           onPressed: () {
                             setState(() {
@@ -228,34 +232,26 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           },
                           child: Row(
                             children: [
-                              Radio(
-                                  value: widget.postContent["pollPost"]["opOne"]
-                                      .toString(),
-                                  toggleable: true,
-                                  groupValue: _vote,
-                                  onChanged: (value) {
-                                    print(value);
-                                    setState(() {
-                                      _vote = value;
-                                    });
-                                  }),
                               Expanded(
-                                child: Text(
-                                  widget.postContent["pollPost"]["opOne"]
-                                      .toString(),
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.normal,
-                                      color: Theme.of(context)
-                                          .accentColor
-                                          .withOpacity(0.9)),
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 5.0),
+                                  child: Text(
+                                    widget.postContent["pollPost"]["opOne"]
+                                        .toString(),
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.normal,
+                                        color: Theme.of(context)
+                                            .accentColor
+                                            .withOpacity(0.9)),
+                                  ),
                                 ),
                               ),
                               _isPollCasted
                                   ? Text(
                                       ((opOnePolls.length / totalPolls.length) *
                                                   100)
-                                              .toString() +
+                                              .toStringAsFixed(2) +
                                           "%")
                                   : Container()
                             ],
@@ -274,8 +270,12 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                         ),
                         child: TextButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.resolveWith(
-                                (state) => Colors.transparent),
+                            backgroundColor:
+                                _vote == widget.postContent["pollPost"]["opTwo"]
+                                    ? MaterialStateProperty.resolveWith(
+                                        (state) => Colors.blue.withOpacity(0.22))
+                                    : MaterialStateProperty.resolveWith(
+                                        (state) => Colors.transparent),
                           ),
                           onPressed: () {
                             setState(() {
@@ -288,34 +288,26 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           },
                           child: Row(
                             children: [
-                              Radio(
-                                  value: widget.postContent["pollPost"]["opTwo"]
-                                      .toString(),
-                                  toggleable: true,
-                                  groupValue: _vote,
-                                  onChanged: (value) {
-                                    print(value);
-                                    setState(() {
-                                      _vote = value;
-                                    });
-                                  }),
                               Expanded(
-                                child: Text(
-                                  widget.postContent["pollPost"]["opTwo"]
-                                      .toString(),
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.normal,
-                                      color: Theme.of(context)
-                                          .accentColor
-                                          .withOpacity(0.9)),
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 5.0),
+                                  child: Text(
+                                    widget.postContent["pollPost"]["opTwo"]
+                                        .toString(),
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.normal,
+                                        color: Theme.of(context)
+                                            .accentColor
+                                            .withOpacity(0.9)),
+                                  ),
                                 ),
                               ),
                               _isPollCasted
                                   ? Text(
                                       ((opTwoPolls.length / totalPolls.length) *
                                                   100)
-                                              .toString() +
+                                              .toStringAsFixed(2) +
                                           "%")
                                   : Container()
                             ],
@@ -334,8 +326,12 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                         ),
                         child: TextButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.resolveWith(
-                                (state) => Colors.transparent),
+                            backgroundColor: _vote ==
+                                    widget.postContent["pollPost"]["opThree"]
+                                ? MaterialStateProperty.resolveWith(
+                                    (state) => Colors.blue.withOpacity(0.22))
+                                : MaterialStateProperty.resolveWith(
+                                    (state) => Colors.transparent),
                           ),
                           onPressed: () {
                             setState(() {
@@ -348,35 +344,26 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           },
                           child: Row(
                             children: [
-                              Radio(
-                                  value: widget.postContent["pollPost"]
-                                          ["opThree"]
-                                      .toString(),
-                                  toggleable: true,
-                                  groupValue: _vote,
-                                  onChanged: (value) {
-                                    print(value);
-                                    setState(() {
-                                      _vote = value;
-                                    });
-                                  }),
                               Expanded(
-                                child: Text(
-                                  widget.postContent["pollPost"]["opThree"]
-                                      .toString(),
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.normal,
-                                      color: Theme.of(context)
-                                          .accentColor
-                                          .withOpacity(0.9)),
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 5.0),
+                                  child: Text(
+                                    widget.postContent["pollPost"]["opThree"]
+                                        .toString(),
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.normal,
+                                        color: Theme.of(context)
+                                            .accentColor
+                                            .withOpacity(0.9)),
+                                  ),
                                 ),
                               ),
                               _isPollCasted
                                   ? Text(((opThreePolls.length /
                                                   totalPolls.length) *
                                               100)
-                                          .toString() +
+                                          .toStringAsFixed(2) +
                                       "%")
                                   : Container()
                             ],
@@ -395,8 +382,12 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                         ),
                         child: TextButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.resolveWith(
-                                (state) => Colors.transparent),
+                            backgroundColor: _vote ==
+                                    widget.postContent["pollPost"]["opFour"]
+                                ? MaterialStateProperty.resolveWith(
+                                    (state) => Colors.blue.withOpacity(0.22))
+                                : MaterialStateProperty.resolveWith(
+                                    (state) => Colors.transparent),
                           ),
                           onPressed: () {
                             setState(() {
@@ -409,35 +400,26 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           },
                           child: Row(
                             children: [
-                              Radio(
-                                  value: widget.postContent["pollPost"]
-                                          ["opFour"]
-                                      .toString(),
-                                  toggleable: true,
-                                  groupValue: _vote,
-                                  onChanged: (value) {
-                                    print(value);
-                                    setState(() {
-                                      _vote = value;
-                                    });
-                                  }),
                               Expanded(
-                                child: Text(
-                                  widget.postContent["pollPost"]["opFour"]
-                                      .toString(),
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.normal,
-                                      color: Theme.of(context)
-                                          .accentColor
-                                          .withOpacity(0.9)),
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 5.0),
+                                  child: Text(
+                                    widget.postContent["pollPost"]["opFour"]
+                                        .toString(),
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.normal,
+                                        color: Theme.of(context)
+                                            .accentColor
+                                            .withOpacity(0.9)),
+                                  ),
                                 ),
                               ),
                               _isPollCasted
                                   ? Text(((opFourPolls.length /
                                                   totalPolls.length) *
                                               100)
-                                          .toString() +
+                                          .toStringAsFixed(2) +
                                       "%")
                                   : Container()
                             ],
@@ -446,7 +428,6 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
               ],
             ),
           ),
-         
           Container(
             margin: EdgeInsets.only(left: 8.0, right: 8.0),
             child: Row(
@@ -477,7 +458,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                               style: TextStyle(fontSize: 14.0)),
                         ),
                 ),
-                 //total polls count
+                //total polls count
                 Container(
                   child: _isPollCasted && totalPolls.length != 0
                       ? Text(
@@ -489,7 +470,6 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
               ],
             ),
           ),
-
           Container(
             height: 50.0,
             width: screenWidth,

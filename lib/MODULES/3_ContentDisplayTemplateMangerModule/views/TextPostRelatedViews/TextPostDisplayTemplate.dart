@@ -181,31 +181,32 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                     colorClickableText: Colors.blue,
                   )),
           //total reactions count
-         Container(
-            alignment: Alignment.centerLeft,
-            child: _likes.length != 0
-                ? GestureDetector(
-                    onTap: () {
-                      Get.to(() => PostLikesDisplayPageScreen(
-                          postId: widget.postContent["_id"]));
-                    },
-                    child: Container(
-                      
-                     
-                      padding:
-                          EdgeInsets.only(top: 10.0,left:8.0,right: 8.0),
-                      child: Text(
-                        "${_likes.length} likes",
-                        style: TextStyle(fontSize: 14.0),
-                      ),
-                    ),
-                  )
-                : Container(
-                    margin: EdgeInsets.only(top: 10.0,left:8.0,right: 8.0),
-                    child: Text("Be the first to like",
-                        style: TextStyle(fontSize: 14.0)),
-                  ),
-          ),
+          _isShared
+              ? Container()
+              : Container(
+                  alignment: Alignment.centerLeft,
+                  child: _likes.length != 0
+                      ? GestureDetector(
+                          onTap: () {
+                            Get.to(() => PostLikesDisplayPageScreen(
+                                postId: widget.postContent["_id"]));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                top: 10.0, left: 8.0, right: 8.0),
+                            child: Text(
+                              "${_likes.length} likes",
+                              style: TextStyle(fontSize: 14.0),
+                            ),
+                          ),
+                        )
+                      : Container(
+                          margin:
+                              EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
+                          child: Text("Be the first to like",
+                              style: TextStyle(fontSize: 14.0)),
+                        ),
+                ),
           _isShared
               ? Container()
               : Container(
@@ -219,8 +220,8 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                       Container(
                         height: 40.0,
                         width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(right: 5.0),
                         child: IconButton(
                             padding: EdgeInsets.all(4.0),
                             icon: _likes.contains(
@@ -242,10 +243,10 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                       ),
                       //comment
                       Container(
-                       height: 40.0,
+                        height: 40.0,
                         width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(right: 5.0),
                         child: IconButton(
                             padding: EdgeInsets.all(4.0),
                             icon: Icon(
@@ -264,8 +265,8 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                       Container(
                         height: 40.0,
                         width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(right: 5.0),
                         child: IconButton(
                             icon: Icon(MaterialCommunityIcons.share),
                             onPressed: () {
@@ -294,7 +295,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                   : widget.postContent["comments"].length == 0
                       ? Container()
                       : BelowPostCommentDisplayTemplate(
-                        commentCount: _numberOfComments,
+                          commentCount: _numberOfComments,
                           commentData: widget.postContent["comments"][0],
                           postId: widget.postContent["_id"],
                           commentCountUpdater: (int count) {

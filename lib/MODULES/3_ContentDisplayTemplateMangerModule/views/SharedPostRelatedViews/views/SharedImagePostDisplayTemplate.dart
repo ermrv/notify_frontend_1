@@ -4,6 +4,7 @@ import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/BelowPostCommentDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImagePostDisplayTemplate.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PostLikesDisplayPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
@@ -190,6 +191,31 @@ class _SharedImagePostDisplayTemplateState
                   parentController: widget.parentController,
                 ),
               )),
+              //likes count
+              Container(
+                  alignment: Alignment.centerLeft,
+                  child: _likes.length != 0
+                      ? GestureDetector(
+                          onTap: () {
+                            Get.to(() => PostLikesDisplayPageScreen(
+                                postId: widget.postContent["_id"]));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                top: 10.0, left: 8.0, right: 8.0),
+                            child: Text(
+                              "${_likes.length} likes",
+                              style: TextStyle(fontSize: 14.0),
+                            ),
+                          ),
+                        )
+                      : Container(
+                          margin:
+                              EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
+                          child: Text("Be the first to like",
+                              style: TextStyle(fontSize: 14.0)),
+                        ),
+                ),
           //like comment and share button container
           Container(
                   height: 50.0,

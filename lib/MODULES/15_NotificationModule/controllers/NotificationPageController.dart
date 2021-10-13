@@ -15,7 +15,6 @@ class NotificationPageController extends GetxController {
   }
 
   getData() async {
-    String token = await NotificationServices.getFcmToken();
     // var response = await ApiServices.postWithAuth(
     //     ApiUrlsData.notifications, {}, userToken);
     // if (response == "error") {
