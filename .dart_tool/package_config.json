@@ -230,12 +230,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "foldable_sidebar",
-      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/foldable_sidebar-1.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.7"
-    },
-    {
       "name": "get",
       "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/get-3.26.0",
       "packageUri": "lib/",
@@ -626,7 +620,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-10-12T05:14:03.789969Z",
+  "generated": "2021-10-13T05:46:58.195038Z",
   "generator": "pub",
   "generatorVersion": "2.14.3"
 }
