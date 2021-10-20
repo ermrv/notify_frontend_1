@@ -15,13 +15,13 @@ class NotificationPageController extends GetxController {
   }
 
   getData() async {
-    // var response = await ApiServices.postWithAuth(
-    //     ApiUrlsData.notifications, {}, userToken);
-    // if (response == "error") {
-    //   Get.snackbar("Cannot get notifications", "some error occured");
-    // } else {
-    //   notificationsData = response;
-    //   update();
-    // }
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.allNotifications, {}, userToken);
+    if (response == "error") {
+      Get.snackbar("Cannot get notifications", "some error occured");
+    } else {
+      notificationsData = response;
+      update();
+    }
   }
 }

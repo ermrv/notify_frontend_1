@@ -141,6 +141,7 @@ abstract class ApiUrlsData {
 
   //..................................notifications........................
   static String notifications = "$domain/api/notification";
+  static String allNotifications="$domain/api/notifications";
 
   //......................................post details.....................
   static String specificPostDetail = "$domain/api/post/detail";
