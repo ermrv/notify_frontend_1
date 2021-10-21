@@ -9,10 +9,10 @@ abstract class TimeStampProvider {
     } else if (_difference > 0 && _difference <= 59) {
       return "$_difference min ago";
     } else if (_difference >= 60 && _difference / 60 <= 24) {
-      return "${(_difference ~/ 60)} hrs ago";
+      return "${(_difference ~/ 60)} hr ago";
     } else if ((_difference / 60) / 24 <2) {
       return "${(_difference ~/ 60) ~/ 24} day ago";
-    } else if ((_difference / 60) / 24 <= 5) {
+    } else if ((_difference / 60) / 24 <= 30) {
       return "${(_difference ~/ 60) ~/ 24} days ago";
     } else {
       return "${_givenTime.day}/${_givenTime.month}/${_givenTime.year}";

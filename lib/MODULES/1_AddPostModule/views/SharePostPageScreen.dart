@@ -131,6 +131,7 @@ class SharePostPageScreen extends StatelessWidget {
                 height: 15.0,
               ),
               Container(
+                margin: EdgeInsets.symmetric(horizontal: 5.0),
                 decoration: BoxDecoration(
                     border: Border.all(
                         width: 0.5,
@@ -139,9 +140,16 @@ class SharePostPageScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      child: CachedNetworkImage(
-                        imageUrl: ApiUrlsData.domain + postOwnerProfilePic,
+                    Container(
+                      padding: EdgeInsets.all(10.0),
+                      height: 50.0,
+                      width: 50.0,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50.0),
+                        child: CachedNetworkImage(
+                          imageUrl: ApiUrlsData.domain + postOwnerProfilePic,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     Text(

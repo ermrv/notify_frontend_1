@@ -41,9 +41,8 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
                 children: [
                   //profile pic
                   Container(
-                    margin: EdgeInsets.only(top: 3.0),
-                    height: 20.0,
-                    width: 20.0,
+                    height: 15.0,
+                    width: 15.0,
                     decoration: BoxDecoration(),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25.0),
@@ -57,26 +56,13 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
                   //name and comment container
                   Container(
                     padding: EdgeInsets.only(left: 5.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 2.0),
-                          child: Text(
-                            commentData["commentBy"]["name"].toString(),
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                            commentData["comment"].toString(),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                          text: commentData["commentBy"]["name"].toString(),
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      TextSpan(text: ": " + commentData["comment"].toString())
+                    ])),
                   )
                 ],
               ),

@@ -53,4 +53,12 @@ class OtherUserProfilePageController extends GetxController {
       update();
     }
   }
+
+  @override
+  void dispose() {
+    postData = null;
+    profileData = null;
+    profileOwnerId = null;
+    super.dispose();
+  }
 }

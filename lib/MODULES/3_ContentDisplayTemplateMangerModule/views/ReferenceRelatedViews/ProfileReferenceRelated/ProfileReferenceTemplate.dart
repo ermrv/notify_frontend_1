@@ -24,49 +24,58 @@ class _ProfileReferenceTemplateState extends State<ProfileReferenceTemplate> {
   @override
   Widget build(BuildContext context) {
     return widget.showVerticalTemplate
-        ? Container(
-            width: 150.0,
-            margin: EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: Theme.of(context).accentColor, width: 0.5),
-                borderRadius: BorderRadius.circular(5.0)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: 5.0),
-                  child: SizedBox(
-                    height: 130.0,
-                    width: 130,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100.0),
-                      child: AspectRatio(
-                          aspectRatio: 1.0,
-                          child: CachedNetworkImage(
-                            imageUrl: ApiUrlsData.domain +
-                                widget.userData["profilePic"].toString(),
-                            fit: BoxFit.cover,
-                          )),
+        ? GestureDetector(
+            onTap: () {
+              Get.to((OtherUserProfilePageScreen(
+                  profileOwnerId: widget.userData["_id"])));
+            },
+            child: Container(
+              width: 150.0,
+              margin: EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Theme.of(context).accentColor, width: 0.5),
+                  borderRadius: BorderRadius.circular(5.0)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 5.0),
+                    child: SizedBox(
+                      height: 130.0,
+                      width: 130,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100.0),
+                        child: AspectRatio(
+                            aspectRatio: 1.0,
+                            child: CachedNetworkImage(
+                              imageUrl: ApiUrlsData.domain +
+                                  widget.userData["profilePic"].toString(),
+                              fit: BoxFit.cover,
+                            )),
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  child: Text(
-                    widget.userData["name"].toString(),
-                    overflow: TextOverflow.ellipsis,
+                  Container(
+                    child: Text(
+                      widget.userData["name"].toString(),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                Container(
-                  height: 30.0,
-                  child: Container(
-                      alignment: Alignment.center,
-                      child: widget.userData["_id"] ==
-                              PrimaryUserData.primaryUserData.userId
-                          ? Container(height: 0,width: 0,)
-                          : getFollowButton(widget.userData["_id"], true)),
-                )
-              ],
+                  Container(
+                    height: 30.0,
+                    child: Container(
+                        alignment: Alignment.center,
+                        child: widget.userData["_id"] ==
+                                PrimaryUserData.primaryUserData.userId
+                            ? Container(
+                                height: 0,
+                                width: 0,
+                              )
+                            : getFollowButton(widget.userData["_id"], true)),
+                  )
+                ],
+              ),
             ),
           )
         : Container(
@@ -98,7 +107,10 @@ class _ProfileReferenceTemplateState extends State<ProfileReferenceTemplate> {
               //     controller.data[index]["userName"].toString()),
               trailing: widget.userData["_id"] ==
                       PrimaryUserData.primaryUserData.userId
-                  ? Container(height: 0,width: 0,)
+                  ? Container(
+                      height: 0,
+                      width: 0,
+                    )
                   : getFollowButton(widget.userData["_id"], false),
             ),
           );
