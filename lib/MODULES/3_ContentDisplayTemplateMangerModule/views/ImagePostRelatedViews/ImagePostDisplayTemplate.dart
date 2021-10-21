@@ -199,7 +199,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                         .capitalizeFirst,
                     style: TextStyle(
                         fontSize: 16.0,
-                        color: Theme.of(context).accentColor.withOpacity(0.9)),
+                        ),
                     trimLines: 7,
                     trimCollapsedText: "...more",
                     trimExpandedText: "  less",

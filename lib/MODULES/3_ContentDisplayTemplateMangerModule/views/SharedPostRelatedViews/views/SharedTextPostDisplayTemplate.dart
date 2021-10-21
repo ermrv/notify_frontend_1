@@ -163,8 +163,8 @@ class _SharedTextPostDisplayTemplateState
                   child: ReadMoreText(
                     widget.postContent["sharedDescription"].toString(),
                     style: TextStyle(
-                        fontSize: 15.0,
-                        color: Theme.of(context).accentColor.withOpacity(0.9)),
+                        fontSize: 16.0,
+                        ),
                     trimLines: 2,
                     trimCollapsedText: "...more",
                     trimExpandedText: "  less",

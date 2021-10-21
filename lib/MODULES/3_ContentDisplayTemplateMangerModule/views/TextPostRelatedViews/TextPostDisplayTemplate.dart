@@ -172,8 +172,8 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                         .toString()
                         .capitalizeFirst,
                     style: TextStyle(
-                        fontSize: 16.0,
-                        color: Theme.of(context).accentColor.withOpacity(0.9)),
+                      fontSize: 16.0,
+                    ),
                     trimLines: 10,
                     trimExpandedText: " less",
                     trimCollapsedText: "...more",

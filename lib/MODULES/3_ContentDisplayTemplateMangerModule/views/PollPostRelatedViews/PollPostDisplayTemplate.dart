@@ -194,8 +194,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           .capitalizeFirst,
                       style: TextStyle(
                           fontSize: 16.0,
-                          color:
-                              Theme.of(context).accentColor.withOpacity(0.9)),
+                          ),
                       trimLines: 8,
                       trimExpandedText: " less",
                       trimCollapsedText: "...more",
@@ -239,7 +238,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                     widget.postContent["pollPost"]["opOne"]
                                         .toString(),
                                     style: TextStyle(
-                                        fontSize: 15.0,
+                                        fontSize: 16.0,
                                         fontWeight: FontWeight.normal,
                                         color: Theme.of(context)
                                             .accentColor
