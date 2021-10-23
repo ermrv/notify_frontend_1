@@ -1,4 +1,5 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -56,12 +57,13 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
                   //name and comment container
                   Container(
                     padding: EdgeInsets.only(left: 5.0),
+                    width: screenWidth-25.0,
                     child: RichText(
                         text: TextSpan(children: [
                       TextSpan(
                           text: commentData["commentBy"]["name"].toString(),
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(text: ": " + commentData["comment"].toString())
+                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.0)),
+                      TextSpan(text: ": " + commentData["comment"].toString(),style: TextStyle(fontSize: 15.0))
                     ])),
                   )
                 ],
