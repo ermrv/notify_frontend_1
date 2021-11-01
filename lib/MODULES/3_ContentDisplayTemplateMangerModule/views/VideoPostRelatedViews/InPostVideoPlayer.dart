@@ -28,7 +28,7 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
     // _videoPlayerWidgetKey = Key(widget.postContent["_id"].toString() +
     //     widget.postContent["createdAt"].toString());
 
-    _aspectRatio =
+    _aspectRatio =widget.postContent["videoPost"]["aspectRatio"]==null?0.8:
         double.parse(widget.postContent["videoPost"]["aspectRatio"].toString());
     super.initState();
   }
@@ -275,7 +275,7 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
   }
 
   _videoPlayerControllerListener() async {
-    if (_videoPlayerController.value.position.inSeconds >= 20) {
+    if (_videoPlayerController.value.position.inSeconds >= 30) {
       if (_videoPlayerController.value.isPlaying) {
         _videoPlayerController.pause();
       }

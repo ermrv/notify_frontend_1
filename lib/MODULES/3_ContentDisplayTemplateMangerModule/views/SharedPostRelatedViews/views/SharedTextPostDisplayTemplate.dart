@@ -237,7 +237,7 @@ class _SharedTextPostDisplayTemplateState
                           : Icon(
                               EvilIcons.heart,
                               size: 28.0,
-                              color: Colors.white,
+                              color:Theme.of(context).iconTheme.color,
                             ),
                       onPressed: () {
                         reactionCountUpdater(_thisUserId);

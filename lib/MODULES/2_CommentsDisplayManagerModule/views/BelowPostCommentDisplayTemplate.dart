@@ -62,8 +62,8 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
                         text: TextSpan(children: [
                       TextSpan(
                           text: commentData["commentBy"]["name"].toString(),
-                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.0)),
-                      TextSpan(text: ": " + commentData["comment"].toString(),style: TextStyle(fontSize: 15.0))
+                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.0,color: Theme.of(context).textTheme.bodyText2.color)),
+                      TextSpan(text: ": " + commentData["comment"].toString(),style: TextStyle(fontSize: 15.0,color: Theme.of(context).textTheme.bodyText2.color))
                     ])),
                   )
                 ],

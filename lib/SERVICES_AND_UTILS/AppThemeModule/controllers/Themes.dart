@@ -10,7 +10,7 @@ class Themes {
     primaryColor: Colors.white,
     scaffoldBackgroundColor: Colors.white,
     cardColor: Colors.white,
-    brightness: Brightness.dark,
+    brightness: Brightness.light,
     //input border decoration theme
     inputDecorationTheme: InputDecorationTheme(
         focusedBorder: UnderlineInputBorder(
@@ -26,14 +26,20 @@ class Themes {
             color: Colors.blue,
             fontSize: 21.0,
             fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic)),
+            fontStyle: FontStyle.italic),
+            systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+            statusBarBrightness: Brightness.dark,
+            statusBarIconBrightness: Brightness.dark,
+            
+            ),),
     secondaryHeaderColor: Colors.blue,
     indicatorColor: Colors.blue,
 
     buttonTheme: ButtonThemeData(),
     accentColor: Colors.black,
     //icontheme
-    iconTheme: IconThemeData(color: Colors.blue, size: 18.0),
+    iconTheme: IconThemeData(color: Colors.black, size: 18.0),
     //textbutton theme
     //
     //
@@ -42,7 +48,7 @@ class Themes {
           side: MaterialStateProperty.resolveWith(
               (states) => BorderSide(color: Colors.blue[300], width: 0.5)),
           backgroundColor:
-              MaterialStateColor.resolveWith((states) => Colors.blue[100]),
+              MaterialStateColor.resolveWith((states) => Colors.white),
           padding: MaterialStateProperty.resolveWith(
               (states) => EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0)),
           minimumSize:
@@ -66,6 +72,7 @@ class Themes {
           textStyle: MaterialStateProperty.resolveWith((states) =>
               TextStyle(color: Colors.blue, fontWeight: FontWeight.w700))),
     ),
+    
   );
 
   //.................................dark theme data...............................
@@ -96,6 +103,7 @@ class Themes {
       buttonTheme: ButtonThemeData(
         buttonColor: Colors.grey[800],
       ),
+      iconTheme: IconThemeData(color: Colors.white),
       //textbutton theme
       //
       //
@@ -104,13 +112,13 @@ class Themes {
             side: MaterialStateProperty.resolveWith(
                 (states) => BorderSide(color: Colors.grey[600], width: 0.5)),
             backgroundColor:
-                MaterialStateColor.resolveWith((states) => Colors.grey[800]),
+                MaterialStateColor.resolveWith((states) => Colors.black),
             padding: MaterialStateProperty.resolveWith((states) =>
                 EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0)),
             minimumSize:
                 MaterialStateProperty.resolveWith((states) => Size(50.0, 5.0)),
             textStyle: MaterialStateProperty.resolveWith((states) =>
-                TextStyle(color: Colors.white, fontWeight: FontWeight.w700))),
+                TextStyle( fontWeight: FontWeight.w700))),
       ),
 
       //elevated button theme

@@ -1,5 +1,6 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
+import 'package:MediaPlus/MODULES/10_PostPromotionModule/views/EstimatedBudgetPageScreen.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/BelowPostCommentDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
@@ -134,6 +135,18 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                 Expanded(
                   child: Container(),
                 ),
+                _isOwner
+                    ? Container(
+                        child: TextButton(
+                          onPressed: () {
+                            Get.to(() => EstimatedBudgetPageScreen(
+                                  postId: widget.postContent["_id"].toString(),
+                                ));
+                          },
+                          child: Text("Promote"),
+                        ),
+                      )
+                    : Container(),
 
                 //actions on post
                 widget.parentController != null
@@ -235,7 +248,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                                 : Icon(
                                     EvilIcons.heart,
                                     size: 28.0,
-                                    color: Colors.white,
+                                    color:Theme.of(context).iconTheme.color
                                   ),
                             onPressed: () {
                               reactionCountUpdater(_thisUserId);

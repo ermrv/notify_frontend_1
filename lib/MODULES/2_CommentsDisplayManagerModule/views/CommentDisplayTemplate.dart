@@ -221,7 +221,6 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
                       widget.data["comment"].toString(),
                       style: TextStyle(fontSize: 16.0),
                     )),
-                //comment details container
                 Container(
                   margin: EdgeInsets.only(top: 10.0),
                   child: Row(

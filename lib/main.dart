@@ -11,7 +11,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:double_back_to_close/double_back_to_close.dart';
 
-
 //handling the background notification
 Future<void> _backgroundNotificationHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -46,10 +45,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: themeController.getTheme("dark"),
+        theme: ThemeMode.system == ThemeMode.dark
+            ? themeController.getTheme("dark")
+            : themeController.getTheme("light"),
         home: DoubleBack(
-          message: "Press back again to exit",
-          
-          child: UserAuthScreen()));
+            message: "Press back again to exit", child: UserAuthScreen()));
   }
 }

@@ -273,16 +273,18 @@ class _ShortVideoPlayerTemplateState extends State<ShortVideoPlayerTemplate> {
               child: Container(
                 padding: EdgeInsets.only(left: 5.0),
                 alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(bottom: 10.0),
+                margin: EdgeInsets.only(bottom: 10.0,left: 10.0),
+                width: screenWidth,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
                           child: Text(
-                            "@" +
+                           
                                 widget.postContent["videoPost"]["postBy"]
                                         ["name"]
                                     .toString(),

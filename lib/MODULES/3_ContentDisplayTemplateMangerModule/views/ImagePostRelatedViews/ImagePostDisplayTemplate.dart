@@ -275,7 +275,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                                 : Icon(
                                     EvilIcons.heart,
                                     size: 28.0,
-                                    color: Colors.white,
+                                    color:Theme.of(context).iconTheme.color
                                   ),
                             onPressed: () {
                               reactionCountUpdater(_thisUserId);

@@ -18,7 +18,6 @@ class ExplorePageScreen extends StatelessWidget {
     return GetBuilder<ExplorePageController>(
       builder: (controller) => Scaffold(
           appBar: AppBar(
-            elevation: 1.0,
             backgroundColor: Theme.of(context).primaryColor,
             title: Text("Explore"),
             actions: [

@@ -226,10 +226,10 @@ class AddPostPageController extends GetxController {
 
     _flutterImageUploader.result.listen((result) {
       if (result.status == UploadTaskStatus.complete) {
-         try {
-        final controller = Get.find<OwnProfilePageScreenController>();
-        controller.getRecentPostsData();
-      } catch (e) {}
+        try {
+          final controller = Get.find<OwnProfilePageScreenController>();
+          controller.getRecentPostsData();
+        } catch (e) {}
       }
     });
 
@@ -238,6 +238,10 @@ class AddPostPageController extends GetxController {
 
   ///....................to upload video................................
   uploadVideo() async {
+    String filePath = videoFile.path;
+    List _temp = filePath.split("/").toList();
+    String savedDir = _temp.getRange(0, _temp.length - 1).join("/").toString();
+    print(savedDir);
     FlutterUploader _flutterVideoUploader = FlutterUploader();
     final taskId = await _flutterVideoUploader.enqueue(
       url: ApiUrlsData.addVideoPost,
@@ -262,10 +266,10 @@ class AddPostPageController extends GetxController {
     );
     _flutterVideoUploader.result.listen((result) {
       if (result.status == UploadTaskStatus.complete) {
-         try {
-        final controller = Get.find<OwnProfilePageScreenController>();
-        controller.getRecentPostsData();
-      } catch (e) {}
+        try {
+          final controller = Get.find<OwnProfilePageScreenController>();
+          controller.getRecentPostsData();
+        } catch (e) {}
       }
     });
 

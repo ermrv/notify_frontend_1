@@ -42,14 +42,17 @@ class MainNavigationScreen extends StatelessWidget {
                     CustomBottomNavigationItem(
                       icon: Icons.home,
                       label: 'Home',
+                      color:Colors.blue
                     ),
                     CustomBottomNavigationItem(
                       icon: Icons.explore,
                       label: 'Explore',
+                      color:Colors.blue
                     ),
                     CustomBottomNavigationItem(
                       icon: Icons.music_video,
                       label: 'Shorts',
+                      color:Colors.blue
                     ),
                     CustomBottomNavigationItem(
                       suffix: Text(
@@ -61,11 +64,13 @@ class MainNavigationScreen extends StatelessWidget {
                       ),
                       icon: Icons.notifications,
                       label: 'Notifications',
+                      color:Colors.blue
                     ),
                     CustomBottomNavigationItem(
                       imageUrl: PrimaryUserData.primaryUserData.profilePic.value
                           .toString(),
                       label: 'Profile',
+                      color:Colors.blue
                     )
                   ],
                 ),
