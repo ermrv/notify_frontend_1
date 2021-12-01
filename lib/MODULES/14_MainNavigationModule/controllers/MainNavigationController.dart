@@ -1,4 +1,3 @@
-import 'package:MediaPlus/MODULES/17_ShortVideoPlayerModule/views/ShortVideoPlayerPageScreen.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/AddPostPageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

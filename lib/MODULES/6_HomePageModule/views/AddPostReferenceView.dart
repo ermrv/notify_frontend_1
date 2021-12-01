@@ -2,7 +2,6 @@ import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/AddPostPageScreen.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/CreateEventPageScreen.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/CreatePollPageScreen.dart';
-import 'package:MediaPlus/MODULES/4_ContestingModule/ContestHostingModule/views/CreateContestScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

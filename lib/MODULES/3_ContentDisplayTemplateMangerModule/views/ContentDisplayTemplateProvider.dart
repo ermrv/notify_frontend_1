@@ -3,7 +3,6 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Ref
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ShortVideosPostReferenceLayout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ContestPostRelatedViews/ContestPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/EventPostRelatedViews/EventPostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImagePostDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PollPostRelatedViews/PollPostDisplayTemplate.dart';
@@ -63,11 +62,11 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
         }
         break;
 
-      //for contest post
-      case "contest":
-        // return Container();
-        return ContestPostDisplayTemplate(postContent: content);
-        break;
+      // //for contest post
+      // case "contest":
+      //   // return Container();
+      //   return ContestPostDisplayTemplate(postContent: content);
+      //   break;
 
       //for poll post
       case "poll":

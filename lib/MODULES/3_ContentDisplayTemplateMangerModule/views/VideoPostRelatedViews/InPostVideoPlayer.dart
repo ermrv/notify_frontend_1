@@ -1,6 +1,5 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
-import 'package:MediaPlus/MODULES/17_ShortVideoPlayerModule/views/ShortVideoPlayerPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/VideoPostFeedPlayerPageScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -50,8 +49,8 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
       onTap: () {
         if (widget.postContent["videoPost"]["shortVideo"].toString() ==
             "true") {
-          Get.to(() =>
-              ShortVideoPlayerPageScreen(postContent: widget.postContent));
+          // Get.to(() =>
+          //     ShortVideoPlayerPageScreen(postContent: widget.postContent));
         } else {
           Get.to(() => VideoPostFeedPlayerPageScreen(
                 postContent: widget.postContent,
@@ -188,8 +187,8 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
                               if (widget.postContent["videoPost"]["shortVideo"]
                                       .toString() ==
                                   "true") {
-                                Get.to(() => ShortVideoPlayerPageScreen(
-                                    postContent: widget.postContent));
+                                // Get.to(() => ShortVideoPlayerPageScreen(
+                                //     postContent: widget.postContent));
                               } else {
                                 Get.to(() => VideoPostFeedPlayerPageScreen(
                                       postContent: widget.postContent,

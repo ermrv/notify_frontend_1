@@ -1,5 +1,4 @@
 import 'package:MediaPlus/MODULES/15_NotificationModule/NotificationPage.dart';
-import 'package:MediaPlus/MODULES/17_ShortVideoPlayerModule/views/ShortVideoPlayerPageScreen.dart';
 import 'package:MediaPlus/MODULES/5_ExplorePageModule/views/ExplorePageDisplayScreen.dart';
 
 import 'package:MediaPlus/MODULES/6_HomePageModule/views/HomePageScreen.dart';
@@ -83,7 +82,7 @@ class MainNavigationScreen extends StatelessWidget {
                 children: [
                   HomeScreen(),
                   ExplorePageDisplayScreen(),
-                  ShortVideoPlayerPageScreen(),
+                  Container(),
                   NotificationPage(),
                   UserProfileScreen(
                     profileOwnerId: PrimaryUserData.primaryUserData.userId,
