@@ -10,8 +10,7 @@ import 'package:get/get.dart';
 class SecondaryUserActionsOnProfile extends StatefulWidget {
   final String profileId;
 
-  const SecondaryUserActionsOnProfile(
-      {Key key, @required this.profileId})
+  const SecondaryUserActionsOnProfile({Key key, @required this.profileId})
       : super(key: key);
 
   @override
@@ -32,56 +31,41 @@ class _SecondaryUserActionsOnProfileState
       padding: EdgeInsets.only(top: 8.0, bottom: 4.0),
       margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            height: 25.0,
-            width: screenWidth * 0.9,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: _getFollowButton(),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextButton(
-                      child: Container(
-                          alignment: Alignment.center, child: Text("Photos")),
-                      onPressed: () {
-                        Get.to(() => CommonPostDisplayPageScreen(
-                              title: "Photos",
-                              apiUrl: ApiUrlsData.otherUserPosts,
-                              apiData: {
-                                "type": "image",
-                                "userId": widget.profileId
-                              },
-                            ));
-                      }),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextButton(
-                      child: Container(
-                          alignment: Alignment.center, child: Text("Videos")),
-                      onPressed: () {
-                        Get.to(() => CommonPostDisplayPageScreen(
-                              title: "Videos",
-                              apiUrl: ApiUrlsData.otherUserPosts,
-                              apiData: {
-                                "type": "video",
-                                "userId": widget.profileId
-                              },
-                            ));
-                      }),
-                ),
-              ],
-            ),
+            margin: EdgeInsets.symmetric(horizontal: 8.0),
+            child: _getFollowButton(),
           ),
-
-          ///to navigate to the grid view of the psots
-          Icon(Icons.keyboard_arrow_right)
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 8.0),
+            child: TextButton(
+                child: Container(
+                    alignment: Alignment.center, child: Text("Shared")),
+                onPressed: () {
+                  Get.to(() => CommonPostDisplayPageScreen(
+                        title: "Shared",
+                        apiUrl: ApiUrlsData.otherUserPosts,
+                        apiData: {"type": "image", "userId": widget.profileId},
+                      ));
+                }),
+          ),
+          // Container(
+          //   margin: EdgeInsets.symmetric(horizontal: 8.0),
+          //   child: TextButton(
+          //       child: Container(
+          //           alignment: Alignment.center, child: Text("Videos")),
+          //       onPressed: () {
+          //         Get.to(() => CommonPostDisplayPageScreen(
+          //               title: "Videos",
+          //               apiUrl: ApiUrlsData.otherUserPosts,
+          //               apiData: {
+          //                 "type": "video",
+          //                 "userId": widget.profileId
+          //               },
+          //             ));
+          //       }),
+          // ),
         ],
       ),
     );

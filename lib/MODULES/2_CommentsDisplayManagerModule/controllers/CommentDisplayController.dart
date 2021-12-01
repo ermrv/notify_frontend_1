@@ -9,7 +9,7 @@ class CommentDisplayController extends GetxController {
   Function(int) commentCountUpdater;
   String postId;
   double bottomSheetHeight = 50.0;
-  List comments = [].obs;
+  List comments = [];
   bool isCommentsLoaded = false;
   TextEditingController commentEditingController,
       subCommentEditingController,
@@ -49,9 +49,11 @@ class CommentDisplayController extends GetxController {
       print("error");
     } else {
       comments.insert(0, response);
+      update();
+
       print(response);
       commentEditingController.text = "";
-      update();
+
       commentCountUpdater.call(comments.length);
     }
   }

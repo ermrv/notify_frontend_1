@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-const double _containerWidth = 65.0;
+const double _containerWidth = 60.0;
 
 class TrendingPostReferenceTemplate extends StatelessWidget {
   final List data;
@@ -16,7 +16,7 @@ class TrendingPostReferenceTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 5.0),
+      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
       height: _containerWidth + 16,
       child: ListView(
         key: PageStorageKey("tendingPostReferenceTemplateKey"),
@@ -78,7 +78,7 @@ class _Template extends StatelessWidget {
             trendingPostIdList: data, initialIndex: initialIndex));
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 3.0),
+        margin: EdgeInsets.only(right: 3.0),
         height: _containerWidth,
         width: _containerWidth,
         decoration: BoxDecoration(
@@ -87,7 +87,7 @@ class _Template extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(
-            50.0,
+            40.0,
           ),
           child:CachedNetworkImage(
                   imageUrl:

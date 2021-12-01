@@ -22,7 +22,7 @@ class MainNavigationController extends GetxController {
   pageTransitionHandler(int index) {
     print(index);
     if (index == 2) {
-      Get.to(() => ShortVideoPlayerPageScreen());
+      Get.to(() => AddPostPageScreen());
     } else {
       pageController.jumpToPage(
         index,

@@ -7,6 +7,7 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.d
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/TextParser/CommentTextWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -217,9 +218,10 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
                 Container(
                     margin: EdgeInsets.only(top: 5.0),
                     width: widget.commentBoxWidth,
-                    child: Text(
-                      widget.data["comment"].toString(),
-                      style: TextStyle(fontSize: 16.0),
+                    child: CommentTextWidget(
+                      tags: [],
+                      mentions: [],
+                      commentText: widget.data["comment"].toString(),
                     )),
                 Container(
                   margin: EdgeInsets.only(top: 10.0),
@@ -250,7 +252,8 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
                                       : Icon(
                                           Icons.favorite_border,
                                           size: 20.0,
-                                          color: Colors.white,
+                                          color:
+                                              Theme.of(context).iconTheme.color,
                                         ),
                                 )),
                             Text("$_numberOfReactions",
@@ -264,7 +267,7 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
                           margin: EdgeInsets.symmetric(horizontal: 5.0)),
                       GestureDetector(
                         onTap: () {
-                          _replyToComment(widget.commentId,controller);
+                          _replyToComment(widget.commentId, controller);
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -350,17 +353,19 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
   }
 
   ///.......................replay to a comment.......................
-  _replyToComment(String commentId,CommentDisplayController controller) {
+  _replyToComment(String commentId, CommentDisplayController controller) {
     Get.bottomSheet(
-      ReplyToCommentTemplate(commentId:commentId, controller:controller, commentData: widget.data)
-    );
+        ReplyToCommentTemplate(commentId: commentId, commentData: widget.data));
   }
 
   ///......................................edit comment......................................
   _commentEditor(String commentId, String initialComment) {
     controller.editCommentController.text = initialComment;
     Get.bottomSheet(
-      EditPreviousCommentTemplate(commentData:widget.data, commentId: commentId, controller: controller, initialComment: initialComment),
+      EditPreviousCommentTemplate(
+          commentData: widget.data,
+          commentId: commentId,
+          initialComment: initialComment),
     );
   }
 
@@ -368,8 +373,10 @@ class _CommentDisplayTemplateState extends State<CommentDisplayTemplate> {
   _subCommentEditor(
       String commentId, String subCommentId, String initialSubComment) {
     controller.editSubCommentController.text = initialSubComment;
-    Get.bottomSheet(
-      EditPreviousSubCommentTemplate(subCommentData:widget.data, subCommentId: subCommentId, commentId: commentId, initialSubComment: initialSubComment, controller: controller)
-    );
+    Get.bottomSheet(EditPreviousSubCommentTemplate(
+        subCommentData: widget.data,
+        subCommentId: subCommentId,
+        commentId: commentId,
+        initialSubComment: initialSubComment));
   }
 }

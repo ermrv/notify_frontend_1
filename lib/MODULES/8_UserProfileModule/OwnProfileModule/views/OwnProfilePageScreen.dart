@@ -7,6 +7,7 @@ import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/Pri
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/PrimaryUserBasicInfoContainer.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
@@ -19,38 +20,30 @@ class OwnProfilePageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<OwnProfilePageScreenController>(
       builder: (controller) => Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          elevation: 0.0,
-        ),
-        body: MediaQuery.removePadding(
-            context: context,
-            child: ListView(
-              key: PageStorageKey("ownProfilePageScreen"),
-              controller: controller.scrollController,
-              children: [
-                PrimaryUserBasicInfoContainer(),
+        body: ListView(
+          key: PageStorageKey("ownProfilePageScreen"),
+          controller: controller.scrollController,
+          children: [
+            PrimaryUserBasicInfoContainer(),
 
-                PrimaryUserActionsOnProfile(),
+            PrimaryUserActionsOnProfile(),
 
-                controller.profilePostData == null
+            controller.profilePostData == null
+                ? Center(
+                    child: SpinKitPulse(
+                      color: Colors.blue,
+                    ),
+                  )
+                : controller.profilePostData.length == 0
                     ? Center(
-                        child: SpinKitPulse(
-                          color: Colors.blue,
-                        ),
+                        child: Text("No posts yet!!!"),
                       )
-                    : controller.profilePostData.length == 0
-                        ? Center(
-                            child: Text("No posts yet!!!"),
-                          )
-                        : ContentDisplayTemplateProvider(
-                            data: controller.profilePostData,
-                            controller: controller,
-                          )
-              ],
-            )),
+                    : ContentDisplayTemplateProvider(
+                        data: controller.profilePostData,
+                        controller: controller,
+                      )
+          ],
+        ),
       ),
     );
   }

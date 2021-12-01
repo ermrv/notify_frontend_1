@@ -59,12 +59,8 @@ class OTPInputScreen extends StatelessWidget {
                                               style: TextStyle(
                                                   fontSize: 18.0,
                                                   fontWeight: FontWeight.w600)),
-                                          RaisedButton(
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.0)),
-                                              elevation: 0,
+                                          TextButton(
+                                             
                                               child: Text(
                                                 "CHANGE",
                                                 style: TextStyle(

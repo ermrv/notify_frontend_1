@@ -40,8 +40,6 @@ class AddPostPageController extends GetxController {
   String templateType;
   //compressed images and videos in Uint8Lst
   //ready to be uploaded
-  List<Uint8List> compressedImages;
-  Uint8List compressedVideo;
   Uint8List compressedThumbnail;
 
   ///autosuggestions
@@ -99,9 +97,6 @@ class AddPostPageController extends GetxController {
     showBottomNavbar = true;
     templateType = null;
 
-    ///all compressed images and videoes are set to null
-    compressedImages = null;
-    compressedVideo = null;
     compressedThumbnail = null;
     update();
   }
@@ -158,7 +153,6 @@ class AddPostPageController extends GetxController {
       for (Uint8List i in _temp) {
         Get.snackbar((i.lengthInBytes / 1000).toString(), "message");
       }
-      compressedImages = _temp;
       uploadImages();
     }
 
@@ -191,7 +185,7 @@ class AddPostPageController extends GetxController {
         final controller = Get.find<OwnProfilePageScreenController>();
         controller.getRecentPostsData();
       } catch (e) {}
-      Get.back();
+      Get.offAll(MainNavigationScreen(tabNumber: 0,));
     }
   }
 
@@ -233,7 +227,7 @@ class AddPostPageController extends GetxController {
       }
     });
 
-    Get.back();
+    Get.offAll(MainNavigationScreen(tabNumber: 0,));
   }
 
   ///....................to upload video................................
@@ -274,7 +268,7 @@ class AddPostPageController extends GetxController {
     });
 
     ///navigate to the news feed screen
-    Get.back();
+    Get.offAll(MainNavigationScreen(tabNumber: 0,));
   }
 //---------------------------------------------user and tags suggestins related--------------------------------
 

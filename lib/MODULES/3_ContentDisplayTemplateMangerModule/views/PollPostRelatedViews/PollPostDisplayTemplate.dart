@@ -13,6 +13,7 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/TextParser/PostDescriptionWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -188,19 +189,13 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                     padding: EdgeInsets.only(
                         top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
                     alignment: Alignment.centerLeft,
-                    child: ReadMoreText(
-                      widget.postContent["pollPost"]["description"]
-                          .toString()
-                          .capitalizeFirst,
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          ),
-                      trimLines: 8,
-                      trimExpandedText: " less",
-                      trimCollapsedText: "...more",
-                      trimMode: TrimMode.Line,
-                      colorClickableText: Colors.blue,
-                    )),
+                    child: PostDescriptionWidget(
+                        tags: [],
+                        mentions: [],
+                        description: widget.postContent["pollPost"]
+                                ["description"]
+                            .toString(),
+                        postType: "pollPost")),
                 //option one
                 widget.postContent["pollPost"]["opOne"] == null
                     ? Container()
@@ -213,12 +208,12 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                         ),
                         child: TextButton(
                           style: ButtonStyle(
-                            backgroundColor:
-                                _vote == widget.postContent["pollPost"]["opOne"]
-                                    ? MaterialStateProperty.resolveWith(
-                                        (state) => Colors.blue.withOpacity(0.22))
-                                    : MaterialStateProperty.resolveWith(
-                                        (state) => Colors.transparent),
+                            backgroundColor: _vote ==
+                                    widget.postContent["pollPost"]["opOne"]
+                                ? MaterialStateProperty.resolveWith(
+                                    (state) => Colors.blue.withOpacity(0.22))
+                                : MaterialStateProperty.resolveWith(
+                                    (state) => Colors.transparent),
                           ),
                           onPressed: () {
                             setState(() {
@@ -269,12 +264,12 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                         ),
                         child: TextButton(
                           style: ButtonStyle(
-                            backgroundColor:
-                                _vote == widget.postContent["pollPost"]["opTwo"]
-                                    ? MaterialStateProperty.resolveWith(
-                                        (state) => Colors.blue.withOpacity(0.22))
-                                    : MaterialStateProperty.resolveWith(
-                                        (state) => Colors.transparent),
+                            backgroundColor: _vote ==
+                                    widget.postContent["pollPost"]["opTwo"]
+                                ? MaterialStateProperty.resolveWith(
+                                    (state) => Colors.blue.withOpacity(0.22))
+                                : MaterialStateProperty.resolveWith(
+                                    (state) => Colors.transparent),
                           ),
                           onPressed: () {
                             setState(() {
@@ -495,7 +490,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                           : Icon(
                               EvilIcons.heart,
                               size: 28.0,
-                              color:Theme.of(context).iconTheme.color,
+                              color: Theme.of(context).iconTheme.color,
                             ),
                       onPressed: () {
                         reactionCountUpdater(_thisUserId);
@@ -529,16 +524,8 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                   margin: EdgeInsets.only(right: 5.0),
                   child: IconButton(
                       icon: Icon(MaterialCommunityIcons.share),
-                      onPressed: () {
-                        Get.to(() => SharePostPageScreen(
-                              postId: widget.postContent["imagePost"]["_id"],
-                              postOwnerName: widget.postContent["imagePost"]
-                                  ["postBy"]["name"],
-                              postOwnerProfilePic:
-                                  widget.postContent["imagePost"]["postBy"]
-                                      ["profilePic"],
-                            ));
-                      }),
+                      color: Theme.of(context).iconTheme.color.withOpacity(0.2),
+                      onPressed: () {}),
                 ),
                 Expanded(
                   child: Container(),

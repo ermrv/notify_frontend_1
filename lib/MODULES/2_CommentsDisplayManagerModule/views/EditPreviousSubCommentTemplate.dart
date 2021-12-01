@@ -10,7 +10,7 @@ class EditPreviousSubCommentTemplate extends StatefulWidget {
   final String subCommentId;
   final String commentId;
   final String initialSubComment;
-  final CommentDisplayController controller;
+  
 
   const EditPreviousSubCommentTemplate(
       {Key key,
@@ -18,7 +18,7 @@ class EditPreviousSubCommentTemplate extends StatefulWidget {
       @required this.subCommentId,
       @required this.commentId,
       @required this.initialSubComment,
-      @required this.controller})
+     })
       : super(key: key);
 
   @override
@@ -28,24 +28,18 @@ class EditPreviousSubCommentTemplate extends StatefulWidget {
 
 class _EditPreviousSubCommentTemplateState
     extends State<EditPreviousSubCommentTemplate> {
+       final controller = Get.find<CommentDisplayController>();
   bool _showSendButton = false;
   double _bottomSheetHeight = 80.0;
   @override
   void initState() {
     _showSendButton = widget.initialSubComment != null;
-    _bottomSheetHeight = 80.0 +
-        (widget.controller
-                .getNumberOfLines(widget.initialSubComment)
-                .toDouble()) *
-            18;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-     
-      height: _bottomSheetHeight,
       padding: EdgeInsets.only(top: 5.0, right: 2.0, left: 2.0),
       decoration: BoxDecoration(
          color: Theme.of(context).scaffoldBackgroundColor,
@@ -77,10 +71,7 @@ class _EditPreviousSubCommentTemplateState
             alignment: Alignment.center,
             padding: EdgeInsets.only(left: 2.0, right: 2.0),
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25.0),
-                border: Border.all(),
-              ),
+             
               padding: EdgeInsets.symmetric(
                 horizontal: 5.0,
               ),
@@ -113,15 +104,16 @@ class _EditPreviousSubCommentTemplateState
                             child: TextFormField(
                               autofocus: true,
                               controller:
-                                  widget.controller.editSubCommentController,
+                                  controller.editSubCommentController,
                               keyboardType: TextInputType.multiline,
+                              textCapitalization: TextCapitalization.sentences,
                               maxLines: null,
                               onChanged: (value) {
-                                _bottomSheetHeight = 80.0 +
-                                    (widget.controller
-                                            .getNumberOfLines(value.toString())
-                                            .toDouble()) *
-                                        18;
+                                // _bottomSheetHeight = 80.0 +
+                                //     (widget.controller
+                                //             .getNumberOfLines(value.toString())
+                                //             .toDouble()) *
+                                //         18;
                                 setState(() {
                                   _showSendButton = value.toString() != "";
                                 });
@@ -141,7 +133,7 @@ class _EditPreviousSubCommentTemplateState
                                   Icons.send,
                                 ),
                                 onPressed: () {
-                                  widget.controller.editSubComment(
+                                  controller.editSubComment(
                                       widget.commentId, widget.subCommentId);
                                 })
                             : Container()

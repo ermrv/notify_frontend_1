@@ -1,4 +1,5 @@
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/controllers/CommentDisplayController.dart';
+import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/AddNewCommentTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayLayout.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -22,67 +23,38 @@ class CommentsDisplayScreen extends StatelessWidget {
         commentsDisplayController.commentCountUpdater = commentCountUpdater;
       },
       builder: (controller) => Scaffold(
+       
         bottomSheet: Container(
-          height:controller.bottomSheetHeight,
-          padding: EdgeInsets.only(left: 2.0, right: 2.0),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: 8.0),
-                  height: 25.0,
-                  width: 25.0,
-                  decoration: BoxDecoration(shape: BoxShape.circle),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25.0),
-                      child: Obx(
-                        () => CachedNetworkImage(
-                          imageUrl:
-                              PrimaryUserData.primaryUserData.profilePic.value,
-                          fit: BoxFit.cover,
-                        ),
-                      )),
-                ),
-                Expanded(
-                    child: Container(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          child: TextFormField(
-                            controller: controller.commentEditingController,
-                            onChanged: (value) {
-                              controller.update();
-                              controller.getNumberOfLines(value);
-                            },
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                hintText: "Add Comment"),
+          height: 50.0,
+          padding: EdgeInsets.only(left: 10.0, right: 10.0),
+          child: GestureDetector(
+            onTap: () {
+              Get.bottomSheet(AddNewCommentTemplate());
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(right: 8.0),
+                    height: 25.0,
+                    width: 25.0,
+                    decoration: BoxDecoration(shape: BoxShape.circle),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(25.0),
+                        child: Obx(
+                          () => CachedNetworkImage(
+                            imageUrl: PrimaryUserData
+                                .primaryUserData.profilePic.value,
+                            fit: BoxFit.cover,
                           ),
-                        ),
-                      ),
-                      controller.commentEditingController.text == ""
-                          ? Container()
-                          : IconButton(
-                              icon: Icon(
-                                Icons.send,
-                                color: Colors.blue,
-                              ),
-                              onPressed: () {
-                                controller.addComment(
-                                    controller.commentEditingController.text);
-                              })
-                    ],
+                        )),
                   ),
-                ))
-              ],
+                  Expanded(child: Container(child: Text("Add a  Comment",style: TextStyle(fontSize: 15.0),)))
+                ],
+              ),
             ),
           ),
         ),
@@ -108,6 +80,9 @@ class CommentsDisplayScreen extends StatelessWidget {
                           CommentsDisplayLayout(
                             commentData: i,
                           ),
+                          Container(
+                            height: 50.0,
+                          )
                       ],
                     ),
                   )

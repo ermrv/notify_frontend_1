@@ -13,6 +13,7 @@ import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/TextParser/PostDescriptionWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -180,19 +181,12 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                   padding: EdgeInsets.only(
                       top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
                   alignment: Alignment.centerLeft,
-                  child: ReadMoreText(
-                    widget.postContent["textPost"]["description"]
-                        .toString()
-                        .capitalizeFirst,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                    ),
-                    trimLines: 10,
-                    trimExpandedText: " less",
-                    trimCollapsedText: "...more",
-                    trimMode: TrimMode.Line,
-                    colorClickableText: Colors.blue,
-                  )),
+                  child: PostDescriptionWidget(
+                      tags: [],
+                      mentions: [],
+                      description: widget.postContent["textPost"]["description"]
+                          .toString(),
+                      postType: "text")),
           //total reactions count
           _isShared
               ? Container()
@@ -245,11 +239,9 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                                     size: 24.0,
                                     color: Colors.red,
                                   )
-                                : Icon(
-                                    EvilIcons.heart,
+                                : Icon(EvilIcons.heart,
                                     size: 28.0,
-                                    color:Theme.of(context).iconTheme.color
-                                  ),
+                                    color: Theme.of(context).iconTheme.color),
                             onPressed: () {
                               reactionCountUpdater(_thisUserId);
                             }),
@@ -284,13 +276,13 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                             icon: Icon(MaterialCommunityIcons.share),
                             onPressed: () {
                               Get.to(() => SharePostPageScreen(
-                                    postId: widget.postContent["imagePost"]
+                                    postId: widget.postContent["textPost"]
                                         ["_id"],
                                     postOwnerName:
-                                        widget.postContent["imagePost"]
+                                        widget.postContent["textPost"]
                                             ["postBy"]["name"],
                                     postOwnerProfilePic:
-                                        widget.postContent["imagePost"]
+                                        widget.postContent["textPost"]
                                             ["postBy"]["profilePic"],
                                   ));
                             }),

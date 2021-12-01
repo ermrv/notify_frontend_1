@@ -10,13 +10,17 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Use
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OthersProfileModule/views/OtherUserProfilePageScreen.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/OwnProfilePageScreen.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/TextParser/PostDescriptionWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 class SharedImagePostDisplayTemplate extends StatefulWidget {
   final postContent;
@@ -72,8 +76,7 @@ class _SharedImagePostDisplayTemplateState
                 //user profile pic
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => OtherUserProfilePageScreen(
-                        profileOwnerId: widget.postContent["postBy"]["_id"]));
+                    Get.to(() => UserProfileScreen(profileOwnerId: _ownerId));
                   },
                   child: Container(
                     padding: EdgeInsets.all(1.0),
@@ -160,18 +163,12 @@ class _SharedImagePostDisplayTemplateState
               : Container(
                   padding: EdgeInsets.symmetric(horizontal: 4.0),
                   alignment: Alignment.centerLeft,
-                  child: ReadMoreText(
-                    widget.postContent["sharedDescription"].toString(),
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        ),
-                    trimLines: 2,
-                    trimCollapsedText: "...more",
-                    trimExpandedText: "  less",
-                    trimMode: TrimMode.Line,
-                    colorClickableText: Colors.blue,
-                  ),
-                ),
+                  child: PostDescriptionWidget(
+                      tags: [],
+                      mentions: [],
+                      description:
+                          widget.postContent["sharedDescription"].toString(),
+                      postType: "sharedPost")),
           //original post contents display
           Container(
               margin: EdgeInsets.only(left: 5.0),
@@ -191,117 +188,114 @@ class _SharedImagePostDisplayTemplateState
                   parentController: widget.parentController,
                 ),
               )),
-              //likes count
-              Container(
-                  alignment: Alignment.centerLeft,
-                  child: _likes.length != 0
-                      ? GestureDetector(
-                          onTap: () {
-                            Get.to(() => PostLikesDisplayPageScreen(
-                                postId: widget.postContent["_id"]));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.only(
-                                top: 10.0, left: 8.0, right: 8.0),
-                            child: Text(
-                              "${_likes.length} likes",
-                              style: TextStyle(fontSize: 14.0),
-                            ),
-                          ),
-                        )
-                      : Container(
-                          margin:
-                              EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
-                          child: Text("Be the first to like",
-                              style: TextStyle(fontSize: 14.0)),
-                        ),
-                ),
+          //likes count
+          Container(
+            alignment: Alignment.centerLeft,
+            child: _likes.length != 0
+                ? GestureDetector(
+                    onTap: () {
+                      Get.to(() => PostLikesDisplayPageScreen(
+                          postId: widget.postContent["_id"]));
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
+                      child: Text(
+                        "${_likes.length} likes",
+                        style: TextStyle(fontSize: 14.0),
+                      ),
+                    ),
+                  )
+                : Container(
+                    margin: EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
+                    child: Text("Be the first to like",
+                        style: TextStyle(fontSize: 14.0)),
+                  ),
+          ),
           //like comment and share button container
           Container(
-                  height: 50.0,
-                  width: screenWidth,
-                  padding: EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //like
-                      Container(
-                        height: 40.0,
-                        width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
-                        child: IconButton(
-                            padding: EdgeInsets.all(4.0),
-                            icon: _likes.contains(
-                              _thisUserId,
+            height: 50.0,
+            width: screenWidth,
+            padding: EdgeInsets.symmetric(horizontal: 2.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //like
+                Container(
+                  height: 40.0,
+                  width: 40.0,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(right: 5.0),
+                  child: IconButton(
+                      padding: EdgeInsets.all(4.0),
+                      icon: _likes.contains(
+                        _thisUserId,
+                      )
+                          ? Icon(
+                              Octicons.heart,
+                              size: 24.0,
+                              color: Colors.red,
                             )
-                                ? Icon(
-                                    Octicons.heart,
-                                    size: 24.0,
-                                    color: Colors.red,
-                                  )
-                                : Icon(
-                                    EvilIcons.heart,
-                                    size: 28.0,
-                                    color:Theme.of(context).iconTheme.color,
-                                  ),
-                            onPressed: () {
-                              reactionCountUpdater(_thisUserId);
-                            }),
-                      ),
-                      //comment
-                      Container(
-                       height: 40.0,
-                        width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
-                        child: IconButton(
-                            padding: EdgeInsets.all(4.0),
-                            icon: Icon(
-                              EvilIcons.comment,
+                          : Icon(
+                              EvilIcons.heart,
                               size: 28.0,
+                              color: Theme.of(context).iconTheme.color,
                             ),
-                            onPressed: () {
-                              Get.to(() => CommentsDisplayScreen(
-                                    postId: widget.postContent["_id"],
-                                    commentCountUpdater: (int commentCount) {
-                                      commentCountUpdater(commentCount);
-                                    },
-                                  ));
-                            }),
-                      ),
-                      Container(
-                        height: 40.0,
-                        width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
-                        child: IconButton(
-                            icon: Icon(MaterialCommunityIcons.share),
-                            onPressed: () {
-                              Get.to(() => SharePostPageScreen(
-                                    postId: widget.postContent["imagePost"]
-                                        ["_id"],
-                                    postOwnerName:
-                                        widget.postContent["imagePost"]
-                                            ["postBy"]["name"],
-                                    postOwnerProfilePic:
-                                        widget.postContent["imagePost"]
-                                            ["postBy"]["profilePic"],
-                                  ));
-                            }),
-                      ),
-                      Expanded(
-                        child: Container(),
-                      ),
-                    ],
-                  ),
+                      onPressed: () {
+                        reactionCountUpdater(_thisUserId);
+                      }),
                 ),
+                //comment
+                Container(
+                  height: 40.0,
+                  width: 40.0,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(right: 5.0),
+                  child: IconButton(
+                      padding: EdgeInsets.all(4.0),
+                      icon: Icon(
+                        EvilIcons.comment,
+                        size: 28.0,
+                      ),
+                      onPressed: () {
+                        Get.to(() => CommentsDisplayScreen(
+                              postId: widget.postContent["_id"],
+                              commentCountUpdater: (int commentCount) {
+                                commentCountUpdater(commentCount);
+                              },
+                            ));
+                      }),
+                ),
+                Container(
+                  height: 40.0,
+                  width: 40.0,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(right: 5.0),
+                  child: IconButton(
+                      icon: Icon(MaterialCommunityIcons.share),
+                      onPressed: () {
+                        Get.to(() => SharePostPageScreen(
+                              postId: widget.postContent["imagePost"]["_id"],
+                              postOwnerName: widget.postContent["imagePost"]
+                                  ["postBy"]["name"],
+                              postOwnerProfilePic:
+                                  widget.postContent["imagePost"]["postBy"]
+                                      ["profilePic"],
+                            ));
+                      }),
+                ),
+                Expanded(
+                  child: Container(),
+                ),
+              ],
+            ),
+          ),
           widget.postContent["comments"] == null
               ? Container()
               : widget.postContent["comments"].length == 0
                   ? Container()
                   : BelowPostCommentDisplayTemplate(
-                    commentCount: _numberOfComments,
+                      commentCount: _numberOfComments,
                       commentData: widget.postContent["comments"][0],
                       postId: widget.postContent["_id"],
                       commentCountUpdater: (int count) {

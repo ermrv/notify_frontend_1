@@ -52,9 +52,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           },
         ),
         title: Text(
-          "mediaPlus",
+          "notify",
           style: TextStyle(
-              fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+              fontStyle: FontStyle.italic, fontWeight: FontWeight.bold,),
         ),
         actions: [
           IconButton(

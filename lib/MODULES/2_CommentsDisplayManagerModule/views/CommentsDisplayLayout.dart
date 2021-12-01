@@ -5,12 +5,10 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 
 class CommentsDisplayLayout extends StatelessWidget {
   final commentData;
-  final GetxController controller;
 
   const CommentsDisplayLayout({
     Key key,
     @required this.commentData,
-    this.controller,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

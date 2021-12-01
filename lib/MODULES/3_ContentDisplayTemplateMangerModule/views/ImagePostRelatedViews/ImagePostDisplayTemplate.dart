@@ -17,8 +17,8 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 
-import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/TextParser/PostDescriptionWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -193,19 +193,12 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                   padding: EdgeInsets.only(
                       top: 3.0, bottom: 3.0, right: 2.0, left: 2.0),
                   alignment: Alignment.centerLeft,
-                  child: ReadMoreText(
-                    widget.postContent["imagePost"]["description"]
-                        .toString()
-                        .capitalizeFirst,
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        ),
-                    trimLines: 7,
-                    trimCollapsedText: "...more",
-                    trimExpandedText: "  less",
-                    trimMode: TrimMode.Line,
-                    colorClickableText: Colors.blue,
-                  )),
+                  child: PostDescriptionWidget(
+                      tags: [],
+                      mentions: [],
+                      description: widget.postContent["imagePost"]
+                          ["description"],
+                      postType: "imagePost")),
           _isShared
               ? Container(
                   child: _imageLayoutSelector(
@@ -272,11 +265,9 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                                     size: 24.0,
                                     color: Colors.red,
                                   )
-                                : Icon(
-                                    EvilIcons.heart,
+                                : Icon(EvilIcons.heart,
                                     size: 28.0,
-                                    color:Theme.of(context).iconTheme.color
-                                  ),
+                                    color: Theme.of(context).iconTheme.color),
                             onPressed: () {
                               reactionCountUpdater(_thisUserId);
                             }),

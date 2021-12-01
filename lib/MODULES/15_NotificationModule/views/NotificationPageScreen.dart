@@ -45,14 +45,15 @@ class NotificationPageScreen extends StatelessWidget {
             : ListView(
                 children: [
                   for (var notification in controller.notificationsData)
-                    getNotificationTemaplate(notification),
+                    getNotificationTemaplate(notification, context),
                 ],
               ),
       ),
     );
   }
 
-  Container getNotificationTemaplate(var notificationData) {
+  Container getNotificationTemaplate(
+      var notificationData, BuildContext context) {
     switch (notificationData["notificationType"].toString().toLowerCase()) {
       case "like":
         return Container(
@@ -86,14 +87,20 @@ class NotificationPageScreen extends StatelessWidget {
                         text: TextSpan(children: [
                       TextSpan(
                           text: notificationData["notificationString"],
-                          style: TextStyle(fontSize: 15.0)),
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              color:
+                                  Theme.of(context).textTheme.bodyText2.color)),
                       TextSpan(text: "  - "),
                       TextSpan(
                           text: TimeStampProvider.timeStampProvider(
                                   notificationData["createdAt"])
                               .toString(),
                           style: TextStyle(
-                              fontSize: 10.0, fontWeight: FontWeight.w700))
+                              fontSize: 10.0,
+                              fontWeight: FontWeight.w700,
+                              color:
+                                  Theme.of(context).textTheme.bodyText2.color))
                     ])),
                   )),
                 ],
@@ -134,14 +141,24 @@ class NotificationPageScreen extends StatelessWidget {
                           text: TextSpan(children: [
                         TextSpan(
                             text: notificationData["notificationString"],
-                            style: TextStyle(fontSize: 15.0)),
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .color)),
                         TextSpan(text: "  - "),
                         TextSpan(
                             text: TimeStampProvider.timeStampProvider(
                                     notificationData["createdAt"])
                                 .toString(),
                             style: TextStyle(
-                                fontSize: 10.0, fontWeight: FontWeight.w700))
+                                fontSize: 10.0,
+                                fontWeight: FontWeight.w700,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .color))
                       ])),
                     ),
                   ),
@@ -183,14 +200,20 @@ class NotificationPageScreen extends StatelessWidget {
                         text: TextSpan(children: [
                       TextSpan(
                           text: notificationData["notificationString"],
-                          style: TextStyle(fontSize: 15.0)),
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              color:
+                                  Theme.of(context).textTheme.bodyText2.color)),
                       TextSpan(text: "  - "),
                       TextSpan(
                           text: TimeStampProvider.timeStampProvider(
                                   notificationData["createdAt"])
                               .toString(),
                           style: TextStyle(
-                              fontSize: 10.0, fontWeight: FontWeight.w700))
+                              fontSize: 10.0,
+                              fontWeight: FontWeight.w700,
+                              color:
+                                  Theme.of(context).textTheme.bodyText2.color))
                     ])),
                   )),
                   notificationData["user"]["_id"].toString() ==

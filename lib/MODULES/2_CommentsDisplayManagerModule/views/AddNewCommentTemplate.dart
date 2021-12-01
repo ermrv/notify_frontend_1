@@ -5,22 +5,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ReplyToCommentTemplate extends StatefulWidget {
-  final commentData;
-  final String commentId;
-
-  const ReplyToCommentTemplate(
-      {Key key,
-      @required this.commentId,
-      @required this.commentData})
-      : super(key: key);
+class AddNewCommentTemplate extends StatefulWidget {
+ 
 
   @override
-  State<ReplyToCommentTemplate> createState() => _ReplyToCommentTemplateState();
+  State<AddNewCommentTemplate> createState() => _AddNewCommentTemplateState();
 }
 
-class _ReplyToCommentTemplateState extends State<ReplyToCommentTemplate> {
-   final controller = Get.find<CommentDisplayController>();
+class _AddNewCommentTemplateState extends State<AddNewCommentTemplate> {
+  final controller = Get.find<CommentDisplayController>();
   bool _showSendButton = false;
   @override
   Widget build(BuildContext context) {
@@ -35,23 +28,7 @@ class _ReplyToCommentTemplateState extends State<ReplyToCommentTemplate> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-          height:1.0,
-          width: screenWidth,
-          color: Theme.of(context).accentColor.withOpacity(0.5),
-                  ),
-          Container(
-            padding: EdgeInsets.only(left: 8.0, top: 2.0, bottom: 5.0),
-            child: Row(
-              children: [
-                Text("Replying to  @"),
-                Text(widget.commentData["commentBy"]["name"].toString(),
-                    style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                    ))
-              ],
-            ),
-          ),
+         
           Container(
             alignment: Alignment.center,
             padding: EdgeInsets.only(left: 2.0, right: 2.0),
@@ -87,8 +64,7 @@ class _ReplyToCommentTemplateState extends State<ReplyToCommentTemplate> {
                             alignment: Alignment.centerLeft,
                             child: TextFormField(
                               autofocus: true,
-                              controller:
-                                  controller.subCommentEditingController,
+                                  controller: controller.commentEditingController,
                               onChanged: (value) {
                                 print(value);
 
@@ -113,10 +89,8 @@ class _ReplyToCommentTemplateState extends State<ReplyToCommentTemplate> {
                                   color: Colors.blue,
                                 ),
                                 onPressed: () {
-                                  controller.addSubComments(
-                                      widget.commentId.toString(),
-                                      controller
-                                          .subCommentEditingController.text);
+                                  controller.addComment(controller
+                                      .commentEditingController.text);
                                 })
                             : Container(),
                       ],

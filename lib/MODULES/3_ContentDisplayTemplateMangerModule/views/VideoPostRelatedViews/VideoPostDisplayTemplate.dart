@@ -13,6 +13,7 @@ import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/InPostVideoPlayer.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/TextParser/PostDescriptionWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flick_video_player/flick_video_player.dart';
@@ -29,7 +30,7 @@ class VideoPostDisplayTemplate extends StatefulWidget {
   final postContent;
   final parentController;
   const VideoPostDisplayTemplate(
-      {Key key, @required this.postContent,this.parentController})
+      {Key key, @required this.postContent, this.parentController})
       : super(key: key);
 
   @override
@@ -62,7 +63,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal:5.0),
+      margin: EdgeInsets.symmetric(horizontal: 5.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -117,8 +118,9 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                       ),
                       Container(
                         child: Text(
-                          TimeStampProvider.timeStampProvider(
-                              widget.postContent["videoPost"]["createdAt"].toString()),
+                          TimeStampProvider.timeStampProvider(widget
+                              .postContent["videoPost"]["createdAt"]
+                              .toString()),
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 12.0),
                         ),
@@ -142,23 +144,25 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                       )
                     : Container(),
                 //actions on post
-             widget.parentController!=null?   _isOwner
-                    ? PostOwnerActionsOnPost(
-                        postId: widget.postContent["_id"].toString(),
-                        postDescription: widget.postContent["videoPost"]
-                                ["description"]
-                            .toString(),
-                        editedDescriptionUpdater: (String description) {
-                          updateEditedDescription(description);
-                        },
-                        parentController: widget.parentController,
-                      )
-                    : OtherUserActionsOnPost(
-                        postUserId: widget.postContent["videoPost"]["postBy"]
-                                ["_id"]
-                            .toString(),
-                        postId: widget.postContent["_id"].toString(),
-                      ):Container()
+                widget.parentController != null
+                    ? _isOwner
+                        ? PostOwnerActionsOnPost(
+                            postId: widget.postContent["_id"].toString(),
+                            postDescription: widget.postContent["videoPost"]
+                                    ["description"]
+                                .toString(),
+                            editedDescriptionUpdater: (String description) {
+                              updateEditedDescription(description);
+                            },
+                            parentController: widget.parentController,
+                          )
+                        : OtherUserActionsOnPost(
+                            postUserId: widget.postContent["videoPost"]
+                                    ["postBy"]["_id"]
+                                .toString(),
+                            postId: widget.postContent["_id"].toString(),
+                          )
+                    : Container()
               ],
             ),
           ),
@@ -171,13 +175,13 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                   padding: EdgeInsets.only(
                       top: 3.0, bottom: 3.0, right: 2.0, left: 2.0),
                   alignment: Alignment.centerLeft,
-                  child: ReadMoreText(
-                    widget.postContent["videoPost"]["description"].toString(),
-                    style: TextStyle(fontSize: 16.0),
-                    trimLines: 7,
-                    trimMode: TrimMode.Line,
-                    colorClickableText: Colors.blue,
-                  )),
+                  child: PostDescriptionWidget(
+                      tags: [],
+                      mentions: [],
+                      description: widget.postContent["videoPost"]
+                              ["description"]
+                          .toString(),
+                      postType: "videoPost")),
 
           _isShared
               ? InPostVideoPlayer(
@@ -192,33 +196,32 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                   ),
                 ),
 //total reactions count
-        _isShared
+          _isShared
               ? Container()
-              :   Container(
-            alignment: Alignment.centerLeft,
-            child: _likes.length != 0
-                ? GestureDetector(
-                    onTap: () {
-                      Get.to(() => PostLikesDisplayPageScreen(
-                          postId: widget.postContent["_id"]));
-                    },
-                    child: Container(
-                      
-                     
-                      padding:
-                          EdgeInsets.only(top: 10.0,left:8.0,right: 8.0),
-                      child: Text(
-                        "${_likes.length} likes",
-                        style: TextStyle(fontSize: 14.0),
-                      ),
-                    ),
-                  )
-                : Container(
-                    margin: EdgeInsets.only(top: 10.0,left:8.0,right: 8.0),
-                    child: Text("Be the first to like",
-                        style: TextStyle(fontSize: 14.0)),
-                  ),
-          ),
+              : Container(
+                  alignment: Alignment.centerLeft,
+                  child: _likes.length != 0
+                      ? GestureDetector(
+                          onTap: () {
+                            Get.to(() => PostLikesDisplayPageScreen(
+                                postId: widget.postContent["_id"]));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                top: 10.0, left: 8.0, right: 8.0),
+                            child: Text(
+                              "${_likes.length} likes",
+                              style: TextStyle(fontSize: 14.0),
+                            ),
+                          ),
+                        )
+                      : Container(
+                          margin:
+                              EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
+                          child: Text("Be the first to like",
+                              style: TextStyle(fontSize: 14.0)),
+                        ),
+                ),
           _isShared
               ? Container()
               : Container(
@@ -232,8 +235,8 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                       Container(
                         height: 40.0,
                         width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(right: 5.0),
                         child: IconButton(
                             padding: EdgeInsets.all(4.0),
                             icon: _likes.contains(
@@ -244,21 +247,19 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                                     size: 24.0,
                                     color: Colors.red,
                                   )
-                                : Icon(
-                                    EvilIcons.heart,
+                                : Icon(EvilIcons.heart,
                                     size: 28.0,
-                                   color:Theme.of(context).iconTheme.color
-                                  ),
+                                    color: Theme.of(context).iconTheme.color),
                             onPressed: () {
                               reactionCountUpdater(_thisUserId);
                             }),
                       ),
                       //comment
                       Container(
-                       height: 40.0,
+                        height: 40.0,
                         width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(right: 5.0),
                         child: IconButton(
                             padding: EdgeInsets.all(4.0),
                             icon: Icon(
@@ -277,19 +278,19 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                       Container(
                         height: 40.0,
                         width: 40.0,
-                        alignment:Alignment.center,
-                        margin: EdgeInsets.only(right:5.0),
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(right: 5.0),
                         child: IconButton(
                             icon: Icon(MaterialCommunityIcons.share),
                             onPressed: () {
                               Get.to(() => SharePostPageScreen(
-                                    postId: widget.postContent["imagePost"]
+                                    postId: widget.postContent["videoPost"]
                                         ["_id"],
                                     postOwnerName:
-                                        widget.postContent["imagePost"]
+                                        widget.postContent["videoPost"]
                                             ["postBy"]["name"],
                                     postOwnerProfilePic:
-                                        widget.postContent["imagePost"]
+                                        widget.postContent["videoPost"]
                                             ["postBy"]["profilePic"],
                                   ));
                             }),
@@ -300,18 +301,20 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                     ],
                   ),
                 ),
-          _isShared?Container(): widget.postContent["comments"] == null
+          _isShared
               ? Container()
-              : widget.postContent["comments"].length == 0
+              : widget.postContent["comments"] == null
                   ? Container()
-                  : BelowPostCommentDisplayTemplate(
-                    commentCount: _numberOfComments,
-                      commentData: widget.postContent["comments"][0],
-                      postId: widget.postContent["_id"],
-                      commentCountUpdater: (int count) {
-                        commentCountUpdater(count);
-                      },
-                    )
+                  : widget.postContent["comments"].length == 0
+                      ? Container()
+                      : BelowPostCommentDisplayTemplate(
+                          commentCount: _numberOfComments,
+                          commentData: widget.postContent["comments"][0],
+                          postId: widget.postContent["_id"],
+                          commentCountUpdater: (int count) {
+                            commentCountUpdater(count);
+                          },
+                        )
         ],
       ),
     );

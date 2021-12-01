@@ -50,8 +50,8 @@ class MainNavigationScreen extends StatelessWidget {
                       color:Colors.blue
                     ),
                     CustomBottomNavigationItem(
-                      icon: Icons.music_video,
-                      label: 'Shorts',
+                      icon: Icons.add_box,
+                      label: 'notify',
                       color:Colors.blue
                     ),
                     CustomBottomNavigationItem(

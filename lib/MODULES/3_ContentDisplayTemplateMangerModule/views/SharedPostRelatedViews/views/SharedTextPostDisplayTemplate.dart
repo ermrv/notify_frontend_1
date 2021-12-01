@@ -10,8 +10,10 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Use
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OthersProfileModule/views/OtherUserProfilePageScreen.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/TextParser/PostDescriptionWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -72,8 +74,7 @@ class _SharedTextPostDisplayTemplateState
                 //user profile pic
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => OtherUserProfilePageScreen(
-                        profileOwnerId: widget.postContent["postBy"]["_id"]));
+                    Get.to(() => UserProfileScreen(profileOwnerId: _ownerId));
                   },
                   child: Container(
                     padding: EdgeInsets.all(1.0),
@@ -160,18 +161,12 @@ class _SharedTextPostDisplayTemplateState
               : Container(
                   padding: EdgeInsets.symmetric(horizontal: 4.0),
                   alignment: Alignment.centerLeft,
-                  child: ReadMoreText(
-                    widget.postContent["sharedDescription"].toString(),
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        ),
-                    trimLines: 2,
-                    trimCollapsedText: "...more",
-                    trimExpandedText: "  less",
-                    trimMode: TrimMode.Line,
-                    colorClickableText: Colors.blue,
-                  ),
-                ),
+                  child: PostDescriptionWidget(
+                      tags: [],
+                      mentions: [],
+                      description:
+                          widget.postContent["sharedDescription"].toString(),
+                      postType: "sharedPost")),
           //original post contents display
           Container(
               margin: EdgeInsets.only(left: 5.0),
@@ -237,7 +232,7 @@ class _SharedTextPostDisplayTemplateState
                           : Icon(
                               EvilIcons.heart,
                               size: 28.0,
-                              color:Theme.of(context).iconTheme.color,
+                              color: Theme.of(context).iconTheme.color,
                             ),
                       onPressed: () {
                         reactionCountUpdater(_thisUserId);

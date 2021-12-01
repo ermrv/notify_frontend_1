@@ -59,11 +59,13 @@ class BelowPostCommentDisplayTemplate extends StatelessWidget {
                     padding: EdgeInsets.only(left: 5.0),
                     width: screenWidth-25.0,
                     child: RichText(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                         text: TextSpan(children: [
                       TextSpan(
                           text: commentData["commentBy"]["name"].toString(),
                           style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.0,color: Theme.of(context).textTheme.bodyText2.color)),
-                      TextSpan(text: ": " + commentData["comment"].toString(),style: TextStyle(fontSize: 15.0,color: Theme.of(context).textTheme.bodyText2.color))
+                      TextSpan(text: ": " + commentData["comment"].toString(),style: TextStyle(fontSize: 15.0,color: Theme.of(context).textTheme.bodyText2.color,),)
                     ])),
                   )
                 ],

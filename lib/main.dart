@@ -45,9 +45,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeMode.system == ThemeMode.dark
-            ? themeController.getTheme("dark")
-            : themeController.getTheme("light"),
+        theme: themeController.getTheme("light"),
         home: DoubleBack(
             message: "Press back again to exit", child: UserAuthScreen()));
   }

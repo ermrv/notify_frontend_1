@@ -148,7 +148,6 @@ class AddPostPageScreen extends StatelessWidget {
                     onChanged: (value) {
                       controller
                           .stringParser(controller.textEditingController.text);
-                      
                     },
                     maxLines: null,
                     textCapitalization: TextCapitalization.sentences,
@@ -239,14 +238,6 @@ class AddPostPageScreen extends StatelessWidget {
                               ))
                         ],
                       ),
-                controller.compressedImages == null
-                    ? Container()
-                    : Column(
-                        children: [
-                          for (Uint8List i in controller.compressedImages)
-                            Image.memory(i)
-                        ],
-                      )
               ],
             ),
           ),

@@ -38,7 +38,6 @@ class NewsFeedPageScreen extends StatelessWidget {
                             margin: EdgeInsets.only(bottom: 5.0),
                             child: TrendingPostReferenceTemplate(
                                 data: controller.trendingPostData)),
-                        AddPostReferenceView(),
                         controller.newsFeedData.length == 0
                             ? Center(child: Text("No posts yet"))
                             : ContentDisplayTemplateProvider(

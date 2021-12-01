@@ -104,9 +104,6 @@ class NewsFeedPageController extends GetxController {
     }
   }
 
-  
-  
-
   ///handle the local file to store and delete the data
   ///[data] corresponds to complete list of data
   _handleLocalFile(List data) {
