@@ -8,6 +8,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Pos
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SpecificPostRelated/views/SpecificPostDisplayPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/FullVideoPostPlayerTemplate.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
@@ -191,6 +192,10 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
             onLongPress: () {
               Get.to(() => SpecificPostDisplayPageScreen(
                   postId: widget.postContent["videoPost"]["_id"]));
+            },
+            onTap: () {
+              Get.to(() =>
+                  FullVideoPostPlayerTemplate(postContent: widget.postContent));
             },
             child: InPostVideoPlayer(
               postContent: widget.postContent,
