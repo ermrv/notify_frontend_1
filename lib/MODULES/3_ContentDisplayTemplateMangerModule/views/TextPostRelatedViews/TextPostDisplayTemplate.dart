@@ -5,6 +5,7 @@ import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/BelowPostCommentDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PostLikesDisplayPageScreen.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SpecificPostRelated/views/SpecificPostDisplayPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
@@ -181,12 +182,22 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                   padding: EdgeInsets.only(
                       top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
                   alignment: Alignment.centerLeft,
-                  child: PostDescriptionWidget(
-                      tags: [],
-                      mentions: [],
-                      description: widget.postContent["textPost"]["description"]
-                          .toString(),
-                      postType: "text")),
+                  child: GestureDetector(
+                    onDoubleTap: () {
+                      reactionCountUpdater(_thisUserId);
+                    },
+                    onLongPress: () {
+                      Get.to(() => SpecificPostDisplayPageScreen(
+                          postId: widget.postContent["textPost"]["_id"]));
+                    },
+                    child: PostDescriptionWidget(
+                        tags: [],
+                        mentions: [],
+                        description: widget.postContent["textPost"]
+                                ["description"]
+                            .toString(),
+                        postType: "text"),
+                  )),
           //total reactions count
           _isShared
               ? Container()
@@ -279,11 +290,11 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                                     postId: widget.postContent["textPost"]
                                         ["_id"],
                                     postOwnerName:
-                                        widget.postContent["textPost"]
-                                            ["postBy"]["name"],
+                                        widget.postContent["textPost"]["postBy"]
+                                            ["name"],
                                     postOwnerProfilePic:
-                                        widget.postContent["textPost"]
-                                            ["postBy"]["profilePic"],
+                                        widget.postContent["textPost"]["postBy"]
+                                            ["profilePic"],
                                   ));
                             }),
                       ),

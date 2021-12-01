@@ -11,6 +11,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Ima
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/MultiImageVerticalDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ImagePostRelatedViews/ImageDisplayTemplates/SingleImageDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PostLikesDisplayPageScreen.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SpecificPostRelated/views/SpecificPostDisplayPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
@@ -199,20 +200,18 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                       description: widget.postContent["imagePost"]
                           ["description"],
                       postType: "imagePost")),
-          _isShared
-              ? Container(
-                  child: _imageLayoutSelector(
-                      widget.postContent["imagePost"]["postContent"],
-                      widget.postContent["imagePost"]["templateType"]),
-                )
-              : GestureDetector(
-                  onDoubleTap: () {
-                    reactionCountUpdater(_thisUserId);
-                  },
-                  child: _imageLayoutSelector(
-                      widget.postContent["imagePost"]["postContent"],
-                      widget.postContent["imagePost"]["templateType"]),
-                ),
+          GestureDetector(
+            onDoubleTap: () {
+              reactionCountUpdater(_thisUserId);
+            },
+            onLongPress: () {
+              Get.to(() => SpecificPostDisplayPageScreen(
+                  postId: widget.postContent["imagePost"]["_id"]));
+            },
+            child: _imageLayoutSelector(
+                widget.postContent["imagePost"]["postContent"],
+                widget.postContent["imagePost"]["templateType"]),
+          ),
 //total reactions count
           _isShared
               ? Container()

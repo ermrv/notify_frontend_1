@@ -1,7 +1,6 @@
 import 'package:MediaPlus/MODULES/1_AddPostModule/controllers/AddPostPageController.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/CreateEventPageScreen.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/CreatePollPageScreen.dart';
-import 'package:MediaPlus/MODULES/4_ContestingModule/ContestHostingModule/views/CreateContestScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

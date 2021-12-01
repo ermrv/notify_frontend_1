@@ -5,6 +5,7 @@ import 'package:MediaPlus/MODULES/1_AddPostModule/views/SharePostPageScreen.dart
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/BelowPostCommentDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentsDisplayScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PostLikesDisplayPageScreen.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SpecificPostRelated/views/SpecificPostDisplayPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/OtherUserActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/UserActionsOnPost/PostOwnerActionsOnPost.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
@@ -183,18 +184,18 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                           .toString(),
                       postType: "videoPost")),
 
-          _isShared
-              ? InPostVideoPlayer(
-                  postContent: widget.postContent,
-                )
-              : GestureDetector(
-                  onDoubleTap: () {
-                    reactionCountUpdater(_thisUserId);
-                  },
-                  child: InPostVideoPlayer(
-                    postContent: widget.postContent,
-                  ),
-                ),
+          GestureDetector(
+            onDoubleTap: () {
+              reactionCountUpdater(_thisUserId);
+            },
+            onLongPress: () {
+              Get.to(() => SpecificPostDisplayPageScreen(
+                  postId: widget.postContent["videoPost"]["_id"]));
+            },
+            child: InPostVideoPlayer(
+              postContent: widget.postContent,
+            ),
+          ),
 //total reactions count
           _isShared
               ? Container()
