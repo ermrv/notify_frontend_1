@@ -56,7 +56,10 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
             );
           } else if (content["primary"].toString() == "false")
             return SharedImagePostDisplayTemplate(
-                postContent: content, parentController: controller);
+              postContent: content,
+              parentController: controller,
+              useAsPostFullDetailTemplate: useTemplatesAsPostFullDetails,
+            );
           break;
         }
       // //for video post
@@ -70,7 +73,9 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
             );
           } else if (content["primary"].toString() == "false")
             return SharedVideoPostDisplayTemplate(
-                postContent: content, parentController: controller);
+                postContent: content,
+                parentController: controller,
+                useAsPostFullDetailTemplate: useTemplatesAsPostFullDetails);
         }
         break;
 
@@ -102,7 +107,9 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
             );
           } else if (content["primary"].toString() == "false")
             return SharedTextPostDisplayTemplate(
-                postContent: content, parentController: controller);
+                postContent: content,
+                parentController: controller,
+                useAsPostFullDetailTemplate: useTemplatesAsPostFullDetails);
         }
 
         break;

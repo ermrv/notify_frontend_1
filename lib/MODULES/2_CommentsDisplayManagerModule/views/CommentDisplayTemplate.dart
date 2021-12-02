@@ -7,7 +7,7 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.d
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
-import 'package:MediaPlus/SERVICES_AND_UTILS/TextParser/CommentTextWidget.dart';
+import 'package:MediaPlus/MODULES/2_CommentsDisplayManagerModule/views/CommentTextWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

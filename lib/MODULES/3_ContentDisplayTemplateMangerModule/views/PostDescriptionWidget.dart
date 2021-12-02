@@ -7,13 +7,15 @@ class PostDescriptionWidget extends StatelessWidget {
   final List tags;
   final List mentions;
   final description;
+  final displayFullText;
 
   const PostDescriptionWidget(
       {Key key,
       @required this.tags,
       @required this.mentions,
       @required this.description,
-      @required this.postType})
+      @required this.postType,
+      @required this.displayFullText})
       : super(key: key);
 
   @override
@@ -26,6 +28,8 @@ class PostDescriptionWidget extends StatelessWidget {
   Wrap _postDiscriptionParser(List tags, List mentions, String description) {
     double fontsize = 16.0;
     List words = description.split(" ").toList();
+    List wordsToDisplay;
+    //selecting font size
     if (postType != "pollPost") {
       fontsize = words.length <= 15
           ? 22.0
@@ -33,9 +37,18 @@ class PostDescriptionWidget extends StatelessWidget {
               ? 19.0
               : 16.0;
     }
+    //selecting words to display
+    if (displayFullText) {
+      wordsToDisplay = words;
+    } else if (words.length >= 60) {
+      wordsToDisplay = words.getRange(0, 59).toList();
+    } else {
+      wordsToDisplay = words;
+    }
+    
     return Wrap(
       children: [
-        for (String word in words) _getWordStyle(word, fontsize),
+        for (String word in wordsToDisplay) _getWordStyle(word, fontsize),
       ],
     );
   }

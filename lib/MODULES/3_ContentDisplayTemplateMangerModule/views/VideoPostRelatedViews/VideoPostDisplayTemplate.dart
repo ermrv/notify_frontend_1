@@ -15,7 +15,7 @@ import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/VideoPostRelatedViews/InPostVideoPlayer.dart';
-import 'package:MediaPlus/SERVICES_AND_UTILS/TextParser/PostDescriptionWidget.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PostDescriptionWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flick_video_player/flick_video_player.dart';
@@ -205,7 +205,8 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                         description: widget.postContent["videoPost"]
                                 ["description"]
                             .toString(),
-                        postType: "videoPost")),
+                        postType: "videoPost",
+                        displayFullText: widget.useAsPostFullDetailTemplate)),
 
             GestureDetector(
               onLongPress: () {

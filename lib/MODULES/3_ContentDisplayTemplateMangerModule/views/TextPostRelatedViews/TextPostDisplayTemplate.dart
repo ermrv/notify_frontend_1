@@ -14,7 +14,7 @@ import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
-import 'package:MediaPlus/SERVICES_AND_UTILS/TextParser/PostDescriptionWidget.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PostDescriptionWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -70,13 +70,16 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
           border:
               Border(top: BorderSide(color: Theme.of(context).primaryColor))),
       child: GestureDetector(
-         onDoubleTap: () {
-                reactionCountUpdater(_thisUserId);
-              },
+        onDoubleTap: () {
+          reactionCountUpdater(_thisUserId);
+        },
         onTap: () {
           if (!widget.useAsPostFullDetailTemplate) {
-            Get.to(SpecificPostDisplayPageScreen(
-                postId: widget.postContent["textPost"]["_id"],postContent: widget.postContent),preventDuplicates: false);
+            Get.to(
+                SpecificPostDisplayPageScreen(
+                    postId: widget.postContent["textPost"]["_id"],
+                    postContent: widget.postContent),
+                preventDuplicates: false);
           }
         },
         child: Column(
@@ -206,7 +209,9 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                         description: widget.postContent["textPost"]
                                 ["description"]
                             .toString(),
-                        postType: "text")),
+                        postType: "text",
+                        displayFullText: widget.useAsPostFullDetailTemplate),
+                  ),
             //total reactions count
             _isShared
                 ? Container()

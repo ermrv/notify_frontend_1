@@ -13,7 +13,7 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
-import 'package:MediaPlus/SERVICES_AND_UTILS/TextParser/PostDescriptionWidget.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PostDescriptionWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -195,7 +195,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                         description: widget.postContent["pollPost"]
                                 ["description"]
                             .toString(),
-                        postType: "pollPost")),
+                        postType: "pollPost",displayFullText:true),),
                 //option one
                 widget.postContent["pollPost"]["opOne"] == null
                     ? Container()
