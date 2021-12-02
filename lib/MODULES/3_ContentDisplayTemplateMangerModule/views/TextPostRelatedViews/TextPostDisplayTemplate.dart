@@ -60,6 +60,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: Key(widget.postContent["_id"].toString()),
       margin: EdgeInsets.only(),
       decoration: BoxDecoration(
           border:
@@ -188,7 +189,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                     },
                     onLongPress: () {
                       Get.to(() => SpecificPostDisplayPageScreen(
-                          postId: widget.postContent["textPost"]["_id"]));
+                          postId: widget.postContent["textPost"]["_id"]),preventDuplicates: false);
                     },
                     child: PostDescriptionWidget(
                         tags: [],
@@ -206,7 +207,9 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                   child: _likes.length != 0
                       ? GestureDetector(
                           onTap: () {
+                            
                             Get.to(() => PostLikesDisplayPageScreen(
+                
                                 postId: widget.postContent["_id"]));
                           },
                           child: Container(

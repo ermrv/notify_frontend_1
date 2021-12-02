@@ -63,8 +63,9 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
-      decoration: BoxDecoration(
+key: Key(widget.postContent["_id"].toString()),      decoration: BoxDecoration(
           border:
               Border(top: BorderSide(color: Theme.of(context).primaryColor))),
       child: Column(

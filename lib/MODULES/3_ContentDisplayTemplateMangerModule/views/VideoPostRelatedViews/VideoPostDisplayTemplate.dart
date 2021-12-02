@@ -65,6 +65,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
   @override
   Widget build(BuildContext context) {
     return Container(
+       key: Key(widget.postContent["_id"].toString()),
       margin: EdgeInsets.symmetric(horizontal: 5.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
