@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
+import 'package:MediaPlus/MODULES/16_SettingsModule/SettingsPageScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
@@ -187,7 +188,9 @@ class UserDrawerScreen extends StatelessWidget {
                         padding: MaterialStateProperty.resolveWith((states) =>
                             EdgeInsets.symmetric(
                                 horizontal: 10.0, vertical: 10.0))),
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.off(() => SettingsPageScreen());
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [Text("Settings"), Text(">>>")],
