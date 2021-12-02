@@ -414,6 +414,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
   //edited description updater
   updateEditedDescription(String editedDescription) {
     widget.postContent["imagePost"]["description"] = editedDescription;
+    print("description $editedDescription");
     if (this.mounted) {
       setState(() {});
     }

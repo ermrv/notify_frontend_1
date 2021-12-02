@@ -3,6 +3,7 @@ import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 class EditPostPageScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class EditPostPageScreen extends StatefulWidget {
 
 class _EditPostPageScreenState extends State<EditPostPageScreen> {
   TextEditingController controller;
+  bool isUpadating = false;
   @override
   void initState() {
     controller = TextEditingController();
@@ -33,12 +35,22 @@ class _EditPostPageScreenState extends State<EditPostPageScreen> {
         actions: [
           Container(
             margin: EdgeInsets.only(right: 10.0, top: 15.0, bottom: 15.0),
-            child: TextButton(
-              onPressed: () {
-                _updateDecription();
-              },
-              child: Text(" Done "),
-            ),
+            child: isUpadating
+                ? TextButton(
+                  onPressed: (){
+                    
+                  },
+                  child: SpinKitThreeBounce(
+                      color: Colors.blue,
+                      size: 12.0,
+                    ),
+                )
+                : TextButton(
+                    onPressed: () {
+                      _updateDecription();
+                    },
+                    child: Text(" Done "),
+                  ),
           )
         ],
       ),
@@ -61,13 +73,19 @@ class _EditPostPageScreenState extends State<EditPostPageScreen> {
   }
 
   _updateDecription() async {
+    setState(() {
+      isUpadating = true;
+    });
     var response = await ApiServices.postWithAuth(ApiUrlsData.editPost,
         {"postId": widget.postId, "description": controller.text}, userToken);
 
-    if (response == "error") {
-      print("error");
-    } else {
+    if (response != "error") {
       Get.back(result: controller.text);
+    } else {
+      setState(() {
+        isUpadating = false;
+      });
+      print("error");
     }
   }
 }

@@ -20,55 +20,116 @@ class PostOwnerActionsOnPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: PopupMenuButton<TextButton>(
-        elevation: 0.0,
-        padding: EdgeInsets.all(2.0),
-        itemBuilder: (context) {
-          return [
-            PopupMenuItem<TextButton>(
-                child: TextButton(
-              onPressed: () async {
-                String description = await Get.to(() => EditPostPageScreen(
-                      description: postDescription,
-                      postId: postId,
-                    ));
+      child: IconButton(
+          onPressed: () {
+            Get.bottomSheet(
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextButton(
+                      onPressed: () async {
+                        Get.back();
+                        String description =
+                            await Get.to(() => EditPostPageScreen(
+                                  description: postDescription,
+                                  postId: postId,
+                                ));
 
-                editedDescriptionUpdater.call(description);
-              },
-              child: Text('Edit Post'),
-            )),
-            PopupMenuItem<TextButton>(
-                child: TextButton(
-              onPressed: () {
-                Get.dialog(AlertDialog(
-                  title: Text("Post will be deleted permanently"),
-                  actions: [
+                        editedDescriptionUpdater.call(description);
+                      },
+                      child: Text('Edit Post'),
+                    ),
                     TextButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        child: Text("Cancel")),
+                      onPressed: () {
+                        Get.back();
+                        Get.dialog(AlertDialog(
+                          title: Text("Post will be deleted permanently"),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                child: Text("Cancel")),
+                            TextButton(
+                                onPressed: () async {
+                                  await parentController.deletePost(postId);
+                                  Get.back();
+                                },
+                                child: Text("Okay"))
+                          ],
+                        ));
+                      },
+                      child: Text('Delete Post'),
+                    ),
                     TextButton(
-                        onPressed: () async {
-                          await parentController.deletePost(postId);
-                          Get.back();
-                        },
-                        child: Text("Okay"))
+                      onPressed: () {
+                        print("okay");
+                      },
+                      child: Text('Turn off Commenting'),
+                    )
                   ],
-                ));
-              },
-              child: Text('Delete Post'),
-            )),
-            PopupMenuItem<TextButton>(
-                child: TextButton(
-              onPressed: () {
-                print("okay");
-              },
-              child: Text('Turn off Commenting'),
-            )),
-          ];
-        },
-      ),
+                ),
+              ),
+            );
+          },
+          icon: Icon(
+            Icons.more_vert,
+            size: 20.0,
+          )),
+      // child: PopupMenuButton<TextButton>(
+      //   elevation: 0.0,
+      //   padding: EdgeInsets.all(2.0),
+      //   itemBuilder: (context) {
+      //     return [
+      //       PopupMenuItem<TextButton>(
+      //           child: TextButton(
+      //         onPressed: () async {
+      //           String description = await Get.to(() => EditPostPageScreen(
+      //                 description: postDescription,
+      //                 postId: postId,
+      //               ));
+
+      //           editedDescriptionUpdater.call(description);
+      //         },
+      //         child: Text('Edit Post'),
+      //       )),
+      //       PopupMenuItem<TextButton>(
+      //           child: TextButton(
+      //         onPressed: () {
+      //           Get.dialog(AlertDialog(
+      //             title: Text("Post will be deleted permanently"),
+      //             actions: [
+      //               TextButton(
+      //                   onPressed: () {
+      //                     Get.back();
+      //                   },
+      //                   child: Text("Cancel")),
+      //               TextButton(
+      //                   onPressed: () async {
+      //                     await parentController.deletePost(postId);
+      //                     Get.back();
+      //                   },
+      //                   child: Text("Okay"))
+      //             ],
+      //           ));
+      //         },
+      //         child: Text('Delete Post'),
+      //       )),
+      //       PopupMenuItem<TextButton>(
+      //           child: TextButton(
+      //         onPressed: () {
+      //           print("okay");
+      //         },
+      //         child: Text('Turn off Commenting'),
+      //       )),
+      //     ];
+      //   },
+      // ),
     );
   }
 }

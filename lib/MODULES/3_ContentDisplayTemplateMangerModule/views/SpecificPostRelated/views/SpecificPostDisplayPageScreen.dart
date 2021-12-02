@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 
 class SpecificPostDisplayPageScreen extends StatefulWidget {
   final String postId;
-  final  postContent;
+  final postContent;
 
   SpecificPostDisplayPageScreen(
       {Key key, @required this.postId, this.postContent})
@@ -81,7 +81,12 @@ class _SpecificPostDisplayPageScreenState
                   ),
                 ),
                 recommendedPostData == null
-                    ? Container()
+                    ? Container(
+                        child: Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.blue,
+                        )),
+                      )
                     : recommendedPostData.length == 0
                         ? Container()
                         : ContentDisplayTemplateProvider(

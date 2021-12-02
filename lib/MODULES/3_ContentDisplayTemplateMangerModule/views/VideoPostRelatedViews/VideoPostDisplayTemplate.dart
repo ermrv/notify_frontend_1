@@ -354,9 +354,10 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
 
   //edited description updater
   updateEditedDescription(String editedDescription) {
-    widget.postContent["videoPost"]["description"] = editedDescription;
     if (this.mounted) {
-      setState(() {});
+      setState(() {
+        widget.postContent["videoPost"]["description"] = editedDescription;
+      });
     }
   }
 
