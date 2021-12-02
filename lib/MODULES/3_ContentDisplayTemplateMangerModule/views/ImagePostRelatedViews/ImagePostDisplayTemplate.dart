@@ -83,6 +83,9 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                 preventDuplicates: false);
           }
         },
+        onDoubleTap: () {
+          reactionCountUpdater(_thisUserId);
+        },
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
