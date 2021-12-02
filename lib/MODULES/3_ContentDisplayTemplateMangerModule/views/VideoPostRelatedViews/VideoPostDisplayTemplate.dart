@@ -72,10 +72,16 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
       key: Key(widget.postContent["_id"].toString()),
       margin: EdgeInsets.symmetric(horizontal: 5.0),
       child: GestureDetector(
+        onDoubleTap: () {
+          reactionCountUpdater(_thisUserId);
+        },
         onTap: () {
           if (!widget.useAsPostFullDetailTemplate) {
-            Get.to(SpecificPostDisplayPageScreen(
-                postId: widget.postContent["videoPost"]["_id"]));
+            Get.to(
+                SpecificPostDisplayPageScreen(
+                    postId: widget.postContent["videoPost"]["_id"],
+                    postContent: widget.postContent),
+                preventDuplicates: false);
           }
         },
         child: Column(
@@ -202,12 +208,15 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                         postType: "videoPost")),
 
             GestureDetector(
-              onDoubleTap: () {
-                reactionCountUpdater(_thisUserId);
-              },
               onLongPress: () {
-                Get.to(() => SpecificPostDisplayPageScreen(
-                    postId: widget.postContent["videoPost"]["_id"]));
+                if (!widget.useAsPostFullDetailTemplate) {
+                  Get.to(
+                      () => SpecificPostDisplayPageScreen(
+                            postId: widget.postContent["videoPost"]["_id"],
+                            postContent: widget.postContent,
+                          ),
+                      preventDuplicates: false);
+                }
               },
               onTap: () {
                 Get.to(() => FullVideoPostPlayerTemplate(

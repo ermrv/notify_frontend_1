@@ -186,6 +186,7 @@ class _SharedImagePostDisplayTemplateState
                 child: ImagePostDisplayTemplate(
                   postContent: widget.postContent,
                   parentController: widget.parentController,
+                  useAsPostFullDetailTemplate: false,
                 ),
               )),
           //likes count

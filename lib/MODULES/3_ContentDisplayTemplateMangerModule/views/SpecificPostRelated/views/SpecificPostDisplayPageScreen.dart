@@ -10,8 +10,10 @@ import 'package:get/get.dart';
 
 class SpecificPostDisplayPageScreen extends StatefulWidget {
   final String postId;
+  final  postContent;
 
-  SpecificPostDisplayPageScreen({Key key, @required this.postId})
+  SpecificPostDisplayPageScreen(
+      {Key key, @required this.postId, this.postContent})
       : super(key: key);
 
   @override
@@ -26,7 +28,12 @@ class _SpecificPostDisplayPageScreenState
 
   @override
   void initState() {
-    _getSpecificPostData();
+    if (widget.postContent == null) {
+      _getSpecificPostData();
+    } else {
+      specificPostData = widget.postContent;
+      _getRecommendedPostData();
+    }
 
     super.initState();
   }
@@ -44,15 +51,19 @@ class _SpecificPostDisplayPageScreenState
           : ListView(
               children: [
                 ContentDisplayTemplateProvider(
-                  data: [specificPostData],useTemplatesAsPostFullDetails: true,
+                  data: [specificPostData],
+                  useTemplatesAsPostFullDetails: true,
                 ),
 
                 ///profile reference
                 Container(
-                  margin: EdgeInsets.only(bottom: 5.0,top: 5.0),
-                  decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Theme.of(context).accentColor.withOpacity(0.5)))
-                  ),
+                    margin: EdgeInsets.only(bottom: 5.0, top: 5.0),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                                color: Theme.of(context)
+                                    .accentColor
+                                    .withOpacity(0.5)))),
                     child: specificPostData != null
                         ? ProfileReferenceTemplate(
                             userData: specificPostData["postBy"],

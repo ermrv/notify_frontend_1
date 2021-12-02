@@ -25,8 +25,12 @@ import 'package:get/get.dart';
 class TextPostDisplayTemplate extends StatefulWidget {
   final postContent;
   final parentController;
-
-  TextPostDisplayTemplate({Key key, this.postContent, this.parentController})
+  final bool useAsPostFullDetailTemplate;
+  TextPostDisplayTemplate(
+      {Key key,
+      this.postContent,
+      this.parentController,
+      @required this.useAsPostFullDetailTemplate})
       : super(key: key);
 
   @override
@@ -65,263 +69,266 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
       decoration: BoxDecoration(
           border:
               Border(top: BorderSide(color: Theme.of(context).primaryColor))),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //basic info of the post
-          Container(
-            height: 50.0,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //
-                //
-                //user profile pic
-                GestureDetector(
-                  onTap: () {
-                    Get.to(() => UserProfileScreen(
-                          profileOwnerId: widget.postContent["textPost"]
-                              ["postBy"]["_id"],
-                        ));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(1.0),
-                    height: 35.0,
-                    width: 35.0,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.deepOrange[900]),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30.0),
-                        child: CachedNetworkImage(
-                          imageUrl: ApiUrlsData.domain +
-                              widget.postContent["textPost"]["postBy"]
-                                  ["profilePic"],
-                          fit: BoxFit.fill,
-                        )),
+      child: GestureDetector(
+         onDoubleTap: () {
+                reactionCountUpdater(_thisUserId);
+              },
+        onTap: () {
+          if (!widget.useAsPostFullDetailTemplate) {
+            Get.to(SpecificPostDisplayPageScreen(
+                postId: widget.postContent["textPost"]["_id"],postContent: widget.postContent),preventDuplicates: false);
+          }
+        },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //basic info of the post
+            Container(
+              height: 50.0,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  //
+                  //
+                  //user profile pic
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => UserProfileScreen(
+                            profileOwnerId: widget.postContent["textPost"]
+                                ["postBy"]["_id"],
+                          ));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(1.0),
+                      height: 35.0,
+                      width: 35.0,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.deepOrange[900]),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30.0),
+                          child: CachedNetworkImage(
+                            imageUrl: ApiUrlsData.domain +
+                                widget.postContent["textPost"]["postBy"]
+                                    ["profilePic"],
+                            fit: BoxFit.fill,
+                          )),
+                    ),
                   ),
-                ),
-                //
-                //
-                //user name,userName and location
-                Container(
-                  margin: EdgeInsets.only(left: 8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 2.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              widget.postContent["textPost"]["postBy"]["name"]
-                                      .toString() +
-                                  "  ",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 15.0),
-                            ),
-                          ],
+                  //
+                  //
+                  //user name,userName and location
+                  Container(
+                    margin: EdgeInsets.only(left: 8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: 2.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                widget.postContent["textPost"]["postBy"]["name"]
+                                        .toString() +
+                                    "  ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15.0),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        child: Text(
-                          TimeStampProvider.timeStampProvider(widget
-                              .postContent["textPost"]["createdAt"]
-                              .toString()),
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 12.0),
-                        ),
-                      )
-                    ],
+                        Container(
+                          child: Text(
+                            TimeStampProvider.timeStampProvider(widget
+                                .postContent["textPost"]["createdAt"]
+                                .toString()),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 12.0),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Container(),
-                ),
-                _isOwner
-                    ? Container(
-                        child: TextButton(
-                          onPressed: () {
-                            Get.to(() => EstimatedBudgetPageScreen(
-                                  postId: widget.postContent["_id"].toString(),
-                                ));
-                          },
-                          child: Text("Promote"),
-                        ),
-                      )
-                    : Container(),
-
-                //actions on post
-                widget.parentController != null
-                    ? _isOwner
-                        ? PostOwnerActionsOnPost(
-                            postId: widget.postContent["_id"].toString(),
-                            postDescription: widget.postContent["textPost"]
-                                    ["description"]
-                                .toString(),
-                            editedDescriptionUpdater: (String description) {
-                              updateEditedDescription(description);
+                  Expanded(
+                    child: Container(),
+                  ),
+                  _isOwner
+                      ? Container(
+                          child: TextButton(
+                            onPressed: () {
+                              Get.to(() => EstimatedBudgetPageScreen(
+                                    postId:
+                                        widget.postContent["_id"].toString(),
+                                  ));
                             },
-                            parentController: widget.parentController,
-                          )
-                        : OtherUserActionsOnPost(
-                            postUserId: widget.postContent["textPost"]["postBy"]
-                                    ["_id"]
-                                .toString(),
-                            postId: widget.postContent["_id"].toString(),
-                          )
-                    : Container()
-              ],
+                            child: Text("Promote"),
+                          ),
+                        )
+                      : Container(),
+
+                  //actions on post
+                  widget.parentController != null
+                      ? _isOwner
+                          ? PostOwnerActionsOnPost(
+                              postId: widget.postContent["_id"].toString(),
+                              postDescription: widget.postContent["textPost"]
+                                      ["description"]
+                                  .toString(),
+                              editedDescriptionUpdater: (String description) {
+                                updateEditedDescription(description);
+                              },
+                              parentController: widget.parentController,
+                            )
+                          : OtherUserActionsOnPost(
+                              postUserId: widget.postContent["textPost"]
+                                      ["postBy"]["_id"]
+                                  .toString(),
+                              postId: widget.postContent["_id"].toString(),
+                            )
+                      : Container()
+                ],
+              ),
             ),
-          ),
-          //description and tags container
-          widget.postContent["textPost"]["description"] == null ||
-                  widget.postContent["textPost"]["description"] == ""
-              ? Container()
-              : Container(
-                  width: screenWidth,
-                  padding: EdgeInsets.only(
-                      top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
-                  alignment: Alignment.centerLeft,
-                  child: GestureDetector(
-                    onDoubleTap: () {
-                      reactionCountUpdater(_thisUserId);
-                    },
-                    onLongPress: () {
-                      Get.to(() => SpecificPostDisplayPageScreen(
-                          postId: widget.postContent["textPost"]["_id"]),preventDuplicates: false);
-                    },
+            //description and tags container
+            widget.postContent["textPost"]["description"] == null ||
+                    widget.postContent["textPost"]["description"] == ""
+                ? Container()
+                : Container(
+                    width: screenWidth,
+                    padding: EdgeInsets.only(
+                        top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
+                    alignment: Alignment.centerLeft,
                     child: PostDescriptionWidget(
                         tags: [],
                         mentions: [],
                         description: widget.postContent["textPost"]
                                 ["description"]
                             .toString(),
-                        postType: "text"),
-                  )),
-          //total reactions count
-          _isShared
-              ? Container()
-              : Container(
-                  alignment: Alignment.centerLeft,
-                  child: _likes.length != 0
-                      ? GestureDetector(
-                          onTap: () {
-                            
-                            Get.to(() => PostLikesDisplayPageScreen(
-                
-                                postId: widget.postContent["_id"]));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.only(
+                        postType: "text")),
+            //total reactions count
+            _isShared
+                ? Container()
+                : Container(
+                    alignment: Alignment.centerLeft,
+                    child: _likes.length != 0
+                        ? GestureDetector(
+                            onTap: () {
+                              Get.to(() => PostLikesDisplayPageScreen(
+                                  postId: widget.postContent["_id"]));
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  top: 10.0, left: 8.0, right: 8.0),
+                              child: Text(
+                                "${_likes.length} likes",
+                                style: TextStyle(fontSize: 14.0),
+                              ),
+                            ),
+                          )
+                        : Container(
+                            margin: EdgeInsets.only(
                                 top: 10.0, left: 8.0, right: 8.0),
-                            child: Text(
-                              "${_likes.length} likes",
-                              style: TextStyle(fontSize: 14.0),
-                            ),
+                            child: Text("Be the first to like",
+                                style: TextStyle(fontSize: 14.0)),
                           ),
-                        )
-                      : Container(
-                          margin:
-                              EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
-                          child: Text("Be the first to like",
-                              style: TextStyle(fontSize: 14.0)),
-                        ),
-                ),
-          _isShared
-              ? Container()
-              : Container(
-                  height: 50.0,
-                  width: screenWidth,
-                  padding: EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //like
-                      Container(
-                        height: 40.0,
-                        width: 40.0,
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(right: 5.0),
-                        child: IconButton(
-                            padding: EdgeInsets.all(4.0),
-                            icon: _likes.contains(
-                              _thisUserId,
-                            )
-                                ? Icon(
-                                    Octicons.heart,
-                                    size: 24.0,
-                                    color: Colors.red,
-                                  )
-                                : Icon(EvilIcons.heart,
-                                    size: 28.0,
-                                    color: Theme.of(context).iconTheme.color),
-                            onPressed: () {
-                              reactionCountUpdater(_thisUserId);
-                            }),
-                      ),
-                      //comment
-                      Container(
-                        height: 40.0,
-                        width: 40.0,
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(right: 5.0),
-                        child: IconButton(
-                            padding: EdgeInsets.all(4.0),
-                            icon: Icon(
-                              EvilIcons.comment,
-                              size: 28.0,
-                            ),
-                            onPressed: () {
-                              Get.to(() => CommentsDisplayScreen(
-                                    postId: widget.postContent["_id"],
-                                    commentCountUpdater: (int commentCount) {
-                                      commentCountUpdater(commentCount);
-                                    },
-                                  ));
-                            }),
-                      ),
-                      Container(
-                        height: 40.0,
-                        width: 40.0,
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(right: 5.0),
-                        child: IconButton(
-                            icon: Icon(MaterialCommunityIcons.share),
-                            onPressed: () {
-                              Get.to(() => SharePostPageScreen(
-                                    postId: widget.postContent["textPost"]
-                                        ["_id"],
-                                    postOwnerName:
-                                        widget.postContent["textPost"]["postBy"]
-                                            ["name"],
-                                    postOwnerProfilePic:
-                                        widget.postContent["textPost"]["postBy"]
-                                            ["profilePic"],
-                                  ));
-                            }),
-                      ),
-                      Expanded(
-                        child: Container(),
-                      ),
-                    ],
                   ),
-                ),
-          _isShared
-              ? Container()
-              : widget.postContent["comments"] == null
-                  ? Container()
-                  : widget.postContent["comments"].length == 0
-                      ? Container()
-                      : BelowPostCommentDisplayTemplate(
-                          commentCount: _numberOfComments,
-                          commentData: widget.postContent["comments"][0],
-                          postId: widget.postContent["_id"],
-                          commentCountUpdater: (int count) {
-                            commentCountUpdater(count);
-                          },
-                        )
-        ],
+            _isShared
+                ? Container()
+                : Container(
+                    height: 50.0,
+                    width: screenWidth,
+                    padding: EdgeInsets.symmetric(horizontal: 2.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        //like
+                        Container(
+                          height: 40.0,
+                          width: 40.0,
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(right: 5.0),
+                          child: IconButton(
+                              padding: EdgeInsets.all(4.0),
+                              icon: _likes.contains(
+                                _thisUserId,
+                              )
+                                  ? Icon(
+                                      Octicons.heart,
+                                      size: 24.0,
+                                      color: Colors.red,
+                                    )
+                                  : Icon(EvilIcons.heart,
+                                      size: 28.0,
+                                      color: Theme.of(context).iconTheme.color),
+                              onPressed: () {
+                                reactionCountUpdater(_thisUserId);
+                              }),
+                        ),
+                        //comment
+                        Container(
+                          height: 40.0,
+                          width: 40.0,
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(right: 5.0),
+                          child: IconButton(
+                              padding: EdgeInsets.all(4.0),
+                              icon: Icon(
+                                EvilIcons.comment,
+                                size: 28.0,
+                              ),
+                              onPressed: () {
+                                Get.to(() => CommentsDisplayScreen(
+                                      postId: widget.postContent["_id"],
+                                      commentCountUpdater: (int commentCount) {
+                                        commentCountUpdater(commentCount);
+                                      },
+                                    ));
+                              }),
+                        ),
+                        Container(
+                          height: 40.0,
+                          width: 40.0,
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(right: 5.0),
+                          child: IconButton(
+                              icon: Icon(MaterialCommunityIcons.share),
+                              onPressed: () {
+                                Get.to(() => SharePostPageScreen(
+                                      postId: widget.postContent["textPost"]
+                                          ["_id"],
+                                      postOwnerName:
+                                          widget.postContent["textPost"]
+                                              ["postBy"]["name"],
+                                      postOwnerProfilePic:
+                                          widget.postContent["textPost"]
+                                              ["postBy"]["profilePic"],
+                                    ));
+                              }),
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                      ],
+                    ),
+                  ),
+            _isShared
+                ? Container()
+                : widget.postContent["comments"] == null
+                    ? Container()
+                    : widget.postContent["comments"].length == 0
+                        ? Container()
+                        : BelowPostCommentDisplayTemplate(
+                            commentCount: _numberOfComments,
+                            commentData: widget.postContent["comments"][0],
+                            postId: widget.postContent["_id"],
+                            commentCountUpdater: (int count) {
+                              commentCountUpdater(count);
+                            },
+                          )
+          ],
+        ),
       ),
     );
   }

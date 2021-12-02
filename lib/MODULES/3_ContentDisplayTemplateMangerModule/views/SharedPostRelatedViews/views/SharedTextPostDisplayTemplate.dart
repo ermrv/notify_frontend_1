@@ -180,6 +180,7 @@ class _SharedTextPostDisplayTemplateState
               child: TextPostDisplayTemplate(
                 postContent: widget.postContent,
                 parentController: widget.parentController,
+                useAsPostFullDetailTemplate: false,
               )),
           //likes count
           Container(

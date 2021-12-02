@@ -27,7 +27,10 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
   final bool useTemplatesAsPostFullDetails;
 
   ContentDisplayTemplateProvider(
-      {Key key, @required this.data, this.controller,@required this.useTemplatesAsPostFullDetails})
+      {Key key,
+      @required this.data,
+      this.controller,
+      @required this.useTemplatesAsPostFullDetails})
       : super(key: key);
 
   @override
@@ -49,6 +52,7 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
             return ImagePostDisplayTemplate(
               postContent: content,
               parentController: controller,
+              useAsPostFullDetailTemplate: useTemplatesAsPostFullDetails,
             );
           } else if (content["primary"].toString() == "false")
             return SharedImagePostDisplayTemplate(
@@ -60,7 +64,10 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
         {
           if (content["primary"].toString() == "true") {
             return VideoPostDisplayTemplate(
-                postContent: content, parentController: controller,useAsPostFullDetailTemplate: useTemplatesAsPostFullDetails,);
+              postContent: content,
+              parentController: controller,
+              useAsPostFullDetailTemplate: useTemplatesAsPostFullDetails,
+            );
           } else if (content["primary"].toString() == "false")
             return SharedVideoPostDisplayTemplate(
                 postContent: content, parentController: controller);
@@ -89,7 +96,10 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
         {
           if (content["primary"].toString() == "true") {
             return TextPostDisplayTemplate(
-                postContent: content, parentController: controller);
+              postContent: content,
+              parentController: controller,
+              useAsPostFullDetailTemplate: useTemplatesAsPostFullDetails,
+            );
           } else if (content["primary"].toString() == "false")
             return SharedTextPostDisplayTemplate(
                 postContent: content, parentController: controller);

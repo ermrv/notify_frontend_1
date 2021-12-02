@@ -30,7 +30,12 @@ import 'package:get/get.dart';
 class ImagePostDisplayTemplate extends StatefulWidget {
   final postContent;
   final parentController;
-  ImagePostDisplayTemplate({Key key, this.postContent, this.parentController})
+  final bool useAsPostFullDetailTemplate;
+  ImagePostDisplayTemplate(
+      {Key key,
+      this.postContent,
+      this.parentController,
+      @required this.useAsPostFullDetailTemplate})
       : super(key: key);
 
   @override
@@ -63,277 +68,299 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
-key: Key(widget.postContent["_id"].toString()),      decoration: BoxDecoration(
+      key: Key(widget.postContent["_id"].toString()),
+      decoration: BoxDecoration(
           border:
               Border(top: BorderSide(color: Theme.of(context).primaryColor))),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //basic info of the post
-          Container(
-            height: 45.0,
-            padding: _isShared
-                ? EdgeInsets.zero
-                : EdgeInsets.symmetric(vertical: 3.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //
-                //
-                //user profile pic
-                GestureDetector(
-                  onTap: () {
-                    Get.to(() => UserProfileScreen(
-                          profileOwnerId: widget.postContent["imagePost"]
-                              ["postBy"]["_id"],
-                        ));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(1.0),
-                    height: 35.0,
-                    width: 35.0,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.deepOrange[900]),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30.0),
-                        child: CachedNetworkImage(
-                          imageUrl: ApiUrlsData.domain +
-                              widget.postContent["imagePost"]["postBy"]
-                                  ["profilePic"],
-                          fit: BoxFit.fill,
-                        )),
+      child: GestureDetector(
+        onTap: () {
+          if (!widget.useAsPostFullDetailTemplate) {
+            Get.to(
+                SpecificPostDisplayPageScreen(
+                    postId: widget.postContent["imagePost"]["_id"],
+                    postContent: widget.postContent),
+                preventDuplicates: false);
+          }
+        },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //basic info of the post
+            Container(
+              height: 45.0,
+              padding: _isShared
+                  ? EdgeInsets.zero
+                  : EdgeInsets.symmetric(vertical: 3.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  //
+                  //
+                  //user profile pic
+                  GestureDetector(
+                    onDoubleTap: () {
+                      reactionCountUpdater(_thisUserId);
+                    },
+                    onTap: () {
+                      Get.to(
+                          () => UserProfileScreen(
+                                profileOwnerId: widget.postContent["imagePost"]
+                                    ["postBy"]["_id"],
+                              ),
+                          preventDuplicates: false);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(1.0),
+                      height: 35.0,
+                      width: 35.0,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.deepOrange[900]),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30.0),
+                          child: CachedNetworkImage(
+                            imageUrl: ApiUrlsData.domain +
+                                widget.postContent["imagePost"]["postBy"]
+                                    ["profilePic"],
+                            fit: BoxFit.fill,
+                          )),
+                    ),
                   ),
-                ),
-                //
-                //
-                //user name,userName and location
-                Container(
-                  margin: EdgeInsets.only(left: 8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 2.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              widget.postContent["imagePost"]["postBy"]["name"]
-                                      .toString() +
-                                  "  ",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 15.0),
-                            ),
-                            // Text(
-                            //   widget.postContent["imagePost"]["postBy"]
-                            //           ["userName"]
-                            //       .toString(),
-                            //   style: TextStyle(
-                            //       fontWeight: FontWeight.w500, fontSize: 14.0),
-                            // ),
-                          ],
+                  //
+                  //
+                  //user name,userName and location
+                  Container(
+                    margin: EdgeInsets.only(left: 8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: 2.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                widget.postContent["imagePost"]["postBy"]
+                                            ["name"]
+                                        .toString() +
+                                    "  ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15.0),
+                              ),
+                              // Text(
+                              //   widget.postContent["imagePost"]["postBy"]
+                              //           ["userName"]
+                              //       .toString(),
+                              //   style: TextStyle(
+                              //       fontWeight: FontWeight.w500, fontSize: 14.0),
+                              // ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        child: Text(
-                          TimeStampProvider.timeStampProvider(widget
-                              .postContent["imagePost"]["createdAt"]
-                              .toString()),
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 12.0),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(),
-                ),
-                _isOwner
-                    ? Container(
-                        child: TextButton(
-                          onPressed: () {
-                            Get.to(() => EstimatedBudgetPageScreen(
-                                  postId: widget.postContent["_id"].toString(),
-                                ));
-                          },
-                          child: Text("Promote"),
-                        ),
-                      )
-                    : Container(),
-                //actions on post
-                widget.parentController != null
-                    ? _isOwner
-                        ? PostOwnerActionsOnPost(
-                            postId: widget.postContent["_id"].toString(),
-                            postDescription: widget.postContent["imagePost"]
-                                    ["description"]
-                                .toString(),
-                            editedDescriptionUpdater: (String description) {
-                              updateEditedDescription(description);
-                            },
-                            parentController: widget.parentController,
-                          )
-                        : OtherUserActionsOnPost(
-                            postUserId: widget.postContent["imagePost"]
-                                    ["postBy"]["_id"]
-                                .toString(),
-                            postId: widget.postContent["_id"].toString(),
-                          )
-                    : Container()
-              ],
-            ),
-          ),
-          //description and tags container
-          widget.postContent["imagePost"]["description"] == null ||
-                  widget.postContent["imagePost"]["description"] == ""
-              ? Container()
-              : Container(
-                  width: screenWidth,
-                  padding: EdgeInsets.only(
-                      top: 3.0, bottom: 3.0, right: 2.0, left: 2.0),
-                  alignment: Alignment.centerLeft,
-                  child: PostDescriptionWidget(
-                      tags: [],
-                      mentions: [],
-                      description: widget.postContent["imagePost"]
-                          ["description"],
-                      postType: "imagePost")),
-          GestureDetector(
-            onDoubleTap: () {
-              reactionCountUpdater(_thisUserId);
-            },
-            onLongPress: () {
-              Get.to(() => SpecificPostDisplayPageScreen(
-                  postId: widget.postContent["imagePost"]["_id"]));
-            },
-            child: _imageLayoutSelector(
-                widget.postContent["imagePost"]["postContent"],
-                widget.postContent["imagePost"]["templateType"]),
-          ),
-//total reactions count
-          _isShared
-              ? Container()
-              : Container(
-                  alignment: Alignment.centerLeft,
-                  child: _likes.length != 0
-                      ? GestureDetector(
-                          onTap: () {
-                            Get.to(() => PostLikesDisplayPageScreen(
-                                postId: widget.postContent["_id"]));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.only(
-                                top: 10.0, left: 8.0, right: 8.0),
-                            child: Text(
-                              "${_likes.length} likes",
-                              style: TextStyle(fontSize: 14.0),
-                            ),
+                        Container(
+                          child: Text(
+                            TimeStampProvider.timeStampProvider(widget
+                                .postContent["imagePost"]["createdAt"]
+                                .toString()),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 12.0),
                           ),
                         )
-                      : Container(
-                          margin:
-                              EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
-                          child: Text("Be the first to like",
-                              style: TextStyle(fontSize: 14.0)),
-                        ),
-                ),
-          _isShared
-              ? Container()
-              : Container(
-                  height: 50.0,
-                  width: screenWidth,
-                  padding: EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //like
-                      Container(
-                        height: 40.0,
-                        width: 40.0,
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(right: 5.0),
-                        child: IconButton(
-                            padding: EdgeInsets.all(4.0),
-                            icon: _likes.contains(
-                              _thisUserId,
-                            )
-                                ? Icon(
-                                    Octicons.heart,
-                                    size: 24.0,
-                                    color: Colors.red,
-                                  )
-                                : Icon(EvilIcons.heart,
-                                    size: 28.0,
-                                    color: Theme.of(context).iconTheme.color),
-                            onPressed: () {
-                              reactionCountUpdater(_thisUserId);
-                            }),
-                      ),
-                      //comment
-                      Container(
-                        height: 40.0,
-                        width: 40.0,
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(right: 5.0),
-                        child: IconButton(
-                            padding: EdgeInsets.all(4.0),
-                            icon: Icon(
-                              EvilIcons.comment,
-                              size: 28.0,
-                            ),
-                            onPressed: () {
-                              Get.to(() => CommentsDisplayScreen(
-                                    postId: widget.postContent["_id"],
-                                    commentCountUpdater: (int commentCount) {
-                                      commentCountUpdater(commentCount);
-                                    },
-                                  ));
-                            }),
-                      ),
-                      Container(
-                        height: 40.0,
-                        width: 40.0,
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(right: 5.0),
-                        child: IconButton(
-                            icon: Icon(MaterialCommunityIcons.share),
-                            onPressed: () {
-                              Get.to(() => SharePostPageScreen(
-                                    postId: widget.postContent["imagePost"]
-                                        ["_id"],
-                                    postOwnerName:
-                                        widget.postContent["imagePost"]
-                                            ["postBy"]["name"],
-                                    postOwnerProfilePic:
-                                        widget.postContent["imagePost"]
-                                            ["postBy"]["profilePic"],
-                                  ));
-                            }),
-                      ),
-                      Expanded(
-                        child: Container(),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-          _isShared
-              ? Container()
-              : widget.postContent["comments"] == null
-                  ? Container()
-                  : widget.postContent["comments"].length == 0
-                      ? Container()
-                      : BelowPostCommentDisplayTemplate(
-                          commentCount: _numberOfComments,
-                          commentData: widget.postContent["comments"][0],
-                          postId: widget.postContent["_id"],
-                          commentCountUpdater: (int count) {
-                            commentCountUpdater(count);
-                          },
+                  Expanded(
+                    child: Container(),
+                  ),
+                  _isOwner
+                      ? Container(
+                          child: TextButton(
+                            onPressed: () {
+                              Get.to(() => EstimatedBudgetPageScreen(
+                                    postId:
+                                        widget.postContent["_id"].toString(),
+                                  ));
+                            },
+                            child: Text("Promote"),
+                          ),
+                        )
+                      : Container(),
+                  //actions on post
+                  widget.parentController != null
+                      ? _isOwner
+                          ? PostOwnerActionsOnPost(
+                              postId: widget.postContent["_id"].toString(),
+                              postDescription: widget.postContent["imagePost"]
+                                      ["description"]
+                                  .toString(),
+                              editedDescriptionUpdater: (String description) {
+                                updateEditedDescription(description);
+                              },
+                              parentController: widget.parentController,
+                            )
+                          : OtherUserActionsOnPost(
+                              postUserId: widget.postContent["imagePost"]
+                                      ["postBy"]["_id"]
+                                  .toString(),
+                              postId: widget.postContent["_id"].toString(),
+                            )
+                      : Container()
+                ],
+              ),
+            ),
+            //description and tags container
+            widget.postContent["imagePost"]["description"] == null ||
+                    widget.postContent["imagePost"]["description"] == ""
+                ? Container()
+                : Container(
+                    width: screenWidth,
+                    padding: EdgeInsets.only(
+                        top: 3.0, bottom: 3.0, right: 2.0, left: 2.0),
+                    alignment: Alignment.centerLeft,
+                    child: PostDescriptionWidget(
+                        tags: [],
+                        mentions: [],
+                        description: widget.postContent["imagePost"]
+                            ["description"],
+                        postType: "imagePost")),
+            GestureDetector(
+              onLongPress: () {
+                if (!widget.useAsPostFullDetailTemplate) {
+                  Get.to(
+                      () => SpecificPostDisplayPageScreen(
+                          postId: widget.postContent["imagePost"]["_id"],
+                          postContent: widget.postContent),
+                      preventDuplicates: false);
+                }
+              },
+              child: _imageLayoutSelector(
+                  widget.postContent["imagePost"]["postContent"],
+                  widget.postContent["imagePost"]["templateType"]),
+            ),
+            //total reactions count
+            _isShared
+                ? Container()
+                : Container(
+                    alignment: Alignment.centerLeft,
+                    child: _likes.length != 0
+                        ? GestureDetector(
+                            onTap: () {
+                              Get.to(() => PostLikesDisplayPageScreen(
+                                  postId: widget.postContent["_id"]));
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  top: 10.0, left: 8.0, right: 8.0),
+                              child: Text(
+                                "${_likes.length} likes",
+                                style: TextStyle(fontSize: 14.0),
+                              ),
+                            ),
+                          )
+                        : Container(
+                            margin: EdgeInsets.only(
+                                top: 10.0, left: 8.0, right: 8.0),
+                            child: Text("Be the first to like",
+                                style: TextStyle(fontSize: 14.0)),
+                          ),
+                  ),
+            _isShared
+                ? Container()
+                : Container(
+                    height: 50.0,
+                    width: screenWidth,
+                    padding: EdgeInsets.symmetric(horizontal: 2.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        //like
+                        Container(
+                          height: 40.0,
+                          width: 40.0,
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(right: 5.0),
+                          child: IconButton(
+                              padding: EdgeInsets.all(4.0),
+                              icon: _likes.contains(
+                                _thisUserId,
+                              )
+                                  ? Icon(
+                                      Octicons.heart,
+                                      size: 24.0,
+                                      color: Colors.red,
+                                    )
+                                  : Icon(EvilIcons.heart,
+                                      size: 28.0,
+                                      color: Theme.of(context).iconTheme.color),
+                              onPressed: () {
+                                reactionCountUpdater(_thisUserId);
+                              }),
                         ),
-        ],
+                        //comment
+                        Container(
+                          height: 40.0,
+                          width: 40.0,
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(right: 5.0),
+                          child: IconButton(
+                              padding: EdgeInsets.all(4.0),
+                              icon: Icon(
+                                EvilIcons.comment,
+                                size: 28.0,
+                              ),
+                              onPressed: () {
+                                Get.to(() => CommentsDisplayScreen(
+                                      postId: widget.postContent["_id"],
+                                      commentCountUpdater: (int commentCount) {
+                                        commentCountUpdater(commentCount);
+                                      },
+                                    ));
+                              }),
+                        ),
+                        Container(
+                          height: 40.0,
+                          width: 40.0,
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(right: 5.0),
+                          child: IconButton(
+                              icon: Icon(MaterialCommunityIcons.share),
+                              onPressed: () {
+                                Get.to(() => SharePostPageScreen(
+                                      postId: widget.postContent["imagePost"]
+                                          ["_id"],
+                                      postOwnerName:
+                                          widget.postContent["imagePost"]
+                                              ["postBy"]["name"],
+                                      postOwnerProfilePic:
+                                          widget.postContent["imagePost"]
+                                              ["postBy"]["profilePic"],
+                                    ));
+                              }),
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                      ],
+                    ),
+                  ),
+            _isShared
+                ? Container()
+                : widget.postContent["comments"] == null
+                    ? Container()
+                    : widget.postContent["comments"].length == 0
+                        ? Container()
+                        : BelowPostCommentDisplayTemplate(
+                            commentCount: _numberOfComments,
+                            commentData: widget.postContent["comments"][0],
+                            postId: widget.postContent["_id"],
+                            commentCountUpdater: (int count) {
+                              commentCountUpdater(count);
+                            },
+                          ),
+          ],
+        ),
       ),
     );
   }
