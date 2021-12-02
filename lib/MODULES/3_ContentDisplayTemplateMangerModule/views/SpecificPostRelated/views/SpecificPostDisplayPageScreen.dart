@@ -44,7 +44,7 @@ class _SpecificPostDisplayPageScreenState
           : ListView(
               children: [
                 ContentDisplayTemplateProvider(
-                  data: [specificPostData],
+                  data: [specificPostData],useTemplatesAsPostFullDetails: true,
                 ),
 
                 ///profile reference
@@ -75,6 +75,7 @@ class _SpecificPostDisplayPageScreenState
                         ? Container()
                         : ContentDisplayTemplateProvider(
                             data: recommendedPostData,
+                            useTemplatesAsPostFullDetails: false,
                           ),
                 recommendedPostData != null
                     ? ProfileReferenceTemplate(

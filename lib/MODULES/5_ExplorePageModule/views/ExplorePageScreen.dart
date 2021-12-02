@@ -50,6 +50,7 @@ class ExplorePageScreen extends StatelessWidget {
                       ContentDisplayTemplateProvider(
                         data: controller.explorePageData,
                         controller: controller,
+                        useTemplatesAsPostFullDetails: false,
                       ),
                     ],
                   ),

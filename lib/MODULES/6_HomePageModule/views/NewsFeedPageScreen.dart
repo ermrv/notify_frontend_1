@@ -42,6 +42,7 @@ class NewsFeedPageScreen extends StatelessWidget {
                             : ContentDisplayTemplateProvider(
                                 data: controller.newsFeedData,
                                 controller: controller,
+                                useTemplatesAsPostFullDetails: false,
                               )
                       ],
                     ),

@@ -182,6 +182,7 @@ class _SharedVideoPostDisplayPostState
                 child: VideoPostDisplayTemplate(
                   postContent: widget.postContent,
                   parentController: widget.parentController,
+                  useAsPostFullDetailTemplate: false,
                 ),
               )),
 

@@ -130,7 +130,7 @@ class SearchResultsDisplayPageScreen extends StatelessWidget {
                         ? ListView(
                             children: [
                               ContentDisplayTemplateProvider(
-                                  data: controller.postsSearchResults)
+                                  data: controller.postsSearchResults,useTemplatesAsPostFullDetails: false,)
                             ],
                           )
                         : controller.selectedSearchType == "tags"

@@ -66,6 +66,7 @@ class CommonPostDisplayPageScreen extends StatelessWidget {
                       ContentDisplayTemplateProvider(
                         data: controller.data,
                         controller: controller,
+                        useTemplatesAsPostFullDetails: false,
                       )
                     ],
                   ),

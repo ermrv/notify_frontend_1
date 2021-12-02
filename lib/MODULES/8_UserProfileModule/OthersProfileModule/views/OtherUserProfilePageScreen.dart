@@ -59,6 +59,7 @@ class OtherUserProfilePageScreen extends StatelessWidget {
                       : ContentDisplayTemplateProvider(
                           data: controller.postData,
                           controller: controller,
+                          useTemplatesAsPostFullDetails: false,
                         )
             ],
           ),

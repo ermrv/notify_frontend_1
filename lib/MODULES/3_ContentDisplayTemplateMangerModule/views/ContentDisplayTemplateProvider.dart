@@ -24,12 +24,11 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 class ContentDisplayTemplateProvider extends StatelessWidget {
   final List data;
   final controller;
+  final bool useTemplatesAsPostFullDetails;
 
-  ContentDisplayTemplateProvider({
-    Key key,
-    @required this.data,
-    this.controller
-  }) : super(key: key);
+  ContentDisplayTemplateProvider(
+      {Key key, @required this.data, this.controller,@required this.useTemplatesAsPostFullDetails})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,18 +46,24 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
       case "image":
         {
           if (content["primary"].toString() == "true") {
-            return ImagePostDisplayTemplate(postContent: content,parentController: controller,);
+            return ImagePostDisplayTemplate(
+              postContent: content,
+              parentController: controller,
+            );
           } else if (content["primary"].toString() == "false")
-            return SharedImagePostDisplayTemplate(postContent: content,parentController: controller);
+            return SharedImagePostDisplayTemplate(
+                postContent: content, parentController: controller);
           break;
         }
       // //for video post
       case "video":
         {
           if (content["primary"].toString() == "true") {
-            return VideoPostDisplayTemplate(postContent: content,parentController: controller);
+            return VideoPostDisplayTemplate(
+                postContent: content, parentController: controller,useAsPostFullDetailTemplate: useTemplatesAsPostFullDetails,);
           } else if (content["primary"].toString() == "false")
-            return SharedVideoPostDisplayTemplate(postContent: content,parentController: controller);
+            return SharedVideoPostDisplayTemplate(
+                postContent: content, parentController: controller);
         }
         break;
 
@@ -71,9 +76,7 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
       //for poll post
       case "poll":
         return PollPostDisplayTemplate(
-          postContent: content,
-          parentController: controller
-        );
+            postContent: content, parentController: controller);
         break;
 
       // for event post
@@ -86,13 +89,10 @@ class ContentDisplayTemplateProvider extends StatelessWidget {
         {
           if (content["primary"].toString() == "true") {
             return TextPostDisplayTemplate(
-              postContent: content,
-              parentController: controller
-            );
+                postContent: content, parentController: controller);
           } else if (content["primary"].toString() == "false")
             return SharedTextPostDisplayTemplate(
-              postContent: content,parentController: controller
-            );
+                postContent: content, parentController: controller);
         }
 
         break;
