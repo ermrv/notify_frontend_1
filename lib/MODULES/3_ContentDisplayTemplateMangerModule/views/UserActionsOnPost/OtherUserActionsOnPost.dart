@@ -3,6 +3,7 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.d
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class OtherUserActionsOnPost extends StatefulWidget {
   final String postUserId;
@@ -20,30 +21,39 @@ class _OtherUserActionsOnPostState extends State<OtherUserActionsOnPost> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: PopupMenuButton<TextButton>(
-        elevation: 0.0,
-        padding: EdgeInsets.all(2.0),
-        itemBuilder: (context) {
-          return [
-            PopupMenuItem<TextButton>(
-                child: TextButton(
-              onPressed: () {
-                print("okay");
-              },
-              child: Text('Block User'),
-            )),
-            PopupMenuItem<TextButton>(
-                child: getFollowButton(widget.postUserId, false)),
-            PopupMenuItem<TextButton>(
-                child: TextButton(
-              onPressed: () {
-                print("okay");
-              },
-              child: Text('Report'),
-            )),
-          ];
-        },
-      ),
+      child: IconButton(
+          onPressed: () {
+            Get.bottomSheet(
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        print("okay");
+                      },
+                      child: Text('Block User'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        print("okay");
+                      },
+                      child: Text('Report'),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+          icon: Icon(
+            Icons.more_vert,
+            size: 20.0,
+          )),
+      
     );
   }
 
