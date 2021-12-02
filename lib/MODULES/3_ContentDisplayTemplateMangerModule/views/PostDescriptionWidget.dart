@@ -27,7 +27,7 @@ class PostDescriptionWidget extends StatelessWidget {
 
   Wrap _postDiscriptionParser(List tags, List mentions, String description) {
     double fontsize = 16.0;
-    List words = description.split(" ").toList();
+    List words = description.split(RegExp(" ")).toList();
     List wordsToDisplay;
     //selecting font size
     if (postType != "pollPost") {
@@ -45,10 +45,12 @@ class PostDescriptionWidget extends StatelessWidget {
     } else {
       wordsToDisplay = words;
     }
-    
+
     return Wrap(
+      alignment: WrapAlignment.start,
       children: [
         for (String word in wordsToDisplay) _getWordStyle(word, fontsize),
+        displayFullText?Container():words.length>=60?Text(".....more",style: TextStyle(color:Colors.blue,fontSize: 16.0)):Container()
       ],
     );
   }

@@ -7,6 +7,7 @@ import 'package:MediaPlus/MODULES/1_AddPostModule/views/ShowSuggestionsWidget.da
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 
 class AddPostPageScreen extends StatelessWidget {
@@ -53,8 +54,36 @@ class AddPostPageScreen extends StatelessWidget {
                 height: 0.0,
               ),
         appBar: AppBar(
-          title: Text("Share a post"),
+          automaticallyImplyLeading: false,
+          title: Text(" Notify"),
           actions: [
+            Container(
+              child: Row(
+                children: [
+                  Icon(
+                    EvilIcons.comment,
+                    size: 28.0,
+                  ),
+                  Switch(
+                      value: controller.allowCommenting,
+                      onChanged: (value) {
+                        controller.updateCommentPrivacy(value);
+                      })
+                ],
+              ),
+            ),
+            Container(
+              child: Row(
+                children: [
+                  Icon(MaterialCommunityIcons.share),
+                  Switch(
+                      value: controller.allowSharing,
+                      onChanged: (value) {
+                        controller.updateSharingPrivacy(value);
+                      })
+                ],
+              ),
+            ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
               alignment: Alignment.center,
@@ -137,6 +166,7 @@ class AddPostPageScreen extends StatelessWidget {
                           ],
                         ),
                       ),
+                      Expanded(child: Container()),
                     ],
                   ),
                 ),

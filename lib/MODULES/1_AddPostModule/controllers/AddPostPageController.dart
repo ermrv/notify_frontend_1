@@ -28,6 +28,9 @@ class AddPostPageController extends GetxController {
   bool isUploaded = false;
   bool isError = false;
 
+  bool allowCommenting = false;
+  bool allowSharing = false;
+
   //
   bool showBottomNavbar = true;
   double aspectRatio;
@@ -61,6 +64,17 @@ class AddPostPageController extends GetxController {
 
   showBottomSheet() {
     Get.bottomSheet(AddPostScreenBottomSheet(), elevation: 0.0);
+  }
+
+  //commenting privacy update
+  updateCommentPrivacy(bool value) {
+    allowCommenting = value;
+    update();
+  }
+  //sharing privacy update
+  updateSharingPrivacy(bool value) {
+    allowSharing = value;
+    update();
   }
 
   ///to select image files
@@ -185,7 +199,9 @@ class AddPostPageController extends GetxController {
         final controller = Get.find<OwnProfilePageScreenController>();
         controller.getRecentPostsData();
       } catch (e) {}
-      Get.offAll(MainNavigationScreen(tabNumber: 0,));
+      Get.offAll(MainNavigationScreen(
+        tabNumber: 0,
+      ));
     }
   }
 
@@ -227,7 +243,9 @@ class AddPostPageController extends GetxController {
       }
     });
 
-    Get.offAll(MainNavigationScreen(tabNumber: 0,));
+    Get.offAll(MainNavigationScreen(
+      tabNumber: 0,
+    ));
   }
 
   ///....................to upload video................................
@@ -268,7 +286,9 @@ class AddPostPageController extends GetxController {
     });
 
     ///navigate to the news feed screen
-    Get.offAll(MainNavigationScreen(tabNumber: 0,));
+    Get.offAll(MainNavigationScreen(
+      tabNumber: 0,
+    ));
   }
 //---------------------------------------------user and tags suggestins related--------------------------------
 
