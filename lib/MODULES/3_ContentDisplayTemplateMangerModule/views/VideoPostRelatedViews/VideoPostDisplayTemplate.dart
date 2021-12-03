@@ -54,6 +54,9 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
   int _numberOfReactions = 0;
   int _numberOfShares = 0;
 
+  //when the post delete is clicked
+  bool _postRemoved = false;
+
   @override
   void initState() {
     _ownerId = widget.postContent["videoPost"]["postBy"]["_id"].toString();
@@ -187,6 +190,9 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                                 updateEditedDescription(description);
                               },
                               parentController: widget.parentController,
+                               removePost: () {
+                                      _removePost();
+                                    },
                             )
                           : OtherUserActionsOnPost(
                               postUserId: widget.postContent["videoPost"]
@@ -361,6 +367,12 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
     );
   }
 
+//remove post
+  _removePost() {
+    setState(() {
+      _postRemoved = true;
+    });
+  }
   //edited description updater
   updateEditedDescription(String editedDescription) {
     if (this.mounted) {

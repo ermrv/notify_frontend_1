@@ -46,7 +46,13 @@ class _SharedTextPostDisplayTemplateState
   int _numberOfComments = 0;
   int _numberOfReactions = 0;
 
+
+
   List _likes = [];
+
+
+   //when the post delete is clicked
+  bool _postRemoved = false;
 
   @override
   void initState() {
@@ -150,6 +156,9 @@ class _SharedTextPostDisplayTemplateState
                               updateEditedDescription(description);
                             },
                             parentController: widget.parentController,
+                             removePost: () {
+                                      _removePost();
+                                    },
                           )
                         : OtherUserActionsOnPost(
                             postUserId:
@@ -319,6 +328,14 @@ class _SharedTextPostDisplayTemplateState
         ],
       ),
     );
+  }
+
+
+  //remove post
+  _removePost() {
+    setState(() {
+      _postRemoved = true;
+    });
   }
 
   //edited description updater

@@ -35,6 +35,9 @@ class _EventPostDisplayTemplateState extends State<EventPostDisplayTemplate> {
 
   Color likeButtonColor = Colors.white;
 
+  //when the post delete is clicked
+  bool _postRemoved = false;
+
   @override
   void initState() {
     _ownerId = widget.postContent["eventPost"]["postBy"]["_id"].toString();
@@ -184,6 +187,9 @@ class _EventPostDisplayTemplateState extends State<EventPostDisplayTemplate> {
                             updateEditedDescription(description);
                           },
                           parentController:widget.controller,
+                           removePost: () {
+                                      _removePost();
+                                    },
                         )
                       : OtherUserActionsOnPost(
                           postUserId: widget.postContent["eventPost"]["postBy"]
@@ -309,6 +315,14 @@ class _EventPostDisplayTemplateState extends State<EventPostDisplayTemplate> {
             ),
           ]),
     );
+  }
+
+
+  //remove post
+  _removePost() {
+    setState(() {
+      _postRemoved = true;
+    });
   }
 
   //edited description updater

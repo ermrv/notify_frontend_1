@@ -56,6 +56,9 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
 
   bool _isPollCasted = false;
 
+  //when the post delete is clicked
+  bool _postRemoved = false;
+
   @override
   void initState() {
     _ownerId = widget.postContent["pollPost"]["postBy"]["_id"].toString();
@@ -173,6 +176,9 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                     // updateEditedDescription(description);
                                   },
                                   parentController: widget.parentController,
+                                  removePost: () {
+                                    _removePost();
+                                  },
                                 )
                               : OtherUserActionsOnPost(
                                   postUserId: widget.postContent["pollPost"]
@@ -185,17 +191,18 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                   ),
                 ),
                 Container(
-                    width: screenWidth,
-                    padding: EdgeInsets.only(
-                        top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
-                    alignment: Alignment.centerLeft,
-                    child: PostDescriptionWidget(
-                        tags: [],
-                        mentions: [],
-                        description: widget.postContent["pollPost"]
-                                ["description"]
-                            .toString(),
-                        postType: "pollPost",displayFullText:true),),
+                  width: screenWidth,
+                  padding: EdgeInsets.only(
+                      top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
+                  alignment: Alignment.centerLeft,
+                  child: PostDescriptionWidget(
+                      tags: [],
+                      mentions: [],
+                      description: widget.postContent["pollPost"]["description"]
+                          .toString(),
+                      postType: "pollPost",
+                      displayFullText: true),
+                ),
                 //option one
                 widget.postContent["pollPost"]["opOne"] == null
                     ? Container()
@@ -648,6 +655,13 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
     if (response == "error") {
       Get.snackbar("Cannot process request", "response is not recorded");
     }
+  }
+
+  //remove post
+  _removePost() {
+    setState(() {
+      _postRemoved = true;
+    });
   }
 
   commentCountUpdater(int count) {

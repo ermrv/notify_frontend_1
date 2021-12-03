@@ -50,6 +50,9 @@ class _SharedImagePostDisplayTemplateState
 
   List _likes = [];
 
+   //when the post delete is clicked
+  bool _postRemoved = false;
+
   @override
   void initState() {
     _ownerId = widget.postContent["postBy"]["_id"].toString();
@@ -152,6 +155,9 @@ class _SharedImagePostDisplayTemplateState
                               updateEditedDescription(description);
                             },
                             parentController: widget.parentController,
+                             removePost: () {
+                                      _removePost();
+                                    },
                           )
                         : OtherUserActionsOnPost(
                             postUserId:
@@ -327,6 +333,13 @@ class _SharedImagePostDisplayTemplateState
     );
   }
 
+
+//remove post
+  _removePost() {
+    setState(() {
+      _postRemoved = true;
+    });
+  }
   //edited description updater
   updateEditedDescription(String editedDescription) {
     widget.postContent["sharedDescription"] = editedDescription;

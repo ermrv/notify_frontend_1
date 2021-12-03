@@ -8,13 +8,15 @@ class PostOwnerActionsOnPost extends StatelessWidget {
   final String postDescription;
   final Function(String) editedDescriptionUpdater;
   final parentController;
+  final Function removePost;
 
   const PostOwnerActionsOnPost(
       {Key key,
       @required this.postId,
       @required this.postDescription,
       @required this.editedDescriptionUpdater,
-      @required this.parentController})
+      @required this.parentController,
+     @required this.removePost})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -56,8 +58,9 @@ class PostOwnerActionsOnPost extends StatelessWidget {
                                 child: Text("Cancel")),
                             TextButton(
                                 onPressed: () async {
-                                  await parentController.deletePost(postId);
+                                  removePost.call();
                                   Get.back();
+                                  await parentController.deletePost(postId);
                                 },
                                 child: Text("Okay"))
                           ],

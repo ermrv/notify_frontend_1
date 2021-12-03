@@ -51,6 +51,9 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
   int _numberOfComments;
   int _numberOfReactions;
 
+  //when the post delete is clicked
+  bool _postRemoved = false;
+
   List _likes = [];
 
   @override
@@ -208,8 +211,12 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                                   .toString(),
                               editedDescriptionUpdater: (String description) {
                                 updateEditedDescription(description);
+                                
                               },
                               parentController: widget.parentController,
+                               removePost: () {
+                                      _removePost();
+                                    },
                             )
                           : OtherUserActionsOnPost(
                               postUserId: widget.postContent["imagePost"]
@@ -421,7 +428,12 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
       }
     }
   }
-
+ //remove post
+  _removePost() {
+    setState(() {
+      _postRemoved = true;
+    });
+  }
   //edited description updater
   updateEditedDescription(String editedDescription) {
     widget.postContent["imagePost"]["description"] = editedDescription;
