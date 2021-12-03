@@ -75,11 +75,19 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
         },
         onTap: () {
           if (!widget.useAsPostFullDetailTemplate) {
-            Get.to(
-                SpecificPostDisplayPageScreen(
+            if (_isShared) {
+              Get.to(
+                  SpecificPostDisplayPageScreen(
                     postId: widget.postContent["textPost"]["_id"],
-                    postContent: widget.postContent),
-                preventDuplicates: false);
+                  ),
+                  preventDuplicates: false);
+            } else {
+              Get.to(
+                  SpecificPostDisplayPageScreen(
+                      postId: widget.postContent["textPost"]["_id"],
+                      postContent: widget.postContent),
+                  preventDuplicates: false);
+            }
           }
         },
         child: Column(

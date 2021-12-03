@@ -76,11 +76,19 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
       child: GestureDetector(
         onTap: () {
           if (!widget.useAsPostFullDetailTemplate) {
-            Get.to(
-                SpecificPostDisplayPageScreen(
+            if (_isShared) {
+              Get.to(
+                  SpecificPostDisplayPageScreen(
                     postId: widget.postContent["imagePost"]["_id"],
-                    postContent: widget.postContent),
-                preventDuplicates: false);
+                  ),
+                  preventDuplicates: false);
+            } else {
+              Get.to(
+                  SpecificPostDisplayPageScreen(
+                      postId: widget.postContent["imagePost"]["_id"],
+                      postContent: widget.postContent),
+                  preventDuplicates: false);
+            }
           }
         },
         onDoubleTap: () {
@@ -223,11 +231,14 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                         top: 3.0, bottom: 3.0, right: 2.0, left: 2.0),
                     alignment: Alignment.centerLeft,
                     child: PostDescriptionWidget(
-                        tags: [],
-                        mentions: [],
-                        description: widget.postContent["imagePost"]
-                            ["description"],
-                        postType: "imagePost",displayFullText:widget.useAsPostFullDetailTemplate,),),
+                      tags: [],
+                      mentions: [],
+                      description: widget.postContent["imagePost"]
+                          ["description"],
+                      postType: "imagePost",
+                      displayFullText: widget.useAsPostFullDetailTemplate,
+                    ),
+                  ),
             GestureDetector(
               onLongPress: () {
                 if (!widget.useAsPostFullDetailTemplate) {

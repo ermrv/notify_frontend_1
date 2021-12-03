@@ -77,11 +77,19 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
         },
         onTap: () {
           if (!widget.useAsPostFullDetailTemplate) {
-            Get.to(
-                SpecificPostDisplayPageScreen(
+            if (_isShared) {
+              Get.to(
+                  SpecificPostDisplayPageScreen(
                     postId: widget.postContent["videoPost"]["_id"],
-                    postContent: widget.postContent),
-                preventDuplicates: false);
+                  ),
+                  preventDuplicates: false);
+            } else {
+              Get.to(
+                  SpecificPostDisplayPageScreen(
+                      postId: widget.postContent["videoPost"]["_id"],
+                      postContent: widget.postContent),
+                  preventDuplicates: false);
+            }
           }
         },
         child: Column(
