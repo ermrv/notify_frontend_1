@@ -75,9 +75,9 @@ class PostOwnerActionsOnPost extends StatelessWidget {
 
                                   if (_postDeleted) {
                                     removePost.call();
-                                    Get.back();
+                                    Get.back(closeOverlays: true);
                                   } else {
-                                    Get.back();
+                                    Get.back(closeOverlays: true);
                                     Get.dialog(AlertDialog(
                                       title: Text(
                                           "Something wrong!!! \n Please try again"),

@@ -31,17 +31,17 @@ class PostDescriptionWidget extends StatelessWidget {
     List wordsToDisplay;
     //selecting font size
     if (postType != "pollPost") {
-      fontsize = words.length <= 15
+      fontsize = words.length <= 20
           ? 22.0
-          : words.length <= 30
+          : words.length <= 50
               ? 19.0
               : 16.0;
     }
     //selecting words to display
     if (displayFullText) {
       wordsToDisplay = words;
-    } else if (words.length >= 60) {
-      wordsToDisplay = words.getRange(0, 59).toList();
+    } else if (words.length >= 90) {
+      wordsToDisplay = words.getRange(0, 89).toList();
     } else {
       wordsToDisplay = words;
     }
@@ -50,7 +50,7 @@ class PostDescriptionWidget extends StatelessWidget {
       alignment: WrapAlignment.start,
       children: [
         for (String word in wordsToDisplay) _getWordStyle(word, fontsize),
-        displayFullText?Container():words.length>=60?Text(".....more",style: TextStyle(color:Colors.blue,fontSize: 16.0)):Container()
+        displayFullText?Container():words.length>=89?Text(".....more",style: TextStyle(color:Colors.blue,fontSize: 16.0)):Container()
       ],
     );
   }
