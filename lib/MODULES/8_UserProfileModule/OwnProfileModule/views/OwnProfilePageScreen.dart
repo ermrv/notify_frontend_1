@@ -6,6 +6,7 @@ import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/controlle
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/PrimaryUserActionsOnProfile.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/PrimaryUserBasicInfoContainer.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/DataLoadingShimmerAnimations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -29,11 +30,7 @@ class OwnProfilePageScreen extends StatelessWidget {
             PrimaryUserActionsOnProfile(),
 
             controller.profilePostData == null
-                ? Center(
-                    child: SpinKitPulse(
-                      color: Colors.blue,
-                    ),
-                  )
+                ? DataLoadingShimmerAnimations(animationType: "postOnlyColumn")
                 : controller.profilePostData.length == 0
                     ? Center(
                         child: Text("No posts yet!!!"),

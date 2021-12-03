@@ -428,6 +428,12 @@
       "languageVersion": "2.1"
     },
     {
+      "name": "shimmer",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shimmer-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///home/mrv/snap/flutter/common/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -620,7 +626,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-10-13T05:46:58.195038Z",
+  "generated": "2021-12-03T07:04:39.260711Z",
   "generator": "pub",
   "generatorVersion": "2.14.3"
 }

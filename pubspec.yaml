@@ -75,6 +75,7 @@ dependencies:
   razorpay_flutter: ^1.2.7
   flutter_local_notifications: ^4.0.1+2
   double_back_to_close: ^2.0.0
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

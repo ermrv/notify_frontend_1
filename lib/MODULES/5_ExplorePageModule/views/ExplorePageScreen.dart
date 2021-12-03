@@ -6,6 +6,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Ref
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/ProfileReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/TagsReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/5_ExplorePageModule/controllers/ExplorePageController.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/DataLoadingShimmerAnimations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -35,11 +36,7 @@ class ExplorePageScreen extends StatelessWidget {
             ],
           ),
           body: controller.explorePageData.length == 0
-              ? Center(
-                  child: SpinKitPulse(
-                    color: Colors.blue,
-                  ),
-                )
+              ? DataLoadingShimmerAnimations(animationType: "postOnly")
               : RefreshIndicator(
                   onRefresh: () {
                     return controller.getRecentPostsData();

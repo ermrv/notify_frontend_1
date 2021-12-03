@@ -2,6 +2,7 @@ import 'package:MediaPlus/MODULES/13_SearchEngineModule/views/SearchInputPageScr
 import 'package:MediaPlus/MODULES/6_HomePageModule/UserDrawerModule/views/UserDrawerScreen.dart';
 import 'package:MediaPlus/MODULES/6_HomePageModule/views/NewsFeedPageScreen.dart';
 import 'package:MediaPlus/MODULES/14_MainNavigationModule/controllers/MainNavigationController.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/DataLoadingShimmerAnimations.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/KeepWidgetAliveModule/KeepWidgetAliveWrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -65,6 +66,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onPressed: () {
                 Get.to(() => SearchInputPageScreen());
               }),
+              IconButton(onPressed:(){
+                Get.to(()=>DataLoadingShimmerAnimations(animationType: "post",));
+              }, icon: Icon(Icons.color_lens)),
           Container(
             width: 3.0,
           )

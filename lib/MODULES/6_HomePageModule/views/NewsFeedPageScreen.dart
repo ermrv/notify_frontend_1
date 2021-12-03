@@ -2,6 +2,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Con
 import 'package:MediaPlus/MODULES/6_HomePageModule/TrendingPostDisplayRelated/views/TrendingPostReferenceTemplate.dart';
 import 'package:MediaPlus/MODULES/6_HomePageModule/controllers/NewsFeedPageController.dart';
 import 'package:MediaPlus/MODULES/6_HomePageModule/views/AddPostReferenceView.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/DataLoadingShimmerAnimations.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -22,13 +23,7 @@ class NewsFeedPageScreen extends StatelessWidget {
                return controller.getRecentPostsData();
               },
               child: controller.newsFeedData == null
-                  ? Container(
-                      child: Center(
-                        child: SpinKitPulse(
-                          color: Colors.blue,
-                        ),
-                      ),
-                    )
+                  ? DataLoadingShimmerAnimations(animationType: "postWithStatus",)
                   : ListView(
                     key: PageStorageKey("newsFeedPageScreen"),
                       controller: controller.scrollController,

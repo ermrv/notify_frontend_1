@@ -4,6 +4,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Ref
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SpecificPostRelated/controllers/SpecificPostDisplayPageController.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/DataLoadingShimmerAnimations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -81,12 +82,7 @@ class _SpecificPostDisplayPageScreenState
                   ),
                 ),
                 recommendedPostData == null
-                    ? Container(
-                        child: Center(
-                            child: CircularProgressIndicator(
-                          color: Colors.blue,
-                        )),
-                      )
+                    ? DataLoadingShimmerAnimations(animationType: "postOnlyColumn")
                     : recommendedPostData.length == 0
                         ? Container()
                         : ContentDisplayTemplateProvider(
