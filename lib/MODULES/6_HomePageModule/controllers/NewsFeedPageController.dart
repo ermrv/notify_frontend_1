@@ -32,14 +32,14 @@ class NewsFeedPageController extends GetxController {
 
   ///to get the post data stored in the local storage
   getFileData() async {
-    try {
-      newsFeedData =
-          json.decode(await File(newsFeedDataFilePath).readAsString());
-      print(newsFeedData.length);
-      update();
-    } catch (e) {
-      print(e);
-    }
+    // try {
+    //   newsFeedData =
+    //       json.decode(await File(newsFeedDataFilePath).readAsString());
+    //   print(newsFeedData.length);
+    //   update();
+    // } catch (e) {
+    //   print(e);
+    // }
 
     getRecentPostsData();
   }
@@ -68,7 +68,7 @@ class NewsFeedPageController extends GetxController {
       if (newsFeedData == null || LocalDataFiles.refreshNewsFeedFile) {
         newsFeedData = response;
         update();
-        _handleLocalFile(newsFeedData);
+        // _handleLocalFile(newsFeedData);
         LocalDataFiles.setRefreshNewsFeedFile(false);
       } else {
         List _temp = response;
@@ -76,7 +76,7 @@ class NewsFeedPageController extends GetxController {
         newsFeedData.clear();
         newsFeedData.addAll(_temp);
         update();
-        _handleLocalFile(newsFeedData);
+        // _handleLocalFile(newsFeedData);
       }
     } else {
       Get.snackbar("Cannot get the data", "some error occured");
@@ -104,22 +104,22 @@ class NewsFeedPageController extends GetxController {
     }
   }
 
-  ///handle the local file to store and delete the data
-  ///[data] corresponds to complete list of data
-  _handleLocalFile(List data) {
-    print(newsFeedData.length);
-    //if data length is greater than 30, store the first 30 in the file
-    if (data.length > 10) {
-      List _data = data.getRange(0, 10).toList();
-      File(newsFeedDataFilePath)
-          .writeAsString(json.encode(_data), mode: FileMode.write);
-    }
-    //if it is less than 30, store all the data to the file
-    else {
-      File(newsFeedDataFilePath)
-          .writeAsString(json.encode(data), mode: FileMode.write);
-    }
-  }
+  // ///handle the local file to store and delete the data
+  // ///[data] corresponds to complete list of data
+  // _handleLocalFile(List data) {
+  //   print(newsFeedData.length);
+  //   //if data length is greater than 30, store the first 30 in the file
+  //   if (data.length > 10) {
+  //     List _data = data.getRange(0, 10).toList();
+  //     File(newsFeedDataFilePath)
+  //         .writeAsString(json.encode(_data), mode: FileMode.write);
+  //   }
+  //   //if it is less than 30, store all the data to the file
+  //   else {
+  //     File(newsFeedDataFilePath)
+  //         .writeAsString(json.encode(data), mode: FileMode.write);
+  //   }
+  // }
 
   ///getting user status data
   gettrendingPostData() async {
@@ -146,7 +146,7 @@ class NewsFeedPageController extends GetxController {
       if (index != -1) {
         newsFeedData.removeAt(index);
       }
-      _handleLocalFile(newsFeedData);
+      // _handleLocalFile(newsFeedData);
       update();
       return true;
     }

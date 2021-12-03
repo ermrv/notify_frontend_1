@@ -28,14 +28,14 @@ class OwnProfilePageScreenController extends GetxController {
 
   ///to get the post data stored in the local storage
   getFileData() async {
-    try {
-      profilePostData =
-          json.decode(await File(userProfileDataFilePath).readAsString());
-      print(profilePostData.length);
-      update();
-    } catch (e) {
-      print(e);
-    }
+    // try {
+    //   profilePostData =
+    //       json.decode(await File(userProfileDataFilePath).readAsString());
+    //   print(profilePostData.length);
+    //   update();
+    // } catch (e) {
+    //   print(e);
+    // }
 
     getRecentPostsData();
   }
@@ -66,14 +66,14 @@ class OwnProfilePageScreenController extends GetxController {
       if (profilePostData == null || LocalDataFiles.refreshProfilePostsFile) {
         profilePostData = response;
         update();
-        _handleLocalFile(profilePostData);
+        // _handleLocalFile(profilePostData);
       } else {
         List _temp = response;
         _temp.addAll(profilePostData);
         profilePostData.clear();
         profilePostData.addAll(_temp);
         update();
-        _handleLocalFile(profilePostData);
+        // _handleLocalFile(profilePostData);
       }
     } else {
       print("error getting profile  latest data");
@@ -100,21 +100,21 @@ class OwnProfilePageScreenController extends GetxController {
     }
   }
 
-  ///handle the local file to store and delete the data
-  ///[data] corresponds to complete list of data
-  _handleLocalFile(List data) {
-    //if data length is greater than 30, store the first 30 in the file
-    if (data.length > 10) {
-      List _data = data.getRange(0, 10).toList();
-      File(userProfileDataFilePath)
-          .writeAsString(json.encode(_data), mode: FileMode.write);
-    }
-    //if it is less than 30, store all the data to the file
-    else {
-      File(userProfileDataFilePath)
-          .writeAsString(json.encode(data), mode: FileMode.write);
-    }
-  }
+  // ///handle the local file to store and delete the data
+  // ///[data] corresponds to complete list of data
+  // _handleLocalFile(List data) {
+  //   //if data length is greater than 30, store the first 30 in the file
+  //   if (data.length > 10) {
+  //     List _data = data.getRange(0, 10).toList();
+  //     File(userProfileDataFilePath)
+  //         .writeAsString(json.encode(_data), mode: FileMode.write);
+  //   }
+  //   //if it is less than 30, store all the data to the file
+  //   else {
+  //     File(userProfileDataFilePath)
+  //         .writeAsString(json.encode(data), mode: FileMode.write);
+  //   }
+  // }
 
   //delete a post
   Future<bool> deletePost(String postId) async {
@@ -128,7 +128,7 @@ class OwnProfilePageScreenController extends GetxController {
       if (index != -1) {
         profilePostData.removeAt(index);
       }
-      _handleLocalFile(profilePostData);
+      // _handleLocalFile(profilePostData);
       update();
       return true;
     }

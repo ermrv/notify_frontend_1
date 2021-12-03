@@ -31,15 +31,15 @@ class ExplorePageController extends GetxController {
 
   ///to get the post data stored in the local storage
   getFileData() async {
-    try {
-      explorePageData =
-          json.decode(await File(explorePageDataFilePath).readAsString());
-      update();
+    // try {
+    //   explorePageData =
+    //       json.decode(await File(explorePageDataFilePath).readAsString());
+    //   update();
+    //   getRecentPostsData();
+    // } catch (e) {
+    //   print(e);
+    // }
       getRecentPostsData();
-    } catch (e) {
-      print(e);
-      getRecentPostsData();
-    }
   }
 
   ///to get the latest post data
@@ -52,7 +52,7 @@ class ExplorePageController extends GetxController {
     if (response != "error") {
       explorePageData = response;
       update();
-      _handleLocalFile(explorePageData);
+      // _handleLocalFile(explorePageData);
     } else {
       print("error getting explorepage latest data");
     }
@@ -68,27 +68,27 @@ class ExplorePageController extends GetxController {
     if (response != "error") {
       explorePageData.addAll(response);
       update();
-      _handleLocalFile(explorePageData);
+      // _handleLocalFile(explorePageData);
     } else {
       print("error getting explore previous data");
     }
   }
 
-  ///handle the local file to store and delete the data
-  ///[data] corresponds to complete list of data
-  _handleLocalFile(List data) {
-    print("handling explore page file");
-    if (data.length > 10) {
-      List _data = data.getRange(0, 10).toList();
-      File(explorePageDataFilePath)
-          .writeAsString(json.encode(_data), mode: FileMode.write);
-    }
-    //if it is less than 30, store all the data to the file
-    else {
-      File(explorePageDataFilePath)
-          .writeAsString(json.encode(data), mode: FileMode.write);
-    }
-  }
+  // ///handle the local file to store and delete the data
+  // ///[data] corresponds to complete list of data
+  // _handleLocalFile(List data) {
+  //   print("handling explore page file");
+  //   if (data.length > 10) {
+  //     List _data = data.getRange(0, 10).toList();
+  //     File(explorePageDataFilePath)
+  //         .writeAsString(json.encode(_data), mode: FileMode.write);
+  //   }
+  //   //if it is less than 30, store all the data to the file
+  //   else {
+  //     File(explorePageDataFilePath)
+  //         .writeAsString(json.encode(data), mode: FileMode.write);
+  //   }
+  // }
 
   //delete post
   //delete a post
@@ -103,7 +103,7 @@ class ExplorePageController extends GetxController {
       if (index != -1) {
         explorePageData.removeAt(index);
       }
-      _handleLocalFile(explorePageData);
+      // _handleLocalFile(explorePageData);
       update();
       return true;
     }
