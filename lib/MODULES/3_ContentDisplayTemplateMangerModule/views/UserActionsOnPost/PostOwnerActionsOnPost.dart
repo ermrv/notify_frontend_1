@@ -1,6 +1,7 @@
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/EditPostPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/controllers/ContentDisplayTemplateManager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 class PostOwnerActionsOnPost extends StatelessWidget {
@@ -16,7 +17,7 @@ class PostOwnerActionsOnPost extends StatelessWidget {
       @required this.postDescription,
       @required this.editedDescriptionUpdater,
       @required this.parentController,
-     @required this.removePost})
+      @required this.removePost})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -58,9 +59,37 @@ class PostOwnerActionsOnPost extends StatelessWidget {
                                 child: Text("Cancel")),
                             TextButton(
                                 onPressed: () async {
-                                  removePost.call();
                                   Get.back();
-                                  await parentController.deletePost(postId);
+
+                                  Get.dialog(AlertDialog(
+                                    title: Container(
+                                      child: SpinKitThreeBounce(
+                                        color: Colors.blue,
+                                        size: 18.0,
+                                      ),
+                                    ),
+                                  ));
+
+                                  bool _postDeleted =
+                                      await parentController.deletePost(postId);
+
+                                  if (_postDeleted) {
+                                    removePost.call();
+                                    Get.back();
+                                  } else {
+                                    Get.back();
+                                    Get.dialog(AlertDialog(
+                                      title: Text(
+                                          "Something wrong!!! \n Please try again"),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                            child: Text("Cancel")),
+                                      ],
+                                    ));
+                                  }
                                 },
                                 child: Text("Okay"))
                           ],

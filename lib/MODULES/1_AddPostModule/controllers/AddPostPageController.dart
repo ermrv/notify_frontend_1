@@ -71,6 +71,7 @@ class AddPostPageController extends GetxController {
     allowCommenting = value;
     update();
   }
+
   //sharing privacy update
   updateSharingPrivacy(bool value) {
     allowSharing = value;
@@ -297,7 +298,11 @@ class AddPostPageController extends GetxController {
     List<String> words;
     words = text.split(" ").toList();
     String lastWord = words.last.trim();
-    String firstCharacter = lastWord.characters.first;
+    String firstCharacter = "";
+    try {
+      firstCharacter = lastWord.characters.first;
+    } catch (e) {}
+
     if (firstCharacter == "#") {
       String query = lastWord.replaceFirst("#", "");
       showSuggestions = true;
