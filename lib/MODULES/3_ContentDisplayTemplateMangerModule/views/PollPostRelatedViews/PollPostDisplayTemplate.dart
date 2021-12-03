@@ -82,7 +82,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
+      child:_postRemoved?Container(): Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(

@@ -74,7 +74,7 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
     return Container(
       key: Key(widget.postContent["_id"].toString()),
       margin: EdgeInsets.symmetric(horizontal: 5.0),
-      child: GestureDetector(
+      child:_postRemoved?Container(): GestureDetector(
         onDoubleTap: () {
           reactionCountUpdater(_thisUserId);
         },

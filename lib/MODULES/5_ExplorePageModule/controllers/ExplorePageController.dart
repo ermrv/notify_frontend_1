@@ -50,7 +50,7 @@ class ExplorePageController extends GetxController {
         await ApiServices.postWithAuth(ApiUrlsData.explorePage, {}, userToken);
 
     if (response != "error") {
-      explorePageData =response;
+      explorePageData = response;
       update();
       _handleLocalFile(explorePageData);
     } else {
@@ -92,11 +92,12 @@ class ExplorePageController extends GetxController {
 
   //delete post
   //delete a post
-  deletePost(String postId) async {
+  Future<bool> deletePost(String postId) async {
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.deletePost, {"postId": postId}, userToken);
     if (response == "error") {
       Get.snackbar("Some error occured", "error deleting post");
+      return false;
     } else {
       int index = explorePageData.indexWhere((post) => post["_id"] == postId);
       if (index != -1) {
@@ -104,6 +105,7 @@ class ExplorePageController extends GetxController {
       }
       _handleLocalFile(explorePageData);
       update();
+      return true;
     }
   }
 

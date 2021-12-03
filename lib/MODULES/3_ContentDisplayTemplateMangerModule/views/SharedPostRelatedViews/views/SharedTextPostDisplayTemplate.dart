@@ -71,7 +71,7 @@ class _SharedTextPostDisplayTemplateState
   Widget build(BuildContext context) {
     return Container(
       width: screenWidth,
-      child: Column(
+      child:_postRemoved?Container(): Column(
         children: [
           //basic info of the post
           Container(

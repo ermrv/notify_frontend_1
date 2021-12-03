@@ -55,7 +55,8 @@ class OwnProfilePageScreenController extends GetxController {
     }
     //if  data is available, get only those data that is  recent
     else if (profilePostData.length >= 1) {
-      String _latestPostId = GettingPostServices.getFirstPostId(profilePostData);
+      String _latestPostId =
+          GettingPostServices.getFirstPostId(profilePostData);
 
       response = await ApiServices.postWithAuth(ApiUrlsData.userPosts,
           {"dataType": "latest", "postId": _latestPostId}, userToken);
@@ -116,11 +117,12 @@ class OwnProfilePageScreenController extends GetxController {
   }
 
   //delete a post
-  deletePost(String postId) async {
+  Future<bool> deletePost(String postId) async {
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.deletePost, {"postId": postId}, userToken);
     if (response == "error") {
       Get.snackbar("Some error occured", "error deleting post");
+      return false;
     } else {
       int index = profilePostData.indexWhere((post) => post["_id"] == postId);
       if (index != -1) {
@@ -128,6 +130,7 @@ class OwnProfilePageScreenController extends GetxController {
       }
       _handleLocalFile(profilePostData);
       update();
+      return true;
     }
   }
 

@@ -76,7 +76,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
       decoration: BoxDecoration(
           border:
               Border(top: BorderSide(color: Theme.of(context).primaryColor))),
-      child: GestureDetector(
+      child:_postRemoved?Container(): GestureDetector(
         onTap: () {
           if (!widget.useAsPostFullDetailTemplate) {
             if (_isShared) {

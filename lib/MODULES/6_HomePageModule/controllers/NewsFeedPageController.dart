@@ -135,11 +135,12 @@ class NewsFeedPageController extends GetxController {
 
   ///delete post
   //delete a post
-  deletePost(String postId) async {
+  Future<bool> deletePost(String postId) async {
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.deletePost, {"postId": postId}, userToken);
     if (response == "error") {
       Get.snackbar("Some error occured", "error deleting post");
+      return false;
     } else {
       int index = newsFeedData.indexWhere((post) => post["_id"] == postId);
       if (index != -1) {
@@ -147,6 +148,7 @@ class NewsFeedPageController extends GetxController {
       }
       _handleLocalFile(newsFeedData);
       update();
+      return true;
     }
   }
 
