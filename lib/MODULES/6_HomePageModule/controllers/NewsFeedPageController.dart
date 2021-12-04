@@ -19,6 +19,7 @@ class NewsFeedPageController extends GetxController {
   String newsFeedDataFilePath;
 
   ScrollController scrollController;
+   bool loadingMoreData = false;
 
   @override
   void onInit() {
@@ -83,8 +84,11 @@ class NewsFeedPageController extends GetxController {
     }
   }
 
-  /// to get the previous post data
+ /// to get the previous post data
   getPreviousPostsData() async {
+    print("getting previous data");
+    loadingMoreData = true;
+    update();
     String _lastPostId = GettingPostServices.getLastPostId(newsFeedData);
     print(_lastPostId);
 
@@ -94,32 +98,21 @@ class NewsFeedPageController extends GetxController {
     if (response != "error") {
       if (newsFeedData == null) {
         newsFeedData = response;
+        loadingMoreData = false;
         update();
       } else {
+        loadingMoreData = false;
         newsFeedData.addAll(response);
         update();
       }
     } else {
+      loadingMoreData = false;
+      update();
       Get.snackbar("Cannot get the data", "some error occured");
     }
   }
 
-  // ///handle the local file to store and delete the data
-  // ///[data] corresponds to complete list of data
-  // _handleLocalFile(List data) {
-  //   print(newsFeedData.length);
-  //   //if data length is greater than 30, store the first 30 in the file
-  //   if (data.length > 10) {
-  //     List _data = data.getRange(0, 10).toList();
-  //     File(newsFeedDataFilePath)
-  //         .writeAsString(json.encode(_data), mode: FileMode.write);
-  //   }
-  //   //if it is less than 30, store all the data to the file
-  //   else {
-  //     File(newsFeedDataFilePath)
-  //         .writeAsString(json.encode(data), mode: FileMode.write);
-  //   }
-  // }
+ 
 
   ///getting user status data
   gettrendingPostData() async {

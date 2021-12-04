@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   AnimationController _animationController;
   // Animation<double> _animation;
   // GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-  final mainNavigationController = Get.find<MainNavigationController>();
+  // final mainNavigationController = Get.find<MainNavigationController>();
 
   @override
   void initState() {
@@ -66,9 +66,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onPressed: () {
                 Get.to(() => SearchInputPageScreen());
               }),
-              IconButton(onPressed:(){
-                Get.to(()=>DataLoadingShimmerAnimations(animationType: "post",));
-              }, icon: Icon(Icons.color_lens)),
           Container(
             width: 3.0,
           )
@@ -78,21 +75,5 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  // TabBar _tabBar = TabBar(
-  //     indicatorSize: TabBarIndicatorSize.label,
-  //     indicatorPadding: EdgeInsets.zero,
-  //     tabs: [
-  //       Tab(
-  //         icon: Icon(Icons.rss_feed),
-  //       ),
-  //       Tab(
-  //         icon: Icon(Icons.ondemand_video_sharp),
-  //       ),
-  //       Tab(
-  //         icon: Icon(Icons.location_on),
-  //       ),
-  //       Tab(
-  //         icon: Icon(Icons.emoji_events),
-  //       )
-  //     ]);
+  
 }

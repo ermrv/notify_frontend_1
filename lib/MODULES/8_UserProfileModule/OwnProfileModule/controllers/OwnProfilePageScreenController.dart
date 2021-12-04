@@ -16,6 +16,7 @@ class OwnProfilePageScreenController extends GetxController {
   String userProfileDataFilePath;
 
   ScrollController scrollController;
+  bool loadingMoreData = false;
 
   @override
   void onInit() {
@@ -80,23 +81,31 @@ class OwnProfilePageScreenController extends GetxController {
     }
   }
 
-  /// to get the previous post data
+  // to get the previous post data
   getPreviousPostsData() async {
+    print("getting previous data");
+    loadingMoreData = true;
+    update();
     String _lastPostId = GettingPostServices.getLastPostId(profilePostData);
     print(_lastPostId);
-    var response = await ApiServices.postWithAuth(ApiUrlsData.userPosts,
+
+    var response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
         {"dataType": "previous", "postId": _lastPostId}, userToken);
 
     if (response != "error") {
       if (profilePostData == null) {
         profilePostData = response;
+        loadingMoreData = false;
         update();
       } else {
+        loadingMoreData = false;
         profilePostData.addAll(response);
         update();
       }
     } else {
-      print("error getting profile previous data");
+      loadingMoreData = false;
+      update();
+      Get.snackbar("Cannot get the data", "some error occured");
     }
   }
 

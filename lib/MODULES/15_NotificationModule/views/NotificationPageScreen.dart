@@ -4,6 +4,7 @@ import 'package:MediaPlus/MODULES/15_NotificationModule/controllers/Notification
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SpecificPostRelated/views/SpecificPostDisplayPageScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OthersProfileModule/views/OtherUserProfilePageScreen.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/DataLoadingShimmerAnimations.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -35,13 +36,7 @@ class NotificationPageScreen extends StatelessWidget {
           ],
         ),
         body: controller.notificationsData == null
-            ? Center(
-                heightFactor: 5.0,
-                child: SpinKitThreeBounce(
-                  color: Colors.blue,
-                  size: 18.0,
-                ),
-              )
+            ? DataLoadingShimmerAnimations(animationType: "notifications")
             : ListView(
                 children: [
                   for (var notification in controller.notificationsData)
@@ -68,10 +63,10 @@ class NotificationPageScreen extends StatelessWidget {
               child: Row(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(30.0),
                     child: Container(
-                        height: 35.0,
-                        width: 35.0,
+                        height:45.0,
+                        width: 45.0,
                         child: CachedNetworkImage(
                           imageUrl: ApiUrlsData.domain +
                               notificationData["user"]["profilePic"].toString(),
@@ -88,7 +83,7 @@ class NotificationPageScreen extends StatelessWidget {
                       TextSpan(
                           text: notificationData["notificationString"],
                           style: TextStyle(
-                              fontSize: 15.0,
+                              fontSize: 16.0,
                               color:
                                   Theme.of(context).textTheme.bodyText2.color)),
                       TextSpan(text: "  - "),
@@ -97,7 +92,7 @@ class NotificationPageScreen extends StatelessWidget {
                                   notificationData["createdAt"])
                               .toString(),
                           style: TextStyle(
-                              fontSize: 10.0,
+                              fontSize: 12.0,
                               fontWeight: FontWeight.w700,
                               color:
                                   Theme.of(context).textTheme.bodyText2.color))
@@ -124,8 +119,8 @@ class NotificationPageScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: Container(
-                        height: 35.0,
-                        width: 35.0,
+                        height:45.0,
+                        width: 45.0,
                         child: CachedNetworkImage(
                           imageUrl: ApiUrlsData.domain +
                               notificationData["user"]["profilePic"].toString(),
@@ -142,7 +137,7 @@ class NotificationPageScreen extends StatelessWidget {
                         TextSpan(
                             text: notificationData["notificationString"],
                             style: TextStyle(
-                                fontSize: 15.0,
+                                fontSize: 16.0,
                                 color: Theme.of(context)
                                     .textTheme
                                     .bodyText2
@@ -153,7 +148,7 @@ class NotificationPageScreen extends StatelessWidget {
                                     notificationData["createdAt"])
                                 .toString(),
                             style: TextStyle(
-                                fontSize: 10.0,
+                                fontSize: 12.0,
                                 fontWeight: FontWeight.w700,
                                 color: Theme.of(context)
                                     .textTheme
@@ -183,8 +178,8 @@ class NotificationPageScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: Container(
-                        height: 35.0,
-                        width: 35.0,
+                        height:45.0,
+                        width: 45.0,
                         child: CachedNetworkImage(
                           imageUrl: ApiUrlsData.domain +
                               notificationData["user"]["profilePic"].toString(),
@@ -201,7 +196,7 @@ class NotificationPageScreen extends StatelessWidget {
                       TextSpan(
                           text: notificationData["notificationString"],
                           style: TextStyle(
-                              fontSize: 15.0,
+                              fontSize: 16.0,
                               color:
                                   Theme.of(context).textTheme.bodyText2.color)),
                       TextSpan(text: "  - "),
@@ -210,7 +205,7 @@ class NotificationPageScreen extends StatelessWidget {
                                   notificationData["createdAt"])
                               .toString(),
                           style: TextStyle(
-                              fontSize: 10.0,
+                              fontSize: 12.0,
                               fontWeight: FontWeight.w700,
                               color:
                                   Theme.of(context).textTheme.bodyText2.color))

@@ -31,7 +31,7 @@ class _SettingsPageScreenState extends State<SettingsPageScreen> {
       appBar: AppBar(
         title: Text("Settings"),
       ),
-      bottomSheet: Container(
+      bottomSheet:settingsData == null?Container(height: 1.0,): Container(
         height: 40.0,
         color: Theme.of(context).scaffoldBackgroundColor,
         child: TextButton(
@@ -49,12 +49,12 @@ class _SettingsPageScreenState extends State<SettingsPageScreen> {
                     : Text("Update Settings"))),
       ),
       body: settingsData == null
-          ? Container(
-              child: Center(
-              child: SpinKitPulse(
-                color: Colors.blue,
-              ),
-            ))
+          ? Center(
+          child: SpinKitThreeBounce(
+            color: Colors.blue,
+            size: 18.0,
+          ),
+            )
           : ListView(
               children: [
                 Container(

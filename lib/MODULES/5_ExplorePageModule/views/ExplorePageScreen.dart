@@ -49,6 +49,17 @@ class ExplorePageScreen extends StatelessWidget {
                         controller: controller,
                         useTemplatesAsPostFullDetails: false,
                       ),
+                      controller.loadingMoreData
+                          ? Container(
+                              height: 30.0,
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.blue,
+                              )),
+                            )
+                          : Container(
+                              height: 30.0,
+                            ),
                     ],
                   ),
                 )),

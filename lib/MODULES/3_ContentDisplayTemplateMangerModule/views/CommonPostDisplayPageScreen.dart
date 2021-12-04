@@ -57,12 +57,24 @@ class CommonPostDisplayPageScreen extends StatelessWidget {
                     child: Text("No post yet!!"),
                   )
                 : ListView(
+                    controller: controller.scrollController,
                     children: [
                       ContentDisplayTemplateProvider(
                         data: controller.data,
                         controller: controller,
                         useTemplatesAsPostFullDetails: false,
-                      )
+                      ),
+                      controller.loadingMoreData
+                          ? Container(
+                              height: 30.0,
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.blue,
+                              )),
+                            )
+                          : Container(
+                              height: 30.0,
+                            ),
                     ],
                   ),
       ),

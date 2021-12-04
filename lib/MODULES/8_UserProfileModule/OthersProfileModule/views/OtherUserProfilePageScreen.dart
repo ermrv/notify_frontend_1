@@ -34,6 +34,7 @@ class OtherUserProfilePageScreen extends StatelessWidget {
         body: MediaQuery.removePadding(
           context: context,
           child: ListView(
+            controller: controller.scrollController,
             children: [
               controller.profileData == null
                   ? Container()
@@ -47,7 +48,7 @@ class OtherUserProfilePageScreen extends StatelessWidget {
                     ),
               controller.postData == null
                   ? Center(
-                    heightFactor: 5.0,
+                      heightFactor: 5.0,
                       child: SpinKitPulse(
                         color: Colors.blue,
                       ),
@@ -60,7 +61,18 @@ class OtherUserProfilePageScreen extends StatelessWidget {
                           data: controller.postData,
                           controller: controller,
                           useTemplatesAsPostFullDetails: false,
-                        )
+                        ),
+              controller.loadingMoreData
+                  ? Container(
+                      height: 30.0,
+                      child: Center(
+                          child: CircularProgressIndicator(
+                        color: Colors.blue,
+                      )),
+                    )
+                  : Container(
+                      height: 30.0,
+                    ),
             ],
           ),
         ),

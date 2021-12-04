@@ -1,4 +1,3 @@
-
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
@@ -15,12 +14,12 @@ class ExplorePageController extends GetxController {
   String explorePageDataFilePath;
 
   ScrollController scrollController;
+  bool loadingMoreData = false;
 
   @override
   void onInit() {
     scrollController = ScrollController();
     scrollController.addListener(scrollListener);
-    explorePageDataFilePath = LocalDataFiles.explorePageDataFilePath;
     getFileData();
 
     super.onInit();
@@ -36,7 +35,7 @@ class ExplorePageController extends GetxController {
     // } catch (e) {
     //   print(e);
     // }
-      getRecentPostsData();
+    getRecentPostsData();
   }
 
   ///to get the latest post data
@@ -57,6 +56,8 @@ class ExplorePageController extends GetxController {
 
   /// to get the previous post data
   getPreviousPostsData() async {
+    loadingMoreData = true;
+    update();
     String _lastPostId = GettingPostServices.getLastPostId(explorePageData);
     print(_lastPostId);
     var response = await ApiServices.postWithAuth(ApiUrlsData.explorePage,
@@ -64,9 +65,12 @@ class ExplorePageController extends GetxController {
 
     if (response != "error") {
       explorePageData.addAll(response);
+      loadingMoreData = false;
       update();
       // _handleLocalFile(explorePageData);
     } else {
+      loadingMoreData = false;
+      update();
       print("error getting explore previous data");
     }
   }

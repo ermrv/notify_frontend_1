@@ -1,10 +1,10 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ContentDisplayTemplateProvider.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ProfileReferenceRelated/ProfileReferenceTemplate.dart';
-import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/SpecificPostRelated/controllers/SpecificPostDisplayPageController.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/DataLoadingShimmerAnimations.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/PostGettingServices/GettingPostServices.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -26,6 +26,8 @@ class _SpecificPostDisplayPageScreenState
     extends State<SpecificPostDisplayPageScreen> {
   var specificPostData;
   List recommendedPostData;
+  bool isLoadingMoreData = false;
+  ScrollController scrollController;
 
   @override
   void initState() {
@@ -35,7 +37,8 @@ class _SpecificPostDisplayPageScreenState
       specificPostData = widget.postContent;
       _getRecommendedPostData();
     }
-
+    scrollController = ScrollController();
+    scrollController.addListener(scrollListener);
     super.initState();
   }
 
@@ -50,6 +53,7 @@ class _SpecificPostDisplayPageScreenState
               ),
             )
           : ListView(
+            controller: scrollController,
               children: [
                 ContentDisplayTemplateProvider(
                   data: [specificPostData],
@@ -82,7 +86,8 @@ class _SpecificPostDisplayPageScreenState
                   ),
                 ),
                 recommendedPostData == null
-                    ? DataLoadingShimmerAnimations(animationType: "postOnlyColumn")
+                    ? DataLoadingShimmerAnimations(
+                        animationType: "postOnlyColumn")
                     : recommendedPostData.length == 0
                         ? Container()
                         : ContentDisplayTemplateProvider(
@@ -93,7 +98,16 @@ class _SpecificPostDisplayPageScreenState
                     ? ProfileReferenceTemplate(
                         userData: specificPostData["postBy"],
                         showVerticalTemplate: false)
-                    : Container()
+                    : Container(),
+                isLoadingMoreData
+                    ? Container(
+                        height: 30.0,
+                        child: Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.blue,
+                        )),
+                      )
+                    : Container(height: 30.0,),
               ],
             ),
     );
@@ -125,6 +139,58 @@ class _SpecificPostDisplayPageScreenState
       }
     } else {
       Get.snackbar("error getting specific post data", "/post/detail");
+    }
+  }
+
+  ///get more data
+  ///
+  ///
+  ///
+  /// to get the previous post data
+  getPreviousPostsData() async {
+    if (this.mounted) {
+      setState(() {
+        isLoadingMoreData = true;
+      });
+    }
+    String _lastPostId = GettingPostServices.getLastPostId(recommendedPostData);
+    print(_lastPostId);
+
+    var response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
+        {"dataType": "previous", "postId": _lastPostId}, userToken);
+
+    if (response != "error") {
+      if (recommendedPostData == null) {
+        recommendedPostData = response;
+        if (this.mounted) {
+          setState(() {
+            isLoadingMoreData = false;
+          });
+        }
+      } else {
+        recommendedPostData.addAll(response);
+        if (this.mounted) {
+          setState(() {
+            isLoadingMoreData = false;
+          });
+        }
+      }
+    } else {
+      if (this.mounted) {
+        setState(() {
+          isLoadingMoreData = false;
+        });
+      }
+      Get.snackbar("Cannot get the data", "some error occured");
+    }
+  }
+
+  ///listen to the scroll of the newfeed in order to load more data
+  ///calls [getPreviousPostsData] when scroll is attend to a limit
+  scrollListener() {
+    if (scrollController.position.maxScrollExtent ==
+        scrollController.position.pixels) {
+      getPreviousPostsData();
     }
   }
 }

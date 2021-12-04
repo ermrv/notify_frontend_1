@@ -20,12 +20,14 @@ class NewsFeedPageScreen extends StatelessWidget {
             child: RefreshIndicator(
               onRefresh: () {
                 LocalDataFiles.setRefreshNewsFeedFile(true);
-               return controller.getRecentPostsData();
+                return controller.getRecentPostsData();
               },
               child: controller.newsFeedData == null
-                  ? DataLoadingShimmerAnimations(animationType: "postWithStatus",)
+                  ? DataLoadingShimmerAnimations(
+                      animationType: "postWithStatus",
+                    )
                   : ListView(
-                    key: PageStorageKey("newsFeedPageScreen"),
+                      key: PageStorageKey("newsFeedPageScreen"),
                       controller: controller.scrollController,
                       children: [
                         Container(
@@ -38,7 +40,18 @@ class NewsFeedPageScreen extends StatelessWidget {
                                 data: controller.newsFeedData,
                                 controller: controller,
                                 useTemplatesAsPostFullDetails: false,
+                              ),
+                        controller.loadingMoreData
+                            ? Container(
+                                height: 40.0,
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                  color: Colors.blue,
+                                )),
                               )
+                            : Container(
+                                height: 30.0,
+                              ),
                       ],
                     ),
             )));
