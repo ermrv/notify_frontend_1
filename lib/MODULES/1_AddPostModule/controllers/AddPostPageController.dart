@@ -28,8 +28,8 @@ class AddPostPageController extends GetxController {
   bool isUploaded = false;
   bool isError = false;
 
-  bool allowCommenting = false;
-  bool allowSharing = false;
+  bool allowCommenting = true;
+  bool allowSharing = true;
 
   //
   bool showBottomNavbar = true;
@@ -163,19 +163,11 @@ class AddPostPageController extends GetxController {
   ///uploading data
   uploadData() async {
     isUploading = true;
-    if (videoFile == null && imageFiles != null) {
-      List<Uint8List> _temp = await ImageCompressor.compressImages(imageFiles);
-      for (Uint8List i in _temp) {
-        Get.snackbar((i.lengthInBytes / 1000).toString(), "message");
-      }
+    if (imageFiles != null && videoFile == null) {
       uploadImages();
-    }
-
-    if (videoFile != null && imageFiles == null) {
+    } else if (videoFile != null && imageFiles == null) {
       uploadVideo();
-    }
-
-    if (videoFile == null &&
+    } else if (videoFile == null &&
         imageFiles == null &&
         textEditingController.text != null) {
       uploadTextPost();
@@ -183,6 +175,7 @@ class AddPostPageController extends GetxController {
         imageFiles == null &&
         textEditingController.text == null) {
       isUploading = false;
+      Get.snackbar("Nothing to post", "Nothing to post");
     }
 
     update();
@@ -192,7 +185,12 @@ class AddPostPageController extends GetxController {
   uploadTextPost() async {
     var response = await ApiServices.postWithAuth(
         ApiUrlsData.addTextPost,
-        {"description": textEditingController.text, "postType": "text"},
+        {
+          "description": textEditingController.text,
+          "postType": "text",
+          "commentOption": allowCommenting.toString(),
+          "sharingOption": allowSharing.toString(),
+        },
         userToken);
 
     if (response != "error") {
@@ -228,7 +226,9 @@ class AddPostPageController extends GetxController {
       data: {
         "description": textEditingController.text,
         "templateType": templateType,
-        "postType": "images"
+        "postType": "images",
+        "commentOption": allowCommenting.toString(),
+        "sharingOption": allowSharing.toString(),
       },
       files: _imageFiles,
       showNotification: true,
@@ -266,7 +266,9 @@ class AddPostPageController extends GetxController {
       data: {
         "description": textEditingController.text,
         "aspectRatio": aspectRatio.toString(),
-        "postType": "video"
+        "postType": "video",
+        "commentOption": allowCommenting.toString(),
+        "sharingOption": allowSharing.toString(),
       },
       files: [
         FileItem(

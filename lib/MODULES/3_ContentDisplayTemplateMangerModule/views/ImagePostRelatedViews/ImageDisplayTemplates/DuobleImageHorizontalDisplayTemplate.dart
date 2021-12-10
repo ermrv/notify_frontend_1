@@ -28,7 +28,6 @@ class DoubleImageHorizontalDisplayTemplate extends StatelessWidget {
                     ));
               },
               child: Container(
-                  decoration: BoxDecoration(border: Border.all(width: 1.0)),
                   width: screenWidth * 0.5,
                   child: AspectRatio(
                       aspectRatio: 0.45,
@@ -46,7 +45,6 @@ class DoubleImageHorizontalDisplayTemplate extends StatelessWidget {
                     ));
               },
               child: Container(
-                  decoration: BoxDecoration(border: Border.all(width: 1.0)),
                   width: screenWidth * 0.5,
                   child: AspectRatio(
                       aspectRatio: 0.45,

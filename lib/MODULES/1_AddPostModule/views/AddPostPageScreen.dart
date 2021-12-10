@@ -77,6 +77,7 @@ class AddPostPageScreen extends StatelessWidget {
                 children: [
                   Icon(MaterialCommunityIcons.share),
                   Switch(
+                    
                       value: controller.allowSharing,
                       onChanged: (value) {
                         controller.updateSharingPrivacy(value);
@@ -97,8 +98,8 @@ class AddPostPageScreen extends StatelessWidget {
                     padding:
                         EdgeInsets.symmetric(vertical: 2.0, horizontal: 7.0),
                     child: controller.isUploading
-                        ? Text("Uploading")
-                        : Text(" Post ")),
+                        ? Text("Posting")
+                        : Text("   Post  ")),
               ),
             ),
           ],

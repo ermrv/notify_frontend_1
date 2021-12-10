@@ -28,7 +28,7 @@ class DoubleImageVerticalDisplayTemplate extends StatelessWidget {
                     ));
               },
               child: Container(
-                  decoration: BoxDecoration(border: Border.all(width: 1.0)),
+                 
                   width: screenWidth,
                   child: AspectRatio(
                       aspectRatio: 1.81,
@@ -46,7 +46,7 @@ class DoubleImageVerticalDisplayTemplate extends StatelessWidget {
                     ));
               },
               child: Container(
-                  decoration: BoxDecoration(border: Border.all(width: 1.0)),
+                 
                   width: screenWidth,
                   child: AspectRatio(
                       aspectRatio: 1.81,
