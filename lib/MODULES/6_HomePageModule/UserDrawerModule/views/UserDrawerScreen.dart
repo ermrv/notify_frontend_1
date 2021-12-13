@@ -73,70 +73,26 @@ class UserDrawerScreen extends StatelessWidget {
               child: TextButton(
                 style: ButtonStyle(
                     padding: MaterialStateProperty.resolveWith((states) =>
-                        EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10.0))),
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0))),
                 onPressed: () {
-                  Get.to(() => UserProfileScreen(
-                        profileOwnerId: PrimaryUserData.primaryUserData.userId,
-                      ));
+                  changeProfileType();
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Full Profile",
+                      "Public Account",
                     ),
-                    Text(">>>")
+                    TextButton(
+                        onPressed: () {
+                          changeProfileType();
+                        },
+                        child: Text("Change")),
                   ],
                 ),
               ),
             ),
-            // Container(
-            //   height: 150.0,
-            //   child: Column(
-            //     children: [
-            //       Container(
-            //         alignment: Alignment.centerLeft,
-            //         margin:
-            //             EdgeInsets.symmetric(horizontal: 3.0, vertical: 5.0),
-            //         child: Text("Contest:"),
-            //       ),
-            //       Container(
-            //           margin: EdgeInsets.symmetric(horizontal: 18.0),
-            //           padding: EdgeInsets.symmetric(vertical: 5.0),
-            //           child: TextButton(
-            //               style: ButtonStyle(
-            //                   padding: MaterialStateProperty.resolveWith(
-            //                       (states) => EdgeInsets.symmetric(
-            //                           horizontal: 10.0, vertical: 10.0))),
-            //               onPressed: () {
-            //                 Get.to(() => ContestParticipationHistoryScreen());
-            //               },
-            //               child: Row(
-            //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //                 children: [
-            //                   Text("Contest Participation"),
-            //                   Text(">>>")
-            //                 ],
-            //               ))),
-            //       Container(
-            //           margin: EdgeInsets.symmetric(horizontal: 18.0),
-            //           padding: EdgeInsets.symmetric(vertical: 5.0),
-            //           child: TextButton(
-            //               style: ButtonStyle(
-            //                   padding: MaterialStateProperty.resolveWith(
-            //                       (states) => EdgeInsets.symmetric(
-            //                           horizontal: 10.0, vertical: 10.0))),
-            //               onPressed: () {
-            //                 Get.to(() => ContestHostingHistoryScreen());
-            //               },
-            //               child: Row(
-            //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //                 children: [Text("Contest Hosting"), Text(">>>")],
-            //               ))),
-            //     ],
-            //   ),
-            // ),
+
             Expanded(child: Container()),
             Container(
               margin: EdgeInsets.only(left: 8.0, right: 18.0),
@@ -291,5 +247,51 @@ class UserDrawerScreen extends StatelessWidget {
     }
 
     return _isFilesDeleted;
+  }
+
+  ///changing the profile type alert box
+  changeProfileType() {
+    return Get.dialog(AlertDialog(
+      title: Text("Choose account type:"),
+      content: Container(
+        height: 150.0,
+        child: Column(
+          children: [
+            TextButton(
+                onPressed: () {},
+                child: Container(
+                   height: 25.0,
+                  alignment: Alignment.center,
+                  child: Text("Private Account"),
+                )),
+            TextButton(
+                onPressed: () {},
+                child: Container(
+                   height: 25.0,
+                  alignment: Alignment.center,
+                  child: Text("Public Account"),
+                )),
+            TextButton(
+                onPressed: () {},
+                child: Container(
+                  height: 25.0,
+                  alignment: Alignment.center,
+                  child: Text("Business Account"),
+                )),
+          ],
+        ),
+      ),
+      actions: [
+        Container(
+          padding: EdgeInsets.all(5.0),
+          child: GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: Text("Cancel",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),),
+          ),
+        )
+      ],
+    ));
   }
 }
