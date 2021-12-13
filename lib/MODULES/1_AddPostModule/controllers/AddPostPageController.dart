@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/14_MainNavigationModule/views/MainNavigation.dart';
-import 'package:MediaPlus/MODULES/1_AddPostModule/MediaCompressorModule/ImageCompressor.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/AddPostScreenBottomSheet.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/ImagesGridDisplay.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/SelectedImagesDisplayTemplates/DuobleImageHorizontalDisplayTemplate.dart';
@@ -169,11 +168,11 @@ class AddPostPageController extends GetxController {
       uploadVideo();
     } else if (videoFile == null &&
         imageFiles == null &&
-        textEditingController.text != null) {
+        textEditingController.text != "") {
       uploadTextPost();
     } else if (videoFile == null &&
         imageFiles == null &&
-        textEditingController.text == null) {
+        textEditingController.text == "") {
       isUploading = false;
       Get.snackbar("Nothing to post", "Nothing to post");
     }

@@ -8,7 +8,6 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 class CommentDisplayController extends GetxController {
   Function(int) commentCountUpdater;
   String postId;
-  double bottomSheetHeight = 50.0;
   List comments = [];
   bool isCommentsLoaded = false;
   TextEditingController commentEditingController,
@@ -62,7 +61,6 @@ class CommentDisplayController extends GetxController {
   int getNumberOfLines(String text) {
     int numOfLines = "\n".allMatches(text).toList().length;
     print(numOfLines);
-    bottomSheetHeight = 50 + numOfLines.toDouble() * 18;
     update();
     return numOfLines;
   }
