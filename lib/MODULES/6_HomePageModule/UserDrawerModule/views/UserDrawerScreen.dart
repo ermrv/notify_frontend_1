@@ -12,6 +12,7 @@ import 'package:MediaPlus/SERVICES_AND_UTILS/AppThemeModule/controllers/ThemeCon
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -260,14 +261,14 @@ class UserDrawerScreen extends StatelessWidget {
             TextButton(
                 onPressed: () {},
                 child: Container(
-                   height: 25.0,
+                  height: 25.0,
                   alignment: Alignment.center,
                   child: Text("Private Account"),
                 )),
             TextButton(
                 onPressed: () {},
                 child: Container(
-                   height: 25.0,
+                  height: 25.0,
                   alignment: Alignment.center,
                   child: Text("Public Account"),
                 )),
@@ -288,9 +289,32 @@ class UserDrawerScreen extends StatelessWidget {
             onTap: () {
               Get.back();
             },
-            child: Text("Cancel",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),),
+            child: Text(
+              "Cancel",
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+            ),
           ),
-        )
+        ),
+        Container(
+          padding: EdgeInsets.all(5.0),
+          child: GestureDetector(
+            onTap: () {
+              Get.back();
+              Get.dialog(AlertDialog(
+                title: Container(
+                  child: SpinKitThreeBounce(
+                    color: Colors.blue,
+                    size: 18.0,
+                  ),
+                ),
+              ));
+            },
+            child: Text(
+              "Done",
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+            ),
+          ),
+        ),
       ],
     ));
   }

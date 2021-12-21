@@ -37,11 +37,16 @@ class NotificationPageScreen extends StatelessWidget {
         ),
         body: controller.notificationsData == null
             ? DataLoadingShimmerAnimations(animationType: "notifications")
-            : ListView(
-                children: [
-                  for (var notification in controller.notificationsData)
-                    getNotificationTemaplate(notification, context),
-                ],
+            : RefreshIndicator(
+                onRefresh: () {
+                  return controller.getData();
+                },
+                child: ListView(
+                  children: [
+                    for (var notification in controller.notificationsData)
+                      getNotificationTemaplate(notification, context),
+                  ],
+                ),
               ),
       ),
     );
@@ -65,7 +70,7 @@ class NotificationPageScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(30.0),
                     child: Container(
-                        height:45.0,
+                        height: 45.0,
                         width: 45.0,
                         child: CachedNetworkImage(
                           imageUrl: ApiUrlsData.domain +
@@ -119,7 +124,7 @@ class NotificationPageScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: Container(
-                        height:45.0,
+                        height: 45.0,
                         width: 45.0,
                         child: CachedNetworkImage(
                           imageUrl: ApiUrlsData.domain +
@@ -178,7 +183,7 @@ class NotificationPageScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: Container(
-                        height:45.0,
+                        height: 45.0,
                         width: 45.0,
                         child: CachedNetworkImage(
                           imageUrl: ApiUrlsData.domain +
