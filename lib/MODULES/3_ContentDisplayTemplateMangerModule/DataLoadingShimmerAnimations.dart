@@ -255,27 +255,6 @@ class DataLoadingShimmerAnimations extends StatelessWidget {
             ),
           ),
         );
-        break;
-      case "rectangular":
-        return Container(
-          child: Shimmer.fromColors(
-            baseColor: Colors.grey[300],
-            highlightColor: Colors.grey[100],
-            direction: ShimmerDirection.ltr,
-            child: ListView(
-              children: [
-                for (var i = 0; i <= 30; i++)
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 5.0,vertical: 2.0),
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[500],
-                        borderRadius: BorderRadius.circular(10.0)),
-                  ),
-              ],
-            ),
-          ),
-        );
       default:
     }
   }

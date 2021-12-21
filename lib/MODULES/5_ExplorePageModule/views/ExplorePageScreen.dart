@@ -1,5 +1,6 @@
 import 'package:MediaPlus/MODULES/13_SearchEngineModule/views/SearchInputPageScreen.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ContentDisplayTemplateProvider.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/HashTagsDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ContestPostReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/EventPostReferenceLayout.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ReferenceRelatedViews/ImagePostReferenceLayout.dart';
@@ -36,7 +37,7 @@ class ExplorePageScreen extends StatelessWidget {
             ],
           ),
           body: controller.explorePageData.length == 0
-              ? DataLoadingShimmerAnimations(animationType: "postOnly")
+              ? DataLoadingShimmerAnimations(animationType: "rectangular")
               : RefreshIndicator(
                   onRefresh: () {
                     return controller.getRecentPostsData();
@@ -44,11 +45,8 @@ class ExplorePageScreen extends StatelessWidget {
                   child: ListView(
                     controller: controller.scrollController,
                     children: [
-                      ContentDisplayTemplateProvider(
-                        data: controller.explorePageData,
-                        controller: controller,
-                        useTemplatesAsPostFullDetails: false,
-                      ),
+                      for (var i in controller.explorePageData)
+                        HashTagsDisplayTemplate(hashTagData: i),
                       controller.loadingMoreData
                           ? Container(
                               height: 30.0,

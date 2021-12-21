@@ -33,21 +33,22 @@ class CommentTextWidget extends StatelessWidget {
   _getWordStyle(String word, double fontSize) {
     String trimmedWord = word.trim();
     List characters = trimmedWord.characters.toList();
-    if (characters[0] == "@") {
-      return Text(
-        word,
-        style: TextStyle(color: Colors.blue, fontSize: fontSize),
-      );
-    } else if (characters[0] == "#") {
-      return GestureDetector(
-        onTap: () {
-          // Get.to(()=>CommonPostDisplayPageScreen(apiUrl: apiUrl, apiData: apiData));
-        },
-        child: Text(word,
-            style: TextStyle(color: Colors.blue, fontSize: fontSize)),
-      );
-    } else {
-      return Text(word + " ", style: TextStyle(fontSize: fontSize));
-    }
+    return Text(word + " ", style: TextStyle(fontSize: fontSize));
+    // if (characters[0] == "@") {
+    //   return Text(
+    //     word,
+    //     style: TextStyle(color: Colors.blue, fontSize: fontSize),
+    //   );
+    // } else if (characters[0] == "#") {
+    //   return GestureDetector(
+    //     onTap: () {
+    //       // Get.to(()=>CommonPostDisplayPageScreen(apiUrl: apiUrl, apiData: apiData));
+    //     },
+    //     child: Text(word,
+    //         style: TextStyle(color: Colors.blue, fontSize: fontSize)),
+    //   );
+    // } else {
+    //   return Text(word + " ", style: TextStyle(fontSize: fontSize));
+    // }
   }
 }
