@@ -7,13 +7,13 @@ abstract class TimeStampProvider {
     if (_difference == 0) {
       return "Just now";
     } else if (_difference > 0 && _difference <= 59) {
-      return "$_difference min ago";
+      return "${_difference}m";
     } else if (_difference >= 60 && _difference / 60 <= 24) {
-      return "${(_difference ~/ 60)} hr ago";
-    } else if ((_difference / 60) / 24 <2) {
-      return "${(_difference ~/ 60) ~/ 24} day ago";
+      return "${(_difference ~/ 60)}h";
+    } else if ((_difference / 60) / 24 < 2) {
+      return "${(_difference ~/ 60) ~/ 24}d";
     } else if ((_difference / 60) / 24 <= 30) {
-      return "${(_difference ~/ 60) ~/ 24} days ago";
+      return "${(_difference ~/ 60) ~/ 24}d";
     } else {
       return "${_givenTime.day}/${_givenTime.month}/${_givenTime.year}";
     }
