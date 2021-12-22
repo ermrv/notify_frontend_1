@@ -3,15 +3,15 @@
   "packages": [
     {
       "name": "archive",
-      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/archive-2.0.13",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/archive-3.1.6",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.12"
     },
     {
       "name": "args",
-      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/args-1.6.0",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.3.0",
       "packageUri": "lib/",
-      "languageVersion": "2.3"
+      "languageVersion": "2.12"
     },
     {
       "name": "async",
@@ -62,16 +62,10 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "convert",
-      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/convert-2.1.1",
-      "packageUri": "lib/",
-      "languageVersion": "1.17"
-    },
-    {
       "name": "crypto",
-      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-2.1.5",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.3"
+      "languageVersion": "2.12"
     },
     {
       "name": "cupertino_icons",
@@ -194,6 +188,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_launcher_icons",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_launcher_icons-0.9.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_local_notifications",
       "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-4.0.1+2",
       "packageUri": "lib/",
@@ -261,9 +261,9 @@
     },
     {
       "name": "image",
-      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image-2.1.19",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image-3.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.12"
     },
     {
       "name": "intl",
@@ -363,9 +363,9 @@
     },
     {
       "name": "petitparser",
-      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/petitparser-3.1.0",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/petitparser-4.4.0",
       "packageUri": "lib/",
-      "languageVersion": "2.7"
+      "languageVersion": "2.14"
     },
     {
       "name": "photo_manager",
@@ -519,9 +519,9 @@
     },
     {
       "name": "uuid",
-      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/uuid-2.2.2",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/uuid-3.0.5",
       "packageUri": "lib/",
-      "languageVersion": "2.2"
+      "languageVersion": "2.12"
     },
     {
       "name": "vector_math",
@@ -615,9 +615,15 @@
     },
     {
       "name": "xml",
-      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/xml-4.5.1",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/xml-5.3.1",
       "packageUri": "lib/",
-      "languageVersion": "2.7"
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "yaml",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/yaml-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "MediaPlus",
@@ -626,7 +632,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-12-22T14:27:24.040086Z",
+  "generated": "2021-12-22T14:29:15.867433Z",
   "generator": "pub",
   "generatorVersion": "2.14.3"
 }

@@ -24,86 +24,88 @@ class PostOwnerActionsOnPost extends StatelessWidget {
     return Container(
       child: IconButton(
           onPressed: () {
-            Get.bottomSheet(
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextButton(
-                      onPressed: () async {
-                        Get.back();
-                        String description =
-                            await Get.to(() => EditPostPageScreen(
-                                  description: postDescription,
-                                  postId: postId,
-                                ));
-
-                        editedDescriptionUpdater.call(description);
-                      },
-                      child: Text('Edit Post'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Get.back();
-                        Get.dialog(AlertDialog(
-                          title: Text("Post will be deleted permanently"),
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                child: Text("Cancel")),
-                            TextButton(
-                                onPressed: () async {
-                                  Get.back();
-
-                                  Get.dialog(AlertDialog(
-                                    title: Container(
-                                      child: SpinKitThreeBounce(
-                                        color: Colors.blue,
-                                        size: 18.0,
-                                      ),
-                                    ),
+            Get.dialog(
+              AlertDialog(
+                
+                content: Container(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextButton(
+                        onPressed: () async {
+                          Get.back();
+                          String description =
+                              await Get.to(() => EditPostPageScreen(
+                                    description: postDescription,
+                                    postId: postId,
                                   ));
 
-                                  bool _postDeleted =
-                                      await parentController.deletePost(postId);
+                          editedDescriptionUpdater.call(description);
+                        },
+                        child: Text('Edit Post'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Get.back();
+                          Get.dialog(AlertDialog(
+                            title: Text("Post will be deleted permanently"),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: Text("Cancel")),
+                              TextButton(
+                                  onPressed: () async {
+                                    Get.back();
 
-                                  if (_postDeleted) {
-                                    removePost.call();
-                                    Get.back(closeOverlays: true);
-                                  } else {
-                                    Get.back(closeOverlays: true);
                                     Get.dialog(AlertDialog(
-                                      title: Text(
-                                          "Something wrong!!! \n Please try again"),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: () {
-                                              Get.back();
-                                            },
-                                            child: Text("Cancel")),
-                                      ],
+                                      title: Container(
+                                        child: SpinKitThreeBounce(
+                                          color: Colors.blue,
+                                          size: 18.0,
+                                        ),
+                                      ),
                                     ));
-                                  }
-                                },
-                                child: Text("Okay"))
-                          ],
-                        ));
-                      },
-                      child: Text('Delete Post'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        print("okay");
-                      },
-                      child: Text('Turn off Commenting'),
-                    )
-                  ],
+
+                                    bool _postDeleted = await parentController
+                                        .deletePost(postId);
+
+                                    if (_postDeleted) {
+                                      removePost.call();
+                                      Get.back(closeOverlays: true);
+                                    } else {
+                                      Get.back(closeOverlays: true);
+                                      Get.dialog(AlertDialog(
+                                        title: Text(
+                                            "Something wrong!!! \n Please try again"),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Get.back();
+                                              },
+                                              child: Text("Cancel")),
+                                        ],
+                                      ));
+                                    }
+                                  },
+                                  child: Text("Okay"))
+                            ],
+                          ));
+                        },
+                        child: Text('Delete Post'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          print("okay");
+                        },
+                        child: Text('Turn off Commenting'),
+                      )
+                    ],
+                  ),
                 ),
               ),
             );
