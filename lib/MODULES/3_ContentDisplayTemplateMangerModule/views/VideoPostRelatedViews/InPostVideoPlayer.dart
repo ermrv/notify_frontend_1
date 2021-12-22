@@ -61,30 +61,30 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
                     aspectRatio: _aspectRatio,
                     child: VideoPlayer(_videoPlayerController),
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: _videoPlayerController.value.isPlaying ||
-                            showFullVideoPlayerButton
-                        ? Container()
-                        : Container(
-                            height: 50.0,
-                            width: 50.0,
-                            decoration: BoxDecoration(
-                                color: Colors.black38,
-                                borderRadius: BorderRadius.circular(50.0),
-                                border: Border.all(
-                                    width: 2.0, color: Colors.white)),
-                            child: IconButton(
-                              onPressed: () {
-                                try {
-                                  _videoPlayerController.play();
-                                } catch (e) {}
-                              },
-                              icon: Icon(Icons.play_arrow),
-                              iconSize: 32,
-                            ),
-                          ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.center,
+                  //   child: _videoPlayerController.value.isPlaying ||
+                  //           showFullVideoPlayerButton
+                  //       ? Container()
+                  //       : Container(
+                  //           height: 50.0,
+                  //           width: 50.0,
+                  //           decoration: BoxDecoration(
+                  //               color: Colors.black38,
+                  //               borderRadius: BorderRadius.circular(50.0),
+                  //               border: Border.all(
+                  //                   width: 2.0, color: Colors.blue)),
+                  //           child: IconButton(
+                  //             onPressed: () {
+                  //               try {
+                  //                 _videoPlayerController.play();
+                  //               } catch (e) {}
+                  //             },
+                  //             icon: Icon(Icons.play_arrow,color: Colors.blue,),
+                  //             iconSize: 32,
+                  //           ),
+                  //         ),
+                  // ),
                   Positioned(
                     bottom: 3.0,
                     right: 3.0,
@@ -129,7 +129,7 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
                                 border: Border(),
                               ),
                               child: Text(
-                                "Play Full Video",
+                                "Play Full Video" ,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             )
@@ -158,34 +158,34 @@ class _InPostVideoPlayerState extends State<InPostVideoPlayer> {
                         fit: BoxFit.fitWidth,
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        height: 50.0,
-                        width: 50.0,
-                        decoration: BoxDecoration(
-                            color: Colors.black38,
-                            borderRadius: BorderRadius.circular(50.0),
-                            border:
-                                Border.all(width: 2.0, color: Colors.white)),
-                        child: IconButton(
-                          icon: Icon(Icons.play_arrow),
-                          iconSize: 32.0,
-                          onPressed: () {
-                            if (widget.postContent["videoPost"]["shortVideo"]
-                                    .toString() ==
-                                "true") {
-                              // Get.to(() => ShortVideoPlayerPageScreen(
-                              //     postContent: widget.postContent));
-                            } else {
-                              Get.to(() => VideoPostFeedPlayerPageScreen(
-                                    postContent: widget.postContent,
-                                  ));
-                            }
-                          },
-                        ),
-                      ),
-                    )
+                    // Align(
+                    //   alignment: Alignment.center,
+                    //   child: Container(
+                    //     height: 50.0,
+                    //     width: 50.0,
+                    //     decoration: BoxDecoration(
+                    //         color: Colors.black38,
+                    //         borderRadius: BorderRadius.circular(50.0),
+                    //         border:
+                    //             Border.all(width: 2.0, color: Colors.white)),
+                    //     child: IconButton(
+                    //       icon: Icon(Icons.play_arrow),
+                    //       iconSize: 32.0,
+                    //       onPressed: () {
+                    //         if (widget.postContent["videoPost"]["shortVideo"]
+                    //                 .toString() ==
+                    //             "true") {
+                    //           // Get.to(() => ShortVideoPlayerPageScreen(
+                    //           //     postContent: widget.postContent));
+                    //         } else {
+                    //           Get.to(() => VideoPostFeedPlayerPageScreen(
+                    //                 postContent: widget.postContent,
+                    //               ));
+                    //         }
+                    //       },
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),
