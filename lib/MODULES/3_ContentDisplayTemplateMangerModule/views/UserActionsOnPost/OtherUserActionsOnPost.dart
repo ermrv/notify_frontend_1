@@ -23,28 +23,30 @@ class _OtherUserActionsOnPostState extends State<OtherUserActionsOnPost> {
     return Container(
       child: IconButton(
           onPressed: () {
-            Get.bottomSheet(
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        print("okay");
-                      },
-                      child: Text('Block User'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        print("okay");
-                      },
-                      child: Text('Report'),
-                    )
-                  ],
+            Get.dialog(
+              AlertDialog(
+                content: Container(
+                 
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          print("okay");
+                        },
+                        child: Text('Block User'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          print("okay");
+                        },
+                        child: Text('Report'),
+                      )
+                    ],
+                  ),
                 ),
               ),
             );
@@ -53,7 +55,6 @@ class _OtherUserActionsOnPostState extends State<OtherUserActionsOnPost> {
             Icons.more_vert,
             size: 20.0,
           )),
-      
     );
   }
 
