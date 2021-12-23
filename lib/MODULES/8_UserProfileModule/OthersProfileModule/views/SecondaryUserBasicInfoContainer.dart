@@ -34,7 +34,8 @@ class SecondaryUserBasicInfoContainer extends StatelessWidget {
                       height: 250.0,
                       width: screenWidth,
                       child: CachedNetworkImage(
-                        imageUrl:ApiUrlsData.domain+ basicUserData["coverPic"],
+                        imageUrl:
+                            ApiUrlsData.domain + basicUserData["coverPic"],
                         fit: BoxFit.cover,
                       )),
                 ),
@@ -168,7 +169,7 @@ class SecondaryUserBasicInfoContainer extends StatelessWidget {
                     ? Container()
                     : Text(
                         basicUserData["bio"].toString(),
-                        style: TextStyle(),
+                        style: TextStyle(fontSize: 16.0),
                       )
               ],
             ),

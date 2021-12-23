@@ -34,7 +34,7 @@ class PrimaryUserData {
     this.profileType.value = jsonData["userdata"]["profileType"];
     this.userName = jsonData["userdata"]["username"];
     this.mobile = jsonData["userdata"]["mobile"];
-    this.bio = jsonData["userdata"]["bio"];
+    this.bio.value = jsonData["userdata"]["bio"];
     this.profilePic.value =
         ApiUrlsData.domain + jsonData["userdata"]["profilePic"];
     this.coverPic.value = ApiUrlsData.domain + jsonData["userdata"]["coverPic"];
@@ -57,7 +57,7 @@ class PrimaryUserData {
 
   ///set bio of the user
   void setBio(var bio) async {
-    this.bio = bio;
+    this.bio.value = bio.toString();
     deleteLocalUserBasicDataFile();
   }
 
