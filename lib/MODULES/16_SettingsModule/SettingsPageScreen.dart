@@ -12,10 +12,10 @@ class SettingsPageScreen extends StatefulWidget {
 
 class _SettingsPageScreenState extends State<SettingsPageScreen> {
   var settingsData;
-  bool securityNotifications = true;
-  bool mentioningNotification = true;
-  bool commentNotification = true;
-  bool likeNotification = true;
+  String securityNotifications = "true";
+  String mentioningNotification = "true";
+  String commentNotification = "true";
+  String likeNotification = "true";
   bool isUpdating = false;
 
   @override
@@ -71,10 +71,10 @@ class _SettingsPageScreenState extends State<SettingsPageScreen> {
                       Text("Security Notiications",
                           style: TextStyle(fontSize: 16.0)),
                       Switch(
-                          value: securityNotifications,
+                          value: securityNotifications=="true",
                           onChanged: (value) {
                             setState(() {
-                              securityNotifications = value;
+                              securityNotifications = value.toString();
                             });
                           })
                     ],
@@ -88,10 +88,10 @@ class _SettingsPageScreenState extends State<SettingsPageScreen> {
                       Text("Mentioning Notiications",
                           style: TextStyle(fontSize: 16.0)),
                       Switch(
-                          value: mentioningNotification,
+                          value: mentioningNotification=="true",
                           onChanged: (value) {
                             setState(() {
-                              mentioningNotification = value;
+                              mentioningNotification = value.toString();
                             });
                           })
                     ],
@@ -105,10 +105,10 @@ class _SettingsPageScreenState extends State<SettingsPageScreen> {
                       Text("Comment Notiications",
                           style: TextStyle(fontSize: 16.0)),
                       Switch(
-                          value: commentNotification,
+                          value: commentNotification=="true",
                           onChanged: (value) {
                             setState(() {
-                              commentNotification = value;
+                              commentNotification = value.toString();
                             });
                           })
                     ],
@@ -124,10 +124,10 @@ class _SettingsPageScreenState extends State<SettingsPageScreen> {
                         style: TextStyle(fontSize: 16.0),
                       ),
                       Switch(
-                          value: likeNotification,
+                          value: likeNotification=="true",
                           onChanged: (value) {
                             setState(() {
-                              likeNotification = value;
+                              likeNotification = value.toString();
                             });
                           })
                     ],

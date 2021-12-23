@@ -9,6 +9,7 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/LoginScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/AppThemeModule/controllers/ThemeController.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/ChangeProfileType.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -76,62 +77,63 @@ class UserDrawerScreen extends StatelessWidget {
                     padding: MaterialStateProperty.resolveWith((states) =>
                         EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0))),
                 onPressed: () {
-                  changeProfileType();
+                  Get.dialog(ChangeProfileType());
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Public Account",
+                    Obx(
+                      () => Text(
+                        "${PrimaryUserData.primaryUserData.profileType.value.toString().capitalizeFirst} Account",
+                      ),
                     ),
                     TextButton(
                         onPressed: () {
-                          changeProfileType();
+                          Get.dialog(ChangeProfileType());
                         },
                         child: Text("Change")),
                   ],
                 ),
               ),
             ),
-
             Expanded(child: Container()),
-            Container(
-              margin: EdgeInsets.only(left: 8.0, right: 18.0),
-              padding: EdgeInsets.symmetric(vertical: 5.0),
-              child: TextButton(
-                  style: ButtonStyle(
-                      padding: MaterialStateProperty.resolveWith((states) =>
-                          EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 10.0))),
-                  onPressed: () {
-                    ThemeController().changeTheme("light");
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Change Theme"),
-                    ],
-                  )),
-            ),
-            Container(
-                margin: EdgeInsets.only(left: 8.0, right: 18.0),
-                padding: EdgeInsets.symmetric(vertical: 5.0),
-                child: TextButton(
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.resolveWith((states) =>
-                            EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 10.0))),
-                    onPressed: () async {
-                      var response = await ApiServices.postWithAuth(
-                          ApiUrlsData.domain + "/api/notification",
-                          {},
-                          userToken);
-                      print(response);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Text("Get notifications"), Text(">>>")],
-                    ))),
+            // Container(
+            //   margin: EdgeInsets.only(left: 8.0, right: 18.0),
+            //   padding: EdgeInsets.symmetric(vertical: 5.0),
+            //   child: TextButton(
+            //       style: ButtonStyle(
+            //           padding: MaterialStateProperty.resolveWith((states) =>
+            //               EdgeInsets.symmetric(
+            //                   horizontal: 10.0, vertical: 10.0))),
+            //       onPressed: () {
+            //         ThemeController().changeTheme("light");
+            //       },
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Text("Change Theme"),
+            //         ],
+            //       )),
+            // ),
+            // Container(
+            //     margin: EdgeInsets.only(left: 8.0, right: 18.0),
+            //     padding: EdgeInsets.symmetric(vertical: 5.0),
+            //     child: TextButton(
+            //         style: ButtonStyle(
+            //             padding: MaterialStateProperty.resolveWith((states) =>
+            //                 EdgeInsets.symmetric(
+            //                     horizontal: 10.0, vertical: 10.0))),
+            //         onPressed: () async {
+            //           var response = await ApiServices.postWithAuth(
+            //               ApiUrlsData.domain + "/api/notification",
+            //               {},
+            //               userToken);
+            //           print(response);
+            //         },
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [Text("Get notifications"), Text(">>>")],
+            //         ))),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
               height: 1.0,
@@ -248,74 +250,5 @@ class UserDrawerScreen extends StatelessWidget {
     }
 
     return _isFilesDeleted;
-  }
-
-  ///changing the profile type alert box
-  changeProfileType() {
-    return Get.dialog(AlertDialog(
-      title: Text("Choose account type:"),
-      content: Container(
-        height: 150.0,
-        child: Column(
-          children: [
-            TextButton(
-                onPressed: () {},
-                child: Container(
-                  height: 25.0,
-                  alignment: Alignment.center,
-                  child: Text("Private Account"),
-                )),
-            TextButton(
-                onPressed: () {},
-                child: Container(
-                  height: 25.0,
-                  alignment: Alignment.center,
-                  child: Text("Public Account"),
-                )),
-            TextButton(
-                onPressed: () {},
-                child: Container(
-                  height: 25.0,
-                  alignment: Alignment.center,
-                  child: Text("Business Account"),
-                )),
-          ],
-        ),
-      ),
-      actions: [
-        Container(
-          padding: EdgeInsets.all(5.0),
-          child: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Text(
-              "Cancel",
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
-            ),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(5.0),
-          child: GestureDetector(
-            onTap: () {
-              Get.back();
-              Get.dialog(AlertDialog(
-                title: Container(
-                  child: SpinKitThreeBounce(
-                    color: Colors.blue,
-                    size: 18.0,
-                  ),
-                ),
-              ));
-            },
-            child: Text(
-              "Done",
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
-            ),
-          ),
-        ),
-      ],
-    ));
   }
 }

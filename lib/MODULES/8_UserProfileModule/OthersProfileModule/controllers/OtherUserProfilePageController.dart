@@ -41,7 +41,7 @@ class OtherUserProfilePageController extends GetxController {
     String _lastPostId = GettingPostServices.getLastPostId(postData);
     print(_lastPostId);
 
-    var response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
+    var response = await ApiServices.postWithAuth(ApiUrlsData.otherUserPosts,
         {"dataType": "previous", "postId": _lastPostId}, userToken);
 
     if (response != "error") {
@@ -96,11 +96,17 @@ class OtherUserProfilePageController extends GetxController {
     }
   }
 
+  // @override
+  // void onClose() {
+  //   postData = null;
+  //   profileData = null;
+  //   profileOwnerId = null;
+  //   scrollController.dispose();
+  //   super.onClose();
+  // }
+
   @override
   void dispose() {
-    postData = null;
-    profileData = null;
-    profileOwnerId = null;
     super.dispose();
   }
 }

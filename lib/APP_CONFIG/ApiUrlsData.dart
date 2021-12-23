@@ -24,6 +24,7 @@ abstract class ApiUrlsData {
   static String userProfileBasicData = "$domain/api/user";
   static String otherUserPosts = "$domain/api/otheruser/posts";
   static String otherUserProfileBasicData = "$domain/api/otheruser";
+  static String profileType = "$domain/api/user/private";
 
 //..........................................newsfeed.......................................................
   static String newsFeedUrl = "$domain/api/newsfeed";
