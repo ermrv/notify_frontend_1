@@ -43,8 +43,8 @@ class SharePostPageScreen extends StatelessWidget {
                     padding:
                         EdgeInsets.symmetric(vertical: 2.0, horizontal: 7.0),
                     child: controller.isUploading
-                        ? Text("Uploading")
-                        : Text(" Post ")),
+                        ? Text("Posting")
+                        : Text("  Post  ")),
               ),
             ),
           ],
