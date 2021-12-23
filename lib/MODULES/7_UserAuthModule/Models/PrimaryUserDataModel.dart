@@ -13,9 +13,10 @@ class PrimaryUserData {
   List followings = [];
   List blockedUsers = [];
   var name = "".obs;
+  var profileType = "".obs;
   String userName;
   String mobile;
-  var bio="".obs;
+  var bio = "".obs;
 
   ///complete address of profile pic
   var profilePic = "".obs;
@@ -30,6 +31,7 @@ class PrimaryUserData {
     followings.addAll(jsonData["userdata"]["following"]);
     blockedUsers.addAll(jsonData["userdata"]["blocked"]);
     this.name.value = jsonData["userdata"]["name"];
+    this.profileType.value = jsonData["userdata"]["profileType"];
     this.userName = jsonData["userdata"]["username"];
     this.mobile = jsonData["userdata"]["mobile"];
     this.bio = jsonData["userdata"]["bio"];
@@ -68,6 +70,11 @@ class PrimaryUserData {
   ///set cover pic of the user
   setCoverPic(String coverPic) async {
     this.coverPic.value = ApiUrlsData.domain + coverPic;
+    deleteLocalUserBasicDataFile();
+  }
+
+  setProfileType(String profileType) async {
+    this.profileType.value = profileType;
     deleteLocalUserBasicDataFile();
   }
 
