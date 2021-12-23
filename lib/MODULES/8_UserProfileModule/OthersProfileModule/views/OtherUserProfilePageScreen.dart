@@ -24,6 +24,12 @@ class OtherUserProfilePageScreen extends StatelessWidget {
             PrimaryUserData.primaryUserData.userId.toString();
         controller.initialise();
       },
+      dispose: (state) {
+        controller.postData = null;
+        controller.profileData = null;
+        controller.profileOwnerId = null;
+        controller.scrollController.dispose();
+      },
       builder: (controller) => Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(

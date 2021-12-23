@@ -96,11 +96,17 @@ class OtherUserProfilePageController extends GetxController {
     }
   }
 
+  // @override
+  // void onClose() {
+  //   postData = null;
+  //   profileData = null;
+  //   profileOwnerId = null;
+  //   scrollController.dispose();
+  //   super.onClose();
+  // }
+
   @override
   void dispose() {
-    postData = null;
-    profileData = null;
-    profileOwnerId = null;
     super.dispose();
   }
 }
