@@ -97,43 +97,43 @@ class UserDrawerScreen extends StatelessWidget {
               ),
             ),
             Expanded(child: Container()),
-            Container(
-              margin: EdgeInsets.only(left: 8.0, right: 18.0),
-              padding: EdgeInsets.symmetric(vertical: 5.0),
-              child: TextButton(
-                  style: ButtonStyle(
-                      padding: MaterialStateProperty.resolveWith((states) =>
-                          EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 10.0))),
-                  onPressed: () {
-                    ThemeController().changeTheme("light");
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Change Theme"),
-                    ],
-                  )),
-            ),
-            Container(
-                margin: EdgeInsets.only(left: 8.0, right: 18.0),
-                padding: EdgeInsets.symmetric(vertical: 5.0),
-                child: TextButton(
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.resolveWith((states) =>
-                            EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 10.0))),
-                    onPressed: () async {
-                      var response = await ApiServices.postWithAuth(
-                          ApiUrlsData.domain + "/api/notification",
-                          {},
-                          userToken);
-                      print(response);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Text("Get notifications"), Text(">>>")],
-                    ))),
+            // Container(
+            //   margin: EdgeInsets.only(left: 8.0, right: 18.0),
+            //   padding: EdgeInsets.symmetric(vertical: 5.0),
+            //   child: TextButton(
+            //       style: ButtonStyle(
+            //           padding: MaterialStateProperty.resolveWith((states) =>
+            //               EdgeInsets.symmetric(
+            //                   horizontal: 10.0, vertical: 10.0))),
+            //       onPressed: () {
+            //         ThemeController().changeTheme("light");
+            //       },
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Text("Change Theme"),
+            //         ],
+            //       )),
+            // ),
+            // Container(
+            //     margin: EdgeInsets.only(left: 8.0, right: 18.0),
+            //     padding: EdgeInsets.symmetric(vertical: 5.0),
+            //     child: TextButton(
+            //         style: ButtonStyle(
+            //             padding: MaterialStateProperty.resolveWith((states) =>
+            //                 EdgeInsets.symmetric(
+            //                     horizontal: 10.0, vertical: 10.0))),
+            //         onPressed: () async {
+            //           var response = await ApiServices.postWithAuth(
+            //               ApiUrlsData.domain + "/api/notification",
+            //               {},
+            //               userToken);
+            //           print(response);
+            //         },
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [Text("Get notifications"), Text(">>>")],
+            //         ))),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
               height: 1.0,

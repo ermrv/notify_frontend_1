@@ -41,7 +41,7 @@ class OtherUserProfilePageController extends GetxController {
     String _lastPostId = GettingPostServices.getLastPostId(postData);
     print(_lastPostId);
 
-    var response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
+    var response = await ApiServices.postWithAuth(ApiUrlsData.otherUserPosts,
         {"dataType": "previous", "postId": _lastPostId}, userToken);
 
     if (response != "error") {
