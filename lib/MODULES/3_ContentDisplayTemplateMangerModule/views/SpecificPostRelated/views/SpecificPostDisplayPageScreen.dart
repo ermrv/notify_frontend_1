@@ -53,7 +53,7 @@ class _SpecificPostDisplayPageScreenState
               ),
             )
           : ListView(
-            controller: scrollController,
+              controller: scrollController,
               children: [
                 ContentDisplayTemplateProvider(
                   data: [specificPostData],
@@ -77,14 +77,17 @@ class _SpecificPostDisplayPageScreenState
                 // Container(
                 //   child: Text(" shared contents will be displayed here"),
                 // ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
-                  child: Text(
-                    "Related Posts:",
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
-                  ),
-                ),
+                recommendedPostData != null
+                    ? Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 5.0),
+                        child: Text(
+                          "Related Posts:",
+                          style: TextStyle(
+                              fontSize: 16.0, fontWeight: FontWeight.w600),
+                        ),
+                      )
+                    : Container(),
                 recommendedPostData == null
                     ? DataLoadingShimmerAnimations(
                         animationType: "postOnlyColumn")
@@ -94,11 +97,6 @@ class _SpecificPostDisplayPageScreenState
                             data: recommendedPostData,
                             useTemplatesAsPostFullDetails: false,
                           ),
-                recommendedPostData != null
-                    ? ProfileReferenceTemplate(
-                        userData: specificPostData["postBy"],
-                        showVerticalTemplate: false)
-                    : Container(),
                 isLoadingMoreData
                     ? Container(
                         height: 30.0,
@@ -107,7 +105,9 @@ class _SpecificPostDisplayPageScreenState
                           color: Colors.blue,
                         )),
                       )
-                    : Container(height: 30.0,),
+                    : Container(
+                        height: 30.0,
+                      ),
               ],
             ),
     );
