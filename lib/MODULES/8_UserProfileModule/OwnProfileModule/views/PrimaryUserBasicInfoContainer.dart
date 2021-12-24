@@ -180,7 +180,7 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
                     : Text(
                         PrimaryUserData.primaryUserData.bio.toString(),
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18.0),
+                           fontSize: 16.0),
                       ),
               ],
             ),
