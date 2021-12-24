@@ -1,6 +1,7 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/CommonPostDisplayPageScreen.dart';
+import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/EditProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,18 +22,16 @@ class PrimaryUserActionsOnProfile extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 8.0),
               child: TextButton(
                   child: Container(
-                      alignment: Alignment.center,
-                      child: Text("Edit Profile")),
+                      alignment: Alignment.center, child: Text("Edit Profile")),
                   onPressed: () {
-                    Get.to(()=>EditProfileScreen());
+                    Get.to(() => EditProfileScreen());
                   }),
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 8.0),
               child: TextButton(
                   child: Container(
-                      alignment: Alignment.center,
-                      child: Text("Promotions")),
+                      alignment: Alignment.center, child: Text("Promotions")),
                   onPressed: () {
                     // Get.to(() => CommonPostDisplayPageScreen(
                     //       title: "Promotions",
@@ -43,12 +42,15 @@ class PrimaryUserActionsOnProfile extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 8.0),
               child: TextButton(
                   child: Container(
-                      alignment: Alignment.center, child: Text("Shared")),
+                      alignment: Alignment.center, child: Text("Shared Posts")),
                   onPressed: () {
                     Get.to(() => CommonPostDisplayPageScreen(
-                          title: "Shared",
-                          apiUrl: ApiUrlsData.userPosts,
-                          apiData: {"type":"image"},
+                          title: "Shared Posts",
+                          apiUrl: ApiUrlsData.userSharedPosts,
+                          apiData: {
+                            "userId": PrimaryUserData.primaryUserData.userId
+                                .toString()
+                          },
                         ));
                   }),
             ),
@@ -60,8 +62,11 @@ class PrimaryUserActionsOnProfile extends StatelessWidget {
                   onPressed: () {
                     Get.to(() => CommonPostDisplayPageScreen(
                           title: "Mentions",
-                           apiUrl: ApiUrlsData.userPosts,
-                          apiData: {"type":"video"},
+                          apiUrl: ApiUrlsData.userMentionedPosts,
+                          apiData: {
+                            "userId": PrimaryUserData.primaryUserData.userId
+                                .toString()
+                          },
                         ));
                   }),
             ),

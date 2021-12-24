@@ -21,6 +21,8 @@ abstract class ApiUrlsData {
 
   ///user profile data and related posts
   static String userPosts = "$domain/api/user/posts";
+  static String userSharedPosts = "$domain/api/user/shared";
+  static String userMentionedPosts = "$domain/api/user/mentions";
   static String userProfileBasicData = "$domain/api/user";
   static String otherUserPosts = "$domain/api/otheruser/posts";
   static String otherUserProfileBasicData = "$domain/api/otheruser";
