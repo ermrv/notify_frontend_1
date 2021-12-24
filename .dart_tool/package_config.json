@@ -206,6 +206,12 @@
       "languageVersion": "2.1"
     },
     {
+      "name": "flutter_parsed_text",
+      "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_parsed_text-2.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_spinkit",
       "rootUri": "file:///home/mrv/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_spinkit-4.1.2+1",
       "packageUri": "lib/",
@@ -632,7 +638,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-12-23T14:23:47.213445Z",
+  "generated": "2021-12-24T05:27:33.542903Z",
   "generator": "pub",
   "generatorVersion": "2.14.3"
 }
