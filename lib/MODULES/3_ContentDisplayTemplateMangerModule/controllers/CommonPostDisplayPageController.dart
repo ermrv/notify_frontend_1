@@ -17,8 +17,6 @@ class CommonPostDisplayPageController extends GetxController {
 
   ScrollController scrollController;
 
-  
-
   initilialise() {
     scrollController = ScrollController();
     scrollController.addListener(scrollListener);
@@ -40,9 +38,11 @@ class CommonPostDisplayPageController extends GetxController {
 
 //get more post
   getMorePosts() async {
+    Map _temp = apiData;
+
     String _lastPostId = GettingPostServices.getLastPostId(data);
-    var response = await ApiServices.postWithAuth(ApiUrlsData.relatedPosts,
-        {"dataType": "previous", "postId": _lastPostId}, userToken);
+    _temp.addAll({"dataType": "previous", "postId": _lastPostId});
+    var response = await ApiServices.postWithAuth(apiUrl, _temp, userToken);
 
     if (response != "error") {
       data.addAll(response);
@@ -67,17 +67,18 @@ class CommonPostDisplayPageController extends GetxController {
     }
   }
 
-
-   /// to get the previous post data
+  /// to get the previous post data
   getPreviousPostsData() async {
     print("getting previous data");
     loadingMoreData = true;
     update();
-    String _lastPostId = GettingPostServices.getLastPostId(data);
-    print(_lastPostId);
+    Map _temp = apiData;
 
-    var response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
-        {"dataType": "previous", "postId": _lastPostId}, userToken);
+    String _lastPostId = GettingPostServices.getLastPostId(data);
+    _temp.addAll({"dataType": "previous", "postId": _lastPostId});
+
+    var response = await ApiServices.postWithAuth(
+        apiUrl,_temp, userToken);
 
     if (response != "error") {
       if (data == null) {
