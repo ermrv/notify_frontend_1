@@ -4,7 +4,6 @@ abstract class TimeStampProvider {
   static String timeStampProvider(String giventime) {
     DateTime _givenTime = DateTime.parse(giventime).toLocal();
     DateTime _timeNow = DateTime.now();
-   
     int _difference = _timeNow.difference(_givenTime).inMinutes.toInt();
     if (_difference == 0) {
       return "Just now";
@@ -14,9 +13,12 @@ abstract class TimeStampProvider {
       return formatDate(_givenTime, [hh, ':', nn, ' ', am]) + " Yesterday";
     } else if (_givenTime.year == _timeNow.year) {
       return formatDate(_givenTime, [hh, ':', nn, ' ', am]) +
-          formatDate(_givenTime, [yy, '-', m, '-', d]);
+          " " +
+          formatDate(_givenTime, [d, '-', M]);
     } else {
-      return "time";
+      return formatDate(_givenTime, [hh, ':', nn, ' ', am]) +
+          " " +
+          formatDate(_givenTime, [d, '-', M, '-', yy]);
     }
     //else if (_difference > 0 && _difference <= 59) {
     //   return "${_difference}m";
