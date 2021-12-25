@@ -78,6 +78,7 @@ dependencies:
   double_back_to_close: ^2.0.0
   shimmer: ^2.0.0
   flutter_parsed_text: ^2.2.1
+  date_format: ^2.0.4
   
 
 dev_dependencies:

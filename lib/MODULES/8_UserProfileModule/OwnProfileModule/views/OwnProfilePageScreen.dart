@@ -14,38 +14,44 @@ class OwnProfilePageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OwnProfilePageScreenController>(
-      builder: (controller) => Scaffold(
-        body: ListView(
-          key: PageStorageKey("ownProfilePageScreen"),
-          controller: controller.scrollController,
-          children: [
-            PrimaryUserBasicInfoContainer(),
-
-            PrimaryUserActionsOnProfile(),
-
-            controller.profilePostData == null
-                ? DataLoadingShimmerAnimations(animationType: "postOnlyColumn")
-                : controller.profilePostData.length == 0
-                    ? Center(
-                        child: Text("No posts yet!!!"),
-                      )
-                    : ContentDisplayTemplateProvider(
-                        data: controller.profilePostData,
-                        controller: controller,
-                        useTemplatesAsPostFullDetails: false,
-                      ),
-                      controller.loadingMoreData
-                            ? Container(
-                                height: 40.0,
-                                child: Center(
-                                    child: CircularProgressIndicator(
-                                  color: Colors.blue,
-                                )),
-                              )
-                            : Container(
-                                height: 30.0,
-                              ),
-          ],
+      builder: (controller) => RefreshIndicator(
+        onRefresh: () {
+          controller.getRecentPostsData();
+         return controller.getUserBasicData();
+         
+        },
+        child: Scaffold(
+          body: ListView(
+            key: PageStorageKey("ownProfilePageScreen"),
+            controller: controller.scrollController,
+            children: [
+              PrimaryUserBasicInfoContainer(),
+              PrimaryUserActionsOnProfile(),
+              controller.profilePostData == null
+                  ? DataLoadingShimmerAnimations(
+                      animationType: "postOnlyColumn")
+                  : controller.profilePostData.length == 0
+                      ? Center(
+                          child: Text("No posts yet!!!"),
+                        )
+                      : ContentDisplayTemplateProvider(
+                          data: controller.profilePostData,
+                          controller: controller,
+                          useTemplatesAsPostFullDetails: false,
+                        ),
+              controller.loadingMoreData
+                  ? Container(
+                      height: 40.0,
+                      child: Center(
+                          child: CircularProgressIndicator(
+                        color: Colors.blue,
+                      )),
+                    )
+                  : Container(
+                      height: 30.0,
+                    ),
+            ],
+          ),
         ),
       ),
     );

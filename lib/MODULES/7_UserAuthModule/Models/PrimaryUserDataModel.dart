@@ -27,8 +27,11 @@ class PrimaryUserData {
 
   jsonToModel(var jsonData) {
     this.userId = jsonData["userdata"]["_id"];
+    followers = [];
     followers.addAll(jsonData["userdata"]["followers"]);
+    followings = [];
     followings.addAll(jsonData["userdata"]["following"]);
+    blockedUsers = [];
     blockedUsers.addAll(jsonData["userdata"]["blocked"]);
     this.name.value = jsonData["userdata"]["name"];
     this.profileType.value = jsonData["userdata"]["profileType"];

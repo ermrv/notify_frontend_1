@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:MediaPlus/MODULES/7_UserAuthModule/views/LoginScreen.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 abstract class ApiServices {
@@ -12,6 +14,8 @@ abstract class ApiServices {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         return data;
+      } else if (response.statusCode == 401) {
+        Get.offAll(() => LoginScreen());
       } else {
         return "error";
       }
@@ -30,6 +34,8 @@ abstract class ApiServices {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         return data;
+      } else if (response.statusCode == 401) {
+        Get.offAll(() => LoginScreen());
       } else {
         return "error";
       }
@@ -52,6 +58,8 @@ abstract class ApiServices {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         return data;
+      } else if (response.statusCode == 401) {
+        Get.offAll(() => LoginScreen());
       } else {
         return "error";
       }

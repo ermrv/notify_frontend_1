@@ -4,6 +4,7 @@ import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/16_SettingsModule/SettingsPageScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:MediaPlus/MODULES/7_UserAuthModule/views/UserAuthScreen.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/LoginScreen.dart';
@@ -11,6 +12,7 @@ import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/AppThemeModule/controllers/ThemeController.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ChangeProfileType.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
+import 'package:MediaPlus/main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -175,21 +177,25 @@ class UserDrawerScreen extends StatelessWidget {
                       padding: MaterialStateProperty.resolveWith((states) =>
                           EdgeInsets.symmetric(
                               horizontal: 10.0, vertical: 10.0))),
-                  onPressed: () async {
-                    final storage = GetStorage();
-                    userToken = "";
-                    await _deleteFileSystem().then((value) async {
-                      if (value) {
-                        await storage.remove("unRegisteredUserToken").then(
-                            (value) async => await storage
-                                .remove("userToken")
-                                .then((value) =>
-                                    Get.offAll(() => LoginScreen())));
-                      } else {
-                        Get.snackbar(
-                            "Cannot process request", "Please try again");
-                      }
-                    });
+                  onPressed: () {
+                    Get.dialog(AlertDialog(
+                      title: Text("Are you sure to LogOut?"),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            child: Text("No")),
+                        TextButton(
+                            onPressed: () {
+                              _logOut();
+                            },
+                            child: Text(
+                              "Yes",
+                              style: TextStyle(color: Colors.red),
+                            )),
+                      ],
+                    ));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -198,6 +204,25 @@ class UserDrawerScreen extends StatelessWidget {
             ),
           ],
         ));
+  }
+
+  _logOut() async {
+    final storage = GetStorage();
+    userToken = "";
+    await _deleteFileSystem().then((value) async {
+      if (value) {
+        try {
+          await storage.remove("userToken");
+          await storage.remove("unRegisteredUserToken");
+          Get.back();
+          Get.offAll(() => LoginScreen());
+        } catch (e) {
+          print(e);
+        }
+      } else {
+        Get.snackbar("Cannot process request", "Please try again");
+      }
+    });
   }
 
   Future<bool> _deleteFileSystem() async {

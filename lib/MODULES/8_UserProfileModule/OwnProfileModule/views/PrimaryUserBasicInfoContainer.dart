@@ -175,7 +175,7 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                   ),
                 ),
-                PrimaryUserData.primaryUserData.bio == null
+                PrimaryUserData.primaryUserData.bio.value ==null ||PrimaryUserData.primaryUserData.bio.value ==""
                     ? Container()
                     : Text(
                         PrimaryUserData.primaryUserData.bio.toString(),

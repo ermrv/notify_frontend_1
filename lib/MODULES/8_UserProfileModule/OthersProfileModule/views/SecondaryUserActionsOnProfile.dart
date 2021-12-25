@@ -41,12 +41,12 @@ class _SecondaryUserActionsOnProfileState
             margin: EdgeInsets.symmetric(horizontal: 8.0),
             child: TextButton(
                 child: Container(
-                    alignment: Alignment.center, child: Text("Shared")),
+                    alignment: Alignment.center, child: Text("Shared Posts")),
                 onPressed: () {
                   Get.to(() => CommonPostDisplayPageScreen(
-                        title: "Shared",
-                        apiUrl: ApiUrlsData.otherUserPosts,
-                        apiData: {"type": "image", "userId": widget.profileId},
+                        title: "Shared Posts",
+                        apiUrl: ApiUrlsData.userSharedPosts,
+                        apiData: {"userId": widget.profileId},
                       ));
                 }),
           ),

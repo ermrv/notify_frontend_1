@@ -165,7 +165,7 @@ class SecondaryUserBasicInfoContainer extends StatelessWidget {
                   basicUserData["name"].toString(),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                 ),
-                basicUserData["bio"] == null
+                basicUserData["bio"] == null || basicUserData["bio"] == ""
                     ? Container()
                     : Text(
                         basicUserData["bio"].toString(),

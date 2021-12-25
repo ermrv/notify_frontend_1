@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/NotificationServices/NotificationServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/PostGettingServices/GettingPostServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:flutter/widgets.dart';
@@ -18,26 +20,39 @@ class OwnProfilePageScreenController extends GetxController {
   ScrollController scrollController;
   bool loadingMoreData = false;
 
+  var userProfileData;
+
   @override
   void onInit() {
     scrollController = ScrollController();
     scrollController.addListener(scrollListener);
     userProfileDataFilePath = LocalDataFiles.profilePostsDataFilePath;
     getFileData();
+    getUserBasicData();
     super.onInit();
+  }
+
+  ///to get the user basic data and refresh the saved data
+  getUserBasicData() async {
+    String fcmToken = await NotificationServices.getFcmToken();
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.appStart, {"fcmToken": fcmToken}, userToken.toString());
+    if (response == "error") {
+      Get.snackbar("Error", "Cannot get the data");
+    } else {
+      userProfileData = response;
+      print(userProfileData);
+      PrimaryUserData.primaryUserData.jsonToModel(response);
+      update();
+
+      //write the data to local file
+      await File(LocalDataFiles.userBasicDataFilePath)
+          .writeAsString(json.encode(response), mode: FileMode.write);
+    }
   }
 
   ///to get the post data stored in the local storage
   getFileData() async {
-    // try {
-    //   profilePostData =
-    //       json.decode(await File(userProfileDataFilePath).readAsString());
-    //   print(profilePostData.length);
-    //   update();
-    // } catch (e) {
-    //   print(e);
-    // }
-
     getRecentPostsData();
   }
 

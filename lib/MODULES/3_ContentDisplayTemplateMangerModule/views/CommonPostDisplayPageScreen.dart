@@ -34,9 +34,14 @@ class CommonPostDisplayPageScreen extends StatelessWidget {
 //     super.initState();
 //   }
 
-  final controller = Get.put(CommonPostDisplayPageController());
   @override
   Widget build(BuildContext context) {
+    try {
+       Get.delete<CommonPostDisplayPageController>();
+    } catch (e) {
+      print(e);
+    }
+    final controller = Get.put(CommonPostDisplayPageController());
     return GetBuilder<CommonPostDisplayPageController>(
       initState: (state) {
         controller.apiUrl = apiUrl;
@@ -45,6 +50,12 @@ class CommonPostDisplayPageScreen extends StatelessWidget {
           controller.title = title;
         }
         controller.initilialise();
+      },
+      dispose: (state) {
+        controller.data = null;
+        controller.apiUrl = null;
+        controller.apiData = null;
+        controller.title = null;
       },
       builder: (controller) => Scaffold(
         appBar: AppBar(
