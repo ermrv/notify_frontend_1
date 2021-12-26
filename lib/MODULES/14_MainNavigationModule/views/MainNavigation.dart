@@ -54,13 +54,6 @@ class MainNavigationScreen extends StatelessWidget {
                       color:Colors.blue
                     ),
                     CustomBottomNavigationItem(
-                      suffix: Text(
-                        "7",
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w700),
-                      ),
                       icon: Icons.notifications,
                       label: 'Notifications',
                       color:Colors.blue

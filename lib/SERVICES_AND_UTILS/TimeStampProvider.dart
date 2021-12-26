@@ -5,11 +5,12 @@ abstract class TimeStampProvider {
     DateTime _givenTime = DateTime.parse(giventime).toLocal();
     DateTime _timeNow = DateTime.now();
     int _difference = _timeNow.difference(_givenTime).inMinutes.toInt();
+    print((_timeNow.day-_givenTime.day));
     if (_difference == 0) {
       return "Just now";
     } else if (_givenTime.day == _timeNow.day) {
       return formatDate(_givenTime, [hh, ':', nn, ' ', am]);
-    } else if (_givenTime.day - _timeNow.day == 1) {
+    } else if ((_timeNow.day-_givenTime.day) == 1) {
       return formatDate(_givenTime, [hh, ':', nn, ' ', am]) + " Yesterday";
     } else if (_givenTime.year == _timeNow.year) {
       return formatDate(_givenTime, [hh, ':', nn, ' ', am]) +
