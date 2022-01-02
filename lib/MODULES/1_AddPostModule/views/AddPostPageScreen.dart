@@ -147,23 +147,23 @@ class AddPostPageScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(top: 5.0),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    size: 16.0,
-                                  ),
-                                  Text(" "),
-                                  Container(
-                                    child: controller.location == null
-                                        ? Text("Select Location")
-                                        : Text(controller.location.toString()),
-                                  )
-                                ],
-                              ),
-                            )
+                            // Container(
+                            //   margin: EdgeInsets.only(top: 5.0),
+                            //   child: Row(
+                            //     children: [
+                            //       Icon(
+                            //         Icons.location_on,
+                            //         size: 16.0,
+                            //       ),
+                            //       Text(" "),
+                            //       Container(
+                            //         child: controller.location == null
+                            //             ? Text("Select Location")
+                            //             : Text(controller.location.toString()),
+                            //       )
+                            //     ],
+                            //   ),
+                            // )
                           ],
                         ),
                       ),
@@ -186,7 +186,7 @@ class AddPostPageScreen extends StatelessWidget {
                     decoration: InputDecoration(
                         focusedBorder: InputBorder.none,
                         border: InputBorder.none,
-                        hintText: "Just ,share it!",
+                        hintText: "Just Say it!",
                         hintStyle: TextStyle(fontSize: 16.0)),
                   ),
                 ),

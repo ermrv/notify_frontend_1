@@ -32,7 +32,9 @@ class AddPostScreenBottomSheet extends StatelessWidget {
                           (states) => Colors.transparent),
                       side: MaterialStateProperty.resolveWith(
                           (states) => BorderSide.none)),
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.getImageFiles();
+                  },
                   child: Row(
                     children: [Icon(Icons.image), Text("   Add Images")],
                   )),
@@ -42,7 +44,9 @@ class AddPostScreenBottomSheet extends StatelessWidget {
                           (states) => Colors.transparent),
                       side: MaterialStateProperty.resolveWith(
                           (states) => BorderSide.none)),
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.getVideoFile();
+                  },
                   child: Row(
                     children: [
                       Icon(Icons.ondemand_video),

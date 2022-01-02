@@ -1,6 +1,6 @@
-import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
+import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/views/ShowCoverPicScreen.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/ProfileCommonModules/views/UserFollowersListPageScreen.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/ProfileCommonModules/views/UserFollowingsListPageScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -26,16 +26,21 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
                   height: 300.0,
                   width: screenWidth,
                 ),
-                Positioned(
-                  child: Container(
-                      height: 250.0,
-                      width: screenWidth,
-                      child: Obx(() => CachedNetworkImage(
-                            imageUrl: PrimaryUserData
-                                .primaryUserData.coverPic.value
-                                .toString(),
-                            fit: BoxFit.cover,
-                          ))),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => ShowCoverPicScreen());
+                  },
+                  child: Positioned(
+                    child: Container(
+                        height: 250.0,
+                        width: screenWidth,
+                        child: Obx(() => CachedNetworkImage(
+                              imageUrl: PrimaryUserData
+                                  .primaryUserData.coverPic.value
+                                  .toString(),
+                              fit: BoxFit.cover,
+                            ))),
+                  ),
                 ),
                 Positioned(
                     bottom: 0,
@@ -175,12 +180,12 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                   ),
                 ),
-                PrimaryUserData.primaryUserData.bio.value ==null ||PrimaryUserData.primaryUserData.bio.value ==""
+                PrimaryUserData.primaryUserData.bio.value == null ||
+                        PrimaryUserData.primaryUserData.bio.value == ""
                     ? Container()
                     : Text(
                         PrimaryUserData.primaryUserData.bio.toString(),
-                        style: TextStyle(
-                           fontSize: 16.0),
+                        style: TextStyle(fontSize: 16.0),
                       ),
               ],
             ),

@@ -17,7 +17,7 @@ class SignupScreen extends StatelessWidget {
               appBar: AppBar(
                 elevation: 0.5,
                 title: Text(
-                  "Welcome to MediaPlus",
+                  "Welcome to Notify",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),

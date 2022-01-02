@@ -6,7 +6,6 @@ import 'package:MediaPlus/MODULES/14_MainNavigationModule/controllers/MainNaviga
 import 'package:MediaPlus/MODULES/14_MainNavigationModule/views/CustomBottomNavigationBar.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
-import 'package:MediaPlus/SERVICES_AND_UTILS/KeepWidgetAliveModule/KeepWidgetAliveWrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
