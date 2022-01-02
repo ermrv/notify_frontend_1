@@ -390,7 +390,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
     if (imagesData.length == 1) {
       return SingleImageDisplayTemplate(
         imageData: imagesData[0],
-        aspectRatio: 0.8,
+        aspectRatio:1.2,
       );
     } else {
       switch (templateType.toLowerCase()) {

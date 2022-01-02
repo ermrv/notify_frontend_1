@@ -27,7 +27,7 @@ class _SpecificPostDisplayPageScreenState
   var specificPostData;
   List recommendedPostData;
   bool isLoadingMoreData = false;
-  ScrollController scrollController;
+  // ScrollController scrollController;
 
   @override
   void initState() {
@@ -37,8 +37,8 @@ class _SpecificPostDisplayPageScreenState
       specificPostData = widget.postContent;
       _getRecommendedPostData();
     }
-    scrollController = ScrollController();
-    scrollController.addListener(scrollListener);
+    // scrollController = ScrollController();
+    // scrollController.addListener(scrollListener);
     super.initState();
   }
 
@@ -53,27 +53,13 @@ class _SpecificPostDisplayPageScreenState
               ),
             )
           : ListView(
-              controller: scrollController,
+              // controller: scrollController,
               children: [
                 ContentDisplayTemplateProvider(
                   data: [specificPostData],
                   useTemplatesAsPostFullDetails: true,
                 ),
 
-                ///profile reference
-                Container(
-                    margin: EdgeInsets.only(bottom: 5.0, top: 5.0),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                                color: Theme.of(context)
-                                    .accentColor
-                                    .withOpacity(0.5)))),
-                    child: specificPostData != null
-                        ? ProfileReferenceTemplate(
-                            userData: specificPostData["postBy"],
-                            showVerticalTemplate: false)
-                        : Container()),
                 // Container(
                 //   child: Text(" shared contents will be displayed here"),
                 // ),
@@ -82,7 +68,8 @@ class _SpecificPostDisplayPageScreenState
                         margin: EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 5.0),
                         child: Text(
-                          "Related Posts:",
+                          "More Posts From ${specificPostData["postBy"]["name"]}:",
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontSize: 16.0, fontWeight: FontWeight.w600),
                         ),
@@ -97,6 +84,21 @@ class _SpecificPostDisplayPageScreenState
                             data: recommendedPostData,
                             useTemplatesAsPostFullDetails: false,
                           ),
+
+                ///profile reference
+                Container(
+                    margin: EdgeInsets.only(bottom: 0.0, top: 1.0),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                                color: Theme.of(context)
+                                    .accentColor
+                                    .withOpacity(0.5)))),
+                    child: recommendedPostData != null
+                        ? ProfileReferenceTemplate(
+                            userData: specificPostData["postBy"],
+                            showVerticalTemplate: false)
+                        : Container()),
                 isLoadingMoreData
                     ? Container(
                         height: 30.0,
@@ -187,10 +189,10 @@ class _SpecificPostDisplayPageScreenState
 
   ///listen to the scroll of the newfeed in order to load more data
   ///calls [getPreviousPostsData] when scroll is attend to a limit
-  scrollListener() {
-    if (scrollController.position.maxScrollExtent ==
-        scrollController.position.pixels) {
-      getPreviousPostsData();
-    }
-  }
+  // scrollListener() {
+  //   if (scrollController.position.maxScrollExtent ==
+  //       scrollController.position.pixels) {
+  //     getPreviousPostsData();
+  //   }
+  // }
 }

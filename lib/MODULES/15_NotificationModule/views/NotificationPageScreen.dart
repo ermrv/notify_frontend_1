@@ -122,7 +122,7 @@ class NotificationPageScreen extends StatelessWidget {
               child: Row(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(30.0),
                     child: Container(
                         height: 45.0,
                         width: 45.0,
@@ -181,7 +181,7 @@ class NotificationPageScreen extends StatelessWidget {
               child: Row(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(30.0),
                     child: Container(
                         height: 45.0,
                         width: 45.0,
