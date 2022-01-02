@@ -9,7 +9,6 @@ class LoginScreenController extends GetxController {
   ///options of country code
   List countryCode = [
     ["IND", "+91"],
-    ["USA", "+90"]
   ];
   String selectedCountryCode = "+91";
 

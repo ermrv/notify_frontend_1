@@ -1,4 +1,5 @@
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PrivacyPolicyPageScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/controllers/LoginScreenController.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/OTPInputScreen.dart';
 import 'package:flutter/material.dart';
@@ -21,13 +22,12 @@ class LoginScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
         ),
         body: Container(
-          margin: EdgeInsets.only(
-              top:10.0, left: 15.0, right: 15.0),
+          margin: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
           child: Center(
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 40.0),
+                  margin: EdgeInsets.only(bottom: 20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -48,11 +48,18 @@ class LoginScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10.0),
+                        child: Text(
+                          "Enter Mobile Number to SignUp/Login:",
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                      ),
                       Row(
                         children: [
                           //countary code
                           Container(
-                            height: 50.0,
+                            height: 70.0,
                             child: DropdownButton(
                               underline: Container(),
                               value: controller.selectedCountryCode,
@@ -71,8 +78,7 @@ class LoginScreen extends StatelessWidget {
                               }).toList(),
                               onChanged: (value) {
                                 print(value);
-                                controller
-                                    .updateCountryCode(value.toString());
+                                controller.updateCountryCode(value.toString());
                               },
                             ),
                           ),
@@ -83,6 +89,7 @@ class LoginScreen extends StatelessWidget {
                               padding: EdgeInsets.only(left: 5.0),
                               height: 50.0,
                               child: TextFormField(
+                                maxLength: 10,
                                 controller: controller.textEditingController,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly
@@ -107,7 +114,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 //Get otp button
                 Container(
-                  margin: EdgeInsets.only(top: 15.0),
+                  margin: EdgeInsets.only(top: 30.0),
                   child: TextButton(
                       child: Container(
                         alignment: Alignment.center,
@@ -147,6 +154,25 @@ class LoginScreen extends StatelessWidget {
                         }
                       }),
                 ),
+                Container(
+                  child: Wrap(
+                    children: [
+                      Text("By signing in, you agree to our "),
+                      Text(
+                        "Terms and Conditions ",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                      Text("and "),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(PrivacyPolicyPageScreen());
+                        },
+                        child: Text("Privacy Policy.",
+                            style: TextStyle(color: Colors.blue)),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ),

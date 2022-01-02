@@ -39,9 +39,9 @@ class SignUpScreenController extends GetxController {
   }
 
   handleFileReturned() async {
-    profilePic = await Get.to(()=>SingleImagePicker(
-      intendedFor: "profilePic",
-    ));
+    profilePic = await Get.to(() => SingleImagePicker(
+          intendedFor: "profilePic",
+        ));
     if (profilePic != null) {
       update();
     }
@@ -53,17 +53,47 @@ class SignUpScreenController extends GetxController {
   sendUserData() async {
     isProcessing = true;
     update();
-    //if profile pic is selected call _updateProfilePic()
-    if (profilePic != null) {
-      int statusCode = await _updateProfilePic();
-      //if profile pic is uploaded successfully only then send the rest of the data
-      if (statusCode == 200) {
+    if (nameEditingController.text == null ||
+        nameEditingController.text == "") {
+      isProcessing = false;
+      update();
+      Get.snackbar("Please Enter your name", "Please Enter your name");
+    } else {
+      //if profile pic is selected call _updateProfilePic()
+      if (profilePic != null) {
+        int statusCode = await _updateProfilePic();
+        //if profile pic is uploaded successfully only then send the rest of the data
+        if (statusCode == 200) {
+          String name = nameEditingController.text;
+          String password = passwordEditingController.text;
+
+          var response = await ApiServices.postWithAuth(
+              ApiUrlsData.userRegistration,
+              {"name": name, "password": password, "email": "dfadf@gmail.com"},
+              unregisteredUserToken);
+          if (response == "error") {
+            isProcessing = false;
+            update();
+            Get.snackbar("Cannot process the request", "try again");
+          } else {
+            rcvdData = response;
+            userToken = unregisteredUserToken;
+            _navigator();
+          }
+        } else {
+          isProcessing = false;
+          update();
+          Get.snackbar("Cannot process the request", "try again");
+        }
+      } else {
         String name = nameEditingController.text;
-        String password = passwordEditingController.text;
+        // String password = passwordEditingController.text;
 
         var response = await ApiServices.postWithAuth(
             ApiUrlsData.userRegistration,
-            {"name": name, "password": password, "email": "dfadf@gmail.com"},
+            {
+              "name": name,
+            },
             unregisteredUserToken);
         if (response == "error") {
           isProcessing = false;
@@ -72,31 +102,10 @@ class SignUpScreenController extends GetxController {
         } else {
           rcvdData = response;
           userToken = unregisteredUserToken;
+
+          print(rcvdData);
           _navigator();
         }
-      } else {
-        isProcessing = false;
-        update();
-        Get.snackbar("Cannot process the request", "try again");
-      }
-    } else {
-      String name = nameEditingController.text;
-      String password = passwordEditingController.text;
-
-      var response = await ApiServices.postWithAuth(
-          ApiUrlsData.userRegistration,
-          {"name": name, "password": password, "email": "dfadf@gmail.com"},
-          unregisteredUserToken);
-      if (response == "error") {
-        isProcessing = false;
-        update();
-        Get.snackbar("Cannot process the request", "try again");
-      } else {
-        rcvdData = response;
-        userToken = unregisteredUserToken;
-
-        print(rcvdData);
-        _navigator();
       }
     }
   }
