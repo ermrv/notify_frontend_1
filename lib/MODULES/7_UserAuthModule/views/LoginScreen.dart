@@ -1,5 +1,6 @@
 import 'package:MediaPlus/APP_CONFIG/ScreenDimensions.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PrivacyPolicyPageScreen.dart';
+import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/TermsAndConditionsPageScreen.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/controllers/LoginScreenController.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/views/OTPInputScreen.dart';
 import 'package:flutter/material.dart';
@@ -158,9 +159,14 @@ class LoginScreen extends StatelessWidget {
                   child: Wrap(
                     children: [
                       Text("By signing in, you agree to our "),
-                      Text(
-                        "Terms and Conditions ",
-                        style: TextStyle(color: Colors.blue),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => TermsAndConditionsPageScreen());
+                        },
+                        child: Text(
+                          "Terms and Conditions ",
+                          style: TextStyle(color: Colors.blue),
+                        ),
                       ),
                       Text("and "),
                       GestureDetector(
