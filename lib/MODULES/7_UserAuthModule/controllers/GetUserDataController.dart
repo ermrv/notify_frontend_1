@@ -10,6 +10,7 @@ import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/NotificationServices/NotificationServices.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get_mac/get_mac.dart';
 import 'package:path_provider/path_provider.dart';
 
 ///uses [PrimaryUserDataMofel] from profile module to set the users data
@@ -19,6 +20,7 @@ class GetUserDataController extends GetxController {
   @override
   onReady() {
     _initialiseFileSystem();
+    _sendMacAddress();
   }
 
   ///creates the files for local storage of user data
@@ -58,8 +60,20 @@ class GetUserDataController extends GetxController {
         await File(LocalDataFiles.userBasicDataFilePath)
             .writeAsString(json.encode(response), mode: FileMode.write)
             .then((value) => Get.offAll(() => MainNavigationScreen()));
-
       }
+    }
+  }
+
+  _sendMacAddress() async {
+    String macAddress;
+    try {
+      macAddress = await GetMac.macAddress;
+      print(macAddress);
+      var response = await ApiServices.postWithAuth(
+          ApiUrlsData.userLoginActivity, {"macAddress": macAddress}, userToken);
+      print(response);
+    } catch (e) {
+      print(e);
     }
   }
 }

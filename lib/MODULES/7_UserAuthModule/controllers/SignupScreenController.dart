@@ -137,15 +137,4 @@ class SignUpScreenController extends GetxController {
       Get.defaultDialog(radius: 5.0, title: "Ooops! something went wrong");
     }
   }
-
-  _sendMacAddress() async {
-    String macAddress;
-    try {
-      macAddress = await GetMac.macAddress;
-      var response = await ApiServices.postWithAuth(
-          ApiUrlsData.userLoginActivity, {"macAdress": macAddress}, userToken);
-    } catch (e) {
-      print(e);
-    }
-  }
 }
