@@ -20,7 +20,7 @@ class GetUserDataController extends GetxController {
   @override
   onReady() {
     _initialiseFileSystem();
-    _sendMacAddress();
+    
   }
 
   ///creates the files for local storage of user data
@@ -64,16 +64,5 @@ class GetUserDataController extends GetxController {
     }
   }
 
-  _sendMacAddress() async {
-    String macAddress;
-    try {
-      macAddress = await GetMac.macAddress;
-      print(macAddress);
-      var response = await ApiServices.postWithAuth(
-          ApiUrlsData.userLoginActivity, {"macAddress": macAddress}, userToken);
-      print(response);
-    } catch (e) {
-      print(e);
-    }
-  }
+  
 }
