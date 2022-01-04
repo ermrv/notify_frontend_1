@@ -35,16 +35,21 @@ class PollPostDisplayTemplate extends StatefulWidget {
 }
 
 class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
+  //post privacy
+  bool commenting = false;
+  bool sharing = false;
   List _likes;
+
+  //ownership of the post
   bool _isOwner = false;
   String _ownerId;
   String _thisUserId;
 
+//post information
   String _vote = "";
 
   int _numberOfComments = 0;
   int _numberOfReactions = 0;
-
   Color likeButtonColor = Colors.white;
 
   //poll post related variables
@@ -61,12 +66,18 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
 
   @override
   void initState() {
+    //post privacy
+    commenting = widget.postContent["commentOption"].toString() == "true";
+    sharing = false;
+    //ownership of the post
     _ownerId = widget.postContent["pollPost"]["postBy"]["_id"].toString();
     _thisUserId = PrimaryUserData.primaryUserData.userId.toString();
     _isOwner = _ownerId == _thisUserId;
+    //post informations
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
     _numberOfComments = widget.postContent["noOfComments"];
+
 //polls calculations
     totalPolls = widget.postContent["pollPost"]["totalResponse"];
     opOnePolls = widget.postContent["pollPost"]["opOneResponse"];
@@ -82,478 +93,509 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child:_postRemoved?Container(): Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            child: Column(
+      child: _postRemoved
+          ? Container()
+          : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //basic info of the post
                 Container(
-                  height: 50.0,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //
-                      //
-                      //user profile pic
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(() => UserProfileScreen(
-                                profileOwnerId: widget.postContent["pollPost"]
-                                    ["postBy"]["_id"],
-                              ));
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(1.0),
-                          height: 35.0,
-                          width: 35.0,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.deepOrange[900]),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(30.0),
-                              child: CachedNetworkImage(
-                                imageUrl: ApiUrlsData.domain +
-                                    widget.postContent["pollPost"]["postBy"]
-                                        ["profilePic"],
-                                fit: BoxFit.fill,
-                              )),
-                        ),
-                      ),
-                      //
-                      //
-                      //user name,userName and location
+                      //basic info of the post
                       Container(
-                        margin: EdgeInsets.only(left: 8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        height: 50.0,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            //
+                            //
+                            //user profile pic
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => UserProfileScreen(
+                                      profileOwnerId:
+                                          widget.postContent["pollPost"]
+                                              ["postBy"]["_id"],
+                                    ));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(1.0),
+                                height: 35.0,
+                                width: 35.0,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.deepOrange[900]),
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    child: CachedNetworkImage(
+                                      imageUrl: ApiUrlsData.domain +
+                                          widget.postContent["pollPost"]
+                                              ["postBy"]["profilePic"],
+                                      fit: BoxFit.fill,
+                                    )),
+                              ),
+                            ),
+                            //
+                            //
+                            //user name,userName and location
                             Container(
-                              margin: EdgeInsets.only(bottom: 2.0),
-                              child: Row(
+                              margin: EdgeInsets.only(left: 8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    widget.postContent["pollPost"]["postBy"]
-                                                ["name"]
-                                            .toString() +
-                                        "  ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.0),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 2.0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          widget.postContent["pollPost"]
+                                                      ["postBy"]["name"]
+                                                  .toString() +
+                                              "  ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15.0),
+                                        ),
+                                      ],
+                                    ),
                                   ),
+                                  Container(
+                                    child: Text(
+                                      TimeStampProvider.timeStampProvider(widget
+                                          .postContent["createdAt"]
+                                          .toString()),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12.0),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
-                            Container(
-                              child: Text(
-                                TimeStampProvider.timeStampProvider(
-                                    widget.postContent["createdAt"].toString()),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12.0),
-                              ),
-                            )
+                            Expanded(
+                              child: Container(),
+                            ),
+
+                            //actions on post
+                            widget.parentController != null
+                                ? _isOwner
+                                    ? PostOwnerActionsOnPost(
+                                        postId: widget.postContent["_id"]
+                                            .toString(),
+                                        postDescription: widget
+                                            .postContent["pollPost"]
+                                                ["description"]
+                                            .toString(),
+                                        editedDescriptionUpdater:
+                                            (String description) {
+                                          // updateEditedDescription(description);
+                                        },
+                                        parentController:
+                                            widget.parentController,
+                                        removePost: () {
+                                          _removePost();
+                                        },
+                                      )
+                                    : OtherUserActionsOnPost(
+                                        postUserId: widget
+                                            .postContent["pollPost"]["postBy"]
+                                                ["_id"]
+                                            .toString(),
+                                        postId: widget.postContent["_id"]
+                                            .toString(),
+                                      )
+                                : Container()
                           ],
                         ),
                       ),
-                      Expanded(
-                        child: Container(),
+                      Container(
+                        width: screenWidth,
+                        padding: EdgeInsets.only(
+                            top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
+                        alignment: Alignment.centerLeft,
+                        child: PostDescriptionWidget(
+                            tags: [],
+                            mentions: [],
+                            description: widget.postContent["pollPost"]
+                                    ["description"]
+                                .toString(),
+                            postType: "pollPost",
+                            displayFullText: true),
                       ),
-
-                      //actions on post
-                      widget.parentController != null
-                          ? _isOwner
-                              ? PostOwnerActionsOnPost(
-                                  postId: widget.postContent["_id"].toString(),
-                                  postDescription: widget
-                                      .postContent["pollPost"]["description"]
-                                      .toString(),
-                                  editedDescriptionUpdater:
-                                      (String description) {
-                                    // updateEditedDescription(description);
-                                  },
-                                  parentController: widget.parentController,
-                                  removePost: () {
-                                    _removePost();
-                                  },
-                                )
-                              : OtherUserActionsOnPost(
-                                  postUserId: widget.postContent["pollPost"]
-                                          ["postBy"]["_id"]
-                                      .toString(),
-                                  postId: widget.postContent["_id"].toString(),
-                                )
-                          : Container()
+                      //option one
+                      widget.postContent["pollPost"]["opOne"] == null
+                          ? Container()
+                          : Container(
+                              height: 45.0,
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 3.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              child: TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: _vote ==
+                                          widget.postContent["pollPost"]
+                                              ["opOne"]
+                                      ? MaterialStateProperty.resolveWith(
+                                          (state) =>
+                                              Colors.blue.withOpacity(0.22))
+                                      : MaterialStateProperty.resolveWith(
+                                          (state) => Colors.transparent),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    if (opOnePolls.contains(_thisUserId)) {
+                                      castPollHandler(0);
+                                    } else {
+                                      castPollHandler(1);
+                                    }
+                                  });
+                                },
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 5.0),
+                                        child: Text(
+                                          widget.postContent["pollPost"]
+                                                  ["opOne"]
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.normal,
+                                              color: Theme.of(context)
+                                                  .accentColor
+                                                  .withOpacity(0.9)),
+                                        ),
+                                      ),
+                                    ),
+                                    _isPollCasted
+                                        ? Text(((opOnePolls.length /
+                                                        totalPolls.length) *
+                                                    100)
+                                                .toStringAsFixed(2) +
+                                            "%")
+                                        : Container()
+                                  ],
+                                ),
+                              )),
+                      // option two
+                      widget.postContent["pollPost"]["opTwo"] == null ||
+                              widget.postContent["pollPost"]["opTwo"] == " "
+                          ? Container()
+                          : Container(
+                              height: 45.0,
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 3.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              child: TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: _vote ==
+                                          widget.postContent["pollPost"]
+                                              ["opTwo"]
+                                      ? MaterialStateProperty.resolveWith(
+                                          (state) =>
+                                              Colors.blue.withOpacity(0.22))
+                                      : MaterialStateProperty.resolveWith(
+                                          (state) => Colors.transparent),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    if (opTwoPolls.contains(_thisUserId)) {
+                                      castPollHandler(0);
+                                    } else {
+                                      castPollHandler(2);
+                                    }
+                                  });
+                                },
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 5.0),
+                                        child: Text(
+                                          widget.postContent["pollPost"]
+                                                  ["opTwo"]
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
+                                              color: Theme.of(context)
+                                                  .accentColor
+                                                  .withOpacity(0.9)),
+                                        ),
+                                      ),
+                                    ),
+                                    _isPollCasted
+                                        ? Text(((opTwoPolls.length /
+                                                        totalPolls.length) *
+                                                    100)
+                                                .toStringAsFixed(2) +
+                                            "%")
+                                        : Container()
+                                  ],
+                                ),
+                              )),
+                      //option three
+                      widget.postContent["pollPost"]["opThree"] == null ||
+                              widget.postContent["pollPost"]["opThree"] == ""
+                          ? Container()
+                          : Container(
+                              height: 45.0,
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 3.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              child: TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: _vote ==
+                                          widget.postContent["pollPost"]
+                                              ["opThree"]
+                                      ? MaterialStateProperty.resolveWith(
+                                          (state) =>
+                                              Colors.blue.withOpacity(0.22))
+                                      : MaterialStateProperty.resolveWith(
+                                          (state) => Colors.transparent),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    if (opThreePolls.contains(_thisUserId)) {
+                                      castPollHandler(0);
+                                    } else {
+                                      castPollHandler(3);
+                                    }
+                                  });
+                                },
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 5.0),
+                                        child: Text(
+                                          widget.postContent["pollPost"]
+                                                  ["opThree"]
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
+                                              color: Theme.of(context)
+                                                  .accentColor
+                                                  .withOpacity(0.9)),
+                                        ),
+                                      ),
+                                    ),
+                                    _isPollCasted
+                                        ? Text(((opThreePolls.length /
+                                                        totalPolls.length) *
+                                                    100)
+                                                .toStringAsFixed(2) +
+                                            "%")
+                                        : Container()
+                                  ],
+                                ),
+                              )),
+                      //option four
+                      widget.postContent["pollPost"]["opFour"] == null ||
+                              widget.postContent["pollPost"]["opFour"] == ""
+                          ? Container()
+                          : Container(
+                              height: 45.0,
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 3.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              child: TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: _vote ==
+                                          widget.postContent["pollPost"]
+                                              ["opFour"]
+                                      ? MaterialStateProperty.resolveWith(
+                                          (state) =>
+                                              Colors.blue.withOpacity(0.22))
+                                      : MaterialStateProperty.resolveWith(
+                                          (state) => Colors.transparent),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    if (opFourPolls.contains(_thisUserId)) {
+                                      castPollHandler(0);
+                                    } else {
+                                      castPollHandler(4);
+                                    }
+                                  });
+                                },
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 5.0),
+                                        child: Text(
+                                          widget.postContent["pollPost"]
+                                                  ["opFour"]
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
+                                              color: Theme.of(context)
+                                                  .accentColor
+                                                  .withOpacity(0.9)),
+                                        ),
+                                      ),
+                                    ),
+                                    _isPollCasted
+                                        ? Text(((opFourPolls.length /
+                                                        totalPolls.length) *
+                                                    100)
+                                                .toStringAsFixed(2) +
+                                            "%")
+                                        : Container()
+                                  ],
+                                ),
+                              )),
                     ],
                   ),
                 ),
                 Container(
-                  width: screenWidth,
-                  padding: EdgeInsets.only(
-                      top: 3.0, bottom: 3.0, right: 5.0, left: 2.5),
-                  alignment: Alignment.centerLeft,
-                  child: PostDescriptionWidget(
-                      tags: [],
-                      mentions: [],
-                      description: widget.postContent["pollPost"]["description"]
-                          .toString(),
-                      postType: "pollPost",
-                      displayFullText: true),
-                ),
-                //option one
-                widget.postContent["pollPost"]["opOne"] == null
-                    ? Container()
-                    : Container(
-                        height: 45.0,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 3.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: TextButton(
-                          style: ButtonStyle(
-                            backgroundColor: _vote ==
-                                    widget.postContent["pollPost"]["opOne"]
-                                ? MaterialStateProperty.resolveWith(
-                                    (state) => Colors.blue.withOpacity(0.22))
-                                : MaterialStateProperty.resolveWith(
-                                    (state) => Colors.transparent),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              if (opOnePolls.contains(_thisUserId)) {
-                                castPollHandler(0);
-                              } else {
-                                castPollHandler(1);
-                              }
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Expanded(
+                  margin: EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //total reactions count
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: _likes.length != 0
+                            ? GestureDetector(
+                                onTap: () {
+                                  Get.to(() => PostLikesDisplayPageScreen(
+                                      postId: widget.postContent["_id"]));
+                                },
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 5.0),
+                                  padding: EdgeInsets.only(
+                                      top: 10.0, left: 8.0, right: 8.0),
                                   child: Text(
-                                    widget.postContent["pollPost"]["opOne"]
-                                        .toString(),
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.normal,
-                                        color: Theme.of(context)
-                                            .accentColor
-                                            .withOpacity(0.9)),
+                                    "${_likes.length} likes",
+                                    style: TextStyle(fontSize: 14.0),
                                   ),
                                 ),
+                              )
+                            : Container(
+                                margin: EdgeInsets.only(
+                                    top: 10.0, left: 8.0, right: 8.0),
+                                child: Text("Be the first to like",
+                                    style: TextStyle(fontSize: 14.0)),
                               ),
-                              _isPollCasted
-                                  ? Text(
-                                      ((opOnePolls.length / totalPolls.length) *
-                                                  100)
-                                              .toStringAsFixed(2) +
-                                          "%")
-                                  : Container()
-                            ],
-                          ),
-                        )),
-                // option two
-                widget.postContent["pollPost"]["opTwo"] == null ||
-                        widget.postContent["pollPost"]["opTwo"] == " "
-                    ? Container()
-                    : Container(
-                        height: 45.0,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 3.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: TextButton(
-                          style: ButtonStyle(
-                            backgroundColor: _vote ==
-                                    widget.postContent["pollPost"]["opTwo"]
-                                ? MaterialStateProperty.resolveWith(
-                                    (state) => Colors.blue.withOpacity(0.22))
-                                : MaterialStateProperty.resolveWith(
-                                    (state) => Colors.transparent),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              if (opTwoPolls.contains(_thisUserId)) {
-                                castPollHandler(0);
-                              } else {
-                                castPollHandler(2);
-                              }
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 5.0),
-                                  child: Text(
-                                    widget.postContent["pollPost"]["opTwo"]
-                                        .toString(),
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.normal,
-                                        color: Theme.of(context)
-                                            .accentColor
-                                            .withOpacity(0.9)),
-                                  ),
-                                ),
-                              ),
-                              _isPollCasted
-                                  ? Text(
-                                      ((opTwoPolls.length / totalPolls.length) *
-                                                  100)
-                                              .toStringAsFixed(2) +
-                                          "%")
-                                  : Container()
-                            ],
-                          ),
-                        )),
-                //option three
-                widget.postContent["pollPost"]["opThree"] == null ||
-                        widget.postContent["pollPost"]["opThree"] == ""
-                    ? Container()
-                    : Container(
-                        height: 45.0,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 3.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: TextButton(
-                          style: ButtonStyle(
-                            backgroundColor: _vote ==
-                                    widget.postContent["pollPost"]["opThree"]
-                                ? MaterialStateProperty.resolveWith(
-                                    (state) => Colors.blue.withOpacity(0.22))
-                                : MaterialStateProperty.resolveWith(
-                                    (state) => Colors.transparent),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              if (opThreePolls.contains(_thisUserId)) {
-                                castPollHandler(0);
-                              } else {
-                                castPollHandler(3);
-                              }
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 5.0),
-                                  child: Text(
-                                    widget.postContent["pollPost"]["opThree"]
-                                        .toString(),
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.normal,
-                                        color: Theme.of(context)
-                                            .accentColor
-                                            .withOpacity(0.9)),
-                                  ),
-                                ),
-                              ),
-                              _isPollCasted
-                                  ? Text(((opThreePolls.length /
-                                                  totalPolls.length) *
-                                              100)
-                                          .toStringAsFixed(2) +
-                                      "%")
-                                  : Container()
-                            ],
-                          ),
-                        )),
-                //option four
-                widget.postContent["pollPost"]["opFour"] == null ||
-                        widget.postContent["pollPost"]["opFour"] == ""
-                    ? Container()
-                    : Container(
-                        height: 45.0,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 3.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: TextButton(
-                          style: ButtonStyle(
-                            backgroundColor: _vote ==
-                                    widget.postContent["pollPost"]["opFour"]
-                                ? MaterialStateProperty.resolveWith(
-                                    (state) => Colors.blue.withOpacity(0.22))
-                                : MaterialStateProperty.resolveWith(
-                                    (state) => Colors.transparent),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              if (opFourPolls.contains(_thisUserId)) {
-                                castPollHandler(0);
-                              } else {
-                                castPollHandler(4);
-                              }
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 5.0),
-                                  child: Text(
-                                    widget.postContent["pollPost"]["opFour"]
-                                        .toString(),
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.normal,
-                                        color: Theme.of(context)
-                                            .accentColor
-                                            .withOpacity(0.9)),
-                                  ),
-                                ),
-                              ),
-                              _isPollCasted
-                                  ? Text(((opFourPolls.length /
-                                                  totalPolls.length) *
-                                              100)
-                                          .toStringAsFixed(2) +
-                                      "%")
-                                  : Container()
-                            ],
-                          ),
-                        )),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 8.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //total reactions count
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: _likes.length != 0
-                      ? GestureDetector(
-                          onTap: () {
-                            Get.to(() => PostLikesDisplayPageScreen(
-                                postId: widget.postContent["_id"]));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.only(
-                                top: 10.0, left: 8.0, right: 8.0),
-                            child: Text(
-                              "${_likes.length} likes",
-                              style: TextStyle(fontSize: 14.0),
-                            ),
-                          ),
-                        )
-                      : Container(
-                          margin:
-                              EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
-                          child: Text("Be the first to like",
-                              style: TextStyle(fontSize: 14.0)),
-                        ),
-                ),
-                //total polls count
-                Container(
-                  child: _isPollCasted && totalPolls.length != 0
-                      ? Text(
-                          "Total ${totalPolls.length} vote",
-                          style: TextStyle(fontSize: 12.0),
-                        )
-                      : Container(),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            height: 50.0,
-            width: screenWidth,
-            padding: EdgeInsets.symmetric(horizontal: 2.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //like
-                Container(
-                  height: 40.0,
-                  width: 40.0,
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(right: 5.0),
-                  child: IconButton(
-                      padding: EdgeInsets.all(4.0),
-                      icon: _likes.contains(
-                        _thisUserId,
-                      )
-                          ? Icon(
-                              Octicons.heart,
-                              size: 24.0,
-                              color: Colors.red,
-                            )
-                          : Icon(
-                              EvilIcons.heart,
-                              size: 28.0,
-                              color: Theme.of(context).iconTheme.color,
-                            ),
-                      onPressed: () {
-                        reactionCountUpdater(_thisUserId);
-                      }),
-                ),
-                //comment
-                Container(
-                  height: 40.0,
-                  width: 40.0,
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(right: 5.0),
-                  child: IconButton(
-                      padding: EdgeInsets.all(4.0),
-                      icon: Icon(
-                        EvilIcons.comment,
-                        size: 28.0,
                       ),
-                      onPressed: () {
-                        Get.to(() => CommentsDisplayScreen(
-                              postId: widget.postContent["_id"],
-                              commentCountUpdater: (int commentCount) {
-                                commentCountUpdater(commentCount);
-                              },
-                            ));
-                      }),
+                      //total polls count
+                      Container(
+                        child: _isPollCasted && totalPolls.length != 0
+                            ? Text(
+                                "Total ${totalPolls.length} vote",
+                                style: TextStyle(fontSize: 12.0),
+                              )
+                            : Container(),
+                      ),
+                    ],
+                  ),
                 ),
                 Container(
-                  height: 40.0,
-                  width: 40.0,
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(right: 5.0),
-                  child: IconButton(
-                      icon: Icon(MaterialCommunityIcons.share),
-                      color: Theme.of(context).iconTheme.color.withOpacity(0.2),
-                      onPressed: () {}),
+                  height: 50.0,
+                  width: screenWidth,
+                  padding: EdgeInsets.symmetric(horizontal: 2.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //like
+                      Container(
+                        height: 40.0,
+                        width: 40.0,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(right: 5.0),
+                        child: IconButton(
+                            padding: EdgeInsets.all(4.0),
+                            icon: _likes.contains(
+                              _thisUserId,
+                            )
+                                ? Icon(
+                                    Octicons.heart,
+                                    size: 24.0,
+                                    color: Colors.red,
+                                  )
+                                : Icon(
+                                    EvilIcons.heart,
+                                    size: 28.0,
+                                    color: Theme.of(context).iconTheme.color,
+                                  ),
+                            onPressed: () {
+                              reactionCountUpdater(_thisUserId);
+                            }),
+                      ),
+                      //comment
+                      Container(
+                        height: 40.0,
+                        width: 40.0,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(right: 5.0),
+                        child: IconButton(
+                            padding: EdgeInsets.all(4.0),
+                            icon: Icon(EvilIcons.comment,
+                                size: 28.0,
+                                color: commenting
+                                    ? Theme.of(context).iconTheme.color
+                                    : Theme.of(context)
+                                        .iconTheme
+                                        .color
+                                        .withOpacity(0.2)),
+                            onPressed: () {
+                              if (commenting) {
+                                Get.to(() => CommentsDisplayScreen(
+                                      postId: widget.postContent["_id"],
+                                      commentCountUpdater: (int commentCount) {
+                                        commentCountUpdater(commentCount);
+                                      },
+                                    ));
+                              }
+                            }),
+                      ),
+                      Container(
+                        height: 40.0,
+                        width: 40.0,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(right: 5.0),
+                        child: IconButton(
+                            icon: Icon(MaterialCommunityIcons.share),
+                            color: Theme.of(context)
+                                .iconTheme
+                                .color
+                                .withOpacity(0.2),
+                            onPressed: () {}),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                    ],
+                  ),
                 ),
-                Expanded(
-                  child: Container(),
-                ),
+                widget.postContent["comments"] == null || !commenting
+                    ? Container()
+                    : widget.postContent["comments"].length == 0
+                        ? Container()
+                        : BelowPostCommentDisplayTemplate(
+                            commentCount: _numberOfComments,
+                            commentData: widget.postContent["comments"][0],
+                            postId: widget.postContent["_id"],
+                            commentCountUpdater: (int count) {
+                              commentCountUpdater(count);
+                            },
+                          )
               ],
             ),
-          ),
-          widget.postContent["comments"] == null
-              ? Container()
-              : widget.postContent["comments"].length == 0
-                  ? Container()
-                  : BelowPostCommentDisplayTemplate(
-                      commentCount: _numberOfComments,
-                      commentData: widget.postContent["comments"][0],
-                      postId: widget.postContent["_id"],
-                      commentCountUpdater: (int count) {
-                        commentCountUpdater(count);
-                      },
-                    )
-        ],
-      ),
     );
   }
 

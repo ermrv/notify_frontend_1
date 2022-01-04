@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:share/share.dart';
 
 class SharedImagePostDisplayTemplate extends StatefulWidget {
   final postContent;
@@ -41,12 +42,18 @@ class SharedImagePostDisplayTemplate extends StatefulWidget {
 
 class _SharedImagePostDisplayTemplateState
     extends State<SharedImagePostDisplayTemplate> {
+  //post privacy
+  bool commenting = false;
+  bool sharing = false;
+  //ownership of the post
   String _ownerId;
   String _thisUserId;
   bool _isOwner = false;
 
+  ///post informations
   int _numberOfComments = 0;
   int _numberOfReactions = 0;
+  int _numberOfShare;
 
   List _likes = [];
 
@@ -55,13 +62,19 @@ class _SharedImagePostDisplayTemplateState
 
   @override
   void initState() {
+    //post privacy
+    commenting = widget.postContent["commentOption"].toString() == "true";
+    sharing = widget.postContent["sharingOption"].toString() == "true";
+    //ownership of the post
     _ownerId = widget.postContent["postBy"]["_id"].toString();
     _thisUserId = PrimaryUserData.primaryUserData.userId.toString();
     _isOwner = _ownerId == _thisUserId;
 
+    //post informations
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
     _numberOfComments = widget.postContent["noOfComments"];
+    _numberOfShare = widget.postContent["noOfShares"];
 
     super.initState();
   }
@@ -293,17 +306,23 @@ class _SharedImagePostDisplayTemplateState
                         margin: EdgeInsets.only(right: 5.0),
                         child: IconButton(
                             padding: EdgeInsets.all(4.0),
-                            icon: Icon(
-                              EvilIcons.comment,
-                              size: 28.0,
-                            ),
+                            icon: Icon(EvilIcons.comment,
+                                size: 28.0,
+                                color: commenting
+                                    ? Theme.of(context).iconTheme.color
+                                    : Theme.of(context)
+                                        .iconTheme
+                                        .color
+                                        .withOpacity(0.2)),
                             onPressed: () {
-                              Get.to(() => CommentsDisplayScreen(
-                                    postId: widget.postContent["_id"],
-                                    commentCountUpdater: (int commentCount) {
-                                      commentCountUpdater(commentCount);
-                                    },
-                                  ));
+                              if (commenting) {
+                                Get.to(() => CommentsDisplayScreen(
+                                      postId: widget.postContent["_id"],
+                                      commentCountUpdater: (int commentCount) {
+                                        commentCountUpdater(commentCount);
+                                      },
+                                    ));
+                              }
                             }),
                       ),
                       Container(
@@ -312,18 +331,26 @@ class _SharedImagePostDisplayTemplateState
                         alignment: Alignment.center,
                         margin: EdgeInsets.only(right: 5.0),
                         child: IconButton(
-                            icon: Icon(MaterialCommunityIcons.share),
+                            icon: Icon(MaterialCommunityIcons.share,
+                                color: sharing
+                                    ? Theme.of(context).iconTheme.color
+                                    : Theme.of(context)
+                                        .iconTheme
+                                        .color
+                                        .withOpacity(0.2)),
                             onPressed: () {
-                              Get.to(() => SharePostPageScreen(
-                                    postId: widget.postContent["imagePost"]
-                                        ["_id"],
-                                    postOwnerName:
-                                        widget.postContent["imagePost"]
-                                            ["postBy"]["name"],
-                                    postOwnerProfilePic:
-                                        widget.postContent["imagePost"]
-                                            ["postBy"]["profilePic"],
-                                  ));
+                              if (sharing) {
+                                Get.to(() => SharePostPageScreen(
+                                      postId: widget.postContent["imagePost"]
+                                          ["_id"],
+                                      postOwnerName:
+                                          widget.postContent["imagePost"]
+                                              ["postBy"]["name"],
+                                      postOwnerProfilePic:
+                                          widget.postContent["imagePost"]
+                                              ["postBy"]["profilePic"],
+                                    ));
+                              }
                             }),
                       ),
                       Expanded(
@@ -332,7 +359,7 @@ class _SharedImagePostDisplayTemplateState
                     ],
                   ),
                 ),
-                widget.postContent["comments"] == null
+                widget.postContent["comments"] == null || !commenting
                     ? Container()
                     : widget.postContent["comments"].length == 0
                         ? Container()

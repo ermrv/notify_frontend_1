@@ -39,12 +39,20 @@ class TextPostDisplayTemplate extends StatefulWidget {
 }
 
 class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
+  //post privacy
+  bool commenting = false;
+  bool sharing = false;
+
+  //ownership of the post
   String _ownerId;
   String _thisUserId;
   bool _isOwner = false;
+
+  ///post informations
   bool _isShared = false;
-  int _numberOfComments = 0;
-  int _numberOfReactions = 0;
+  int _numberOfComments;
+  int _numberOfReactions;
+  int _numberOfShare;
 
   //when the post delete is clicked
   bool _postRemoved = false;
@@ -53,14 +61,19 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
 
   @override
   void initState() {
+    //post privacy
+    commenting = widget.postContent["commentOption"].toString() == "true";
+    sharing = widget.postContent["sharingOption"].toString() == "true";
+    //ownership of the post
     _ownerId = widget.postContent["textPost"]["postBy"]["_id"].toString();
     _thisUserId = PrimaryUserData.primaryUserData.userId.toString();
     _isOwner = _ownerId == _thisUserId;
+    //post informations
     _isShared = widget.postContent["primary"].toString() != "true";
     _likes = widget.postContent["likes"];
     _numberOfReactions = _likes.length;
     _numberOfComments = widget.postContent["noOfComments"];
-
+    _numberOfShare = widget.postContent["noOfShares"];
     super.initState();
   }
 
@@ -295,7 +308,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                                       reactionCountUpdater(_thisUserId);
                                     }),
                               ),
-                              //comment
+                              //commenting............................
                               Container(
                                 height: 40.0,
                                 width: 40.0,
@@ -303,38 +316,55 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                                 margin: EdgeInsets.only(right: 5.0),
                                 child: IconButton(
                                     padding: EdgeInsets.all(4.0),
-                                    icon: Icon(
-                                      EvilIcons.comment,
-                                      size: 28.0,
-                                    ),
+                                    icon: Icon(EvilIcons.comment,
+                                        size: 28.0,
+                                        color: commenting
+                                            ? Theme.of(context).iconTheme.color
+                                            : Theme.of(context)
+                                                .iconTheme
+                                                .color
+                                                .withOpacity(0.2)),
                                     onPressed: () {
-                                      Get.to(() => CommentsDisplayScreen(
-                                            postId: widget.postContent["_id"],
-                                            commentCountUpdater:
-                                                (int commentCount) {
-                                              commentCountUpdater(commentCount);
-                                            },
-                                          ));
+                                      if (commenting) {
+                                        Get.to(() => CommentsDisplayScreen(
+                                              postId: widget.postContent["_id"],
+                                              commentCountUpdater:
+                                                  (int commentCount) {
+                                                commentCountUpdater(
+                                                    commentCount);
+                                              },
+                                            ));
+                                      }
                                     }),
                               ),
+                              //share...............................
                               Container(
                                 height: 40.0,
                                 width: 40.0,
                                 alignment: Alignment.center,
                                 margin: EdgeInsets.only(right: 5.0),
                                 child: IconButton(
-                                    icon: Icon(MaterialCommunityIcons.share),
+                                    icon: Icon(MaterialCommunityIcons.share,
+                                        color: sharing
+                                            ? Theme.of(context).iconTheme.color
+                                            : Theme.of(context)
+                                                .iconTheme
+                                                .color
+                                                .withOpacity(0.2)),
                                     onPressed: () {
-                                      Get.to(() => SharePostPageScreen(
-                                            postId: widget
-                                                .postContent["textPost"]["_id"],
-                                            postOwnerName:
-                                                widget.postContent["textPost"]
-                                                    ["postBy"]["name"],
-                                            postOwnerProfilePic:
-                                                widget.postContent["textPost"]
-                                                    ["postBy"]["profilePic"],
-                                          ));
+                                      if (sharing) {
+                                        Get.to(() => SharePostPageScreen(
+                                              postId:
+                                                  widget.postContent["textPost"]
+                                                      ["_id"],
+                                              postOwnerName:
+                                                  widget.postContent["textPost"]
+                                                      ["postBy"]["name"],
+                                              postOwnerProfilePic:
+                                                  widget.postContent["textPost"]
+                                                      ["postBy"]["profilePic"],
+                                            ));
+                                      }
                                     }),
                               ),
                               Expanded(
@@ -343,7 +373,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                             ],
                           ),
                         ),
-                  _isShared
+                  _isShared || !commenting
                       ? Container()
                       : widget.postContent["comments"] == null
                           ? Container()
