@@ -26,22 +26,6 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
                   height: 300.0,
                   width: screenWidth,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Get.to(() => ShowCoverPicScreen());
-                  },
-                  child: Positioned(
-                    child: Container(
-                        height: 250.0,
-                        width: screenWidth,
-                        child: Obx(() => CachedNetworkImage(
-                              imageUrl: PrimaryUserData
-                                  .primaryUserData.coverPic.value
-                                  .toString(),
-                              fit: BoxFit.cover,
-                            ))),
-                  ),
-                ),
                 Positioned(
                     bottom: 0,
                     left: 5.0,
@@ -160,6 +144,22 @@ class PrimaryUserBasicInfoContainer extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                ),
+                Positioned(
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => ShowCoverPicScreen());
+                    },
+                    child: Container(
+                        height: 250.0,
+                        width: screenWidth,
+                        child: Obx(() => CachedNetworkImage(
+                              imageUrl: PrimaryUserData
+                                  .primaryUserData.coverPic.value
+                                  .toString(),
+                              fit: BoxFit.cover,
+                            ))),
                   ),
                 )
               ],
