@@ -20,6 +20,8 @@ class NewsFeedPageScreen extends StatelessWidget {
             child: RefreshIndicator(
               onRefresh: () {
                 LocalDataFiles.setRefreshNewsFeedFile(true);
+                controller.newsFeedData = null;
+                controller.update();
                 return controller.getRecentPostsData();
               },
               child: controller.newsFeedData == null

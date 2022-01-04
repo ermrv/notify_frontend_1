@@ -31,7 +31,6 @@ class SharePostPageController extends GetxController {
 
     if (response != "error") {
       isUploading = false;
-      textEditingController.dispose();
 
       Get.back();
     } else {

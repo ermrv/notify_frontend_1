@@ -43,7 +43,7 @@ class ExplorePageScreen extends StatelessWidget {
                     return controller.getRecentPostsData();
                   },
                   child: ListView(
-                    controller: controller.scrollController,
+                    // controller: controller.scrollController,
                     children: [
                       for (var i in controller.explorePageData)
                         HashTagsDisplayTemplate(hashTagData: i),

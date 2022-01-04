@@ -18,8 +18,8 @@ class ExplorePageController extends GetxController {
 
   @override
   void onInit() {
-    scrollController = ScrollController();
-    scrollController.addListener(scrollListener);
+    // scrollController = ScrollController();
+    // scrollController.addListener(scrollListener);
     getFileData();
 
     super.onInit();
