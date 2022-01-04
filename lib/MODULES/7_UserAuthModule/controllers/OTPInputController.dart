@@ -10,11 +10,13 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get_mac/get_mac.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class OTPInputController extends GetxController {
   final String mobileNumber;
   final String countryCode;
   String macAddress;
+  String deviceName;
   bool isVerifying = false;
 
   OTPInputController(this.mobileNumber, this.countryCode);
@@ -26,7 +28,7 @@ class OTPInputController extends GetxController {
   onInit() {
     print(mobileNumber);
     super.onInit();
-    _getMacAddress();
+    _getDeviceInfo();
     _getData();
   }
 
@@ -44,8 +46,12 @@ class OTPInputController extends GetxController {
   verifyOtp(String otp) async {
     isVerifying = true;
     update();
-    var response = await ApiServices.post(ApiUrlsData.verifyOtp,
-        {"mobile": data["mobile"], "code": otp, "macAddress": macAddress});
+    var response = await ApiServices.post(ApiUrlsData.verifyOtp, {
+      "mobile": data["mobile"],
+      "code": otp,
+      "macAddress": macAddress,
+      "deviceName": deviceName
+    });
     if (response == "error") {
       print("error");
       isVerifying = false;
@@ -82,12 +88,29 @@ class OTPInputController extends GetxController {
     }
   }
 
-  _getMacAddress() async {
+  // _getMacAddress() async {
+  //   try {
+  //     macAddress = await GetMac.macAddress;
+  //     print(macAddress);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+  _getDeviceInfo() async {
+    DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     try {
-      macAddress = await GetMac.macAddress;
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
+        deviceName = androidInfo.model;
+        macAddress = await GetMac.macAddress;
+      } else if (Platform.isIOS) {
+        IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
+        deviceName = iosInfo.name;
+        macAddress = await GetMac.macAddress;
+      }
+      print(deviceName);
       print(macAddress);
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 }
