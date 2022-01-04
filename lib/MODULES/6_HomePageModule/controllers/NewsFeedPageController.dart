@@ -93,7 +93,7 @@ class NewsFeedPageController extends GetxController {
     print(_lastPostId);
 
     var response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
-        {"dataType": "previous", "postId": _lastPostId}, userToken);
+        {"dataType": "previous", "postId": _lastPostId,}, userToken);
 
     if (response != "error") {
       if (newsFeedData == null) {

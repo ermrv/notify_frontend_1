@@ -49,13 +49,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         leading: IconButton(
           icon: Icon(Entypo.grid),
           onPressed: () {
-            Get.to(() => UserDrawerScreen(),transition: Transition.leftToRightWithFade);
+            Get.to(() => UserDrawerScreen(),
+                transition: Transition.leftToRightWithFade);
           },
         ),
-        title: Text(
-          "notify",
-          style: TextStyle(
-              fontStyle: FontStyle.italic, fontWeight: FontWeight.bold,),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // ClipRRect(
+            //   borderRadius: BorderRadius.circular(3.0),
+            //   child: Image.asset(
+            //     "assets/app_icon/notify_icon.png",
+            //     height: 15.0,
+            //     width: 15.0,
+            //   ),
+            // ),
+            Text(
+              "notify",
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
         actions: [
           IconButton(
@@ -74,6 +90,4 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       body: NewsFeedPageScreen(),
     );
   }
-
-  
 }

@@ -1,6 +1,7 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/PostGettingServices/GettingPostServices.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -10,6 +11,8 @@ class CommentDisplayController extends GetxController {
   String postId;
   List comments = [];
   bool isCommentsLoaded = false;
+  bool loadingMoreComments = false;
+  ScrollController scrollController;
   TextEditingController commentEditingController,
       subCommentEditingController,
       editCommentController,
@@ -21,6 +24,8 @@ class CommentDisplayController extends GetxController {
     subCommentEditingController = TextEditingController();
     editCommentController = TextEditingController();
     editSubCommentController = TextEditingController();
+    scrollController = ScrollController();
+    scrollController.addListener(scrollListener);
 
     print("initialised");
     super.onInit();
@@ -29,12 +34,32 @@ class CommentDisplayController extends GetxController {
   //get comments
   getComments() async {
     comments = [];
-    var response = await ApiServices.postWithAuth(
-        ApiUrlsData.comments, {"postId": postId}, userToken);
+    var response = await ApiServices.postWithAuth(ApiUrlsData.comments,
+        {"postId": postId, "dataType": "latest"}, userToken);
     if (response == "error") {
       print("error");
     } else {
       isCommentsLoaded = true;
+      comments.addAll(response);
+      update();
+    }
+  }
+
+  //get previous comments
+  getPreviousComments() async {
+    loadingMoreComments = true;
+    update();
+    String _lastCommentId = GettingPostServices.getLastPostId(comments);
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.comments,
+        {"postId": postId, "dataType": "previous", "commentId": _lastCommentId},
+        userToken);
+    if (response == "error") {
+      print("error");
+      loadingMoreComments = false;
+      update();
+    } else {
+      loadingMoreComments = false;
       comments.addAll(response);
       update();
     }
@@ -164,6 +189,14 @@ class CommentDisplayController extends GetxController {
       comments.removeAt(_index);
       comments.insert(_index, response);
       update();
+    }
+  }
+
+  ///scroll listener
+  scrollListener() {
+    if (scrollController.position.maxScrollExtent ==
+        scrollController.position.pixels) {
+      getPreviousComments();
     }
   }
 

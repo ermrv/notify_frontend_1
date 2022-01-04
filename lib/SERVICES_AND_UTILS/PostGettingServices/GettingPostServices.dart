@@ -6,46 +6,46 @@ import 'package:get/get.dart';
 
 class GettingPostServices {
   ///get the recent post
-  static Future<List> getRecentPostsData(
-      List initialData, String apiUrl) async {
-    List _finalData;
-    _finalData = initialData;
-    var response;
-    //if newsfeed data is null get all data from back end
-    if (initialData == null || LocalDataFiles.refreshNewsFeedFile) {
-      response = await ApiServices.postWithAuth(
-          apiUrl, {"dataType": "latest"}, userToken);
-    }
-    //if list is empty get all data from backend
-    else if (initialData.length == 0) {
-      response = await ApiServices.postWithAuth(
-          ApiUrlsData.newsFeedUrl, {"dataType": "latest"}, userToken);
-    }
-    //if newsfeed data is available, get only those data that is  recent
-    else if (initialData.length >= 1) {
-      String _firstPostId = getFirstPostId(initialData);
-      response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
-          {"dataType": "latest", "postId": _firstPostId}, userToken);
-    }
+  // static Future<List> getRecentPostsData(
+  //     List initialData, String apiUrl) async {
+  //   List _finalData;
+  //   _finalData = initialData;
+  //   var response;
+  //   //if newsfeed data is null get all data from back end
+  //   if (initialData == null || LocalDataFiles.refreshNewsFeedFile) {
+  //     response = await ApiServices.postWithAuth(
+  //         apiUrl, {"dataType": "latest"}, userToken);
+  //   }
+  //   //if list is empty get all data from backend
+  //   else if (initialData.length == 0) {
+  //     response = await ApiServices.postWithAuth(
+  //         ApiUrlsData.newsFeedUrl, {"dataType": "latest"}, userToken);
+  //   }
+  //   //if newsfeed data is available, get only those data that is  recent
+  //   else if (initialData.length >= 1) {
+  //     String _firstPostId = getFirstPostId(initialData);
+  //     response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
+  //         {"dataType": "latest", "postId": _firstPostId}, userToken);
+  //   }
 
-    if (response != "error") {
-      if (_finalData == null || LocalDataFiles.refreshNewsFeedFile) {
-        _finalData = response;
-        LocalDataFiles.setRefreshNewsFeedFile(false);
-      } else {
-        List _temp = response;
-        _temp.addAll(initialData);
-        _finalData.clear();
-        _finalData.addAll(_temp);
-        // update();
-        // _handleLocalFile(newsFeedData);
-      }
-    } else {
-      Get.snackbar("Cannot get the data", "some error occured");
-    }
+  //   if (response != "error") {
+  //     if (_finalData == null || LocalDataFiles.refreshNewsFeedFile) {
+  //       _finalData = response;
+  //       LocalDataFiles.setRefreshNewsFeedFile(false);
+  //     } else {
+  //       List _temp = response;
+  //       _temp.addAll(initialData);
+  //       _finalData.clear();
+  //       _finalData.addAll(_temp);
+  //       // update();
+  //       // _handleLocalFile(newsFeedData);
+  //     }
+  //   } else {
+  //     Get.snackbar("Cannot get the data", "some error occured");
+  //   }
 
-    return _finalData;
-  }
+  //   return _finalData;
+  // }
 
   ///to get the first post id from the [data]
   ///eturns the last post id if present or returns [null] if not present

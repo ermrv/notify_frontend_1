@@ -23,7 +23,6 @@ class CommentsDisplayScreen extends StatelessWidget {
         commentsDisplayController.commentCountUpdater = commentCountUpdater;
       },
       builder: (controller) => Scaffold(
-       
         bottomSheet: Container(
           height: 50.0,
           padding: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -52,7 +51,12 @@ class CommentsDisplayScreen extends StatelessWidget {
                           ),
                         )),
                   ),
-                  Expanded(child: Container(child: Text("Add a  Comment",style: TextStyle(fontSize: 15.0),)))
+                  Expanded(
+                      child: Container(
+                          child: Text(
+                    "Add a  Comment",
+                    style: TextStyle(fontSize: 15.0),
+                  )))
                 ],
               ),
             ),
@@ -75,14 +79,21 @@ class CommentsDisplayScreen extends StatelessWidget {
                       return controller.getComments();
                     },
                     child: ListView(
+                      controller: controller.scrollController,
                       children: [
                         for (var i in controller.comments)
                           CommentsDisplayLayout(
                             commentData: i,
                           ),
-                          Container(
-                            height: 50.0,
-                          )
+                        controller.loadingMoreComments
+                            ? Container(
+                                height: 50.0,
+                                child: CircularProgressIndicator(
+                                  color: Colors.blue,
+                                ))
+                            : Container(
+                                height: 50.0,
+                              )
                       ],
                     ),
                   )
