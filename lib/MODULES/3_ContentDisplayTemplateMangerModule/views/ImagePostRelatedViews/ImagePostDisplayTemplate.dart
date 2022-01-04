@@ -20,6 +20,7 @@ import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
 
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PostDescriptionWidget.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/IntegerParser.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -322,7 +323,7 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                                 height: 40.0,
                                 width: 40.0,
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.only(right: 5.0),
+                                margin: EdgeInsets.only(right: 3.0),
                                 child: IconButton(
                                     padding: EdgeInsets.all(4.0),
                                     icon: _likes.contains(
@@ -342,12 +343,16 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                                       reactionCountUpdater(_thisUserId);
                                     }),
                               ),
+                              Container(
+                                margin: EdgeInsets.only(right: 5.0),
+                                child: Text(integerParser(_numberOfReactions)),
+                              ),
                               //comment
                               Container(
                                 height: 40.0,
                                 width: 40.0,
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.only(right: 5.0),
+                                margin: EdgeInsets.only(right: 3.0),
                                 child: IconButton(
                                     padding: EdgeInsets.all(4.0),
                                     icon: Icon(EvilIcons.comment,
@@ -372,10 +377,22 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                                     }),
                               ),
                               Container(
+                                margin: EdgeInsets.only(right: 5.0),
+                                child: Text(integerParser(_numberOfComments),
+                                    style: TextStyle(
+                                        color: commenting
+                                            ? Theme.of(context).iconTheme.color
+                                            : Theme.of(context)
+                                                .iconTheme
+                                                .color
+                                                .withOpacity(0.2))),
+                              ),
+                              //share...............................
+                              Container(
                                 height: 40.0,
                                 width: 40.0,
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.only(right: 5.0),
+                                margin: EdgeInsets.only(right: 3.0),
                                 child: IconButton(
                                     icon: Icon(
                                       MaterialCommunityIcons.share,
@@ -401,6 +418,19 @@ class _ImagePostDisplayTemplateState extends State<ImagePostDisplayTemplate> {
                                             ));
                                       }
                                     }),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(right: 5.0),
+                                child: Text(
+                                  integerParser(_numberOfShare),
+                                  style: TextStyle(
+                                      color: sharing
+                                          ? Theme.of(context).iconTheme.color
+                                          : Theme.of(context)
+                                              .iconTheme
+                                              .color
+                                              .withOpacity(0.2)),
+                                ),
                               ),
                               Expanded(
                                 child: Container(),

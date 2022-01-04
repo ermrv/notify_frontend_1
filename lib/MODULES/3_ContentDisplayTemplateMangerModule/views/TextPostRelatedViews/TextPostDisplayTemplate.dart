@@ -11,6 +11,7 @@ import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/Use
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/IntegerParser.dart';
 
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
@@ -50,9 +51,9 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
 
   ///post informations
   bool _isShared = false;
-  int _numberOfComments;
-  int _numberOfReactions;
-  int _numberOfShare;
+  int _numberOfComments = 0;
+  int _numberOfReactions = 0;
+  int _numberOfShare = 0;
 
   //when the post delete is clicked
   bool _postRemoved = false;
@@ -288,7 +289,7 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                                 height: 40.0,
                                 width: 40.0,
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.only(right: 5.0),
+                                margin: EdgeInsets.only(right: 3.0),
                                 child: IconButton(
                                     padding: EdgeInsets.all(4.0),
                                     icon: _likes.contains(
@@ -308,12 +309,16 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                                       reactionCountUpdater(_thisUserId);
                                     }),
                               ),
+                              Container(
+                                margin: EdgeInsets.only(right: 5.0),
+                                child: Text(integerParser(_numberOfReactions)),
+                              ),
                               //commenting............................
                               Container(
                                 height: 40.0,
                                 width: 40.0,
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.only(right: 5.0),
+                                margin: EdgeInsets.only(right: 3.0),
                                 child: IconButton(
                                     padding: EdgeInsets.all(4.0),
                                     icon: Icon(EvilIcons.comment,
@@ -337,12 +342,23 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                                       }
                                     }),
                               ),
+                              Container(
+                                margin: EdgeInsets.only(right: 5.0),
+                                child: Text(integerParser(_numberOfComments),
+                                    style: TextStyle(
+                                        color: commenting
+                                            ? Theme.of(context).iconTheme.color
+                                            : Theme.of(context)
+                                                .iconTheme
+                                                .color
+                                                .withOpacity(0.2))),
+                              ),
                               //share...............................
                               Container(
                                 height: 40.0,
                                 width: 40.0,
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.only(right: 5.0),
+                                margin: EdgeInsets.only(right: 3.0),
                                 child: IconButton(
                                     icon: Icon(MaterialCommunityIcons.share,
                                         color: sharing
@@ -366,6 +382,19 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                                             ));
                                       }
                                     }),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(right: 5.0),
+                                child: Text(
+                                  integerParser(_numberOfShare),
+                                  style: TextStyle(
+                                      color: sharing
+                                          ? Theme.of(context).iconTheme.color
+                                          : Theme.of(context)
+                                              .iconTheme
+                                              .color
+                                              .withOpacity(0.2)),
+                                ),
                               ),
                               Expanded(
                                 child: Container(),

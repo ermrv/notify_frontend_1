@@ -12,6 +12,7 @@ import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.d
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/UserProfileScreen.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/IntegerParser.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ReadMoreTextWidget.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/PostDescriptionWidget.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/TimeStampProvider.dart';
@@ -516,7 +517,7 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                         height: 40.0,
                         width: 40.0,
                         alignment: Alignment.center,
-                        margin: EdgeInsets.only(right: 5.0),
+                        margin: EdgeInsets.only(right: 3.0),
                         child: IconButton(
                             padding: EdgeInsets.all(4.0),
                             icon: _likes.contains(
@@ -536,12 +537,16 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                               reactionCountUpdater(_thisUserId);
                             }),
                       ),
+                      Container(
+                        margin: EdgeInsets.only(right: 5.0),
+                        child: Text(integerParser(_numberOfReactions)),
+                      ),
                       //comment
                       Container(
                         height: 40.0,
                         width: 40.0,
                         alignment: Alignment.center,
-                        margin: EdgeInsets.only(right: 5.0),
+                        margin: EdgeInsets.only(right: 3.0),
                         child: IconButton(
                             padding: EdgeInsets.all(4.0),
                             icon: Icon(EvilIcons.comment,
@@ -564,10 +569,21 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                             }),
                       ),
                       Container(
+                        margin: EdgeInsets.only(right: 5.0),
+                        child: Text(integerParser(_numberOfComments),
+                            style: TextStyle(
+                                color: commenting
+                                    ? Theme.of(context).iconTheme.color
+                                    : Theme.of(context)
+                                        .iconTheme
+                                        .color
+                                        .withOpacity(0.2))),
+                      ),
+                      Container(
                         height: 40.0,
                         width: 40.0,
                         alignment: Alignment.center,
-                        margin: EdgeInsets.only(right: 5.0),
+                        margin: EdgeInsets.only(right: 3.0),
                         child: IconButton(
                             icon: Icon(MaterialCommunityIcons.share),
                             color: Theme.of(context)
@@ -575,6 +591,19 @@ class _PollPostDisplayTemplateState extends State<PollPostDisplayTemplate> {
                                 .color
                                 .withOpacity(0.2),
                             onPressed: () {}),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(right: 5.0),
+                        child: Text(
+                          integerParser(0),
+                          style: TextStyle(
+                              color: sharing
+                                  ? Theme.of(context).iconTheme.color
+                                  : Theme.of(context)
+                                      .iconTheme
+                                      .color
+                                      .withOpacity(0.2)),
+                        ),
                       ),
                       Expanded(
                         child: Container(),
