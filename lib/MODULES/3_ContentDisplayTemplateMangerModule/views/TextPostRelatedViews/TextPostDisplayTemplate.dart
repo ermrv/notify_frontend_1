@@ -186,7 +186,8 @@ class _TextPostDisplayTemplateState extends State<TextPostDisplayTemplate> {
                         Expanded(
                           child: Container(),
                         ),
-                        _isOwner
+                        _isOwner && PrimaryUserData.primaryUserData.profileType.value ==
+                            "business"
                             ? Container(
                                 child: TextButton(
                                   onPressed: () {

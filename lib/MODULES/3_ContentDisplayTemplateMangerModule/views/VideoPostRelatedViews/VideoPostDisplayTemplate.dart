@@ -185,7 +185,8 @@ class _VideoPostDisplayTemplateState extends State<VideoPostDisplayTemplate> {
                         Expanded(
                           child: Container(),
                         ),
-                        _isOwner
+                        _isOwner && PrimaryUserData.primaryUserData.profileType.value ==
+                            "business"
                             ? Container(
                                 child: TextButton(
                                   onPressed: () {
