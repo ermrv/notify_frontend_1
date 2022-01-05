@@ -85,10 +85,7 @@ class AddPostPageScreen extends StatelessWidget {
                   ),
                   Switch(
                       value:
-                          PrimaryUserData.primaryUserData.profileType.value ==
-                                  "private"
-                              ? false
-                              : controller.allowSharing,
+                          controller.allowSharing,
                       onChanged: (value) {
                         if (PrimaryUserData.primaryUserData.profileType.value !=
                             "private") {
