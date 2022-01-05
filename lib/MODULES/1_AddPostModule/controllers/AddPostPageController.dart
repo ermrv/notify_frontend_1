@@ -12,6 +12,7 @@ import 'package:MediaPlus/MODULES/1_AddPostModule/views/SelectedImagesDisplayTem
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/SelectedImagesDisplayTemplates/MultiImageVerticalDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/SelectedImagesDisplayTemplates/SingleImageDisplayTemplate.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/views/VideoGridDisplay.dart';
+import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/MODULES/8_UserProfileModule/OwnProfileModule/controllers/OwnProfilePageScreenController.dart';
@@ -51,6 +52,9 @@ class AddPostPageController extends GetxController {
 
   @override
   void onInit() {
+    if (PrimaryUserData.primaryUserData.profileType.value == "private") {
+      allowSharing = false;
+    }
     textEditingController = TextEditingController();
     super.onInit();
   }

@@ -63,6 +63,7 @@ class AddPostPageScreen extends StatelessWidget {
                   Icon(
                     EvilIcons.comment,
                     size: 28.0,
+                    color: Theme.of(context).iconTheme.color,
                   ),
                   Switch(
                       value: controller.allowCommenting,
@@ -75,12 +76,45 @@ class AddPostPageScreen extends StatelessWidget {
             Container(
               child: Row(
                 children: [
-                  Icon(MaterialCommunityIcons.share),
+                  Icon(
+                    MaterialCommunityIcons.share,
+                    color: PrimaryUserData.primaryUserData.profileType.value ==
+                            "private"
+                        ? Theme.of(context).iconTheme.color.withOpacity(0.2)
+                        : Theme.of(context).iconTheme.color,
+                  ),
                   Switch(
-                    
-                      value: controller.allowSharing,
+                      value:
+                          PrimaryUserData.primaryUserData.profileType.value ==
+                                  "private"
+                              ? false
+                              : controller.allowSharing,
                       onChanged: (value) {
-                        controller.updateSharingPrivacy(value);
+                        if (PrimaryUserData.primaryUserData.profileType.value !=
+                            "private") {
+                          controller.updateSharingPrivacy(value);
+                        } else {
+                          Get.dialog(AlertDialog(
+                            title: Text(
+                                "Posts from PRIVATE ACCOUNTS cannot be shared!"),
+                            actions: [
+                              GestureDetector(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Okay",
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ));
+                        }
                       })
                 ],
               ),
