@@ -17,7 +17,7 @@ abstract class NotificationServices {
 
     if (Platform.isIOS || Platform.isAndroid) {
       //subscribe to the general topic
-      NotificationServices.subscribeToNotificationChannel("general");
+      // NotificationServices.subscribeToNotificationChannel("general");
       AndroidNotificationChannel channel = const AndroidNotificationChannel(
         'high_importance_channel', // id
         'High Importance Notifications', // title
@@ -62,7 +62,7 @@ abstract class NotificationServices {
                   'This channel is used for important notifications.', // description
                   importance: Importance.high,
                   // TODO add a proper drawable resource to android, for now using
-                  icon: "launch_background"),
+                  icon: "launcher_icon"),
             ));
       }
     });

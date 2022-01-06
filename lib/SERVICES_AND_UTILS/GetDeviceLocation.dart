@@ -10,7 +10,7 @@ abstract class GetDeviceLocation {
       Position position = await _determinePosition();
       print(position);
       await ApiServices.postWithAuth(ApiUrlsData.userLocation,
-          {"lat": position.latitude, "lang": position.longitude}, userToken);
+          {"lat": position.latitude.toString(), "lng": position.longitude.toString()}, userToken);
     } catch (e) {
       print(e);
     }
