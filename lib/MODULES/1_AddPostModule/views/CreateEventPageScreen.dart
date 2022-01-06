@@ -21,7 +21,7 @@ class CreateEventPageScreen extends StatelessWidget {
                     child: TextButton(
                         onPressed: () {
                           if (!controller.isUploading) {
-                            controller.postEventHandler();
+                          
                           }
                         },
                         child: controller.isUploading

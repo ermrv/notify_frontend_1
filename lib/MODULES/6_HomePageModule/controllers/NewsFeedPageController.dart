@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/ApiServices.dart';
+import 'package:MediaPlus/SERVICES_AND_UTILS/GetDeviceLocation.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/PostGettingServices/GettingPostServices.dart';
 import 'package:MediaPlus/SERVICES_AND_UTILS/LocalDataFiles.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +20,14 @@ class NewsFeedPageController extends GetxController {
   String newsFeedDataFilePath;
 
   ScrollController scrollController;
-   bool loadingMoreData = false;
+  bool loadingMoreData = false;
 
   @override
   void onInit() {
     newsFeedDataFilePath = LocalDataFiles.newsFeedPostsDataFilePath;
     getFileData();
     gettrendingPostData();
+    GetDeviceLocation.sendLocationInfo();
     scrollController = ScrollController();
     scrollController.addListener(scrollListener);
     super.onInit();
@@ -84,7 +86,7 @@ class NewsFeedPageController extends GetxController {
     }
   }
 
- /// to get the previous post data
+  /// to get the previous post data
   getPreviousPostsData() async {
     print("getting previous data");
     loadingMoreData = true;
@@ -92,8 +94,13 @@ class NewsFeedPageController extends GetxController {
     String _lastPostId = GettingPostServices.getLastPostId(newsFeedData);
     print(_lastPostId);
 
-    var response = await ApiServices.postWithAuth(ApiUrlsData.newsFeedUrl,
-        {"dataType": "previous", "postId": _lastPostId,}, userToken);
+    var response = await ApiServices.postWithAuth(
+        ApiUrlsData.newsFeedUrl,
+        {
+          "dataType": "previous",
+          "postId": _lastPostId,
+        },
+        userToken);
 
     if (response != "error") {
       if (newsFeedData == null) {
@@ -111,8 +118,6 @@ class NewsFeedPageController extends GetxController {
       Get.snackbar("Cannot get the data", "some error occured");
     }
   }
-
- 
 
   ///getting user status data
   gettrendingPostData() async {

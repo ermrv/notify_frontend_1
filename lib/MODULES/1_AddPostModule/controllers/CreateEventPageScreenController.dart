@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
-import 'package:MediaPlus/MODULES/1_AddPostModule/MediaCompressorModule/ImageCompressor.dart';
 import 'package:MediaPlus/MODULES/1_AddPostModule/SingleImagePickerModule/views/SingleImagePicker.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/Models/PrimaryUserDataModel.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
@@ -48,35 +47,35 @@ class CreateEventPageScreenController extends GetxController {
     update();
   }
 
-  postEventHandler() async {
-    isUploading = true;
-    update();
-    //check if required field is not null
-    if (eventNameController.text != null &&
-        eventStartDate != null &&
-        eventImage != null) {
-      //get the compressed image
-      List<Uint8List> _temp =
-          await ImageCompressor.compressImages([eventImage]);
-      compressedEventImage = _temp[0];
-      print(compressedEventImage.lengthInBytes);
-      //call the function upload the data
-      uploadEventData();
-    } else {
-      isUploading = false;
-      update();
-      Get.dialog(AlertDialog(
-        title: Text("All Fields are mandatory!"),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Get.back();
-              },
-              child: Text("Okay"))
-        ],
-      ));
-    }
-  }
+  // postEventHandler() async {
+  //   isUploading = true;
+  //   update();
+  //   //check if required field is not null
+  //   if (eventNameController.text != null &&
+  //       eventStartDate != null &&
+  //       eventImage != null) {
+  //     //get the compressed image
+  //     List<Uint8List> _temp =
+  //         await ImageCompressor.compressImages([eventImage]);
+  //     compressedEventImage = _temp[0];
+  //     print(compressedEventImage.lengthInBytes);
+  //     //call the function upload the data
+  //     uploadEventData();
+  //   } else {
+  //     isUploading = false;
+  //     update();
+  //     Get.dialog(AlertDialog(
+  //       title: Text("All Fields are mandatory!"),
+  //       actions: [
+  //         TextButton(
+  //             onPressed: () {
+  //               Get.back();
+  //             },
+  //             child: Text("Okay"))
+  //       ],
+  //     ));
+  //   }
+  // }
 
   //upload the data
   uploadEventData() async {

@@ -47,13 +47,7 @@ dependencies:
   get_mac: ^0.0.1
   flick_video_player:
     path: ./../LocalPackages/flick-video-player
-
-  video_compress: ^2.1.0
-
-
-
-  flutter_image_compress: ^1.0.0
-  
+  geolocator: any
 
 
 

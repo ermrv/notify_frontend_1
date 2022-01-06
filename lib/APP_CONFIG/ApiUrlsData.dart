@@ -18,6 +18,8 @@ abstract class ApiUrlsData {
   static String userFollowers = "$domain/api/user/followers";
   static String userFollowings = "$domain/api/user/followings";
   static String userHighlights = "$domain/api/user/highlights";
+  //user location
+  static String userLocation = "$domain/api/getlocation";
 
   ///user profile data and related posts
   static String userPosts = "$domain/api/user/posts";

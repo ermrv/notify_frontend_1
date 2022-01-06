@@ -8,18 +8,25 @@ import 'package:get/get.dart';
 import 'SecondaryUserActionsOnProfile.dart';
 import 'SecondaryUserBasicInfoContainer.dart';
 
-class OtherUserProfilePageScreen extends StatelessWidget {
+class OtherUserProfilePageScreen extends StatefulWidget {
   final String profileOwnerId;
 
   OtherUserProfilePageScreen({Key key, @required this.profileOwnerId})
       : super(key: key);
 
-  final controller = Get.put(OtherUserProfilePageController());
+  @override
+  State<OtherUserProfilePageScreen> createState() => _OtherUserProfilePageScreenState();
+}
+
+class _OtherUserProfilePageScreenState extends State<OtherUserProfilePageScreen> {
+  final controller = Get.put(OtherUserProfilePageController(),
+  );
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OtherUserProfilePageController>(
       initState: (state) {
-        controller.profileOwnerId = profileOwnerId;
+        controller.profileOwnerId = widget.profileOwnerId;
         controller.thisUserId =
             PrimaryUserData.primaryUserData.userId.toString();
         controller.initialise();
@@ -28,7 +35,10 @@ class OtherUserProfilePageScreen extends StatelessWidget {
         controller.postData = null;
         controller.profileData = null;
         controller.profileOwnerId = null;
-        controller.scrollController.dispose();
+        try {
+          controller.scrollController.dispose();
+        } catch (e) {
+        }
       },
       builder: (controller) => Scaffold(
         extendBodyBehindAppBar: true,
