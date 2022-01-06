@@ -1,4 +1,5 @@
 import 'package:MediaPlus/APP_CONFIG/ApiUrlsData.dart';
+import 'package:MediaPlus/MODULES/14_MainNavigationModule/views/MainNavigation.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/controllers/CommonPostDisplayPageController.dart';
 import 'package:MediaPlus/MODULES/3_ContentDisplayTemplateMangerModule/views/ContentDisplayTemplateProvider.dart';
 import 'package:MediaPlus/MODULES/7_UserAuthModule/userAuthVariables.dart';
@@ -37,7 +38,7 @@ class CommonPostDisplayPageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     try {
-       Get.delete<CommonPostDisplayPageController>();
+      Get.delete<CommonPostDisplayPageController>();
     } catch (e) {
       print(e);
     }
@@ -60,6 +61,18 @@ class CommonPostDisplayPageScreen extends StatelessWidget {
       builder: (controller) => Scaffold(
         appBar: AppBar(
           title: Text(title),
+          actions: [
+            Container(
+              margin: EdgeInsets.only(right: 8.0),
+              child: IconButton(
+                  onPressed: () {
+                    Get.to(() => MainNavigationScreen(
+                          tabNumber: 0,
+                        ));
+                  },
+                  icon:Icon(Icons.home)),
+            )
+          ],
         ),
         body: controller.data == null
             ? DataLoadingShimmerAnimations(animationType: "postOnly")

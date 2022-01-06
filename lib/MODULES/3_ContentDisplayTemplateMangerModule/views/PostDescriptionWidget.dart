@@ -55,7 +55,7 @@ class PostDescriptionWidget extends StatelessWidget {
             Get.to(() => CommonPostDisplayPageScreen(
                 title: tag.toString(),
                 apiUrl: ApiUrlsData.tagRelatedPosts,
-                apiData: {"hashtag": tag.toString()}));
+                apiData: {"hashtag": tag.toString()}),preventDuplicates: false);
           },
           // onLongTap: (url) {
           //   print('long press');
