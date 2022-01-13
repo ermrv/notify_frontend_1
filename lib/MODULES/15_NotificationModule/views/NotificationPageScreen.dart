@@ -42,9 +42,21 @@ class NotificationPageScreen extends StatelessWidget {
                   return controller.getData();
                 },
                 child: ListView(
+                  controller: controller.scrollController,
                   children: [
                     for (var notification in controller.notificationsData)
                       getNotificationTemaplate(notification, context),
+                    controller.loadingMoreData
+                        ? Container(
+                            height: 40.0,
+                            child: Center(
+                                child: CircularProgressIndicator(
+                              color: Colors.blue,
+                            )),
+                          )
+                        : Container(
+                            height: 30.0,
+                          ),
                   ],
                 ),
               ),

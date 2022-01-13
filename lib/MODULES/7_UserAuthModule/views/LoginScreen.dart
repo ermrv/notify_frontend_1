@@ -52,7 +52,7 @@ class LoginScreen extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(bottom: 10.0),
                         child: Text(
-                          "Enter Mobile Number to SignUp/Login:",
+                          "Enter Mobile Number to Login/SignUp:",
                           style: TextStyle(fontSize: 16.0),
                         ),
                       ),
